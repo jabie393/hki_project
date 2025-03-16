@@ -15,15 +15,59 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
 <h2>Form Pendaftaran HKI</h2>
 <form action="submit_hki.php" method="POST" enctype="multipart/form-data">
     <input type="text" name="judul" placeholder="Judul Hak Cipta" required />
+    <label>Jenis Hak Cipta:</label>
+    <select name="jenis_hak_cipta" id="jenis_hak_cipta" required>
+        <option value="">Pilih Jenis</option>
+        <option value="Ciptaan Seni">Ciptaan Seni</option>
+        <option value="Ciptaan Sastra">Ciptaan Sastra</option>
+        <option value="Ciptaan Ilmiah">Ciptaan Ilmiah</option>
+    </select>
+    <label>Sub Jenis Hak Cipta:</label>
+    <select name="sub_jenis_hak_cipta" id="sub_jenis_hak_cipta" required>
+        <option value="">Pilih Sub Jenis</option>
+    </select>
+    <label>Nama Pencipta:</label>
+    <div id="pencipta-container">
+        <input type="text" name="pencipta[]" placeholder="Nama Pencipta" required />
+    </div>
+    <button type="button" onclick="tambahPencipta()">Tambah Pencipta</button>
     <textarea name="deskripsi" placeholder="Deskripsi"></textarea>
     <input type="file" name="dokumen" required />
     <button type="submit">Kirim</button>
 </form>
+<script>
+    document.getElementById('jenis_hak_cipta').addEventListener('change', function() {
+        var jenis = this.value;
+        var subJenis = document.getElementById('sub_jenis_hak_cipta');
+        subJenis.innerHTML = '';
+
+        if (jenis === "Ciptaan Seni") {
+            subJenis.innerHTML = '<option value="Lukisan">Lukisan</option><option value="Patung">Patung</option>';
+        } else if (jenis === "Ciptaan Sastra") {
+            subJenis.innerHTML = '<option value="Novel">Novel</option><option value="Puisi">Puisi</option>';
+        } else if (jenis === "Ciptaan Ilmiah") {
+            subJenis.innerHTML = '<option value="Penelitian">Penelitian</option><option value="Artikel Ilmiah">Artikel Ilmiah</option>';
+        }
+    });
+
+    function tambahPencipta() {
+        let container = document.getElementById('pencipta-container');
+        let input = document.createElement("input");
+        input.type = "text";
+        input.name = "pencipta[]";
+        input.placeholder = "Nama Pencipta";
+        container.appendChild(input);
+    }
+</script>
+
 
 <h2>Status Pendaftaran</h2>
 <table border="1">
     <tr>
         <th>Judul</th>
+        <th>Jenis</th>
+        <th>Sub Jenis</th>
+        <th>Pencipta</th>
         <th>Status</th>
         <th>Aksi</th>
     </tr>
@@ -31,6 +75,15 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
     <?php while ($row = $result->fetch_assoc()) { ?>
         <tr>
             <td><?php echo $row['judul_hak_cipta']; ?></td>
+            <td><?php echo $row['jenis_hak_cipta']; ?></td>
+            <td><?php echo $row['sub_jenis_hak_cipta']; ?></td>
+            <td>
+                <ul>
+                    <?php foreach (json_decode($row['nama_pencipta'], true) as $pencipta) { ?>
+                        <li><?php echo htmlspecialchars($pencipta); ?></li>
+                    <?php } ?>
+                </ul>
+            </td>
             <td><?php echo $row['status']; ?></td>
             <td>
                 <?php if ($row['status'] == 'Pending') { ?>
