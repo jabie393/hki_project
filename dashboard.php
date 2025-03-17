@@ -14,25 +14,25 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
 
 <h2>Form Pendaftaran HKI</h2>
 <form action="submit_hki.php" method="POST" enctype="multipart/form-data">
-    <input type="text" name="judul" placeholder="Judul Hak Cipta" required />
-    <label>Jenis Hak Cipta:</label>
+    <input type="text" name="judul" placeholder="Judul Hak Cipta" required /><br><br>
+    <label>Jenis Hak Cipta:</label><br>
     <select name="jenis_hak_cipta" id="jenis_hak_cipta" required>
         <option value="">Pilih Jenis</option>
         <option value="Ciptaan Seni">Ciptaan Seni</option>
         <option value="Ciptaan Sastra">Ciptaan Sastra</option>
         <option value="Ciptaan Ilmiah">Ciptaan Ilmiah</option>
-    </select>
-    <label>Sub Jenis Hak Cipta:</label>
+    </select><br><br>
+    <label>Sub Jenis Hak Cipta:</label><br>
     <select name="sub_jenis_hak_cipta" id="sub_jenis_hak_cipta" required>
         <option value="">Pilih Sub Jenis</option>
-    </select>
+    </select><br><br>
     <label>Nama Pencipta:</label>
     <div id="pencipta-container">
         <input type="text" name="pencipta[]" placeholder="Nama Pencipta" required />
-    </div>
-    <button type="button" onclick="tambahPencipta()">Tambah Pencipta</button>
-    <textarea name="deskripsi" placeholder="Deskripsi"></textarea>
-    <input type="file" name="dokumen" required />
+    </div><br>
+    <button type="button" onclick="tambahPencipta()">Tambah Pencipta</button><br><br>
+    <textarea name="deskripsi" placeholder="Deskripsi"></textarea><br><br>
+    <input type="file" name="dokumen" required /><br><br>
     <button type="submit">Kirim</button>
 </form>
 <script>
@@ -97,4 +97,7 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
 </table>
 <div>
     <a href="logout.php">Logout</a>
+</div>
+<div>
+    <a href="profile.php">Lengkapi Profil</a>
 </div>
