@@ -9,18 +9,22 @@ if (!isset($_SESSION['user_id'])) {
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user_id = $_SESSION['user_id'];
-    $judul = $_POST['judul'];
+    $jenis_permohonan = isset($_POST['jenis_permohonan']) ? $_POST['jenis_permohonan'] : "";
     $jenis_hak_cipta = $_POST['jenis_hak_cipta'];
     $sub_jenis_hak_cipta = $_POST['sub_jenis_hak_cipta'];
+    $tanggal_pengumuman = isset($_POST['tanggal_pengumuman']) ? $_POST['tanggal_pengumuman'] : "0000-00-00";
+    $judul = $_POST['judul'];
     $deskripsi = $_POST['deskripsi'];
+    $negara_pengumuman = isset($_POST['negara_pengumuman']) ? $_POST['negara_pengumuman'] : "";
+    $kota_pengumuman = isset($_POST['kota_pengumuman']) ? $_POST['kota_pengumuman'] : "";
     $status = "Pending";
     
     // Ambil data pencipta dan ubah jadi format JSON
     $pencipta = json_encode($_POST['pencipta']);
 
     // Simpan ke tabel registrations
-    $sql = "INSERT INTO registrations (user_id, judul_hak_cipta, jenis_hak_cipta, sub_jenis_hak_cipta, nama_pencipta, deskripsi, status) 
-            VALUES ('$user_id', '$judul', '$jenis_hak_cipta', '$sub_jenis_hak_cipta', '$pencipta', '$deskripsi', '$status')";
+    $sql = "INSERT INTO registrations (user_id, jenis_permohonan, jenis_hak_cipta, sub_jenis_hak_cipta,  tanggal_pengumuman, judul_hak_cipta, deskripsi, negara_pengumuman, kota_pengumuman, nama_pencipta, status)
+            VALUES ('$user_id', '$jenis_permohonan', '$jenis_hak_cipta', '$sub_jenis_hak_cipta', '$tanggal_pengumuman', '$judul', '$deskripsi', '$negara_pengumuman', '$kota_pengumuman', '$pencipta', '$status')";
 
     if ($conn->query($sql) === TRUE) {
         $reg_id = $conn->insert_id;
