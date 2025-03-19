@@ -1,0 +1,115 @@
+/* Reset margin dan padding */
+body {
+    font-family: 'Poppins', sans-serif;
+    font-size: 25px;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    background: url('/assets/image/bg.png') no-repeat center center;
+    background-size: cover;
+    background-attachment: fixed;
+    height: 100vh;
+    color: rgb(255, 255, 255);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Header */
+.header {
+    background: #202F5B;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    position: fixed;
+    top: 0;
+}
+
+.header img {
+    height: 60px;
+    max-width: 100%;
+}
+
+/* Menu */
+.menu {
+    margin-top: 80px; /* Memberi ruang dari header */
+    width: 90%; /* Agar tombol tidak terlalu besar di layar kecil */
+    max-width: 400px; /* Batas maksimum tombol */
+}
+
+.menu button {
+    width: 100%;
+    height: 50px;
+    margin: 10px 0;
+    padding: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    background: #202F5B;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out, transform 0.2s ease;
+}
+
+.menu button:hover {
+    background: #1A244A;
+    transform: scale(1.05);
+}
+
+/* Footer */
+.footer {
+    background: #202F5B;
+    padding: 15px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap; /* Agar tetap rapi di layar kecil */
+}
+
+.footer a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 8px 12px;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+/* ✅ Media Query untuk layar kecil (HP) */
+@media screen and (max-width: 768px) {
+    .header img {
+        height: 45px; /* Mengecilkan logo */
+    }
+    
+    .menu {
+        width: 100%; /* Lebar penuh pada layar kecil */
+    }
+
+    .menu button {
+        font-size: 18px;
+        height: 45px;
+    }
+
+    .footer {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .footer a {
+        font-size: 14px;
+    }
+}
