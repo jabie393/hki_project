@@ -56,6 +56,16 @@ $profile = $conn->query("SELECT * FROM user_profile WHERE user_id = '$user_id'")
 
         <button type="submit">Simpan</button>
     </form>
+
+    <br>
+    <button onclick="kembali()">Kembali</button>
+
+<script>
+    function kembali() {
+        window.history.back();
+    }
+</script>
+
     <script>
     fetch('https://restcountries.com/v3.1/all')
         .then(response => response.json())

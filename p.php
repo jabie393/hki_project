@@ -1,16 +1,15 @@
 <?php
 include 'config/config.php';
 session_start();
-
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'admin') {
+if ($_SESSION['role'] != 'admin') {
     header("Location: login.html");
     exit();
 }
 
-// Ambil semua data pengajuan yang belum disetujui
+// Ambil semua pendaftaran yang sudah disetujui
 $result = $conn->query("SELECT registrations.*, users.name FROM registrations 
                         JOIN users ON registrations.user_id = users.id 
-                        WHERE registrations.status != 'Terdaftar'");
+                        WHERE registrations.status = 'Terdaftar'");
 ?>
 
 <!DOCTYPE html>
@@ -22,7 +21,7 @@ $result = $conn->query("SELECT registrations.*, users.name FROM registrations
     <link rel="stylesheet" href="css/pengajuan.css">
 </head>
 <body>
-    <h2>Daftar Pengajuan HKI</h2>
+    <h2>Rekapitulasi Hak Cipta Terdaftar</h2>
     <table>
         <tr>
             <th>Nama Pemohon</th>
@@ -52,7 +51,7 @@ $result = $conn->query("SELECT registrations.*, users.name FROM registrations
                 </td>
                 <td><?php echo htmlspecialchars($row['status']); ?></td>
                 <td>
-                    <a href="approve.php?id=<?php echo $row['id']; ?>" class="btn btn-safe" onclick="return confirm('Yakin ingin menyetujui pengajuan ini?')">Setujui</a>
+                    <a href="delete_hki.php?id=<?php echo $row['id']; ?>" class="btn btn-danger" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
                 </td>
             </tr>
         <?php } ?>
@@ -93,3 +92,10 @@ $result = $conn->query("SELECT registrations.*, users.name FROM registrations
 
 </body>
 </html>
+
+<div>
+    <a href="logout.php">Logout</a>
+</div>
+<div>
+    <a href="admin.php">Daftar pengajuan HKI</a>
+</div>

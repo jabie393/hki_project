@@ -9,25 +9,41 @@ if (!isset($_SESSION['user_id'])) {
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user_id = $_SESSION['user_id'];
-    $jenis_permohonan = isset($_POST['jenis_permohonan']) ? $_POST['jenis_permohonan'] : "";
+    $jenis_permohonan = $_POST['jenis_permohonan'] ?? "";
     $jenis_hak_cipta = $_POST['jenis_hak_cipta'];
     $sub_jenis_hak_cipta = $_POST['sub_jenis_hak_cipta'];
-    $tanggal_pengumuman = isset($_POST['tanggal_pengumuman']) ? $_POST['tanggal_pengumuman'] : "0000-00-00";
+    $tanggal_pengumuman = $_POST['tanggal_pengumuman'] ?? NULL;
     $judul = $_POST['judul'];
     $deskripsi = $_POST['deskripsi'];
-    $negara_pengumuman = isset($_POST['negara_pengumuman']) ? $_POST['negara_pengumuman'] : "";
-    $kota_pengumuman = isset($_POST['kota_pengumuman']) ? $_POST['kota_pengumuman'] : "";
+    $negara_pengumuman = $_POST['negara_pengumuman'] ?? "";
+    $kota_pengumuman = $_POST['kota_pengumuman'] ?? "";
     $status = "Pending";
     
-    // Ambil data pencipta dan ubah jadi format JSON
-    $pencipta = json_encode($_POST['pencipta']);
-
     // Simpan ke tabel registrations
-    $sql = "INSERT INTO registrations (user_id, jenis_permohonan, jenis_hak_cipta, sub_jenis_hak_cipta,  tanggal_pengumuman, judul_hak_cipta, deskripsi, negara_pengumuman, kota_pengumuman, nama_pencipta, status)
-            VALUES ('$user_id', '$jenis_permohonan', '$jenis_hak_cipta', '$sub_jenis_hak_cipta', '$tanggal_pengumuman', '$judul', '$deskripsi', '$negara_pengumuman', '$kota_pengumuman', '$pencipta', '$status')";
+    $sql = "INSERT INTO registrations (user_id, jenis_permohonan, jenis_hak_cipta, sub_jenis_hak_cipta, tanggal_pengumuman, judul_hak_cipta, deskripsi, negara_pengumuman, kota_pengumuman, status)
+            VALUES ('$user_id', '$jenis_permohonan', '$jenis_hak_cipta', '$sub_jenis_hak_cipta', '$tanggal_pengumuman', '$judul', '$deskripsi', '$negara_pengumuman', '$kota_pengumuman', '$status')";
 
     if ($conn->query($sql) === TRUE) {
         $reg_id = $conn->insert_id;
+
+        // Simpan data pencipta
+        foreach ($_POST['nama'] as $index => $nama) {
+            $nik = $_POST['nik'][$index];
+            $no_telepon = $_POST['no_telepon'][$index];
+            $jenis_kelamin = $_POST['jenis_kelamin'][$index];
+            $alamat = $_POST['alamat'][$index];
+            $negara = $_POST['negara'][$index];
+            $provinsi = $_POST['provinsi'][$index];
+            $kota = $_POST['kota'][$index];
+            $kecamatan = $_POST['kecamatan'][$index];
+            $kelurahan = $_POST['kelurahan'][$index];
+            $kode_pos = $_POST['kode_pos'][$index];
+
+            $sql_pencipta = "INSERT INTO creators (registration_id, nik, nama, no_telepon, jenis_kelamin, alamat, negara, provinsi, kota, kecamatan, kelurahan, kode_pos) 
+                            VALUES ('$reg_id', '$nik', '$nama', '$no_telepon', '$jenis_kelamin', '$alamat', '$negara', '$provinsi', '$kota', '$kecamatan', '$kelurahan', '$kode_pos')";
+
+            $conn->query($sql_pencipta);
+        }
 
         // Simpan file
         $target_dir = "uploads/";

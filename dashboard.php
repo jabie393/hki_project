@@ -12,6 +12,14 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
 
 ?>
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
 <h2>Form Pendaftaran HKI</h2>
 <form action="submit_hki.php" method="POST" enctype="multipart/form-data">
     <!--Jenis Permohonan-->
@@ -53,14 +61,57 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
     <!--Kota Pertama Kali Diumumkan-->
     <label>Kota Pertama Kali Diumumkan:</label><br>
     <input type="text" name="kota_pengumuman" placeholder="Nama Kota/Kabupaten" required><br><br>
-    <label>Nama Pencipta:</label>
-    <div id="pencipta-container">
-        <input type="text" name="pencipta[]" placeholder="Nama Pencipta" required />
-    </div><br>
-    <button type="button" onclick="tambahPencipta()">Tambah Pencipta</button><br><br>
+    <label>Pencipta:</label>
+    <div id="pencipta-list">
+    <div class="pencipta">
+        <h4 class="pencipta-label">Pencipta 1</h4><br>
+
+        <label>NIK:</label><br>
+        <input type="text" name="nik[]" required><br><br>
+
+        <label>Nama:</label><br>
+        <input type="text" name="nama[]" required><br><br>
+
+        <label>No. Telepon:</label><br>
+        <input type="text" name="no_telepon[]" required><br><br>
+
+        <label>Jenis Kelamin:</label><br>
+        <select name="jenis_kelamin[]" required>
+            <option value="Laki-laki">Laki-laki</option>
+            <option value="Perempuan">Perempuan</option>
+        </select><br><br>
+
+        <label>Alamat:</label><br>
+        <textarea name="alamat[]" required></textarea><br><br>
+
+        <label>Negara:</label><br>
+        <select name="negara[]" class="negara-select" required>
+            <option value="">-- Pilih Negara --</option>
+        </select><br><br>
+
+        <label>Provinsi:</label><br>
+        <input type="text" name="provinsi[]"><br><br>
+
+        <label>Kota/Kabupaten:</label><br>
+        <input type="text" name="kota[]"><br><br>
+
+        <label>Kecamatan:</label><br>
+        <input type="text" name="kecamatan[]"><br><br>
+
+        <label>Kelurahan:</label><br>
+        <input type="text" name="kelurahan[]"><br><br>
+
+        <label>Kode Pos:</label><br>
+        <input type="text" name="kode_pos[]"><br><br>
+    </div>
+</div>
+
+<br><button type="button" id="addPencipta">Tambah Pencipta</button><br><br><br>
+
+
 
     <input type="file" name="dokumen" required /><br><br>
-    <button type="submit">Kirim</button>
+    <button type="submit">Kirim</button><br><br>
 </form>
 <script>
     document.getElementById('jenis_hak_cipta').addEventListener('change', function() {
@@ -77,77 +128,103 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
         }
     });
 
-    function tambahPencipta() {
-        let container = document.getElementById('pencipta-container');
-        let input = document.createElement("input");
-        input.type = "text";
-        input.name = "pencipta[]";
-        input.placeholder = "Nama Pencipta";
-        container.appendChild(input);
+// Tambahkan pencipta baru
+document.getElementById("addPencipta").addEventListener("click", function() {
+    let original = document.querySelector(".pencipta");
+    let clone = original.cloneNode(true);
+
+    // Reset input pada clone
+    clone.querySelectorAll("input, select, textarea").forEach(input => input.value = "");
+
+    // Perbarui label pencipta
+    let penciptaList = document.getElementById("pencipta-list");
+    let penciptaCount = penciptaList.children.length + 1;
+    let label = clone.querySelector(".pencipta-label");
+    
+    if (!label) {
+        label = document.createElement("h4");
+        label.classList.add("pencipta-label");
+        clone.insertBefore(label, clone.firstChild);
     }
+    label.textContent = "Pencipta " + penciptaCount;
+
+    // Tambahkan tombol hapus jika belum ada
+    let deleteButton = clone.querySelector(".hapusPencipta");
+    if (!deleteButton) {
+        deleteButton = document.createElement("button");
+        deleteButton.type = "button";
+        deleteButton.classList.add("hapusPencipta");
+        deleteButton.textContent = "Hapus";
+        deleteButton.onclick = function() {
+            clone.remove();
+            updatePenciptaLabels();
+        };
+        clone.appendChild(deleteButton);
+    }
+
+    penciptaList.appendChild(clone);
+    updatePenciptaLabels();
+});
+
+// Fungsi untuk memperbarui label pencipta dan tombol hapus
+function updatePenciptaLabels() {
+    let penciptaDivs = document.querySelectorAll(".pencipta");
+    penciptaDivs.forEach((div, index) => {
+        let label = div.querySelector(".pencipta-label");
+        if (!label) {
+            label = document.createElement("h4");
+            label.classList.add("pencipta-label");
+            div.insertBefore(label, div.firstChild);
+        }
+        label.textContent = "Pencipta " + (index + 1);
+    });
+
+    let deleteButtons = document.querySelectorAll(".hapusPencipta");
+    if (penciptaDivs.length > 1) {
+        deleteButtons.forEach(btn => btn.style.display = "inline-block");
+    } else {
+        deleteButtons.forEach(btn => btn.style.display = "none");
+    }
+}
+
+// Hapus pencipta yang ada
+document.addEventListener("click", function(event) {
+    if (event.target.classList.contains("hapusPencipta")) {
+        let penciptaDiv = event.target.closest(".pencipta");
+        penciptaDiv.remove();
+        updatePenciptaLabels();
+    }
+});
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch("https://restcountries.com/v3.1/all")
+                .then(response => response.json())
+                .then(data => {
+                    data.sort((a, b) => a.name.common.localeCompare(b.name.common)); // Urutkan abjad
+                    
+                    let selects = document.querySelectorAll("#nationality, .negara-select");
+                    selects.forEach(select => {
+                        data.forEach(country => {
+                            let option = document.createElement("option");
+                            option.value = country.name.common;
+                            option.textContent = country.name.common;
+                            select.appendChild(option);
+                        });
+                    });
+                })
+                .catch(error => console.error("Gagal memuat data negara:", error));
+    });
 </script>
-<script>
-    fetch('https://restcountries.com/v3.1/all')
-        .then(response => response.json())
-        .then(data => {
-            let select = document.querySelector("select[name='negara_pengumuman']");
-            data.sort((a, b) => a.name.common.localeCompare(b.name.common)); // Urutkan abjad
-            data.forEach(country => {
-                let option = document.createElement("option");
-                option.value = country.name.common;
-                option.textContent = country.name.common;
-                select.appendChild(option);
-            });
-        })
-        .catch(error => console.error("Gagal memuat data negara:", error));
-</script>
-
-
-<h2>Status Pendaftaran</h2>
-<table border="1">
-    <tr>
-        <th>Jenis Permohonan</th>
-        <th>Jenis Ciptaan</th>
-        <th>Sub Jenis Ciptaan</th>
-        <th>Tanggal Pengumuman</th>
-        <th>Judul</th>
-        <th>Negara Pengumuman</th>
-        <th>Kota Pengumuman</th>
-        <th>Pencipta</th>
-        <th>Status</th>
-        <th>Aksi</th>
-    </tr>
-
-    <?php while ($row = $result->fetch_assoc()) { ?>
-        <tr>
-            <td><?php echo $row['jenis_permohonan']; ?></td>
-            <td><?php echo $row['jenis_hak_cipta']; ?></td>
-            <td><?php echo $row['sub_jenis_hak_cipta']; ?></td>
-            <td><?php echo $row['tanggal_pengumuman']; ?></td>
-            <td><?php echo $row['judul_hak_cipta']; ?></td>
-            <td><?php echo $row['negara_pengumuman']; ?></td>
-            <td><?php echo $row['kota_pengumuman']; ?></td>
-            <td>
-                <ul>
-                    <?php foreach (json_decode($row['nama_pencipta'], true) as $pencipta) { ?>
-                        <li><?php echo htmlspecialchars($pencipta); ?></li>
-                    <?php } ?>
-                </ul>
-            </td>
-            <td><?php echo $row['status']; ?></td>
-            <td>
-                <?php if ($row['status'] == 'Pending') { ?>
-                    <a href="cancel_hki.php?id=<?php echo $row['id']; ?>" onclick="return confirm('Yakin ingin membatalkan?')">Batalkan</a>
-                <?php } else { ?>
-                    Tidak bisa dibatalkan
-                <?php } ?>
-            </td>
-        </tr>
-    <?php } ?>
-</table>
 <div>
-    <a href="logout.php">Logout</a>
+    <a href="status_pengajuan.php">Lihat Status Pengajuan</a>
 </div>
 <div>
     <a href="profile.php">Lengkapi Profil</a>
 </div>
+<div>
+    <a href="logout.php">Logout</a>
+</div>
+
+</body>
+</html>
