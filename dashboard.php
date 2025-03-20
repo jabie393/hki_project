@@ -33,15 +33,20 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
     <!--Jenis Hak Cipta-->
     <label>Jenis Hak Cipta:</label><br>
     <select name="jenis_hak_cipta" id="jenis_hak_cipta" required>
-        <option value="">Pilih Jenis</option>
-        <option value="Ciptaan Seni">Ciptaan Seni</option>
-        <option value="Ciptaan Sastra">Ciptaan Sastra</option>
-        <option value="Ciptaan Ilmiah">Ciptaan Ilmiah</option>
+        <option value="">-- Pilih Jenis --</option>
+        <option value="Karya Tulis">Karya Tulis</option>
+        <option value="Karya Seni">Karya Seni</option>
+        <option value="Komposisi Musik">Komposisi Musik</option>
+        <option value="Karya Audio Visual">Karya Audio Visual</option>
+        <option value="Karya Fotografi">Karya Fotografi</option>
+        <option value="Karya Drama & Koreografi">Karya Drama & Koreografi</option>
+        <option value="Karya Rekaman">Karya Rekaman</option>
+        <option value="Karya Lainnya">Karya Lainnya</option>
     </select><br><br>
     <!--Sub Jenis Hak Cipta-->
     <label>Sub Jenis Hak Cipta:</label><br>
     <select name="sub_jenis_hak_cipta" id="sub_jenis_hak_cipta" required>
-        <option value="">Pilih Sub Jenis</option>
+        <option value="">-- Pilih Sub Jenis --</option>
     </select><br><br>
     <!--Tanggal Pertama Kali Diumumkan-->
     <label>Tanggal Pertama Kali Diumumkan:</label><br>
@@ -59,7 +64,7 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
     <option value="">-- Pilih Negara --</option>
     </select><br><br>
     <!--Kota Pertama Kali Diumumkan-->
-    <label>Kota Pertama Kali Diumumkan:</label><br>
+    <label>Kota/Kabupaten Pertama Kali Diumumkan:</label><br>
     <input type="text" name="kota_pengumuman" placeholder="Nama Kota/Kabupaten" required><br><br>
     <label>Pencipta:</label>
     <div id="pencipta-list">
@@ -114,19 +119,62 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
     <button type="submit">Kirim</button><br><br>
 </form>
 <script>
-    document.getElementById('jenis_hak_cipta').addEventListener('change', function() {
-        var jenis = this.value;
-        var subJenis = document.getElementById('sub_jenis_hak_cipta');
-        subJenis.innerHTML = '';
+document.getElementById('jenis_hak_cipta').addEventListener('change', function () {
+    var jenis = this.value;
+    var subJenis = document.getElementById('sub_jenis_hak_cipta');
+    subJenis.innerHTML = '';
 
-        if (jenis === "Ciptaan Seni") {
-            subJenis.innerHTML = '<option value="Lukisan">Lukisan</option><option value="Patung">Patung</option>';
-        } else if (jenis === "Ciptaan Sastra") {
-            subJenis.innerHTML = '<option value="Novel">Novel</option><option value="Puisi">Puisi</option>';
-        } else if (jenis === "Ciptaan Ilmiah") {
-            subJenis.innerHTML = '<option value="Penelitian">Penelitian</option><option value="Artikel Ilmiah">Artikel Ilmiah</option>';
-        }
-    });
+    var options = {
+        "Karya Tulis": [
+            "Karya Tulis Lainnya", "Naskah Drama / Pertunjukan", "Naskah Karya Siaran", 
+            "Buku", "Karya Tulis", "Terjemahan", "Tafsir", "Saduran", "Bunga Rampai",
+            "Perwajahan Karya Tulis", "Naskah Film", "Karya Tulis (Artikel)", 
+            "Karya Tulis (Skripsi)", "Karya Tulis (Disertasi)", "Karya Tulis (Tesis)",
+            "Naskah Karya Sinematografi", "Modul", "Novel", "e-Book", "Cerita Bergambar", 
+            "Komik", "Buku Panduan / Petunjuk", "Atlas", "Buku Saku", "Buku Pelajaran", 
+            "Diktat", "Buku Mewarnai", "Dongeng", "Majalah", "Kamus", "Ensiklopedia", 
+            "Biografi", "Booklet", "Jurnal", "Makalah", "Proposal Penelitian", 
+            "Resensi", "Resume / Ringkasan", "Sinopsis", "Karya Ilmiah", "Laporan Penelitian", "Puisi"
+        ],
+        "Karya Seni": [
+            "Seni Gambar", "Alat Peraga", "Pamflet", "Seni Rupa", "Seni Lukis",
+            "Seni Patung", "Seni Pahat", "Kaligrafi", "Seni Motif", "Arsitektur",
+            "Peta", "Brosur", "Seni Terapan", "Karya Seni Rupa", "Ukiran", "Kolase",
+            "Seni Ilustrasi", "Sketsa", "Diorama", "Karya Seni Batik", "Seni Songket",
+            "Motif Tenun Ikat", "Motif Tapis", "Motif Ulos", "Motif Sasirangan",
+            "Seni Motif Lainnya", "Flyer", "Leaflet", "Poster", "Banner", "Spanduk",
+            "Baliho", "Seni Umum"
+        ],
+        "Komposisi Musik": [
+            "Musik Karawitan", "Lagu (Musik Dengan Teks)", "Musik Tanpa Teks", "Aransemen", "Musik",
+            "Musik Klasik", "Musik Jazz", "Musik Gospel", "Musik Blues", "Musik Rhythm and Blues",
+            "Musik Funk", "Musik Rock", "Musik Metal", "Musik Elektronik", "Musik Ska, Reggae, Dub",
+            "Musik Hip Hop, Rap, Rapcore", "Musik Pop", "Musik Latin", "Musik Country", "Musk Dangdut"
+        ],
+        "Karya Audio Visual": [
+            "Film", "Karya Rekaman Video", "Kuliah", "Karya Siaran Media Televisi dan Film", "Karya Siaran Media Radio", "Karya Siaran Video",
+            "Karya Sinematografi", "Film Dokumenter", "Film Iklan", "Film Kartun", "Reportase", "Film Cerita", "Karya Siaran"
+        ],
+        "Karya Fotografi": [
+            "Karya Fotografi", "Potret"
+        ],
+        "Karya Drama & Koreografi": [
+            "Drama / Pertunjukan", "Pewayangan", "Pantomim", "Koreografi", "Seni Pertunjukan", "Tari (Sendra Tari)", "Drama Musikal",
+            "Ludruk", "Lenong", "Ketoprak", "Komedi / Lawak", "Seni Akrobat", "Opera", "Pentas Musik", "Sulap", "Sirkus"
+        ],
+        "Karya Rekaman": [
+            "Ceramah", "Pidato", "Karya Rekaman Suara atau Bunyi", "Khutbah"
+        ],
+        "Karya Lainnya": [
+            "Basis Data", "Kompilasi Ciptaan / Data", "Permainan Video", "Program Komputer"
+        ]
+    };
+
+    if (options[jenis]) {
+        subJenis.innerHTML = '<option value="">-- Pilih Sub Jenis --</option>' + 
+            options[jenis].map(option => `<option value="${option}">${option}</option>`).join('');
+    }
+});
 
 // Tambahkan pencipta baru
 document.getElementById("addPencipta").addEventListener("click", function() {

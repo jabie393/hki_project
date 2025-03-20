@@ -59,7 +59,7 @@ $result = $conn->query("SELECT registrations.*, users.name FROM registrations
 
     <br>
     <div>
-        <a href="rekap_hki.php">Lihat Rekap HKI</a> |
+        <a href="admin.php">Daftar pengajuan HKI</a> |
         <a href="logout.php">Logout</a>
     </div>
 
@@ -92,10 +92,3 @@ $result = $conn->query("SELECT registrations.*, users.name FROM registrations
 
 </body>
 </html>
-
-<div>
-    <a href="logout.php">Logout</a>
-</div>
-<div>
-    <a href="admin.php">Daftar pengajuan HKI</a>
-</div>
