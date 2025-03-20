@@ -265,10 +265,10 @@ document.addEventListener("click", function(event) {
     });
 </script>
 <div>
-    <a href="status_pengajuan.php">Lihat Status Pengajuan</a>
+    <a href="profile.php">Profil</a>
 </div>
 <div>
-    <a href="profile.php">Lengkapi Profil</a>
+    <a href="status_pengajuan.php">Lihat Status Pengajuan</a>
 </div>
 <div>
     <a href="logout.php">Logout</a>
