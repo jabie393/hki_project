@@ -1,5 +1,5 @@
 <?php
-include 'config/config.php';
+include '../config/config.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST['name'];
@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $user_id = $stmt->insert_id;
 
         // Buat direktori user berdasarkan user_id
-        $user_folder = "uploads/users/" . $user_id;
+        $user_folder = "../uploads/users/" . $user_id;
         if (!file_exists($user_folder)) {
             mkdir($user_folder, 0777, true);
             mkdir($user_folder . "/profile", 0777, true); // Untuk foto profil

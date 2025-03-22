@@ -75,14 +75,14 @@ $result = $conn->query("SELECT registrations.*, users.name FROM registrations
                 <?php } ?>
             </td>
             <td>
-                <form action="edit_certificate.php" method="POST" enctype="multipart/form-data">
+                <form action="services/edit_certificate.php" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="id" value="<?= $row['id'] ?>">
                     <input type="file" name="new_certificate" required>
                     <button type="submit" class="btn btn-warning">Edit</button>
                 </form>
             </td>
             <td>
-                <a href="delete_hki.php?id=<?php echo $row['id']; ?>" class="btn btn-danger" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
+                <a href="services/delete_hki.php?id=<?php echo $row['id']; ?>" class="btn btn-danger" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
             </td>
         </tr>
         <?php } ?>
@@ -92,7 +92,7 @@ $result = $conn->query("SELECT registrations.*, users.name FROM registrations
     <div>
         <a href="profile.php">Profil</a> |
         <a href="admin.php">Daftar pengajuan HKI</a> |
-        <a href="logout.php">Logout</a>
+        <a href="services/logout.php">Logout</a>
     </div>
 
     <!-- Modal untuk Profil User -->

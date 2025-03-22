@@ -1,9 +1,9 @@
 <?php
-include 'config/config.php';
+include '../config/config.php';
 session_start();
 
 if ($_SESSION['role'] != 'admin') {
-    header("Location: login.html");
+    header("Location: ../login.html");
     exit();
 }
 
@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
 
     // Jika ada file yang diunggah, proses penyimpanan sertifikat
     if (!empty($_FILES["certificate"]["name"])) {
-        $upload_dir = "uploads/users/$user_id/files/$id/certificates/";
+        $upload_dir = "../uploads/users/$user_id/files/$id/certificates/";
         if (!file_exists($upload_dir)) {
             mkdir($upload_dir, 0777, true);
         }
@@ -47,5 +47,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
     echo "Pengajuan telah disetujui.";
 }
 
-header("Location: admin.php");
+header("Location: ../admin.php");
 ?>

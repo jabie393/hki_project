@@ -1,9 +1,9 @@
 <?php
-include 'config/config.php';
+include '../config/config.php';
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
-    header("Location: login.html");
+    header("Location: ../login.html");
     exit();
 }
 
@@ -29,7 +29,7 @@ if (isset($_GET['id'])) {
         $conn->query("DELETE FROM documents WHERE registration_id = '$id'");
 
         // Hapus folder pendaftaran jika kosong
-        $folder_path = "uploads/users/$user_id/files/$id/";
+        $folder_path = "../uploads/users/$user_id/files/$id/";
         if (is_dir($folder_path)) {
             // Hapus semua file dalam folder (jika ada)
             $files = array_diff(scandir($folder_path), array('.', '..'));
@@ -49,6 +49,6 @@ if (isset($_GET['id'])) {
     }
 }
 
-header("Location: status_pengajuan.php");
+header("Location: ../status_pengajuan.php");
 exit();
 ?>

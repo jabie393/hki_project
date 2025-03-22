@@ -1,5 +1,5 @@
 <?php
-include 'config/config.php';
+include '../config/config.php';
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($user && password_verify($password, $user['password'])) {
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['role'] = $user['role'];
-        header("Location: " . ($user['role'] == 'admin' ? 'admin.php' : 'dashboard.php'));
+        header("Location: " . ($user['role'] == 'admin' ? '../admin.php' : '../dashboard.php'));
     } else {
         echo "Login gagal. Cek email atau password.";
     }

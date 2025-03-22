@@ -1,9 +1,9 @@
 <?php
 session_start();
-include 'config/config.php';
+include '../config/config.php';
 
 if (!isset($_SESSION['user_id'])) {
-    header("Location: login.html");
+    header("Location: ../login.html");
     exit();
 }
 
@@ -26,7 +26,7 @@ $nationality = !empty($_POST['nationality']) ? $_POST['nationality'] : $existing
 $type_of_applicant = !empty($_POST['type_of_applicant']) ? $_POST['type_of_applicant'] : $existing_data['type_of_applicant'];
 
 // Direktori upload
-$upload_dir = "uploads/users/$user_id/";
+$upload_dir = "../uploads/users/$user_id/";
 if (!file_exists($upload_dir)) {
     mkdir($upload_dir, 0777, true);
 }
@@ -59,11 +59,10 @@ if ($existing_data) {
 // Eksekusi query
 if ($query->execute()) {
     echo "Profil berhasil diperbarui!";
-    header("Location: edit_profile.php");
+    header("Location: ../edit_profile.php");
 } else {
     echo "Gagal memperbarui profil.";
 }
 
 $query->close();
 $conn->close();
-?>

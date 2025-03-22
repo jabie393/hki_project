@@ -68,11 +68,11 @@ $result = $conn->query("SELECT registrations.*, users.name FROM registrations
                 <td><?php echo htmlspecialchars($row['status']); ?></td>
                 <td>
                     <?php if ($row['status'] == 'Pending') { ?>
-                        <form action="approve.php" method="POST" enctype="multipart/form-data">
+                        <form action="services/approve.php" method="POST" enctype="multipart/form-data">
                             <input type="hidden" name="id" value="<?= $row['id'] ?>">
                             <input type="file" name="certificate">
                             <button type="submit" class="btn btn-safe" onclick="return confirm('Yakin ingin menyetujui pengajuan ini?')">Upload & Setujui</button>
-                            <a href="delete_hki.php?id=<?php echo $row['id']; ?>" class="btn btn-danger" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
+                            <a href="services/delete_hki.php?id=<?php echo $row['id']; ?>" class="btn btn-danger" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
                         </form>
                     <?php } elseif (!empty($row['certificate_path'])) { ?>
                         <a href="<?= $row['certificate_path'] ?>" class="btn btn-primary" download>Unduh</a>
@@ -88,7 +88,7 @@ $result = $conn->query("SELECT registrations.*, users.name FROM registrations
     <div>
         <a href="profile.php">Profil</a> |
         <a href="rekap_hki.php">Lihat Rekap HKI</a> |
-        <a href="logout.php">Logout</a>
+        <a href="services/logout.php">Logout</a>
     </div>
 
     <!-- Modal untuk Profil User -->

@@ -63,7 +63,7 @@ $result = $stmt->get_result();
             </td>
             <td>
                 <?php if ($row['status'] == 'Pending') { ?>
-                    <a href="cancel_hki.php?id=<?php echo $row['id']; ?>" class="btn btn-danger" onclick="return confirm('Yakin ingin membatalkan?')">Batalkan</a>
+                    <a href="services/cancel_hki.php?id=<?php echo $row['id']; ?>" class="btn btn-danger" onclick="return confirm('Yakin ingin membatalkan?')">Batalkan</a>
                 <?php } else { ?>
                     <span style="color: gray;">Tidak bisa dibatalkan</span>
                 <?php } ?>

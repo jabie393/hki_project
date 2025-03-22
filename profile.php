@@ -12,7 +12,7 @@ $profile = $conn->query("SELECT * FROM user_profile WHERE user_id = '$user_id'")
 $user_role = $_SESSION['role'] ?? 'user'; // Ambil role dari sesi, default 'user'
 
 // Jika data kosong, tampilkan pesan default
-$nama_lengkap = $profile['nama_lengkap'] ?? 'Belum diisi';
+$nama_lengkap = $profile['nama_lengkap'] ?? 'Nama?🤔';
 $no_ktp = $profile['no_ktp'] ?? 'Belum diisi';
 $telephone = $profile['telephone'] ?? 'Belum diisi';
 $birth_date = $profile['birth_date'] ?? 'Belum diisi';

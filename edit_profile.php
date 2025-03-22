@@ -28,7 +28,7 @@ $isAdmin = ($user_role === 'admin'); // Periksa apakah user adalah admin
 </head>
 <body>
     <h2>Form Profile</h2>
-    <form id="profileForm" action="submit_profile.php" method="POST" enctype="multipart/form-data">
+    <form id="profileForm" action="services/submit_profile.php" method="POST" enctype="multipart/form-data">
         <input type="text" name="nama_lengkap" placeholder="Nama Lengkap" value="<?= $profile['nama_lengkap'] ?? '' ?>"> <br>
         <input type="text" name="no_ktp" placeholder="No KTP" value="<?= $profile['no_ktp'] ?? '' ?>"> <br>
         <input type="text" name="telephone" placeholder="No Telepon" value="<?= $profile['telephone'] ?? '' ?>"> <br>
@@ -91,9 +91,9 @@ $isAdmin = ($user_role === 'admin'); // Periksa apakah user adalah admin
         }
         ?>
     </select>
-<?php else : ?>
-    <input type="hidden" name="type_of_applicant" value="Admin">
-<?php endif; ?>
+    <?php else : ?>
+        <input type="hidden" name="type_of_applicant" value="Admin">
+    <?php endif; ?>
 
 
         <button type="submit">Simpan</button>

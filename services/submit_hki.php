@@ -1,9 +1,9 @@
 <?php
-include 'config/config.php';
+include '../config/config.php';
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
-    header("Location: login.html");
+    header("Location: ../login.html");
     exit();
 }
 
@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         // **Buat folder berdasarkan user_id dan registration_id**
-        $user_dir = "uploads/users/$user_id/files/";
+        $user_dir = "../uploads/users/$user_id/files/";
         $reg_dir = $user_dir . $reg_id . "/";
 
         if (!is_dir($reg_dir)) {

@@ -23,6 +23,7 @@ th {
     cursor: pointer;
 }
 .btn-safe { background-color: green;}
+.btn-warning { background-color: rgb(201, 201, 0);}
 .btn-danger { background-color: red; }
 .btn-info { background-color: blue; }
 .btn-download { background-color: rgb(150, 199, 15);}

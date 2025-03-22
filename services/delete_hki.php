@@ -1,10 +1,10 @@
 <?php
-include 'config/config.php';
+include '../config/config.php';
 session_start();
 
 // Cek apakah pengguna adalah admin
 if (!isset($_SESSION['role']) || $_SESSION['role'] != 'admin') {
-    header("Location: login.html");
+    header("Location: ../login.html");
     exit();
 }
 
@@ -50,7 +50,7 @@ if (isset($_GET['id'])) {
         $conn->query("DELETE FROM documents WHERE registration_id = '$id'");
 
         // Hapus folder pendaftaran secara rekursif
-        $folder_path = "uploads/users/$user_id/files/$id/";
+        $folder_path = "../uploads/users/$user_id/files/$id/";
         deleteFolder($folder_path);
 
         // Hapus pendaftaran dari database
@@ -62,7 +62,7 @@ if (isset($_GET['id'])) {
     }
 }
 
-$redirect_page = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'admin.php';
+$redirect_page = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '../admin.php';
 header("Location: $redirect_page");
 exit();
 ?>

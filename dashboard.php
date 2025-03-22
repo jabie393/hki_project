@@ -21,7 +21,7 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
 </head>
 <body>
 <h2>Form Pendaftaran HKI</h2>
-<form action="submit_hki.php" method="POST" enctype="multipart/form-data">
+<form action="services/submit_hki.php" method="POST" enctype="multipart/form-data">
     <!--Jenis Permohonan-->
 <label>Jenis Permohonan:</label><br>
 <select name="jenis_permohonan" required>
@@ -66,6 +66,7 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
     <!--Kota Pertama Kali Diumumkan-->
     <label>Kota/Kabupaten Pertama Kali Diumumkan:</label><br>
     <input type="text" name="kota_pengumuman" placeholder="Nama Kota/Kabupaten" required><br><br>
+    <input type="file" name="dokumen" required /><br><br>
     <label>Pencipta:</label>
     <div id="pencipta-list">
     <div class="pencipta">
@@ -113,9 +114,6 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
 
 <br><button type="button" id="addPencipta">Tambah Pencipta</button><br><br><br>
 
-
-
-    <input type="file" name="dokumen" required /><br><br>
     <button type="submit">Kirim</button><br><br>
 </form>
 <script>
@@ -271,7 +269,7 @@ document.addEventListener("click", function(event) {
     <a href="status_pengajuan.php">Lihat Status Pengajuan</a>
 </div>
 <div>
-    <a href="logout.php">Logout</a>
+    <a href="services/logout.php">Logout</a>
 </div>
 
 </body>
