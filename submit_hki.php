@@ -45,10 +45,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $conn->query($sql_pencipta);
         }
 
-        // Simpan file
-        $target_dir = "uploads/";
+        // **Buat folder berdasarkan user_id dan registration_id**
+        $user_dir = "uploads/users/$user_id/files/";
+        $reg_dir = $user_dir . $reg_id . "/";
+
+        if (!is_dir($reg_dir)) {
+            mkdir($reg_dir, 0777, true);
+        }
+
+        // Simpan file di folder pendaftaran
         $file_name = basename($_FILES["dokumen"]["name"]);
-        $target_file = $target_dir . $file_name;
+        $target_file = $reg_dir . $file_name;
 
         if (move_uploaded_file($_FILES["dokumen"]["tmp_name"], $target_file)) {
             // Simpan ke tabel documents

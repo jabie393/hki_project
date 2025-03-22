@@ -13,13 +13,32 @@ if (isset($_GET['id'])) {
     // Cek apakah pendaftaran milik user yang login
     $user_id = $_SESSION['user_id'];
     $check = $conn->query("SELECT * FROM registrations WHERE id = '$id' AND user_id = '$user_id' AND status = 'Pending'");
+
     if ($check->num_rows > 0) {
-        // Hapus dokumen terkait
-        $doc = $conn->query("SELECT file_path FROM documents WHERE registration_id = '$id'")->fetch_assoc();
-        if ($doc && file_exists($doc['file_path'])) {
-            unlink($doc['file_path']); // Hapus file dari server
+        // Ambil daftar file yang terkait
+        $doc_query = $conn->query("SELECT file_path FROM documents WHERE registration_id = '$id'");
+
+        // Hapus semua file terkait
+        while ($doc = $doc_query->fetch_assoc()) {
+            if ($doc['file_path'] && file_exists($doc['file_path'])) {
+                unlink($doc['file_path']); // Hapus file dari server
+            }
         }
+
+        // Hapus data dokumen dari database
         $conn->query("DELETE FROM documents WHERE registration_id = '$id'");
+
+        // Hapus folder pendaftaran jika kosong
+        $folder_path = "uploads/users/$user_id/files/$id/";
+        if (is_dir($folder_path)) {
+            // Hapus semua file dalam folder (jika ada)
+            $files = array_diff(scandir($folder_path), array('.', '..'));
+            foreach ($files as $file) {
+                unlink($folder_path . $file);
+            }
+            // Hapus folder setelah kosong
+            rmdir($folder_path);
+        }
 
         // Hapus pendaftaran
         $conn->query("DELETE FROM registrations WHERE id = '$id'");
@@ -30,5 +49,6 @@ if (isset($_GET['id'])) {
     }
 }
 
-header("Location: dashboard.php");
+header("Location: status_pengajuan.php");
+exit();
 ?>

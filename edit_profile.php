@@ -9,6 +9,9 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 $profile = $conn->query("SELECT * FROM user_profile WHERE user_id = '$user_id'")->fetch_assoc();
+$user_role = $_SESSION['role'] ?? 'user'; // Ambil role dari session, default user
+
+$isAdmin = ($user_role === 'admin'); // Periksa apakah user adalah admin
 ?>
 
 <!DOCTYPE html>
@@ -26,10 +29,10 @@ $profile = $conn->query("SELECT * FROM user_profile WHERE user_id = '$user_id'")
 <body>
     <h2>Form Profile</h2>
     <form id="profileForm" action="submit_profile.php" method="POST" enctype="multipart/form-data">
-        <input type="text" name="nama_lengkap" placeholder="Nama Lengkap"  value="<?= $profile['nama_lengkap'] ?? '' ?>"> <br>
-        <input type="text" name="no_ktp" placeholder="No KTP"  value="<?= $profile['no_ktp'] ?? '' ?>"> <br>
-        <input type="text" name="telephone" placeholder="No Telepon"  value="<?= $profile['telephone'] ?? '' ?>"> <br>
-        <input type="date" name="birth_date"  value="<?= $profile['birth_date'] ?? '' ?>"> <br>
+        <input type="text" name="nama_lengkap" placeholder="Nama Lengkap" value="<?= $profile['nama_lengkap'] ?? '' ?>"> <br>
+        <input type="text" name="no_ktp" placeholder="No KTP" value="<?= $profile['no_ktp'] ?? '' ?>"> <br>
+        <input type="text" name="telephone" placeholder="No Telepon" value="<?= $profile['telephone'] ?? '' ?>"> <br>
+        <input type="date" name="birth_date" value="<?= $profile['birth_date'] ?? '' ?>"> <br>
 
         <label>Foto Profil:</label>
         <input type="file" id="profilePictureInput" accept="image/*"> <br>
@@ -53,39 +56,45 @@ $profile = $conn->query("SELECT * FROM user_profile WHERE user_id = '$user_id'")
         <img src="<?= $profile_picture ?>" width="100" height="100"><br>
 
         <label>Jenis Kelamin:</label>
-        <select name="gender" >
+        <select name="gender">
             <option value="Laki-laki" <?= isset($profile['gender']) && $profile['gender'] == 'Laki-laki' ? 'selected' : '' ?>>Laki-laki</option>
             <option value="Perempuan" <?= isset($profile['gender']) && $profile['gender'] == 'Perempuan' ? 'selected' : '' ?>>Perempuan</option>
         </select> <br>
 
         <label>Kewarganegaraan:</label>
-        <select name="nationality" id="nationality" >
+        <select name="nationality" id="nationality">
             <option value="">-- Pilih Negara --</option>
         </select> <br>
 
-        <label>Tipe Pemohon:</label>
-        <select name="type_of_applicant" >
-            <option value="">-- Tipe Pemohon --</option>
-            <?php
-            $applicant_types = [
-                "Kementerian dan Lembaga",
-                "Pemerintahan Daerah",
-                "Lembaga Pendidikan",
-                "Lembaga Penelitian dan Pengembangan",
-                "Kantor Wilayah Kementerian Hukum dan HAM",
-                "Sentra Hak Kekayaan Intelektual",
-                "Konsultan Hak Kekayaan Intelektual",
-                "Usaha Mikro, Kecil dan Menengah",
-                "Institusi lain",
-                "Badan Hukum",
-                "Perorangan"
-            ];
-            foreach ($applicant_types as $type) {
-                $selected = isset($profile['type_of_applicant']) && $profile['type_of_applicant'] == $type ? 'selected' : '';
-                echo "<option value=\"$type\" $selected>$type</option>";
-            }
-            ?>
-        </select>
+        <!-- Sembunyikan "Tipe Pemohon" jika user adalah admin -->
+        <?php if ($_SESSION['role'] !== 'admin') : ?>
+    <label>Tipe Pemohon:</label>
+    <select name="type_of_applicant">
+        <option value="">-- Tipe Pemohon --</option>
+        <?php
+        $applicant_types = [
+            "Kementerian dan Lembaga",
+            "Pemerintahan Daerah",
+            "Lembaga Pendidikan",
+            "Lembaga Penelitian dan Pengembangan",
+            "Kantor Wilayah Kementerian Hukum dan HAM",
+            "Sentra Hak Kekayaan Intelektual",
+            "Konsultan Hak Kekayaan Intelektual",
+            "Usaha Mikro, Kecil dan Menengah",
+            "Institusi lain",
+            "Badan Hukum",
+            "Perorangan"
+        ];
+        foreach ($applicant_types as $type) {
+            $selected = isset($profile['type_of_applicant']) && $profile['type_of_applicant'] == $type ? 'selected' : '';
+            echo "<option value=\"$type\" $selected>$type</option>";
+        }
+        ?>
+    </select>
+<?php else : ?>
+    <input type="hidden" name="type_of_applicant" value="Admin">
+<?php endif; ?>
+
 
         <button type="submit">Simpan</button>
     </form>

@@ -1,6 +1,6 @@
 <?php
-session_start();
 include 'config/config.php';
+session_start();
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.html");
@@ -9,10 +9,24 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 $profile = $conn->query("SELECT * FROM user_profile WHERE user_id = '$user_id'")->fetch_assoc();
+$user_role = $_SESSION['role'] ?? 'user'; // Ambil role dari sesi, default 'user'
 
+// Jika data kosong, tampilkan pesan default
+$nama_lengkap = $profile['nama_lengkap'] ?? 'Belum diisi';
+$no_ktp = $profile['no_ktp'] ?? 'Belum diisi';
+$telephone = $profile['telephone'] ?? 'Belum diisi';
+$birth_date = $profile['birth_date'] ?? 'Belum diisi';
+$gender = $profile['gender'] ?? 'Belum diisi';
+$nationality = $profile['nationality'] ?? 'Belum diisi';
+
+// Periksa apakah user adalah admin
+$isAdmin = ($user_role === 'admin');
+$type_of_applicant = $isAdmin ? '' : ($profile['type_of_applicant'] ?? 'Belum diisi');
+
+// Periksa apakah ada foto profil
 $profile_picture = "uploads/users/$user_id/profile.jpg";
-if (!file_exists($profile_picture)) {
-    $profile_picture = "assets/image/default-avatar.png"; // Default jika belum ada foto
+if (!file_exists($profile_picture) || empty($profile['profile_picture'])) {
+    $profile_picture = "assets/image/default-avatar.png"; // Foto default jika belum diunggah
 }
 ?>
 
@@ -22,53 +36,81 @@ if (!file_exists($profile_picture)) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profil Pengguna</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
-        .profile-container {
-            max-width: 600px;
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 50%;
             margin: 50px auto;
             background: #fff;
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
         }
-        .profile-picture {
-            width: 150px;
-            height: 150px;
-            object-fit: cover;
+        .profile-img {
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
-            margin-bottom: 20px;
+            object-fit: cover;
             border: 3px solid #007bff;
         }
-        .profile-info {
-            text-align: left;
+        h2 {
+            color: #333;
+        }
+        p {
+            font-size: 16px;
+            margin: 5px 0;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 20px;
+            background: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .btn:hover {
+            background: #0056b3;
+        }
+        .fa-check-circle {
+            color: #007bff;
+            margin-left: 5px;
         }
     </style>
 </head>
-<body class="bg-light">
+<body>
 
 <div class="container">
-    <div class="profile-container">
-        <img src="<?= $profile_picture ?>" alt="Foto Profil" class="profile-picture">
-        <h2><?= htmlspecialchars($profile['nama_lengkap']) ?></h2>
-        <p><strong>No. KTP:</strong> <?= htmlspecialchars($profile['no_ktp']) ?></p>
-        <p><strong>Telepon:</strong> <?= htmlspecialchars($profile['telephone']) ?></p>
-        <p><strong>Tanggal Lahir:</strong> <?= htmlspecialchars($profile['birth_date']) ?></p>
-        <p><strong>Jenis Kelamin:</strong> <?= htmlspecialchars($profile['gender']) ?></p>
-        <p><strong>Kewarganegaraan:</strong> <?= htmlspecialchars($profile['nationality']) ?></p>
-        <p><strong>Tipe Pemohon:</strong> <?= htmlspecialchars($profile['type_of_applicant']) ?></p>
-        <a href="edit_profile.php" class="btn btn-primary">Edit Profil</a>
-    </div>
-</div>
+    <img src="<?= $profile_picture ?>" class="profile-img" alt="Foto Profil">
+    <h2><?= $nama_lengkap ?> <?= $isAdmin ? '<i class="fas fa-check-circle"></i>' : '' ?></h2>
+    
+    <p><strong>No. KTP:</strong> <?= $no_ktp ?></p>
+    <p><strong>Telepon:</strong> <?= $telephone ?></p>
+    <p><strong>Tanggal Lahir:</strong> <?= $birth_date ?></p>
+    <p><strong>Jenis Kelamin:</strong> <?= $gender ?></p>
+    <p><strong>Kewarganegaraan:</strong> <?= $nationality ?></p>
 
+    <!-- Tipe Pemohon hanya ditampilkan jika bukan admin -->
+    <?php if (!$isAdmin): ?>
+        <p><strong>Tipe Pemohon:</strong> <?= $type_of_applicant ?></p>
+    <?php endif; ?>
+    
+    <a href="edit_profile.php" class="btn">Edit Profil</a>
+</div><br>
 <div>
     <a href="dashboard.php">Dashboard</a>
 </div>
 <div>
     <a href="status_pengajuan.php">Lihat Status Pengajuan</a>
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+

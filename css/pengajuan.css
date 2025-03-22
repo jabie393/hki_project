@@ -25,6 +25,7 @@ th {
 .btn-safe { background-color: green;}
 .btn-danger { background-color: red; }
 .btn-info { background-color: blue; }
+.btn-download { background-color: rgb(150, 199, 15);}
 .btn-secondary { background-color: gray; }
 .btn:hover { opacity: 0.8; }
 
@@ -103,3 +104,5 @@ th, td {
     padding: 8px;
     text-align: left;
 }
+
+

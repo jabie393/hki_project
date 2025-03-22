@@ -38,6 +38,7 @@ $result = $stmt->get_result();
         <th>Kota Pengumuman</th>
         <th>Pencipta</th>
         <th>Status</th>
+        <th>Sertifikat</th>
         <th>Aksi</th>
     </tr>
     <?php while ($row = $result->fetch_assoc()) { ?>
@@ -53,6 +54,13 @@ $result = $stmt->get_result();
                 <button class="btn btn-info" onclick="showCreator(<?php echo $row['id']; ?>)">Detail Pencipta</button>
             </td>
             <td><?php echo htmlspecialchars($row['status']); ?></td>
+            <td>
+                <?php if (!empty($row['certificate_path'])) { ?>
+                    <a href="<?= $row['certificate_path'] ?>" class="btn btn-download" download>Download</a>
+                <?php } else { ?>
+                    <span>Belum tersedia</span>
+                <?php } ?>
+            </td>
             <td>
                 <?php if ($row['status'] == 'Pending') { ?>
                     <a href="cancel_hki.php?id=<?php echo $row['id']; ?>" class="btn btn-danger" onclick="return confirm('Yakin ingin membatalkan?')">Batalkan</a>
