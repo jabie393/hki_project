@@ -116,7 +116,7 @@ $result = $conn->query("SELECT registrations.*, users.name FROM registrations
     <script>
         //script detail profil user
         function showProfile(userId) {
-            fetch('profile_details.php?id=' + userId)
+            fetch('widgets/profile_details.php?id=' + userId)
                 .then(response => response.text())
                 .then(data => {
                     document.getElementById('profileDetails').innerHTML = data;
@@ -131,7 +131,7 @@ $result = $conn->query("SELECT registrations.*, users.name FROM registrations
 
         //script detail pencipta
         function openModal(id) {
-            fetch('creator_details.php?id=' + id)
+            fetch('widgets/creator_details.php?id=' + id)
                 .then(response => response.text())
                 .then(data => {
                     document.getElementById('creatorDetails').innerHTML = data;

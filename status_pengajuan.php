@@ -23,6 +23,7 @@ $result = $stmt->get_result();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Status Pengajuan HKI</title>
     <link rel="stylesheet" href="css/pengajuan.css">
+    <link rel="stylesheet" href="css/modal.css">
 </head>
 <body>
 
@@ -89,7 +90,7 @@ $result = $stmt->get_result();
 
     <script>
     function showCreator(id) {
-        fetch(`creator_details.php?id=${id}`)
+        fetch(`widgets/creator_details.php?id=${id}`)
             .then(response => response.text())
             .then(data => {
                 document.getElementById("creatorDetails").innerHTML = data;

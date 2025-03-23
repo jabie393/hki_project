@@ -1,4 +1,3 @@
-/* Modal styling */
 .modal {
     display: none;
     position: fixed;
@@ -13,53 +12,71 @@
 }
 
 .modal-content {
-    background: #fff;
+    background-color: white;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     width: 50%;
-    max-width: 600px;
-    max-height: 80vh; /* Batasi tinggi modal agar tidak melebihi viewport */
-    overflow-y: auto; /* Aktifkan scroll jika konten melebihi ukuran modal */
-    text-align: center;
+    max-height: 80vh; /* Batasi tinggi modal */
+    display: flex;
+    flex-direction: column;
+    position: relative;
     animation: fadeIn 0.3s ease-in-out;
 }
 
+.modal-content h2 {
+    margin: 0;
+    padding-bottom: 10px;
+}
 
 .modal-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #ddd;
     padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
 }
 
 .modal-header h2 {
     margin: 0;
+    font-size: 20px;
 }
 
 .close {
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #333;
     background: none;
     border: none;
-    font-size: 24px;
-    cursor: pointer;
-    color: #555;
+    padding: 5px;
 }
 
 .close:hover {
     color: #000;
 }
 
-/* Button style */
-.btn-link {
-    color: #007bff;
-    text-decoration: none;
-    cursor: pointer;
-    font-weight: bold;
+#profileDetails, #creatorDetails {
+    overflow-y: auto;
+    max-height: 60vh; /* Scroll hanya di bagian detail */
+    padding: 10px;
+    border-top: 1px solid #ddd;
 }
 
-.btn-link:hover {
-    text-decoration: underline;
+/* Tambahkan agar tabel dalam modal bisa discroll jika terlalu lebar */
+.modal-content .table-wrapper {
+    overflow-x: auto;
+    max-width: 100%;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;
 }
 
 /* Animation */
