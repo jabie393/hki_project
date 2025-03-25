@@ -17,7 +17,7 @@ if ($result->num_rows === 1) {
     // Verifikasi password
     if (password_verify($password, $user['password'])) {
         $_SESSION['user_id'] = $user['id'];
-        $_SESSION['user_name'] = $user['name'];
+        $_SESSION['user_username'] = $user['username'];
         $_SESSION['role'] = $user['role']; // Simpan role pengguna
 
         // Redirect berdasarkan role

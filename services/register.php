@@ -3,14 +3,14 @@ include '../config/config.php';
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $name = $_POST['name'];
+    $username = $_POST['username'];
     $email = $_POST['email'];
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-    // Cek apakah email atau nama sudah terdaftar
-    $check_query = "SELECT name, email FROM users WHERE email = ? OR name = ?";
+    // Cek apakah email atau username sudah terdaftar
+    $check_query = "SELECT username, email FROM users WHERE email = ? OR username = ?";
     $stmt = $conn->prepare($check_query);
-    $stmt->bind_param("ss", $email, $name);
+    $stmt->bind_param("ss", $email, $username);
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -18,19 +18,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($row['email'] == $email) {
             $_SESSION['error_email'] = "Email sudah terdaftar. Gunakan email lain.";
         }
-        if ($row['name'] == $name) {
-            $_SESSION['error_name'] = "Nama sudah terdaftar. Gunakan nama lain.";
+        if ($row['username'] == $username) { //
+            $_SESSION['error_username'] = "Username sudah terdaftar. Gunakan username lain.";
         }
     }
 
-    if (isset($_SESSION['error_email']) || isset($_SESSION['error_name'])) {
+    if (isset($_SESSION['error_email']) || isset($_SESSION['error_username'])) {
         header("Location: ../register.php");
         exit();
     }
 
-    $query = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
+    // Perbaiki query INSERT agar menggunakan 'username'
+    $query = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("sss", $name, $email, $password);
+    $stmt->bind_param("sss", $username, $email, $password);
 
     if ($stmt->execute()) {
         // Ambil ID user yang baru dibuat
@@ -52,3 +53,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 }
+?>

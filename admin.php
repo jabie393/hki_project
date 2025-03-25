@@ -8,7 +8,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'admin') {
 }
 
 // Ambil semua data pengajuan yang belum disetujui
-$result = $conn->query("SELECT registrations.*, users.name FROM registrations 
+$result = $conn->query("SELECT registrations.*, users.username FROM registrations 
                         JOIN users ON registrations.user_id = users.id 
                         WHERE registrations.status != 'Terdaftar'");
 ?>
@@ -43,7 +43,7 @@ $result = $conn->query("SELECT registrations.*, users.name FROM registrations
             <tr>
                 <td>
                     <a href="#" onclick="showProfile(<?php echo $row['user_id']; ?>)" class="profile-link">
-                    <?php echo htmlspecialchars($row['name']); ?>
+                    <?php echo htmlspecialchars($row['username']); ?>
                     </a>
                 </td>
                 <td><?php echo htmlspecialchars($row['jenis_permohonan']); ?></td>

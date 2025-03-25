@@ -11,7 +11,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'admin') {
 // Jika form disubmit
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user_id = $_POST['user_id'];
-    $new_name = $_POST['new_name'];
+    $new_username = $_POST['new_username'];
     $new_email = $_POST['new_email'];
     $new_password = !empty($_POST['new_password']) ? password_hash($_POST['new_password'], PASSWORD_DEFAULT) : null;
 
@@ -27,9 +27,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     $email_check->close();
 
-    // Update name dan email
-    $query = $conn->prepare("UPDATE users SET name = ?, email = ? WHERE id = ?");
-    $query->bind_param("ssi", $new_name, $new_email, $user_id);
+    // Cek apakah username baru sudah digunakan oleh user lain
+    $username_check = $conn->prepare("SELECT id FROM users WHERE username = ? AND id != ?");
+    $username_check->bind_param("si", $new_username, $user_id);
+    $username_check->execute();
+    $username_check->store_result();
+    if ($username_check->num_rows > 0) {
+        echo "<script>alert('Username sudah digunakan oleh user lain!'); window.location.href='reset_password.php';</script>";
+        exit();
+    }
+    $username_check->close();
+
+    // Update username dan email
+    $query = $conn->prepare("UPDATE users SET username = ?, email = ? WHERE id = ?");
+    $query->bind_param("ssi", $new_username, $new_email, $user_id);
     $query->execute();
 
     // Update password jika diisi
@@ -66,28 +77,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <option value="">-- Pilih User --</option>
             <?php
             include 'config/config.php';
-            $result = $conn->query("SELECT id, name FROM users");
+            $result = $conn->query("SELECT id, username FROM users");
 
             while ($row = $result->fetch_assoc()) {
-                echo "<option value='{$row['id']}'>{$row['name']}</option>";
+                echo "<option value='{$row['id']}'>{$row['username']}</option>";
             }
             ?>
         </select>
 
         <br><br>
 
-        <label for="new_name">Nama:</label>
-        <input type="text" id="new_name" name="new_name" required>
+        <label for="new_username">Nama:</label>
+        <input type="text" id="new_username" name="new_username" required autocomplete="off">
 
         <br><br>
 
         <label for="new_email">Email:</label>
-        <input type="email" id="new_email" name="new_email" required>
+        <input type="email" id="new_email" name="new_email" required autocomplete="off">
 
         <br><br>
 
         <label for="new_password">Password Baru (Opsional):</label>
-        <input type="password" name="new_password">
+        <input type="password" name="new_password" autocomplete="new-password">
 
         <br><br>
 
@@ -112,12 +123,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     data: { user_id: userId },
                     dataType: "json",
                     success: function(data) {
-                        $('#new_name').val(data.name);
+                        $('#new_username').val(data.username);
                         $('#new_email').val(data.email);
                     }
                 });
             } else {
-                $('#new_name').val('');
+                $('#new_username').val('');
                 $('#new_email').val('');
             }
         });

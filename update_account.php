@@ -11,7 +11,7 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 
 // Ambil data user saat ini
-$query = $conn->prepare("SELECT name, email, password FROM users WHERE id = ?");
+$query = $conn->prepare("SELECT username, email, password FROM users WHERE id = ?");
 $query->bind_param("i", $user_id);
 $query->execute();
 $result = $query->get_result();
@@ -19,7 +19,7 @@ $user = $result->fetch_assoc();
 $query->close();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $new_name = $_POST['new_name'];
+    $new_username = $_POST['new_username'];
     $new_email = $_POST['new_email'];
     $new_password = !empty($_POST['new_password']) ? password_hash($_POST['new_password'], PASSWORD_DEFAULT) : null;
     $old_password = $_POST['old_password'];
@@ -35,16 +35,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email_check->bind_param("si", $new_email, $user_id);
     $email_check->execute();
     $email_check->store_result();
-
     if ($email_check->num_rows > 0) {
         echo "<script>alert('Email sudah digunakan oleh user lain!'); window.location.href='update_account.php';</script>";
         exit();
     }
     $email_check->close();
 
-    // Update name dan email
-    $query = $conn->prepare("UPDATE users SET name = ?, email = ? WHERE id = ?");
-    $query->bind_param("ssi", $new_name, $new_email, $user_id);
+    // Cek apakah username baru sudah digunakan oleh user lain
+    $username_check = $conn->prepare("SELECT id FROM users WHERE username = ? AND id != ?");
+    $username_check->bind_param("si", $new_username, $user_id);
+    $username_check->execute();
+    $username_check->store_result();
+    if ($username_check->num_rows > 0) {
+        echo "<script>alert('Username sudah digunakan oleh user lain!'); window.location.href='update_account.php';</script>";
+        exit();
+    }
+    $username_check->close();
+
+    // Update username dan email
+    $query = $conn->prepare("UPDATE users SET username = ?, email = ? WHERE id = ?");
+    $query->bind_param("ssi", $new_username, $new_email, $user_id);
     $query->execute();
 
     // Update password jika diisi
@@ -69,8 +79,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <h2>Update Profil</h2>
     <form method="post">
-        <label for="new_name">Nama:</label>
-        <input type="text" name="new_name" value="<?= htmlspecialchars($user['name']) ?>" required>
+        <label for="new_username">Nama:</label>
+        <input type="text" name="new_username" value="<?= htmlspecialchars($user['username']) ?>" required>
 
         <br><br>
 

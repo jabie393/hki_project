@@ -29,12 +29,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
         }
 
         $file_name = "certificate_" . time() . "." . pathinfo($_FILES["certificate"]["name"], PATHINFO_EXTENSION);
-        $certificate_path = $upload_dir . $file_name;
+        $full_path = $upload_dir . $file_name;
+        $db_file_path = "uploads/users/$user_id/files/$id/certificates/$file_name"; // Path yang disimpan tanpa '../'
 
-        if (!move_uploaded_file($_FILES["certificate"]["tmp_name"], $certificate_path)) {
+        if (!move_uploaded_file($_FILES["certificate"]["tmp_name"], $full_path)) {
             echo "Gagal mengunggah sertifikat.";
             exit();
         }
+
+        $certificate_path = $db_file_path;
     }
 
     // Update status menjadi "Terdaftar" dan simpan path sertifikat jika ada
@@ -48,4 +51,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
 }
 
 header("Location: ../admin.php");
+exit();
 ?>

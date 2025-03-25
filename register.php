@@ -32,22 +32,22 @@ $dashboardPage = (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') ? 'a
     <!-- Register Form -->
     <div class="login-container">
         <h2>Masukkan Biodata Diri Anda</h2>
-        <form action="services/register.php" method="POST">
+        <form action="services/register.php" method="POST" autocomplete="off">
             <div class="form-group">
-                <label for="nama">Nama Lengkap</label>
-                <input type="text" id="nama" name="name" placeholder="Masukkan Nama Lengkap Anda" required
-                    value="<?= isset($_SESSION['input_name']) ? $_SESSION['input_name'] : ''; ?>" />
+                <label for="username">Nama Lengkap</label>
+                <input type="text" id="username" name="username" placeholder="Masukkan Username Anda" required autocomplete="off" 
+                    value="<?= isset($_SESSION['input_username']) ? $_SESSION['input_username'] : ''; ?>" />
             </div>
-            <?php if (isset($_SESSION['error_name'])): ?>
+            <?php if (isset($_SESSION['error_username'])): ?>
                 <div class="mt-2 mb-3 text-red-500 text-sm">
-                    <i class="fas fa-exclamation-circle"></i> <?= $_SESSION['error_name']; ?>
+                    <i class="fas fa-exclamation-circle"></i> <?= $_SESSION['error_username']; ?>
                 </div>
-                <?php unset($_SESSION['error_name']); ?>
+                <?php unset($_SESSION['error_username']); ?>
             <?php endif; ?>
 
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" id="email" name="email" placeholder="Masukkan Email Anda" required
+                <input type="email" id="email" name="email" placeholder="Masukkan Email Anda" required autocomplete="off" 
                     value="<?= isset($_SESSION['input_email']) ? $_SESSION['input_email'] : ''; ?>" />
             </div>
             <?php if (isset($_SESSION['error_email'])): ?>
@@ -59,7 +59,7 @@ $dashboardPage = (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') ? 'a
 
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" id="password" name="password" placeholder="Masukkan password Anda" required />
+                <input type="password" id="password" name="password" placeholder="Masukkan password Anda" required autocomplete="new-password" />
             </div>
 
             <button type="submit" class="btn-daftar">Daftar</button>
