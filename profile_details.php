@@ -1,10 +1,10 @@
 <?php
-include '../config/config.php';
+include 'config/config.php';
 
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
-    header("Location: ../login.html");
+    header("Location: login.html");
     exit();
 }
 
@@ -22,7 +22,7 @@ if (isset($_GET['id'])) {
     $type_of_applicant = $profile['type_of_applicant'] ?? 'Belum diisi';
 
     // Periksa apakah ada foto profil
-    $profile_picture = "uploads/users/$user_id/profile.jpg";
+    $profile_picture = "uploads/users/$user_id/profile/profile.jpg";
     if (!file_exists($profile_picture) || empty($profile['profile_picture'])) {
         $profile_picture = "assets/image/default-avatar.png"; // Foto default jika belum diunggah
     }

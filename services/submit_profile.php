@@ -26,7 +26,7 @@ $nationality = !empty($_POST['nationality']) ? $_POST['nationality'] : $existing
 $type_of_applicant = !empty($_POST['type_of_applicant']) ? $_POST['type_of_applicant'] : $existing_data['type_of_applicant'];
 
 // Direktori upload
-$upload_dir = "../uploads/users/$user_id/";
+$upload_dir = "../uploads/users/$user_id/profile/";
 if (!file_exists($upload_dir)) {
     mkdir($upload_dir, 0777, true);
 }

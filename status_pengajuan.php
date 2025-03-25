@@ -90,7 +90,7 @@ $result = $stmt->get_result();
 
     <script>
     function showCreator(id) {
-        fetch(`widgets/creator_details.php?id=${id}`)
+        fetch(`creator_details.php?id=${id}`)
             .then(response => response.text())
             .then(data => {
                 document.getElementById("creatorDetails").innerHTML = data;

@@ -48,7 +48,7 @@ $isAdmin = ($user_role === 'admin'); // Periksa apakah user adalah admin
         <button type="button" id="cropButton">Crop & Simpan</button>
 
         <?php
-        $profile_picture = "uploads/users/$user_id/profile.jpg";
+        $profile_picture = "uploads/users/$user_id/profile/profile.jpg";
         if (!file_exists($profile_picture)) {
             $profile_picture = "assets/image/default-avatar.png"; // Default jika belum ada foto
         }

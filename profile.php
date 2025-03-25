@@ -24,7 +24,7 @@ $isAdmin = ($user_role === 'admin');
 $type_of_applicant = $isAdmin ? '' : ($profile['type_of_applicant'] ?? 'Belum diisi');
 
 // Periksa apakah ada foto profil
-$profile_picture = "uploads/users/$user_id/profile.jpg";
+$profile_picture = "uploads/users/$user_id/profile/profile.jpg";
 if (!file_exists($profile_picture) || empty($profile['profile_picture'])) {
     $profile_picture = "assets/image/default-avatar.png"; // Foto default jika belum diunggah
 }
