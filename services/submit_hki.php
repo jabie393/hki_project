@@ -9,6 +9,20 @@ if (!isset($_SESSION['user_id'])) {
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user_id = $_SESSION['user_id'];
+
+    // **Cek apakah profil user sudah lengkap**
+    $query = $conn->prepare("SELECT nama_lengkap, no_ktp, telephone, birth_date, gender, nationality, type_of_applicant FROM user_profile WHERE user_id = ?");
+    $query->bind_param("i", $user_id);
+    $query->execute();
+    $result = $query->get_result();
+    $profile = $result->fetch_assoc();
+
+    if (!$profile || in_array(null, $profile, true) || in_array("", $profile, true)) {
+        echo "Profil Anda belum lengkap. Silakan lengkapi profil sebelum mendaftar HKI.";
+        exit();
+    }
+
+    // **Ambil data dari form**
     $jenis_permohonan = $_POST['jenis_permohonan'] ?? "";
     $jenis_hak_cipta = $_POST['jenis_hak_cipta'];
     $sub_jenis_hak_cipta = $_POST['sub_jenis_hak_cipta'];
@@ -18,15 +32,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $negara_pengumuman = $_POST['negara_pengumuman'] ?? "";
     $kota_pengumuman = $_POST['kota_pengumuman'] ?? "";
     $status = "Pending";
-    
-    // Simpan ke tabel registrations
-    $sql = "INSERT INTO registrations (user_id, jenis_permohonan, jenis_hak_cipta, sub_jenis_hak_cipta, tanggal_pengumuman, judul_hak_cipta, deskripsi, negara_pengumuman, kota_pengumuman, status)
-            VALUES ('$user_id', '$jenis_permohonan', '$jenis_hak_cipta', '$sub_jenis_hak_cipta', '$tanggal_pengumuman', '$judul', '$deskripsi', '$negara_pengumuman', '$kota_pengumuman', '$status')";
 
-    if ($conn->query($sql) === TRUE) {
+    // **Simpan ke tabel registrations**
+    $sql = $conn->prepare("INSERT INTO registrations (user_id, jenis_permohonan, jenis_hak_cipta, sub_jenis_hak_cipta, tanggal_pengumuman, judul_hak_cipta, deskripsi, negara_pengumuman, kota_pengumuman, status) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+    $sql->bind_param("isssssssss", $user_id, $jenis_permohonan, $jenis_hak_cipta, $sub_jenis_hak_cipta, $tanggal_pengumuman, $judul, $deskripsi, $negara_pengumuman, $kota_pengumuman, $status);
+
+    if ($sql->execute()) {
         $reg_id = $conn->insert_id;
 
-        // Simpan data pencipta
+        // **Simpan data pencipta**
+        $stmt_pencipta = $conn->prepare("INSERT INTO creators (registration_id, nik, nama, no_telepon, jenis_kelamin, alamat, negara, provinsi, kota, kecamatan, kelurahan, kode_pos) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
         foreach ($_POST['nama'] as $index => $nama) {
             $nik = $_POST['nik'][$index];
             $no_telepon = $_POST['no_telepon'][$index];
@@ -39,10 +58,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $kelurahan = $_POST['kelurahan'][$index];
             $kode_pos = $_POST['kode_pos'][$index];
 
-            $sql_pencipta = "INSERT INTO creators (registration_id, nik, nama, no_telepon, jenis_kelamin, alamat, negara, provinsi, kota, kecamatan, kelurahan, kode_pos) 
-                            VALUES ('$reg_id', '$nik', '$nama', '$no_telepon', '$jenis_kelamin', '$alamat', '$negara', '$provinsi', '$kota', '$kecamatan', '$kelurahan', '$kode_pos')";
-
-            $conn->query($sql_pencipta);
+            $stmt_pencipta->bind_param("issssssssssss", $reg_id, $nik, $nama, $no_telepon, $jenis_kelamin, $alamat, $negara, $provinsi, $kota, $kecamatan, $kelurahan, $kode_pos);
+            $stmt_pencipta->execute();
         }
 
         // **Buat folder berdasarkan user_id dan registration_id**
@@ -53,13 +70,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             mkdir($reg_dir, 0777, true);
         }
 
-        // Simpan file di folder pendaftaran
+        // **Simpan file di folder pendaftaran**
         $file_name = basename($_FILES["dokumen"]["name"]);
         $target_file = $reg_dir . $file_name;
 
         if (move_uploaded_file($_FILES["dokumen"]["tmp_name"], $target_file)) {
             // Simpan ke tabel documents
-            $conn->query("INSERT INTO documents (registration_id, file_name, file_path) VALUES ('$reg_id', '$file_name', '$target_file')");
+            $stmt_doc = $conn->prepare("INSERT INTO documents (registration_id, file_name, file_path) VALUES (?, ?, ?)");
+            $stmt_doc->bind_param("iss", $reg_id, $file_name, $target_file);
+            $stmt_doc->execute();
+
             echo "Pendaftaran berhasil dikirim!";
         } else {
             echo "Gagal mengunggah dokumen.";
@@ -67,5 +87,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         echo "Error: " . $conn->error;
     }
+
+    $sql->close();
+    $stmt_pencipta->close();
+    $conn->close();
 }
 ?>

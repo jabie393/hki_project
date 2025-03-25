@@ -16,14 +16,14 @@ $query->execute();
 $result = $query->get_result();
 $existing_data = $result->fetch_assoc();
 
-// Ambil data dari form, jika kosong pakai data lama
-$nama_lengkap = !empty($_POST['nama_lengkap']) ? $_POST['nama_lengkap'] : $existing_data['nama_lengkap'];
-$no_ktp = !empty($_POST['no_ktp']) ? $_POST['no_ktp'] : $existing_data['no_ktp'];
-$telephone = !empty($_POST['telephone']) ? $_POST['telephone'] : $existing_data['telephone'];
-$birth_date = !empty($_POST['birth_date']) ? $_POST['birth_date'] : $existing_data['birth_date'];
-$gender = !empty($_POST['gender']) ? $_POST['gender'] : $existing_data['gender'];
-$nationality = !empty($_POST['nationality']) ? $_POST['nationality'] : $existing_data['nationality'];
-$type_of_applicant = !empty($_POST['type_of_applicant']) ? $_POST['type_of_applicant'] : $existing_data['type_of_applicant'];
+// Ambil data dari form, jika kosong pakai NULL
+$nama_lengkap = isset($_POST['nama_lengkap']) && $_POST['nama_lengkap'] !== '' ? $_POST['nama_lengkap'] : null;
+$no_ktp = isset($_POST['no_ktp']) && $_POST['no_ktp'] !== '' ? $_POST['no_ktp'] : null;
+$telephone = isset($_POST['telephone']) && $_POST['telephone'] !== '' ? $_POST['telephone'] : null;
+$birth_date = isset($_POST['birth_date']) && $_POST['birth_date'] !== '' ? $_POST['birth_date'] : null;
+$gender = isset($_POST['gender']) && $_POST['gender'] !== '' ? $_POST['gender'] : null;
+$nationality = isset($_POST['nationality']) && $_POST['nationality'] !== '' ? $_POST['nationality'] : null;
+$type_of_applicant = isset($_POST['type_of_applicant']) && $_POST['type_of_applicant'] !== '' ? $_POST['type_of_applicant'] : null;
 
 // Direktori upload
 $upload_dir = "../uploads/users/$user_id/profile/";
@@ -32,7 +32,7 @@ if (!file_exists($upload_dir)) {
 }
 
 // Proses gambar profil (jika ada gambar baru diunggah)
-$profile_picture = $existing_data['profile_picture']; // Default pakai gambar lama
+$profile_picture = $existing_data['profile_picture'] ?? null; // Default pakai gambar lama jika ada
 if (!empty($_POST['cropped_image'])) {
     $image_data = $_POST['cropped_image'];
     $image_parts = explode(";base64,", $image_data);
@@ -66,3 +66,4 @@ if ($query->execute()) {
 
 $query->close();
 $conn->close();
+?>
