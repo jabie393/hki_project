@@ -88,6 +88,7 @@ $result = $conn->query("SELECT registrations.*, users.name FROM registrations
     <div>
         <a href="profile.php">Profil</a> |
         <a href="rekap_hki.php">Lihat Rekap HKI</a> |
+        <a href="reset_password.php">Reset Password User |</a>
         <a href="services/logout.php">Logout</a>
     </div>
 
@@ -116,7 +117,7 @@ $result = $conn->query("SELECT registrations.*, users.name FROM registrations
     <script>
         //script detail profil user
         function showProfile(userId) {
-            fetch('widgets/profile_details.php?id=' + userId)
+            fetch('profile_details.php?id=' + userId)
                 .then(response => response.text())
                 .then(data => {
                     document.getElementById('profileDetails').innerHTML = data;

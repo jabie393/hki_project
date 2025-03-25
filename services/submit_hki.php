@@ -41,11 +41,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($sql->execute()) {
         $reg_id = $conn->insert_id;
-
+    
         // **Simpan data pencipta**
-        $stmt_pencipta = $conn->prepare("INSERT INTO creators (registration_id, nik, nama, no_telepon, jenis_kelamin, alamat, negara, provinsi, kota, kecamatan, kelurahan, kode_pos) 
+        $stmt_pencipta = $conn->prepare("INSERT INTO creators 
+            (registration_id, nik, nama, no_telepon, jenis_kelamin, alamat, negara, provinsi, kota, kecamatan, kelurahan, kode_pos) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-
+    
         foreach ($_POST['nama'] as $index => $nama) {
             $nik = $_POST['nik'][$index];
             $no_telepon = $_POST['no_telepon'][$index];
@@ -58,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $kelurahan = $_POST['kelurahan'][$index];
             $kode_pos = $_POST['kode_pos'][$index];
 
-            $stmt_pencipta->bind_param("issssssssssss", $reg_id, $nik, $nama, $no_telepon, $jenis_kelamin, $alamat, $negara, $provinsi, $kota, $kecamatan, $kelurahan, $kode_pos);
+            $stmt_pencipta->bind_param("isssssssssss", $reg_id, $nik, $nama, $no_telepon, $jenis_kelamin, $alamat, $negara, $provinsi, $kota, $kecamatan, $kelurahan, $kode_pos);
             $stmt_pencipta->execute();
         }
 

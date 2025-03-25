@@ -57,7 +57,7 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
     <input type="text" name="judul" placeholder="Judul Hak Cipta" required /><br><br>
     <!--Deskripsi-->
     <label>Deskripsi:</label><br>
-    <textarea name="deskripsi" placeholder="Deskripsi"></textarea><br><br>
+    <textarea name="deskripsi" placeholder="Deskripsi" required></textarea><br><br>
     <!--Negara Pertama Kali Diumumkan-->
     <label>Negara Pertama Kali Diumumkan:</label><br>
     <select name="negara_pengumuman" id="nationality" required>
@@ -96,19 +96,19 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
         </select><br><br>
 
         <label>Provinsi:</label><br>
-        <input type="text" name="provinsi[]"><br><br>
+        <input type="text" name="provinsi[]" required><br><br>
 
         <label>Kota/Kabupaten:</label><br>
-        <input type="text" name="kota[]"><br><br>
+        <input type="text" name="kota[]" required><br><br>
 
         <label>Kecamatan:</label><br>
-        <input type="text" name="kecamatan[]"><br><br>
+        <input type="text" name="kecamatan[]" required><br><br>
 
         <label>Kelurahan:</label><br>
-        <input type="text" name="kelurahan[]"><br><br>
+        <input type="text" name="kelurahan[]" required><br><br>
 
         <label>Kode Pos:</label><br>
-        <input type="text" name="kode_pos[]"><br><br>
+        <input type="text" name="kode_pos[]" required><br><br>
     </div>
 </div>
 
@@ -267,6 +267,9 @@ document.addEventListener("click", function(event) {
 </div>
 <div>
     <a href="status_pengajuan.php">Lihat Status Pengajuan</a>
+</div>
+<div>
+    <a href="update_account.php">Update Data Akun</a>
 </div>
 <div>
     <a href="services/logout.php">Logout</a>
