@@ -1,3 +1,10 @@
+<?php
+session_start();
+
+// session role yang menunjukkan peran pengguna
+$dashboardPage = (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') ? 'admin.php' : 'dashboard.php';
+?>
+
 <!DOCTYPE html>
 <html lang="id">
   <head>
@@ -31,13 +38,13 @@
     <h1>Hak Kekayaan Intelektual</h1>
     <div class="menu">
       <button onclick="location.href='rekapitulasi.php'">REKAPITULASI</button>
-      <button onclick="location.href='dashboard.php'">PENGAJUAN HKI</button>
+      <button onclick="location.href='<?php echo $dashboardPage; ?>'">PENGAJUAN HKI</button>
       <button onclick="location.href='petunjuk_pengajuan.html'">PETUNJUK PENGAJUAN HKI</button>
     </div>
     <div class="footer">
       <a href="rekapitulasi.php">REKAPITULASI</a>
       <a href="index.html">BERANDA</a>
-      <a href="dashboard.php">PENGAJUAN HKI</a>
+      <a href="<?php echo $dashboardPage; ?>">PENGAJUAN HKI</a>
     </div>
   </body>
 </html>

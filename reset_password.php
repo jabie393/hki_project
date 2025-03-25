@@ -4,7 +4,7 @@ include 'config/config.php';
 
 // Periksa apakah admin sudah login
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'admin') {
-    header("Location: login.html");
+    header("Location: login.php");
     exit();
 }
 

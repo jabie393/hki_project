@@ -2,7 +2,7 @@
 include 'config/config.php';
 session_start();
 if ($_SESSION['role'] != 'admin') {
-    header("Location: login.html");
+    header("Location: login.php");
     exit();
 }
 

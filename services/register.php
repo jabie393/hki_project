@@ -1,10 +1,32 @@
 <?php
 include '../config/config.php';
+session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST['name'];
     $email = $_POST['email'];
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+
+    // Cek apakah email atau nama sudah terdaftar
+    $check_query = "SELECT name, email FROM users WHERE email = ? OR name = ?";
+    $stmt = $conn->prepare($check_query);
+    $stmt->bind_param("ss", $email, $name);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    while ($row = $result->fetch_assoc()) {
+        if ($row['email'] == $email) {
+            $_SESSION['error_email'] = "Email sudah terdaftar. Gunakan email lain.";
+        }
+        if ($row['name'] == $name) {
+            $_SESSION['error_name'] = "Nama sudah terdaftar. Gunakan nama lain.";
+        }
+    }
+
+    if (isset($_SESSION['error_email']) || isset($_SESSION['error_name'])) {
+        header("Location: ../register.php");
+        exit();
+    }
 
     $query = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
     $stmt = $conn->prepare($query);
@@ -22,9 +44,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             mkdir($user_folder . "/files", 0777, true);   // Untuk file lain
         }
 
-        echo "Registrasi berhasil!";
+        echo "<script>alert('Pembuatan akun berhasil! Silakan login.'); window.location.href='../login.php';</script>";
+        exit();
     } else {
-        echo "Gagal mendaftar.";
+        $_SESSION['error_general'] = "Gagal mendaftar. Coba lagi.";
+        header("Location: ../register.php");
+        exit();
     }
 }
-?>
