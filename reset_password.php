@@ -87,7 +87,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <br><br>
 
-        <label for="new_username">Nama:</label>
+        <label for="new_username">Username:</label>
         <input type="text" id="new_username" name="new_username" required autocomplete="off">
 
         <br><br>

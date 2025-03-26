@@ -43,7 +43,7 @@ $dashboardPage = (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') ? 'a
     </div>
     <div class="footer">
       <a href="rekapitulasi.php">REKAPITULASI</a>
-      <a href="index.html">BERANDA</a>
+      <a href="index.php">BERANDA</a>
       <a href="<?php echo $dashboardPage; ?>">PENGAJUAN HKI</a>
     </div>
   </body>

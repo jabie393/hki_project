@@ -6,14 +6,28 @@ if ($_SESSION['role'] != 'admin') {
     exit();
 }
 
-// Ambil semua pendaftaran yang sudah disetujui
-$result = $conn->query("SELECT registrations.*, users.username FROM registrations 
-                        JOIN users ON registrations.user_id = users.id 
-                        WHERE registrations.status = 'Terdaftar'");
+// Ambil kata kunci pencarian jika ada
+$search = isset($_GET['search']) ? $conn->real_escape_string($_GET['search']) : '';
+
+// Ambil semua pendaftaran yang sudah disetujui dengan filter pencarian
+$query = "SELECT registrations.*, users.username FROM registrations 
+          JOIN users ON registrations.user_id = users.id 
+          WHERE registrations.status = 'Terdaftar' 
+          AND (users.username LIKE '%$search%' 
+          OR registrations.nomor_permohonan LIKE '%$search%' 
+          OR registrations.jenis_permohonan LIKE '%$search%' 
+          OR registrations.jenis_hak_cipta LIKE '%$search%' 
+          OR registrations.sub_jenis_hak_cipta LIKE '%$search%' 
+          OR registrations.tanggal_pengumuman LIKE '%$search%' 
+          OR registrations.judul_hak_cipta LIKE '%$search%' 
+          OR registrations.negara_pengumuman LIKE '%$search%' 
+          OR registrations.kota_pengumuman LIKE '%$search%')";
+$result = $conn->query($query);
 ?>
 
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,11 +35,22 @@ $result = $conn->query("SELECT registrations.*, users.username FROM registration
     <link rel="stylesheet" href="css/pengajuan.css">
     <link rel="stylesheet" href="css/modal.css">
 </head>
+
 <body>
     <h2>Rekapitulasi Hak Cipta Terdaftar</h2>
+
+    <!-- Form Pencarian -->
+    <form method="GET">
+        <input type="text" name="search"
+            placeholder="Cari Data Hak Cipta"
+            value="<?php echo htmlspecialchars($search); ?>">
+        <button type="submit">Cari</button>
+    </form>
+
     <table>
         <tr>
             <th>Nama Pemilik</th>
+            <th>Nomor Permohonan</th>
             <th>Jenis Permohonan</th>
             <th>Jenis Ciptaan</th>
             <th>Sub Jenis Ciptaan</th>
@@ -41,50 +66,61 @@ $result = $conn->query("SELECT registrations.*, users.username FROM registration
             <th>Aksi</th>
         </tr>
         <?php while ($row = $result->fetch_assoc()) { ?>
-        <tr>
-            <td>
-                <a href="#" onclick="showProfile(<?php echo $row['user_id']; ?>)" class="profile-link">
-                    <?php echo htmlspecialchars($row['username']); ?>
-                </a>
-            </td>
-            <td><?php echo htmlspecialchars($row['jenis_permohonan']); ?></td>
-            <td><?php echo htmlspecialchars($row['jenis_hak_cipta']); ?></td>
-            <td><?php echo htmlspecialchars($row['sub_jenis_hak_cipta']); ?></td>
-            <td><?php echo htmlspecialchars($row['tanggal_pengumuman']); ?></td>
-            <td><?php echo htmlspecialchars($row['judul_hak_cipta']); ?></td>
-            <td><?php echo htmlspecialchars($row['negara_pengumuman']); ?></td>
-            <td><?php echo htmlspecialchars($row['kota_pengumuman']); ?></td>
-            <td>
-                <button onclick="openModal('<?php echo $row['id']; ?>')" class="btn btn-info">Detail Pencipta</button>
-            </td>
-            <td>
-                <?php
+            <tr>
+                <td>
+                    <a href="#" onclick="showProfile(<?php echo $row['user_id']; ?>)" class="profile-link">
+                        <?php echo htmlspecialchars($row['username']); ?>
+                    </a>
+                </td>
+                <td>
+                    <form action="services/edit_nomor_permohonan.php" method="POST">
+                        <input type="hidden" name="id" value="<?= $row['id']; ?>">
+                        <input type="text" name="nomor_permohonan"
+                            value="<?= htmlspecialchars($row['nomor_permohonan'] ?? ''); ?>" required>
+                        <button type="submit" class="btn btn-warning"
+                            onclick="return confirm('Yakin ingin mengedit nomor permohonan?')">Edit & Simpan</button>
+                    </form>
+                </td>
+                <td><?php echo htmlspecialchars($row['jenis_permohonan']); ?></td>
+                <td><?php echo htmlspecialchars($row['jenis_hak_cipta']); ?></td>
+                <td><?php echo htmlspecialchars($row['sub_jenis_hak_cipta']); ?></td>
+                <td><?php echo htmlspecialchars($row['tanggal_pengumuman']); ?></td>
+                <td><?php echo htmlspecialchars($row['judul_hak_cipta']); ?></td>
+                <td><?php echo htmlspecialchars($row['negara_pengumuman']); ?></td>
+                <td><?php echo htmlspecialchars($row['kota_pengumuman']); ?></td>
+                <td>
+                    <button onclick="openModal('<?php echo $row['id']; ?>')" class="btn btn-info">Detail Pencipta</button>
+                </td>
+                <td>
+                    <?php
                     $reg_id = $row['id'];
                     $files = $conn->query("SELECT file_name, file_path FROM documents WHERE registration_id = '$reg_id'");
                     while ($file = $files->fetch_assoc()) {
                         echo '<a href="' . htmlspecialchars($file['file_path']) . '" download="' . htmlspecialchars($file['file_name']) . '" class="btn btn-download">Download</a><br>';
                     }
-                ?>
-            </td>
-            <td><?php echo htmlspecialchars($row['status']); ?></td>
-            <td>
-                <?php if (!empty($row['certificate_path'])) { ?>
-                    <a href="<?= $row['certificate_path'] ?>" class="btn btn-download" download>Download</a>
-                <?php } else { ?>
-                    <span>Belum ada sertifikat</span>
-                <?php } ?>
-            </td>
-            <td>
-                <form action="services/edit_certificate.php" method="POST" enctype="multipart/form-data">
-                    <input type="hidden" name="id" value="<?= $row['id'] ?>">
-                    <input type="file" name="new_certificate" required>
-                    <button type="submit" class="btn btn-warning">Edit</button>
-                </form>
-            </td>
-            <td>
-                <a href="services/delete_hki.php?id=<?php echo $row['id']; ?>" class="btn btn-danger" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
-            </td>
-        </tr>
+                    ?>
+                </td>
+                <td><?php echo htmlspecialchars($row['status']); ?></td>
+                <td>
+                    <?php if (!empty($row['certificate_path'])) { ?>
+                        <a href="<?= $row['certificate_path'] ?>" class="btn btn-download" download>Download</a>
+                    <?php } else { ?>
+                        <span>Belum ada sertifikat</span>
+                    <?php } ?>
+                </td>
+                <td>
+                    <form action="services/edit_certificate.php" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="id" value="<?= $row['id'] ?>">
+                        <input type="file" name="new_certificate" required>
+                        <button type="submit" class="btn btn-warning"
+                            onclick="return confirm('Yakin ingin mengedit sertifikat?')">Edit</button>
+                    </form>
+                </td>
+                <td>
+                    <a href="services/delete_hki.php?id=<?php echo $row['id']; ?>" class="btn btn-danger"
+                        onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
+                </td>
+            </tr>
         <?php } ?>
     </table>
 
@@ -150,4 +186,5 @@ $result = $conn->query("SELECT registrations.*, users.username FROM registration
     </script>
 
 </body>
+
 </html>

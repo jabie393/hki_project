@@ -79,7 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <h2>Update Profil</h2>
     <form method="post">
-        <label for="new_username">Nama:</label>
+        <label for="new_username">Username:</label>
         <input type="text" name="new_username" value="<?= htmlspecialchars($user['username']) ?>" required>
 
         <br><br>

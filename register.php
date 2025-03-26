@@ -34,7 +34,7 @@ $dashboardPage = (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') ? 'a
         <h2>Masukkan Biodata Diri Anda</h2>
         <form action="services/register.php" method="POST" autocomplete="off">
             <div class="form-group">
-                <label for="username">Nama Lengkap</label>
+                <label for="username">Username</label>
                 <input type="text" id="username" name="username" placeholder="Masukkan Username Anda" required autocomplete="off" 
                     value="<?= isset($_SESSION['input_username']) ? $_SESSION['input_username'] : ''; ?>" />
             </div>
@@ -70,7 +70,7 @@ $dashboardPage = (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') ? 'a
     <!-- Footer -->
     <div class="footer">
         <a href="rekapitulasi.php">REKAPITULASI</a>
-        <a href="index.html">BERANDA</a>
+        <a href="index.php">BERANDA</a>
         <a href="<?php echo $dashboardPage; ?>">PENGAJUAN HKI</a>
     </div>
 </body>

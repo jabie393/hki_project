@@ -30,6 +30,7 @@ $result = $stmt->get_result();
 <h2>Status Pengajuan</h2>
 <table>
     <tr>
+        <th>Nomor Permohonan</th>
         <th>Jenis Permohonan</th>
         <th>Jenis Ciptaan</th>
         <th>Sub Jenis Ciptaan</th>
@@ -44,6 +45,7 @@ $result = $stmt->get_result();
     </tr>
     <?php while ($row = $result->fetch_assoc()) { ?>
         <tr>
+        <td><?php echo htmlspecialchars($row['nomor_permohonan'] ?? '-'); ?></td>
             <td><?php echo htmlspecialchars($row['jenis_permohonan']); ?></td>
             <td><?php echo htmlspecialchars($row['jenis_hak_cipta']); ?></td>
             <td><?php echo htmlspecialchars($row['sub_jenis_hak_cipta']); ?></td>
