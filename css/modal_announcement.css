@@ -1,0 +1,143 @@
+/* Modal Overlay */
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Modal Box */
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 800px;
+  max-height: 90vh;
+  overflow: hidden;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Modal Header */
+.modal-header {
+  text-align: center; /* Pastikan teks dalam header rata tengah */
+  width: 100%; /* Pastikan header memenuhi lebar modal */
+  display: flex;
+  justify-content: center; /* Pusatkan konten dalam flexbox */
+  align-items: center; /* Pusatkan vertikal */
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.modal-header h2 {
+  color: rgb(126, 125, 125);
+  margin: 0 auto; /* Hindari margin yang mengganggu */
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* Modal Body */
+.modal-body {
+  overflow-y: auto;
+  flex-grow: 1; /* Agar body bisa menyesuaikan ukuran */
+  padding-top: 10px;
+  text-align: center;
+}
+
+/* Image Styling */
+.modal-content img {
+  max-width: 100%;
+  max-height: 60vh;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+/* Footer yang lebih menarik */
+.modal-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  padding: 20px; /* Tambahkan padding lebih besar */
+  min-height: 80px;
+  background-color: #f8f9fa;
+  position: relative;
+  border-top: 1px solid #ddd;
+  height: 100%;
+}
+
+/* Tombol Tutup di tengah & lebih besar */
+.close-btn {
+  background-color: #ffa500;
+  color: white;
+  margin-top: 10px;
+  border: none;
+  padding: 8px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.close-btn:hover {
+  background-color: #ff8c00;
+}
+
+/* Tombol Next & Prev lebih rapi */
+.carousel-control-prev,
+.carousel-control-next {
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  transition: background-color 0.3s ease;
+  align-self: center;
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+  color: rgba(100, 100, 100, 0.9);
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  width: 15px; /* Ukuran ikon */
+  height: 15px;
+  background-color: black; /* Warna ikon */
+  mask: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23FFF' d='M4.5 0L0 4l4.5 4V0z'/%3e%3c/svg%3e")
+    no-repeat center / contain; /* Chevron kiri */
+  -webkit-mask: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23FFF' d='M4.5 0L0 4l4.5 4V0z'/%3e%3c/svg%3e")
+    no-repeat center / contain;
+}
+.carousel-control-next-icon {
+  mask: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23FFF' d='M3.5 0L8 4l-4.5 4V0z'/%3e%3c/svg%3e")
+    no-repeat center / contain; /* Chevron kanan */
+  -webkit-mask: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23FFF' d='M3.5 0L8 4l-4.5 4V0z'/%3e%3c/svg%3e")
+    no-repeat center / contain;
+}
+
+/* Animasi Modal */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
