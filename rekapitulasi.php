@@ -4,15 +4,17 @@ include 'config/config.php';
 // Ambil kata kunci pencarian jika ada
 $search = isset($_GET['search']) ? $conn->real_escape_string($_GET['search']) : '';
 
-// Query dengan filter pencarian jika ada input
-$query = "SELECT r.id, r.nomor_permohonan, r.jenis_permohonan, r.jenis_hak_cipta, r.sub_jenis_hak_cipta, r.tanggal_pengumuman, r.status, p.nama AS pencipta_nama, p.jenis_kelamin, p.negara 
-          FROM registrations r 
-          LEFT JOIN creators p ON r.id = p.registration_id
-          WHERE r.status = 'Terdaftar' 
-          AND (r.nomor_permohonan LIKE '%$search%' 
-          OR r.jenis_permohonan LIKE '%$search%' 
-          OR r.jenis_hak_cipta LIKE '%$search%' 
-          OR r.sub_jenis_hak_cipta LIKE '%$search%')";
+// Query hanya mengambil data dari tabel registrations
+$query = "SELECT id, nomor_permohonan, jenis_permohonan, jenis_hak_cipta, sub_jenis_hak_cipta, tanggal_pengumuman, negara_pengumuman, kota_pengumuman, status
+          FROM registrations 
+          WHERE status = 'Terdaftar' 
+          AND (nomor_permohonan LIKE '%$search%' 
+          OR jenis_permohonan LIKE '%$search%' 
+          OR jenis_hak_cipta LIKE '%$search%' 
+          OR sub_jenis_hak_cipta LIKE '%$search%'
+          OR tanggal_pengumuman LIKE '%$search%'
+          OR negara_pengumuman LIKE '%$search%'
+          OR kota_pengumuman LIKE '%$search%')";
 
 $result = $conn->query($query);
 ?>
@@ -45,8 +47,8 @@ $result = $conn->query($query);
         <th>Tanggal Pengumuman</th>
         <th>Pencipta</th>
         <th>Pemegang Hak Cipta</th>
-        <th>Jenis Kelamin</th>
         <th>Negara</th>
+        <th>Kota</th>
         <th>Status</th>
     </tr>
     <?php while ($row = $result->fetch_assoc()) { ?>
@@ -58,8 +60,8 @@ $result = $conn->query($query);
             <td><?php echo htmlspecialchars($row['tanggal_pengumuman']); ?></td>
             <td><button class="btn btn-info" onclick="showCreator(<?php echo $row['id']; ?>)">Detail Pencipta</button></td>
             <td>Universitas Raden Rahmat Malang</td>
-            <td><?php echo htmlspecialchars($row['jenis_kelamin']); ?></td>
-            <td><?php echo htmlspecialchars($row['negara']); ?></td>
+            <td><?php echo htmlspecialchars($row['negara_pengumuman']); ?></td>
+            <td><?php echo htmlspecialchars($row['kota_pengumuman']); ?></td>
             <td><?php echo htmlspecialchars($row['status']); ?></td>
         </tr>
     <?php } ?>
