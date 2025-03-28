@@ -15,6 +15,7 @@ $result = $conn->query("SELECT registrations.*, users.username FROM registration
 
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,6 +23,7 @@ $result = $conn->query("SELECT registrations.*, users.username FROM registration
     <link rel="stylesheet" href="css/pengajuan.css">
     <link rel="stylesheet" href="css/modal.css">
 </head>
+
 <body>
     <h2>Daftar Pengajuan HKI</h2>
     <table>
@@ -32,8 +34,8 @@ $result = $conn->query("SELECT registrations.*, users.username FROM registration
             <th>Sub Jenis Ciptaan</th>
             <th>Tanggal Pengumuman</th>
             <th>Judul</th>
-            <th>Negara Pengumuman</th>
-            <th>Kota Pengumuman</th>
+            <th>Deskripsi</th>
+            <th>Tempat Pengumuman</th>
             <th>Pencipta</th>
             <th>File</th>
             <th>Status</th>
@@ -43,7 +45,7 @@ $result = $conn->query("SELECT registrations.*, users.username FROM registration
             <tr>
                 <td>
                     <a href="#" onclick="showProfile(<?php echo $row['user_id']; ?>)" class="profile-link">
-                    <?php echo htmlspecialchars($row['username']); ?>
+                        <?php echo htmlspecialchars($row['username']); ?>
                     </a>
                 </td>
                 <td><?php echo htmlspecialchars($row['jenis_permohonan']); ?></td>
@@ -51,16 +53,24 @@ $result = $conn->query("SELECT registrations.*, users.username FROM registration
                 <td><?php echo htmlspecialchars($row['sub_jenis_hak_cipta']); ?></td>
                 <td><?php echo htmlspecialchars($row['tanggal_pengumuman']); ?></td>
                 <td><?php echo htmlspecialchars($row['judul_hak_cipta']); ?></td>
-                <td><?php echo htmlspecialchars($row['negara_pengumuman']); ?></td>
-                <td><?php echo htmlspecialchars($row['kota_pengumuman']); ?></td>
+                <td>
+                    <button onclick="openDescriptionModal('<?php echo htmlspecialchars($row['deskripsi']); ?>')"
+                        class="btn btn-info">
+                        Lihat
+                    </button>
+                </td>
+                <td>
+                    <div><strong>Negara:</strong> <?php echo htmlspecialchars($row['negara_pengumuman']); ?></div>
+                    <div><strong>Kota:</strong> <?php echo htmlspecialchars($row['kota_pengumuman']); ?></div>
+                </td>
                 <td>
                     <button onclick="openModal('<?php echo $row['id']; ?>')" class="btn btn-info">Detail Pencipta</button>
                 </td>
                 <td>
                     <?php
-                        $reg_id = $row['id'];
-                        $files = $conn->query("SELECT file_name, file_path FROM documents WHERE registration_id = '$reg_id'");
-                        while ($file = $files->fetch_assoc()) {
+                    $reg_id = $row['id'];
+                    $files = $conn->query("SELECT file_name, file_path FROM documents WHERE registration_id = '$reg_id'");
+                    while ($file = $files->fetch_assoc()) {
                         echo '<a href="' . htmlspecialchars($file['file_path']) . '" download="' . htmlspecialchars($file['file_name']) . '" class="btn btn-download">Download</a><br>';
                     }
                     ?>
@@ -75,8 +85,10 @@ $result = $conn->query("SELECT registrations.*, users.username FROM registration
                             <label>Nomor Sertifikat:</label><br>
                             <input type="text" name="nomor_sertifikat" placeholder="Opsional">
                             <input type="file" name="certificate">
-                            <button type="submit" class="btn btn-safe" onclick="return confirm('Yakin ingin menyetujui pengajuan ini?')">Upload & Setujui</button>
-                            <a href="services/delete_hki.php?id=<?php echo $row['id']; ?>" class="btn btn-danger" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
+                            <button type="submit" class="btn btn-safe"
+                                onclick="return confirm('Yakin ingin menyetujui pengajuan ini?')">Upload & Setujui</button>
+                            <a href="services/delete_hki.php?id=<?php echo $row['id']; ?>" class="btn btn-danger"
+                                onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
                         </form>
                     <?php } elseif (!empty($row['certificate_path'])) { ?>
                         <a href="<?= $row['certificate_path'] ?>" class="btn btn-primary" download>Unduh</a>
@@ -108,6 +120,17 @@ $result = $conn->query("SELECT registrations.*, users.username FROM registration
         </div>
     </div>
 
+    <!-- Modal untuk Deskripsi -->
+    <div id="descriptionModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Deskripsi Ciptaan</h2>
+                <button class="close" onclick="closeDescriptionModal()">&times;</button>
+            </div>
+            <div id="descriptionDetails"></div>
+        </div>
+    </div>
+
     <!-- Modal untuk Detail Pencipta -->
     <div id="creatorModal" class="modal" style="display: none;">
         <div class="modal-content">
@@ -135,9 +158,19 @@ $result = $conn->query("SELECT registrations.*, users.username FROM registration
             document.getElementById('profileModal').style.display = 'none';
         }
 
+        //script detail deskripsi
+        function openDescriptionModal(description) {
+            document.getElementById('descriptionDetails').innerText = description;
+            document.getElementById('descriptionModal').style.display = 'flex';
+        }
+
+        function closeDescriptionModal() {
+            document.getElementById('descriptionModal').style.display = 'none';
+        }
+
         //script detail pencipta
         function openModal(id) {
-            fetch('creator_details.php?id=' + id)
+            fetch('widgets/creator_details.php?id=' + id)
                 .then(response => response.text())
                 .then(data => {
                     document.getElementById('creatorDetails').innerHTML = data;
@@ -152,4 +185,5 @@ $result = $conn->query("SELECT registrations.*, users.username FROM registration
     </script>
 
 </body>
+
 </html>

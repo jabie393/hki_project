@@ -56,8 +56,8 @@ $result = $conn->query($query);
             <th>Sub Jenis Ciptaan</th>
             <th>Tanggal Pengumuman</th>
             <th>Judul</th>
-            <th>Negara Pengumuman</th>
-            <th>Kota Pengumuman</th>
+            <th>Deskripsi</th>
+            <th>Tempat Pengumuman</th>
             <th>Pencipta</th>
             <th>File</th>
             <th>Status</th>
@@ -88,8 +88,16 @@ $result = $conn->query($query);
                 <td><?php echo htmlspecialchars($row['sub_jenis_hak_cipta']); ?></td>
                 <td><?php echo htmlspecialchars($row['tanggal_pengumuman']); ?></td>
                 <td><?php echo htmlspecialchars($row['judul_hak_cipta']); ?></td>
-                <td><?php echo htmlspecialchars($row['negara_pengumuman']); ?></td>
-                <td><?php echo htmlspecialchars($row['kota_pengumuman']); ?></td>
+                <td>
+                    <button onclick="openDescriptionModal('<?php echo htmlspecialchars($row['deskripsi']); ?>')"
+                        class="btn btn-info">
+                        Lihat
+                    </button>
+                </td>
+                <td>
+                    <div><strong>Negara:</strong> <?php echo htmlspecialchars($row['negara_pengumuman']); ?></div>
+                    <div><strong>Kota:</strong> <?php echo htmlspecialchars($row['kota_pengumuman']); ?></div>
+                </td>
                 <td>
                     <button onclick="openModal('<?php echo $row['id']; ?>')" class="btn btn-info">Detail Pencipta</button>
                 </td>
@@ -154,6 +162,17 @@ $result = $conn->query($query);
         </div>
     </div>
 
+    <!-- Modal untuk Deskripsi -->
+    <div id="descriptionModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Deskripsi Ciptaan</h2>
+                <button class="close" onclick="closeDescriptionModal()">&times;</button>
+            </div>
+            <div id="descriptionDetails"></div>
+        </div>
+    </div>
+
     <!-- Modal untuk Detail Pencipta -->
     <div id="creatorModal" class="modal" style="display: none;">
         <div class="modal-content">
@@ -181,9 +200,19 @@ $result = $conn->query($query);
             document.getElementById('profileModal').style.display = 'none';
         }
 
+        //script detail deskripsi
+        function openDescriptionModal(description) {
+            document.getElementById('descriptionDetails').innerText = description;
+            document.getElementById('descriptionModal').style.display = 'flex';
+        }
+
+        function closeDescriptionModal() {
+            document.getElementById('descriptionModal').style.display = 'none';
+        }
+
         //script detail pencipta
         function openModal(id) {
-            fetch('creator_details.php?id=' + id)
+            fetch('widgets/creator_details.php?id=' + id)
                 .then(response => response.text())
                 .then(data => {
                     document.getElementById('creatorDetails').innerHTML = data;
