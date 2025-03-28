@@ -5,16 +5,16 @@ include 'config/config.php';
 $search = isset($_GET['search']) ? $conn->real_escape_string($_GET['search']) : '';
 
 // Query hanya mengambil data dari tabel registrations
-$query = "SELECT id, nomor_permohonan, jenis_permohonan, jenis_hak_cipta, sub_jenis_hak_cipta, tanggal_pengumuman, negara_pengumuman, kota_pengumuman, status
+$query = "SELECT id, nomor_permohonan, jenis_hak_cipta, tanggal_pengumuman, judul_hak_cipta, negara_pengumuman, kota_pengumuman, nomor_sertifikat, status
           FROM registrations 
           WHERE status = 'Terdaftar' 
           AND (nomor_permohonan LIKE '%$search%' 
-          OR jenis_permohonan LIKE '%$search%' 
+          OR judul_hak_cipta LIKE '%$search%'
           OR jenis_hak_cipta LIKE '%$search%' 
-          OR sub_jenis_hak_cipta LIKE '%$search%'
           OR tanggal_pengumuman LIKE '%$search%'
           OR negara_pengumuman LIKE '%$search%'
-          OR kota_pengumuman LIKE '%$search%')";
+          OR kota_pengumuman LIKE '%$search%'
+          OR nomor_sertifikat LIKE '%$search%')";
 
 $result = $conn->query($query);
 ?>
@@ -41,27 +41,27 @@ $result = $conn->query($query);
 <table>
     <tr>
         <th>Nomor Permohonan</th>
-        <th>Jenis Permohonan</th>
         <th>Jenis Ciptaan</th>
-        <th>Sub Jenis Ciptaan</th>
         <th>Tanggal Pengumuman</th>
+        <th>Judul</th>
         <th>Pencipta</th>
         <th>Pemegang Hak Cipta</th>
         <th>Negara</th>
         <th>Kota</th>
+        <th>Nomor Sertifikat</th>
         <th>Status</th>
     </tr>
     <?php while ($row = $result->fetch_assoc()) { ?>
         <tr>
             <td><?php echo htmlspecialchars($row['nomor_permohonan'] ?? '-'); ?></td>
-            <td><?php echo htmlspecialchars($row['jenis_permohonan']); ?></td>
             <td><?php echo htmlspecialchars($row['jenis_hak_cipta']); ?></td>
-            <td><?php echo htmlspecialchars($row['sub_jenis_hak_cipta']); ?></td>
             <td><?php echo htmlspecialchars($row['tanggal_pengumuman']); ?></td>
+            <td><?php echo htmlspecialchars($row['judul_hak_cipta']); ?></td>
             <td><button class="btn btn-info" onclick="showCreator(<?php echo $row['id']; ?>)">Detail Pencipta</button></td>
             <td>Universitas Raden Rahmat Malang</td>
             <td><?php echo htmlspecialchars($row['negara_pengumuman']); ?></td>
             <td><?php echo htmlspecialchars($row['kota_pengumuman']); ?></td>
+            <td><?php echo htmlspecialchars($row['nomor_sertifikat'] ?? '-'); ?></td>
             <td><?php echo htmlspecialchars($row['status']); ?></td>
         </tr>
     <?php } ?>

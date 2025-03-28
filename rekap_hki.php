@@ -21,7 +21,8 @@ $query = "SELECT registrations.*, users.username FROM registrations
           OR registrations.tanggal_pengumuman LIKE '%$search%' 
           OR registrations.judul_hak_cipta LIKE '%$search%' 
           OR registrations.negara_pengumuman LIKE '%$search%' 
-          OR registrations.kota_pengumuman LIKE '%$search%')";
+          OR registrations.kota_pengumuman LIKE '%$search%'
+          OR registrations.nomor_sertifikat LIKE '%$search%')";
 $result = $conn->query($query);
 ?>
 
@@ -41,8 +42,7 @@ $result = $conn->query($query);
 
     <!-- Form Pencarian -->
     <form method="GET">
-        <input type="text" name="search"
-            placeholder="Cari Data Hak Cipta"
+        <input type="text" name="search" placeholder="Cari Data Hak Cipta"
             value="<?php echo htmlspecialchars($search); ?>">
         <button type="submit">Cari</button>
     </form>
@@ -63,6 +63,7 @@ $result = $conn->query($query);
             <th>Status</th>
             <th>Sertifikat</th>
             <th>Edit Sertifikat</th>
+            <th>Nomor Sertifikat</th>
             <th>Aksi</th>
         </tr>
         <?php while ($row = $result->fetch_assoc()) { ?>
@@ -76,7 +77,8 @@ $result = $conn->query($query);
                     <form action="services/edit_nomor_permohonan.php" method="POST">
                         <input type="hidden" name="id" value="<?= $row['id']; ?>">
                         <input type="text" name="nomor_permohonan"
-                            value="<?= htmlspecialchars($row['nomor_permohonan'] ?? ''); ?>" required>
+                            value="<?= htmlspecialchars($row['nomor_permohonan'] ?? ''); ?>" placeholder="Nomor Permohonan"
+                            required>
                         <button type="submit" class="btn btn-warning"
                             onclick="return confirm('Yakin ingin mengedit nomor permohonan?')">Edit & Simpan</button>
                     </form>
@@ -114,6 +116,16 @@ $result = $conn->query($query);
                         <input type="file" name="new_certificate" required>
                         <button type="submit" class="btn btn-warning"
                             onclick="return confirm('Yakin ingin mengedit sertifikat?')">Edit</button>
+                    </form>
+                </td>
+                <td>
+                    <form action="services/edit_nomor_sertifikat.php" method="POST">
+                        <input type="hidden" name="id" value="<?= $row['id']; ?>">
+                        <input type="text" name="nomor_sertifikat"
+                            value="<?= htmlspecialchars($row['nomor_sertifikat'] ?? ''); ?>" placeholder="Nomor Sertifikat"
+                            required>
+                        <button type="submit" class="btn btn-warning"
+                            onclick="return confirm('Yakin ingin mengedit nomor permohonan?')">Edit & Simpan</button>
                     </form>
                 </td>
                 <td>

@@ -70,8 +70,10 @@ $result = $conn->query("SELECT registrations.*, users.username FROM registration
                     <?php if ($row['status'] == 'Pending') { ?>
                         <form action="services/approve.php" method="POST" enctype="multipart/form-data">
                             <input type="hidden" name="id" value="<?= $row['id'] ?>">
-                            <label>Nomor Permohonan (Opsional):</label>
-                            <input type="text" name="nomor_permohonan">
+                            <label>Nomor Permohonan:</label><br>
+                            <input type="text" name="nomor_permohonan" placeholder="Opsional"><br>
+                            <label>Nomor Sertifikat:</label><br>
+                            <input type="text" name="nomor_sertifikat" placeholder="Opsional">
                             <input type="file" name="certificate">
                             <button type="submit" class="btn btn-safe" onclick="return confirm('Yakin ingin menyetujui pengajuan ini?')">Upload & Setujui</button>
                             <a href="services/delete_hki.php?id=<?php echo $row['id']; ?>" class="btn btn-danger" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>

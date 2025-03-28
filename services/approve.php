@@ -10,6 +10,7 @@ if ($_SESSION['role'] != 'admin') {
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
     $id = $_POST['id'];
     $nomor_permohonan = isset($_POST['nomor_permohonan']) ? $_POST['nomor_permohonan'] : null;
+    $nomor_sertifikat = isset($_POST['nomor_sertifikat']) ? $_POST['nomor_sertifikat'] : null;
 
     // Ambil user_id berdasarkan id registrasi
     $query = $conn->query("SELECT user_id FROM registrations WHERE id = '$id'");
@@ -41,16 +42,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
         $certificate_path = $db_file_path;
     }
 
-    // Update status menjadi "Terdaftar" dan simpan path sertifikat serta nomor permohonan jika ada
-    if ($certificate_path && $nomor_permohonan) {
-        $conn->query("UPDATE registrations SET status='Terdaftar', certificate_path='$certificate_path', nomor_permohonan='$nomor_permohonan' WHERE id='$id'");
-    } elseif ($certificate_path) {
-        $conn->query("UPDATE registrations SET status='Terdaftar', certificate_path='$certificate_path' WHERE id='$id'");
-    } elseif ($nomor_permohonan) {
-        $conn->query("UPDATE registrations SET status='Terdaftar', nomor_permohonan='$nomor_permohonan' WHERE id='$id'");
-    } else {
-        $conn->query("UPDATE registrations SET status='Terdaftar' WHERE id='$id'");
+    // Update status menjadi "Terdaftar" dan simpan path sertifikat, nomor permohonan, serta nomor sertifikat jika ada
+    $update_query = "UPDATE registrations SET status='Terdaftar'";
+    if ($certificate_path) {
+        $update_query .= ", certificate_path='$certificate_path'";
     }
+    if ($nomor_permohonan) {
+        $update_query .= ", nomor_permohonan='$nomor_permohonan'";
+    }
+    if ($nomor_sertifikat) {
+        $update_query .= ", nomor_sertifikat='$nomor_sertifikat'";
+    }
+    $update_query .= " WHERE id='$id'";
+
+    $conn->query($update_query);
 
     echo "Pengajuan telah disetujui.";
 }
