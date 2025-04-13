@@ -147,7 +147,9 @@ $result = $conn->query($query);
     <br>
     <div>
         <a href="profile.php">Profil</a> |
-        <a href="admin.php">Daftar pengajuan HKI</a> |
+        <a href="admin.php">Dashboard</a> |
+        <a href="template.php">Template Dokumen</a> |
+        <a href="reset_password.php">Reset Password User |</a>
         <a href="services/logout.php">Logout</a>
     </div>
 

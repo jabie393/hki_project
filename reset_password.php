@@ -57,18 +57,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kelola User</title>
-    
+
     <!-- Tambahkan CSS Select2 -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
-    
+
     <!-- Tambahkan jQuery (Wajib sebelum Select2) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 </head>
+
 <body>
     <h2>Kelola User</h2>
     <form method="post">
@@ -103,36 +105,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <br><br>
 
         <button type="submit">Simpan Perubahan</button>
-    </form>
+    </form><br>
+    <div>
+        <a href="profile.php">Profil</a> |
+        <a href="admin.php">Dashboard</a> |
+        <a href="rekap_hki.php">Lihat Rekap HKI</a> |
+        <a href="template.php">Template Dokumen</a> |
+        <a href="services/logout.php">Logout</a>
+    </div>
 
     <!-- Pindahkan script Select2 ke sini setelah jQuery dimuat -->
     <script>
-    $(document).ready(function() {
-        $('#userSelect').select2({
-            placeholder: "Cari User...",
-            allowClear: true
-        });
+        $(document).ready(function () {
+            $('#userSelect').select2({
+                placeholder: "Cari User...",
+                allowClear: true
+            });
 
-        // Ambil data user secara otomatis setelah memilih user
-        $('#userSelect').change(function() {
-            var userId = $(this).val();
-            if (userId) {
-                $.ajax({
-                    url: "services/get_user_data.php",
-                    type: "POST",
-                    data: { user_id: userId },
-                    dataType: "json",
-                    success: function(data) {
-                        $('#new_username').val(data.username);
-                        $('#new_email').val(data.email);
-                    }
-                });
-            } else {
-                $('#new_username').val('');
-                $('#new_email').val('');
-            }
+            // Ambil data user secara otomatis setelah memilih user
+            $('#userSelect').change(function () {
+                var userId = $(this).val();
+                if (userId) {
+                    $.ajax({
+                        url: "services/get_user_data.php",
+                        type: "POST",
+                        data: { user_id: userId },
+                        dataType: "json",
+                        success: function (data) {
+                            $('#new_username').val(data.username);
+                            $('#new_email').val(data.email);
+                        }
+                    });
+                } else {
+                    $('#new_username').val('');
+                    $('#new_email').val('');
+                }
+            });
         });
-    });
     </script>
 </body>
+
 </html>

@@ -42,6 +42,14 @@ if ($_SESSION['role'] != 'admin') {
         }
         ?>
     </ul>
+
+    <div>
+        <a href="profile.php">Profil</a> |
+        <a href="admin.php">Dashboard</a> |
+        <a href="rekap_hki.php">Lihat Rekap HKI</a> |
+        <a href="reset_password.php">Reset Password User |</a>
+        <a href="services/logout.php">Logout</a>
+    </div>
 </body>
 
 </html>
