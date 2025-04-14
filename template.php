@@ -1,3 +1,4 @@
+<!-- Flow FE -->
 <?php
 include 'config/config.php';
 session_start();
@@ -13,43 +14,73 @@ if ($_SESSION['role'] != 'admin') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload & Download Documents</title>
+    <title>Admin - Upload & Download Documents</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/template.css">
 </head>
 
 <body>
-    <h2>Admin Upload</h2>
-    <form action="services/edit_template.php" method="post" enctype="multipart/form-data">
-        <select name="doc_type" required>
-            <option value="surat_pernyataan">Surat Pernyataan</option>
-            <option value="surat_pengalihan_hak">Surat Pengalihan Hak</option>
-        </select>
-        <input type="file" name="file" required>
-        <button type="submit">Upload</button>
-    </form>
 
-    <h2>Available Documents</h2>
-    <ul>
-        <?php
-        $docs = ['surat_pernyataan' => 'Surat Pernyataan', 'surat_pengalihan_hak' => 'Surat Pengalihan Hak'];
-        foreach ($docs as $key => $label) {
-            $result = $conn->query("SELECT * FROM template_documents WHERE doc_type='$key'");
-            if ($row = $result->fetch_assoc()) {
-                echo "<li>$label: <a href='" . $row['filepath'] . "' download>" . $row['filename'] . "</a> ";
-                echo "<a href='services/edit_template.php?delete=$key' onclick='return confirm(\"Hapus dokumen ini?\")'>[Delete]</a></li>";
-            } else {
-                echo "<li>$label: Belum diunggah</li>";
+    <main>
+        <h2>Upload Dokumen</h2>
+        <form action="services/edit_template.php" method="post" enctype="multipart/form-data">
+            <select name="doc_type" required>
+                <option value="surat_pernyataan">Surat Pernyataan</option>
+                <option value="surat_pengalihan_hak">Surat Pengalihan Hak</option>
+            </select>
+            <div class="custom-file-upload">
+                <input type="file" name="file" id="fileInput" required>
+                <div class="upload-box">
+                    <span class="upload-icon">📁</span>
+                    <span id="upload-text">Klik untuk memilih file</span>
+                </div>
+            </div>
+            <span id="file-name">Belum ada file dipilih</span>
+
+
+
+            <button type="submit">Upload</button>
+        </form>
+
+        <h2>Dokumen Tersedia</h2>
+        <ul>
+            <?php
+            $docs = ['surat_pernyataan' => 'Surat Pernyataan', 'surat_pengalihan_hak' => 'Surat Pengalihan Hak'];
+            foreach ($docs as $key => $label) {
+                $result = $conn->query("SELECT * FROM template_documents WHERE doc_type='$key'");
+                if ($row = $result->fetch_assoc()) {
+                    echo "<li><strong>$label:</strong><br><span class='doc-actions'>";
+                    echo "<a class='download-btn' href='" . $row['filepath'] . "' download>" . $row['filename'] . "</a>";
+                    echo "<a class='delete-btn' href='services/edit_template.php?delete=$key' onclick='return confirm(\"Hapus dokumen ini?\")'>Hapus</a>";
+                    echo "</span></li>";
+                } else {
+                    echo "<li><strong>$label:</strong> <em>Belum diunggah</em></li>";
+                }
             }
-        }
-        ?>
-    </ul>
+            ?>
+        </ul>
 
-    <div>
-        <a href="profile.php">Profil</a> |
-        <a href="admin.php">Dashboard</a> |
-        <a href="rekap_hki.php">Lihat Rekap HKI</a> |
-        <a href="reset_password.php">Reset Password User |</a>
-        <a href="services/logout.php">Logout</a>
-    </div>
+        <div class="nav-links">
+            <a href="profile.php">Profil</a> |
+            <a href="admin.php">Dashboard</a> |
+            <a href="rekap_hki.php">Rekap HKI</a> |
+            <a href="reset_password.php">Reset Password</a> |
+            <a href="services/logout.php">Logout</a>
+        </div>
+    </main>
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const fileNameDisplay = document.getElementById('file-name');
+
+        fileInput.addEventListener('change', function () {
+            if (fileInput.files.length > 0) {
+                fileNameDisplay.textContent = fileInput.files[0].name;
+            } else {
+                fileNameDisplay.textContent = 'Belum ada file dipilih';
+            }
+        });
+    </script>
+
 </body>
 
 </html>
