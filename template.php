@@ -24,10 +24,19 @@ if ($_SESSION['role'] != 'admin') {
     <main>
         <h2>Upload Dokumen</h2>
         <form action="services/edit_template.php" method="post" enctype="multipart/form-data">
-            <select name="doc_type" required>
-                <option value="surat_pernyataan">Surat Pernyataan</option>
-                <option value="surat_pengalihan_hak">Surat Pengalihan Hak</option>
-            </select>
+            <div class="custom-select-wrapper">
+                <select name="doc_type" required>
+                    <option value="surat_pernyataan">Surat Pernyataan</option>
+                    <option value="surat_pengalihan_hak">Surat Pengalihan Hak</option>
+                </select>
+                <span class="custom-arrow">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7 10l5 5 5-5" stroke="#4f46e5" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </span>
+            </div>
+
             <div class="custom-file-upload">
                 <input type="file" name="file" id="fileInput" required>
                 <div class="upload-box">
@@ -68,18 +77,7 @@ if ($_SESSION['role'] != 'admin') {
             <a href="services/logout.php">Logout</a>
         </div>
     </main>
-    <script>
-        const fileInput = document.getElementById('fileInput');
-        const fileNameDisplay = document.getElementById('file-name');
-
-        fileInput.addEventListener('change', function () {
-            if (fileInput.files.length > 0) {
-                fileNameDisplay.textContent = fileInput.files[0].name;
-            } else {
-                fileNameDisplay.textContent = 'Belum ada file dipilih';
-            }
-        });
-    </script>
+    <script src="js/template.js"></script>
 
 </body>
 

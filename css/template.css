@@ -39,6 +39,46 @@ input[type="file"] {
   border: 1px solid #ccc;
 }
 
+.custom-select-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+
+}
+
+.custom-select-wrapper select {
+  width: 100%;
+  padding: 12px 40px 12px 12px;
+  border: 2px solid #a5b4fc;
+  border-radius: 8px;
+  background-color: #eef2ff;
+  font-weight: 600;
+  color: #333;
+  cursor: pointer;
+  appearance: none; /* Menghapus panah default */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.custom-select-wrapper select:focus {
+  outline: none;
+  border-color: #6366f1;
+  background-color: #e0e7ff;
+}
+
+.custom-arrow {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%) rotate(0deg); /* Panah menghadap ke bawah default */
+  pointer-events: none;
+  transition: transform 0.3s ease;
+}
+
+.custom-select-wrapper select:focus + .custom-arrow {
+  transform: translateY(-50%) rotate(180deg); /* Menghadap ke atas saat focus */
+}
+
 .custom-file-upload {
   position: relative;
   width: 100%;
