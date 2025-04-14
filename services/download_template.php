@@ -1,7 +1,6 @@
 <?php
-$conn = new mysqli('localhost', 'root', '', 'hki_db');
-if ($conn->connect_error)
-    die('Connection failed: ' . $conn->connect_error);
+include '../config/config.php';
+session_start();
 
 if (isset($_GET['doc_type'])) {
     $docType = $_GET['doc_type'];
