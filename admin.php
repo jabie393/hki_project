@@ -103,7 +103,7 @@ $result = $conn->query("SELECT registrations.*, users.username FROM registration
     <br>
     <div>
         <a href="profile.php">Profil</a> |
-        <a href="rekap_hki.php">Lihat Rekap HKI</a> |
+        <a href="rekap_hki.php">Rekap HKI</a> |
         <a href="announcement.php">Pengumuman</a> |
         <a href="template.php">Template Dokumen</a> |
         <a href="reset_password.php">Reset Password User |</a>

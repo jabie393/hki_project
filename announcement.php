@@ -40,7 +40,7 @@ $result = $conn->query("SELECT * FROM announcement");
 
     <div>
         <a href="profile.php">Profil</a> |
-        <a href="rekap_hki.php">Lihat Rekap HKI</a> |
+        <a href="rekap_hki.php">Rekap HKI</a> |
         <a href="admin.php">Dashboard</a> |
         <a href="template.php">Template Dokumen</a> |
         <a href="reset_password.php">Reset Password User |</a>

@@ -112,7 +112,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="nav-links mt-4">
             <a href="profile.php">Profil</a> |
             <a href="admin.php">Dashboard</a> |
-            <a href="rekap_hki.php">Lihat Rekap HKI</a> |
+            <a href="rekap_hki.php">Rekap HKI</a> |
             <a href="template.php">Template Dokumen</a> |
             <a href="services/logout.php">Logout</a>
         </div>
