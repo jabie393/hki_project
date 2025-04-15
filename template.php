@@ -45,9 +45,6 @@ if ($_SESSION['role'] != 'admin') {
                 </div>
             </div>
             <span id="file-name">Belum ada file dipilih</span>
-
-
-
             <button type="submit">Upload</button>
         </form>
 
@@ -73,6 +70,7 @@ if ($_SESSION['role'] != 'admin') {
             <a href="profile.php">Profil</a> |
             <a href="admin.php">Dashboard</a> |
             <a href="rekap_hki.php">Rekap HKI</a> |
+            <a href="announcement.php">Pengumuman</a> |
             <a href="reset_password.php">Reset Password</a> |
             <a href="services/logout.php">Logout</a>
         </div>

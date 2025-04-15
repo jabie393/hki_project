@@ -113,6 +113,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <a href="profile.php">Profil</a> |
             <a href="admin.php">Dashboard</a> |
             <a href="rekap_hki.php">Rekap HKI</a> |
+            <a href="announcement.php">Pengumuman</a> |
             <a href="template.php">Template Dokumen</a> |
             <a href="services/logout.php">Logout</a>
         </div>
