@@ -1,3 +1,5 @@
+<!-- Flow FE -->
+<!-- ADMIN & USER -->
 <?php
 include 'config/config.php';
 session_start();
@@ -32,85 +34,52 @@ if (!file_exists($profile_picture) || empty($profile['profile_picture'])) {
 
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profil Pengguna</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            width: 50%;
-            margin: 50px auto;
-            background: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-        .profile-img {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid #007bff;
-        }
-        h2 {
-            color: #333;
-        }
-        p {
-            font-size: 16px;
-            margin: 5px 0;
-        }
-        .btn {
-            display: inline-block;
-            padding: 10px 20px;
-            margin-top: 20px;
-            background: #007bff;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-        .btn:hover {
-            background: #0056b3;
-        }
-        .fa-check-circle {
-            color: #007bff;
-            margin-left: 5px;
-        }
-    </style>
+    <!-- Custom CSS-->
+    <link rel="stylesheet" href="css/profile.css">
 </head>
+
 <body>
 
-<div class="container">
-    <img src="<?= $profile_picture ?>" class="profile-img" alt="Foto Profil">
-    <h2><?= $nama_lengkap ?> <?= $isAdmin ? '<i class="fas fa-check-circle"></i>' : '' ?></h2>
-    
-    <p><strong>No. KTP:</strong> <?= $no_ktp ?></p>
-    <p><strong>Telepon:</strong> <?= $telephone ?></p>
-    <p><strong>Tanggal Lahir:</strong> <?= $birth_date ?></p>
-    <p><strong>Jenis Kelamin:</strong> <?= $gender ?></p>
-    <p><strong>Kewarganegaraan:</strong> <?= $nationality ?></p>
+    <div class="container">
+        <img src="<?= $profile_picture ?>" class="profile-img" alt="Foto Profil">
+        <h2><?= $nama_lengkap ?> <?= $isAdmin ? '<i class="fas fa-check-circle"></i>' : '' ?></h2>
 
-    <!-- Tipe Pemohon hanya ditampilkan jika bukan admin -->
-    <?php if (!$isAdmin): ?>
-        <p><strong>Tipe Pemohon:</strong> <?= $type_of_applicant ?></p>
-    <?php endif; ?>
-    
-    <a href="edit_profile.php" class="btn">Edit Profil</a>
-</div><br>
-<div>
-    <a href="dashboard.php">Dashboard</a>
-</div>
-<div>
-    <a href="status_pengajuan.php">Lihat Status Pengajuan</a>
-</div>
+        <p><strong>No. KTP:</strong> <?= $no_ktp ?></p>
+        <p><strong>Telepon:</strong> <?= $telephone ?></p>
+        <p><strong>Tanggal Lahir:</strong> <?= $birth_date ?></p>
+        <p><strong>Jenis Kelamin:</strong> <?= $gender ?></p>
+        <p><strong>Kewarganegaraan:</strong> <?= $nationality ?></p>
+
+        <!-- Tipe Pemohon hanya ditampilkan jika bukan admin -->
+        <?php if (!$isAdmin): ?>
+            <p><strong>Tipe Pemohon:</strong> <?= $type_of_applicant ?></p>
+        <?php endif; ?>
+
+        <a href="edit_profile.php" class="btn">Edit Profil</a>
+    </div><br>
+    <div>
+        <?php if ($isAdmin): ?>
+            <a href="admin.php">Dashboard</a> |
+            <a href="rekap_hki.php">Rekap HKI</a> |
+            <a href="announcement.php">Pengumuman</a> |
+            <a href="template.php">Template Dokumen</a> |
+            <a href="reset_password.php">Reset Password User |</a>
+            <a href="services/logout.php">Logout</a>
+        <?php else: ?>
+            <a href="dashboard.php">Dashboard</a> |
+            <a href="status_pengajuan.php">Lihat Status Pengajuan</a> |
+            <a href="update_account.php">Update Data Akun</a> |
+            <a href="services/logout.php">Logout</a>
+        <?php endif; ?>
+    </div>
+
 </body>
-</html>
 
+</html>

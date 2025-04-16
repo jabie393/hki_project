@@ -1,13 +1,16 @@
 <!-- Flow FE -->
+<!-- ADMIN -->
 <?php
 session_start();
 include 'config/config.php';
 
+// Periksa apakah admin sudah login
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'admin') {
     header("Location: login.php");
     exit();
 }
 
+// Jika form disubmit
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user_id = $_POST['user_id'];
     $new_username = $_POST['new_username'];
@@ -18,7 +21,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email_check->bind_param("si", $new_email, $user_id);
     $email_check->execute();
     $email_check->store_result();
-
     if ($email_check->num_rows > 0) {
         echo "<script>alert('Email sudah digunakan oleh user lain!'); window.location.href='reset_password.php';</script>";
         exit();
@@ -55,19 +57,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kelola User</title>
-
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-
-    <!-- Bootstrap 5 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Select2 -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
-    <!-- Custom Style -->
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="css/reset_password.css">
 </head>
 
@@ -75,41 +73,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="container">
         <h2>Kelola User</h2>
         <form method="post">
-            <div class="mb-3">
-                <label for="user_id" class="form-label">Pilih User</label>
-                <select id="userSelect" name="user_id" style="width: 100%;">
+            <div class="form-group">
+                <label for="user_id" class="custom-label">Pilih User:</label>
+                <select id="userSelect" name="user_id" style="width: 100%;" required>
                     <option value="">Cari User...</option>
                     <?php
-                    include 'config/config.php';
                     $result = $conn->query("SELECT id, username FROM users");
                     while ($row = $result->fetch_assoc()) {
                         echo "<option value='{$row['id']}'>{$row['username']}</option>";
                     }
                     ?>
                 </select>
-
             </div>
 
-            <div class="mb-3">
-                <label for="new_username" class="form-label">Username</label>
-                <input type="text" id="new_username" name="new_username" class="form-control" required
+            <div class="form-group">
+                <label for="new_username" class="custom-label">Username:</label>
+                <input type="text" id="new_username" name="new_username" class="custom-input" required
                     autocomplete="off">
             </div>
 
-            <div class="mb-3">
-                <label for="new_email" class="form-label">Email</label>
-                <input type="email" id="new_email" name="new_email" class="form-control" required autocomplete="off">
+            <div class="form-group">
+                <label for="new_email" class="custom-label">Email:</label>
+                <input type="email" id="new_email" name="new_email" class="custom-input" required autocomplete="off">
             </div>
 
-            <div class="mb-3">
-                <label for="new_password" class="form-label">Password Baru (Opsional)</label>
-                <input type="password" name="new_password" class="form-control" autocomplete="new-password">
+            <div class="form-group">
+                <label for="new_password" class="custom-label">Password Baru (Opsional):</label>
+                <input type="password" name="new_password" class="custom-input" autocomplete="new-password">
             </div>
 
-            <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+            <button type="submit" class="button">Simpan Perubahan</button>
         </form>
 
-        <div class="nav-links mt-4">
+        <div class="nav-links">
             <a href="profile.php">Profil</a> |
             <a href="admin.php">Dashboard</a> |
             <a href="rekap_hki.php">Rekap HKI</a> |
@@ -119,47 +115,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>
 
-    <!-- jQuery dan Bootstrap -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Select2 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-
-    <script>
-        $(document).ready(function () {
-            $('#userSelect').select2({
-                placeholder: "Cari User...",
-                allowClear: true,
-                width: '100%',
-                dropdownAutoWidth: true
-            });
-
-            // Fokus ke kolom pencarian saat dropdown dibuka
-            $('#userSelect').on('select2:open', function () {
-                document.querySelector('.select2-search__field').focus();
-            });
-
-            $('#userSelect').change(function () {
-                var userId = $(this).val();
-                if (userId) {
-                    $.ajax({
-                        url: "services/get_user_data.php",
-                        type: "POST",
-                        data: { user_id: userId },
-                        dataType: "json",
-                        success: function (data) {
-                            $('#new_username').val(data.username);
-                            $('#new_email').val(data.email);
-                        }
-                    });
-                } else {
-                    $('#new_username').val('');
-                    $('#new_email').val('');
-                }
-            });
-        });
-    </script>
+    <script src="js/reset_password.js"></script>
 </body>
 
 </html>

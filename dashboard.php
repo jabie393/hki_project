@@ -1,3 +1,5 @@
+<!-- Flow FE -->
+<!-- USER -->
 <?php
 include 'config/config.php';
 session_start();
@@ -276,15 +278,9 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
         });
     </script>
     <div>
-        <a href="profile.php">Profil</a>
-    </div>
-    <div>
-        <a href="status_pengajuan.php">Lihat Status Pengajuan</a>
-    </div>
-    <div>
-        <a href="update_account.php">Update Data Akun</a>
-    </div>
-    <div>
+        <a href="profile.php">Profil</a> |
+        <a href="status_pengajuan.php">Lihat Status Pengajuan</a> |
+        <a href="update_account.php">Update Data Akun</a> |
         <a href="services/logout.php">Logout</a>
     </div>
 

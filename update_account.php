@@ -1,3 +1,5 @@
+<!-- Flow FE -->
+<!-- USER -->
 <?php
 session_start();
 include 'config/config.php';
@@ -71,35 +73,43 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Update Profil</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/update_account.css">
 </head>
+
 <body>
-    <h2>Update Profil</h2>
-    <form method="post">
-        <label for="new_username">Username:</label>
-        <input type="text" name="new_username" value="<?= htmlspecialchars($user['username']) ?>" required>
+    <div class="container">
+        <h2>Update Profil</h2>
+        <form method="post">
+            <label for="new_username">Username:</label>
+            <input type="text" name="new_username" value="<?= htmlspecialchars($user['username']) ?>" required>
 
-        <br><br>
+            <label for="new_email">Email:</label>
+            <input type="email" name="new_email" value="<?= htmlspecialchars($user['email']) ?>" required>
 
-        <label for="new_email">Email:</label>
-        <input type="email" name="new_email" value="<?= htmlspecialchars($user['email']) ?>" required>
+            <label for="new_password">Password Baru (Opsional):</label>
+            <input type="password" name="new_password" autocomplete="new-password">
 
-        <br><br>
+            <label for="old_password">Masukkan Password Lama Untuk Menyimpan Perubahan:</label>
+            <input type="password" name="old_password" required autocomplete="off">
 
-        <label for="new_password">Password Baru (Opsional):</label>
-        <input type="password" name="new_password" autocomplete="new-password">
+            <button type="submit">Simpan Perubahan</button>
+        </form>
 
-        <br><br>
-
-        <label for="old_password">Masukkan Password Lama Untuk Menyimpan Perubahan:</label>
-        <input type="password" name="old_password" required autocomplete="off">
-
-        <br><br>
-
-        <button type="submit">Simpan Perubahan</button>
-    </form>
+        <div class="nav-links">
+            <a href="profile.php">Profil</a> |
+            <a href="dashboard.php">Dashboard</a> |
+            <a href="status_pengajuan.php">Lihat Status Pengajuan</a> |
+            <a href="services/logout.php">Logout</a>
+        </div>
+    </div>
 </body>
+
 </html>

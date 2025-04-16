@@ -1,3 +1,4 @@
+<!-- ADMIN -->
 <?php
 include 'config/config.php';
 

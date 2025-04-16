@@ -1,3 +1,4 @@
+<!-- ALL -->
 <?php
 session_start();
 

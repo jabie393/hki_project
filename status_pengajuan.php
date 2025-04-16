@@ -1,3 +1,4 @@
+<!-- ADMIN & USER -->
 <?php
 include 'config/config.php';
 session_start();
@@ -88,9 +89,6 @@ $result = $stmt->get_result();
         <?php } ?>
     </table>
 
-    <br>
-    <button class="btn btn-secondary" onclick="history.back()">Kembali</button>
-
     <!-- Modal untuk Deskripsi -->
     <div id="descriptionModal" class="modal" style="display: none;">
         <div class="modal-content">
@@ -139,6 +137,12 @@ $result = $stmt->get_result();
         }
     </script>
 
+    <div>
+        <a href="profile.php">Profil</a> |
+        <a href="dashboard.php">Dashboard</a> |
+        <a href="update_account.php">Update Data Akun</a> |
+        <a href="services/logout.php">Logout</a>
+    </div>
 </body>
 
 </html>
