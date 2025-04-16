@@ -1,0 +1,126 @@
+/* Reset & Global */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    background: #f0f2f5;
+    color: #333;
+}
+
+/* Container */
+form {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 30px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+/* Full Width for title and buttons */
+h2, button[type="submit"], #cropButton {
+    grid-column: 1 / -1;
+}
+
+h2 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="file"],
+select {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+
+input:focus,
+select:focus {
+    border-color: #3498db;
+    outline: none;
+}
+
+/* Label styling */
+label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+    color: #444;
+}
+
+/* Image & Preview Area */
+#previewImage {
+    max-width: 100%;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    margin-top: 10px;
+}
+
+img[src*="profile.jpg"],
+img[src*="default-avatar.png"] {
+    border-radius: 50%;
+    object-fit: cover;
+    margin-top: 10px;
+    border: 2px solid #3498db;
+    width: 100px;
+    height: 100px;
+}
+
+/* Buttons */
+button {
+    background: #3498db;
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+
+button:hover {
+    background: #2980b9;
+    transform: scale(1.02);
+}
+
+#cropButton {
+    background-color: #27ae60;
+}
+
+#cropButton:hover {
+    background-color: #1e8449;
+}
+
+/* Navigation Links */
+div > a {
+    display: inline-block;
+    margin-top: 20px;
+    margin-right: 10px;
+    color: #3498db;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+div > a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Stack on Mobile */
+@media (max-width: 768px) {
+    form {
+        grid-template-columns: 1fr;
+    }
+
+    button, h2 {
+        font-size: 16px;
+    }
+}
