@@ -44,7 +44,7 @@ $profile_picture = file_exists("uploads/users/$user_id/profile/profile.jpg")
 <body>
     <main>
         <form id="profileForm" action="services/submit_profile.php" method="POST" enctype="multipart/form-data">
-            <h2>Formulir Profil</h2>
+            <h2>Edit Profil</h2>
 
             <div>
                 <label for="nama_lengkap">Nama Lengkap:</label>
