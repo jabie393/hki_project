@@ -1,4 +1,3 @@
-/* Reset & Global */
 body {
   font-family: "Inter", sans-serif;
   margin: 0;
@@ -40,19 +39,29 @@ h2 {
   margin-bottom: 20px;
 }
 
+/* Field Containers */
+form > div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Input & Native Select */
 input[type="text"],
 input[type="date"],
 input[type="file"],
-select {
+select:not(.select2-hidden-accessible) {
   width: 100%;
+  height: 45px;
   padding: 12px 14px;
   border: 1px solid #ccc;
-  border-radius: 8px;
+  border-radius: 10px;
   font-size: 16px;
   box-sizing: border-box;
-  transition: border-color 0.3s;
+  transition: border-color 0.3s, box-shadow 0.3s;
 }
 
+/* Focus */
 input:focus,
 select:focus {
   border-color: #007bff;
@@ -60,7 +69,7 @@ select:focus {
   box-shadow: 0 0 4px #007bff66;
 }
 
-/* Label styling */
+/* Label */
 label {
   font-weight: 500;
   margin-bottom: 6px;
@@ -68,7 +77,69 @@ label {
   color: black;
 }
 
-/* Image & Preview Area */
+/* Select2 */
+/* Pastikan Select2 tetap seragam dengan input lain */
+.select2-container--default .select2-selection--single {
+  border-radius: 8px !important;
+  border: 1px solid #ccc !important;
+  height: 45px !important;
+  display: flex;
+  align-items: center;
+  padding-left: 12px;
+  padding-right: 30px;
+  box-sizing: border-box;
+}
+
+/* Untuk pastikan kontainernya juga konsisten */
+.select2-container {
+  width: 100% !important;
+  box-sizing: border-box;
+}
+
+
+.select2-selection__rendered {
+  line-height: 45px !important;
+  color: #6c757d !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+  height: 100% !important;
+  top: 0 !important;
+  right: 8px !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+  color: black !important; /* font warna hitam */
+}
+
+.select2-container--default .select2-selection--single .select2-selection__placeholder {
+  color: black !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__clear {
+  position: absolute;
+  right: -20px;
+  top: 20px;
+  transform: translateY(-50%);
+  color: #dc3545;
+  font-size: 1.2em;
+  cursor: pointer;
+  z-index: 2;
+}
+
+/* Select2 Search Field */
+.select2-search__field {
+  padding: 6px;
+  border-radius: 6px;
+}
+
+.select2-search__field:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 4px #007bff66;
+}
+
+/* Image Preview */
 #previewImage {
   max-width: 100%;
   border-radius: 8px;
@@ -86,6 +157,7 @@ img[src*="default-avatar.png"] {
   height: 100px;
 }
 
+/* Upload Box */
 .profile-picture-input {
   position: relative;
   width: 100%;
@@ -129,13 +201,13 @@ img[src*="default-avatar.png"] {
   display: none;
 }
 
-/* Buttons */
+/* Button */
 button {
   background-color: #007bff;
   color: white;
   padding: 12px 20px;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   font-size: 16px;
   cursor: pointer;
   transition: background 0.3s, transform 0.2s;

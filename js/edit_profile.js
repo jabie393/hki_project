@@ -1,20 +1,40 @@
 // Load negara
-fetch('https://restcountries.com/v3.1/all')
-    .then(response => response.json())
-    .then(data => {
-        const select = document.querySelector("select[name='nationality']");
-        data.sort((a, b) => a.name.common.localeCompare(b.name.common));
-        data.forEach(country => {
-            const option = document.createElement("option");
-            option.value = country.name.common;
-            option.textContent = country.name.common;
-            select.appendChild(option);
-        });
+document.addEventListener("DOMContentLoaded", function () {
+    const select = $("#nationality");
+    const selected = select.data("selected");
 
-        const currentValue = "<?= $profile['nationality'] ?? '' ?>";
-        if (currentValue) select.value = currentValue;
-    })
-    .catch(error => console.error("Gagal memuat data negara:", error));
+    fetch("https://restcountries.com/v3.1/all")
+        .then(response => response.json())
+        .then(data => {
+            data.sort((a, b) => a.name.common.localeCompare(b.name.common));
+            data.forEach(country => {
+                const option = new Option(country.name.common, country.name.common);
+                select.append(option);
+            });
+
+            // Cegah double init Select2 (jaga-jaga)
+            if (select.hasClass("select2-hidden-accessible")) {
+                select.select2('destroy');
+            }
+
+            // Init Select2 setelah semua opsi dimuat
+            select.select2({
+                placeholder: "-- Pilih Negara --",
+                allowClear: true,
+                width: '100%' // penting supaya lebarnya konsisten
+            });
+
+            // Fokus ke kolom pencarian saat dropdown dibuka
+            $('#nationality').on('select2:open', function () {
+                document.querySelector('.select2-search__field').focus();
+            });
+
+            if (selected) {
+                select.val(selected).trigger('change');
+            }
+        })
+        .catch(error => console.error("Gagal memuat data negara:", error));
+});
 
 // Cropper
 document.addEventListener("DOMContentLoaded", function () {

@@ -30,6 +30,14 @@ $profile_picture = file_exists("uploads/users/$user_id/profile/profile.jpg")
     <!-- CSS -->
     <link rel="stylesheet" href="css/edit_profile.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" />
+
+    <!-- Select2 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+
+    <!-- Cropper -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
 </head>
 
@@ -66,9 +74,9 @@ $profile_picture = file_exists("uploads/users/$user_id/profile/profile.jpg")
                 </select>
             </div>
 
-            <div>
+            <div class="form-group">
                 <label for="nationality">Kewarganegaraan:</label>
-                <select name="nationality" id="nationality">
+                <select name="nationality" id="nationality" data-selected="<?= $profile['nationality'] ?? '' ?>">
                     <option value="">-- Pilih Negara --</option>
                 </select>
             </div>
@@ -143,6 +151,7 @@ $profile_picture = file_exists("uploads/users/$user_id/profile/profile.jpg")
         </div>
     </div>
     <script src="js/edit_profile.js"></script>
+
 </body>
 
 </html>
