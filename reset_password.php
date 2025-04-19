@@ -19,9 +19,24 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     <!-- Sweet Alert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/reset_password.css">
+    <link rel="stylesheet" href="css/modal.css">
+    <style>
+        .modal-hidden {
+            display: none !important;
+        }
+
+        .modal-visible {
+            display: block !important;
+        }
+    </style>
 </head>
 
 <div id="reset_password-page">
@@ -59,6 +74,25 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
 
             <button type="submit" class="button">Simpan Perubahan</button>
         </form>
+
+        <!-- Tombol Detail User -->
+        <div id="detailButtonWrapper" style="display: none; margin-top: 15px;">
+            <button type="button" class="button" id="showUserDetailBtn">Detail User</button>
+        </div>
+
+        <!-- Modal Detail User -->
+        <div id="userDetailModal" class="modal-page modal modal-hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Detail Pengguna</h2>
+                    <button class="close" onclick="closeProfileModal()">&times;</button>
+                </div>
+                <div id="userDetailContent">
+                    <!-- Konten AJAX -->
+                </div>
+            </div>
+        </div>
+
 
         <div class="nav-links">
             <a href="#" onclick="loadContent('profile.php')">Profil</a> |
