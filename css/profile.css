@@ -1,33 +1,42 @@
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f8f9fa;
+/* profile.css */
+#profile-page {
+  font-family: "Inter", sans-serif;
   margin: 0;
   padding: 0;
+  background-color: #f7f9fc;
+  color: #333;
 }
-.container {
-  width: 50%;
-  margin: 50px auto;
-  background: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+#profile-page .container {
   text-align: center;
+
+  /* Flexbox untuk pastikan semua konten rata tengah */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-.profile-img {
+
+#profile-page .profile-img {
   width: 120px;
   height: 120px;
   border-radius: 50%;
   object-fit: cover;
   border: 3px solid #007bff;
+  margin-bottom: 15px;
 }
-h2 {
+
+#profile-page h2 {
   color: #333;
+  margin-bottom: 10px;
+  font-weight: bold;
 }
-p {
+
+#profile-page p {
   font-size: 16px;
   margin: 5px 0;
 }
-.btn {
+
+#profile-page .btn {
   display: inline-block;
   padding: 10px 20px;
   margin-top: 20px;
@@ -36,10 +45,32 @@ p {
   text-decoration: none;
   border-radius: 5px;
 }
-.btn:hover {
+
+#profile-page .btn:hover {
   background: #0056b3;
 }
-.fa-check-circle {
+
+#profile-page .fa-check-circle {
+  color: #007bff;
+  margin-left: 5px;
+}
+
+#profile-page .profile-links {
+  text-align: center;
+  margin-top: 20px;
+}
+
+#profile-page .profile-links a {
+  color: #007bff;
+  text-decoration: none;
+  margin: 0 5px;
+}
+
+#profile-page .profile-links a:hover {
+  text-decoration: underline;
+}
+
+#profile-page .fa-check-circle {
   color: #007bff;
   margin-left: 5px;
 }

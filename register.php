@@ -3,7 +3,7 @@
 session_start();
 
 // session role yang menunjukkan peran pengguna
-$dashboardPage = (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') ? 'admin.php' : 'dashboard.php';
+$dashboardPage = (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') ? 'admin.php' : 'user.php';
 ?>
 <!DOCTYPE html>
 <html lang="id">

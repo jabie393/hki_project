@@ -1,48 +1,41 @@
-body {
+#announcement-page {
     font-family: "Inter", sans-serif;
     margin: 0;
     padding: 0;
     background-color: #f7f9fc;
     color: #333;
-}
+  }
 
-main {
-    max-width: 800px;
-    margin: 30px auto;
-    background-color: #ffffff;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-h2{
+  #announcement-page h2 {
     text-align: center;
 }
 
-h2,
-h3 {
+#announcement-page h2,   #announcement-page h3 {
     color: #4f46e5;
+    font-weight: bold;
+    padding-bottom: 20px;
+    padding-top: 10px;
 }
 
-form {
+#announcement-page form {
     display: flex;
     flex-direction: column;
     gap: 12px;
     margin-bottom: 30px;
 }
 
-input[type="file"] {
+#announcement-page input[type="file"] {
     padding: 10px;
     border-radius: 8px;
     border: 1px solid #ccc;
 }
 
-.custom-file-upload {
+#announcement-page .custom-file-upload {
     position: relative;
     width: 100%;
 }
 
-.custom-file-upload input[type="file"] {
+#announcement-page .custom-file-upload input[type="file"] {
     position: absolute;
     top: 0;
     left: 0;
@@ -52,7 +45,7 @@ input[type="file"] {
     cursor: pointer;
 }
 
-.upload-box {
+#announcement-page .upload-box {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -66,24 +59,24 @@ input[type="file"] {
     transition: background-color 0.3s, border-color 0.3s;
 }
 
-.upload-box:hover {
+#announcement-page .upload-box:hover {
     background-color: #e0e7ff;
     border-color: #6366f1;
 }
 
-.upload-icon {
+#announcement-page .upload-icon {
     font-size: 32px;
     margin-bottom: 10px;
 }
 
-#file-name {
+#announcement-page #file-name {
     display: block;
     margin-top: 8px;
     font-style: italic;
     color: #555;
 }
 
-button {
+#announcement-page button {
     background-color: #4f46e5;
     color: white;
     padding: 10px;
@@ -94,13 +87,12 @@ button {
     transition: background 0.3s;
 }
 
-button:hover {
+#announcement-page button:hover {
     background-color: #3730a3;
 }
 
-.delete-btn {
+#announcement-page .delete-btn {
     background-color: #ef4444;
-    /* Merah */
     color: white;
     padding: 6px 12px;
     border: none;
@@ -113,12 +105,11 @@ button:hover {
     text-decoration: none;
 }
 
-.delete-btn:hover {
-    text-decoration: none;
+#announcement-page .delete-btn:hover {
     background-color: #b91c1c;
 }
 
-ul {
+#announcement-page ul {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 20px;
@@ -126,7 +117,7 @@ ul {
     margin: 0;
 }
 
-li {
+#announcement-page li {
     background-color: #e0e7ff;
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
@@ -138,43 +129,42 @@ li {
     box-sizing: border-box;
 }
 
-
-li:hover {
+#announcement-page li:hover {
     transform: translateY(-4px);
 }
 
-img {
+#announcement-page img {
     width: 100%;
     border-radius: 8px;
 }
 
-.action {
+#announcement-page .action {
     margin-top: auto;
     text-align: center;
     padding-top: 10px;
 }
 
-a {
+#announcement-page a {
     text-decoration: none;
     color: #ef4444;
     font-weight: 600;
 }
 
-a:hover {
+#announcement-page a:hover {
     text-decoration: underline;
 }
 
-.nav {
+#announcement-page .nav {
     text-align: center;
     margin-top: 40px;
     font-size: 15px;
 }
 
-.nav a {
+#announcement-page .nav a {
     color: #374151;
     margin-right: 10px;
 }
 
-.nav a:hover {
+#announcement-page .nav a:hover {
     color: #1d4ed8;
 }

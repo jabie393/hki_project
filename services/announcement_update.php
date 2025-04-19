@@ -15,20 +15,24 @@ if (!file_exists($target_dir)) {
 // Proses Upload Gambar
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['image'])) {
     $target_file = $target_dir . basename($_FILES["image"]["name"]);
-    $save_path = "uploads/announcement/" . basename($_FILES["image"]["name"]); // Path disimpan tanpa "../"
+    $save_path = "uploads/announcement/" . basename($_FILES["image"]["name"]);
 
     if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
         $stmt = $conn->prepare("INSERT INTO announcement (image_path) VALUES (?)");
         $stmt->bind_param("s", $save_path);
         $stmt->execute();
         $stmt->close();
+
+        echo json_encode(['success' => true, 'message' => 'Pengumuman berhasil diunggah!']);
+    } else {
+        echo json_encode(['success' => false, 'message' => 'Gagal mengunggah file.']);
     }
-    header("Location: ../announcement.php");
     exit();
 }
 
 // Proses Hapus Gambar
 if (isset($_GET['delete'])) {
+    header('Content-Type: application/json');
     $id = $_GET['delete'];
 
     $stmt = $conn->prepare("SELECT image_path FROM announcement WHERE id = ?");
@@ -38,7 +42,7 @@ if (isset($_GET['delete'])) {
     $stmt->fetch();
     $stmt->close();
 
-    if (file_exists("../" . $file_path)) { // Tambahkan "../" untuk akses path yang benar
+    if ($file_path && file_exists("../" . $file_path)) {
         unlink("../" . $file_path);
     }
 
@@ -47,7 +51,10 @@ if (isset($_GET['delete'])) {
     $stmt->execute();
     $stmt->close();
 
-    header("Location: ../announcement.php");
+    echo json_encode([
+        'success' => true,
+        'message' => 'Pengumuman berhasil dihapus.'
+    ]);
     exit();
 }
 ?>

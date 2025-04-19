@@ -134,7 +134,7 @@ $profile_picture = file_exists("uploads/users/$user_id/profile/profile.jpg")
         </form>
 
         <div style="text-align: center; margin-top: 20px;">
-            <a href="dashboard.php">🏠 Dashboard</a>
+            <a href="user.php">🏠 Dashboard</a>
             <a href="status_pengajuan.php">📄 Status Pengajuan</a>
             <a href="profile.php">👤 Profil</a>
         </div>

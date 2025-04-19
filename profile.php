@@ -31,21 +31,16 @@ if (!file_exists($profile_picture) || empty($profile['profile_picture'])) {
     $profile_picture = "assets/image/default-avatar.png"; // Foto default jika belum diunggah
 }
 ?>
-
-<!DOCTYPE html>
-<html lang="id">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profil Pengguna</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <!-- Custom CSS-->
-    <link rel="stylesheet" href="css/profile.css">
+<!-- Css -->
+<link rel="stylesheet" href="css/profile.css">
+<!-- Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<!-- Font -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 </head>
 
-<body>
+<div id="profile-page">
 
     <div class="container">
         <img src="<?= $profile_picture ?>" class="profile-img" alt="Foto Profil">
@@ -73,13 +68,11 @@ if (!file_exists($profile_picture) || empty($profile['profile_picture'])) {
             <a href="reset_password.php">Reset Password User |</a>
             <a href="services/logout.php">Logout</a>
         <?php else: ?>
-            <a href="dashboard.php">Dashboard</a> |
+            <a href="user.php">Dashboard</a> |
             <a href="status_pengajuan.php">Lihat Status Pengajuan</a> |
             <a href="update_account.php">Update Data Akun</a> |
             <a href="services/logout.php">Logout</a>
         <?php endif; ?>
     </div>
 
-</body>
-
-</html>
+</div>

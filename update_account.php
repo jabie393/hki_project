@@ -105,7 +105,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <div class="nav-links">
             <a href="profile.php">Profil</a> |
-            <a href="dashboard.php">Dashboard</a> |
+            <a href="user.php">Dashboard</a> |
             <a href="status_pengajuan.php">Lihat Status Pengajuan</a> |
             <a href="services/logout.php">Logout</a>
         </div>

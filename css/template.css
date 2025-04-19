@@ -1,8 +1,8 @@
-* {
+#template-page * {
   box-sizing: border-box;
 }
 
-body {
+#template-page {
   font-family: "Inter", sans-serif;
   margin: 0;
   padding: 0;
@@ -10,43 +10,36 @@ body {
   color: #333;
 }
 
-main {
-  max-width: 800px;
-  margin: 30px auto;
-  background-color: #ffffff;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-h2 {
+#template-page h2 {
   color: #4f46e5;
-  margin-top: 0;
   text-align: center;
+  font-weight: bold;
+  padding-bottom: 20px;
+  padding-top: 10px;
 }
 
-form {
+#template-page form {
   display: flex;
   flex-direction: column;
   gap: 12px;
   margin-bottom: 30px;
 }
 
-select,
-input[type="file"] {
+#template-page select,
+#template-page input[type="file"] {
   padding: 10px;
   border-radius: 8px;
   border: 1px solid #ccc;
 }
 
-.custom-select-wrapper {
+#template-page .custom-select-wrapper {
   position: relative;
   display: inline-block;
   width: 100%;
 
 }
 
-.custom-select-wrapper select {
+#template-page .custom-select-wrapper select {
   width: 100%;
   padding: 12px 40px 12px 12px;
   border: 2px solid #a5b4fc;
@@ -60,13 +53,13 @@ input[type="file"] {
   -moz-appearance: none;
 }
 
-.custom-select-wrapper select:focus {
+#template-page .custom-select-wrapper select:focus {
   outline: none;
   border-color: #6366f1;
   background-color: #e0e7ff;
 }
 
-.custom-arrow {
+#template-page .custom-arrow {
   position: absolute;
   right: 12px;
   top: 50%;
@@ -75,16 +68,16 @@ input[type="file"] {
   transition: transform 0.3s ease;
 }
 
-.custom-select-wrapper select:focus + .custom-arrow {
+#template-page .custom-select-wrapper select:focus + .custom-arrow {
   transform: translateY(-50%) rotate(180deg); /* Menghadap ke atas saat focus */
 }
 
-.custom-file-upload {
+#template-page .custom-file-upload {
   position: relative;
   width: 100%;
 }
 
-.custom-file-upload input[type="file"] {
+#template-page .custom-file-upload input[type="file"] {
   position: absolute;
   top: 0;
   left: 0;
@@ -94,7 +87,7 @@ input[type="file"] {
   cursor: pointer;
 }
 
-.upload-box {
+#template-page .upload-box {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -108,31 +101,31 @@ input[type="file"] {
   transition: background-color 0.3s, border-color 0.3s;
 }
 
-.upload-box:hover {
+#template-page .upload-box:hover {
   background-color: #e0e7ff;
   border-color: #6366f1;
 }
 
-.upload-icon {
+#template-page .upload-icon {
   font-size: 32px;
   margin-bottom: 10px;
 }
 
-#file-name {
+#template-page #file-name {
   display: block;
   margin-top: 8px;
   font-style: italic;
   color: #555;
 }
 
-.doc-actions {
+#template-page .doc-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
   margin-top: 6px;
 }
 
-.doc-actions a {
+#template-page .doc-actions a {
   display: inline-block;
   padding: 6px 12px;
   border-radius: 6px;
@@ -143,7 +136,7 @@ input[type="file"] {
   transition: background 0.3s ease;
 }
 
-button {
+#template-page button {
   background-color: #4f46e5;
   color: white;
   padding: 10px;
@@ -154,21 +147,21 @@ button {
   transition: background 0.3s;
 }
 
-button:hover {
+#template-page button:hover {
   background-color: #3730a3;
 }
 
-.download-btn {
+#template-page .download-btn {
   background-color: #3b82f6;
   color: white;
 }
 
-.download-btn:hover {
+#template-page .download-btn:hover {
   text-decoration: none;
   background-color: #1e40af;
 }
 
-.delete-btn {
+#template-page .delete-btn {
   background-color: #ef4444;
   /* Merah */
   color: white;
@@ -183,52 +176,52 @@ button:hover {
   text-decoration: none;
 }
 
-.delete-btn:hover {
+#template-page .delete-btn:hover {
   text-decoration: none;
   background-color: #b91c1c;
 }
 
-ul {
+#template-page ul {
   list-style-type: none;
   padding-left: 0;
 }
 
-li {
+#template-page li {
   margin-bottom: 10px;
   padding: 10px;
   background-color: #f1f5f9;
   border-radius: 8px;
 }
 
-li a {
+#template-page li a {
   margin-left: 10px;
   color: #2563eb;
   text-decoration: none;
   font-weight: 500;
 }
 
-li a:hover {
+#template-page li a:hover {
   text-decoration: underline;
 }
 
-.nav-links {
+#template-page .nav-links {
   margin-top: 30px;
   text-align: center;
 }
 
-.nav-links a {
+#template-page .nav-links a {
   margin: 0 10px;
   color: #4f46e5;
   text-decoration: none;
   font-weight: 500;
 }
 
-.nav-links a:hover {
+#template-page .nav-links a:hover {
   text-decoration: underline;
 }
 
 @media (max-width: 480px) {
-  .doc-actions a {
+  #template-page .doc-actions a {
     flex: 1 1 100%;
     text-align: center;
   }

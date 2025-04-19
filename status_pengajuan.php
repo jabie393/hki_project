@@ -139,7 +139,7 @@ $result = $stmt->get_result();
 
     <div>
         <a href="profile.php">Profil</a> |
-        <a href="dashboard.php">Dashboard</a> |
+        <a href="user.php">Dashboard</a> |
         <a href="update_account.php">Update Data Akun</a> |
         <a href="services/logout.php">Logout</a>
     </div>

@@ -8,19 +8,12 @@ if ($_SESSION['role'] != 'admin') {
     exit();
 }
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - Upload & Download Documents</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/template.css">
 </head>
 
-<body>
+<div id="template-page">
 
     <main>
         <h2>Upload Dokumen</h2>
@@ -77,7 +70,4 @@ if ($_SESSION['role'] != 'admin') {
         </div>
     </main>
     <script src="js/template.js"></script>
-
-</body>
-
-</html>
+</div>
