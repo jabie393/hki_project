@@ -51,13 +51,7 @@ if (isset($_GET['id'])) {
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
         }
-        .profile-img {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid #007bff;
-        }
+
         h2 {
             color: #333;
         }
