@@ -26,24 +26,26 @@ function setupUploadForm() {
                 method: 'POST',
                 body: formData
             })
-            .then(res => res.json())
-            .then(response => {
-                Swal.fire({
-                    icon: response.success ? 'success' : 'error',
-                    title: response.message,
-                }).then(() => {
-                    if (response.success) {
-                        loadContent('announcement.php'); // refresh ulang
-                    }
+                .then(res => res.json())
+                .then(response => {
+                    Swal.fire({
+                        icon: response.success ? 'success' : 'error',
+                        title: response.message,
+                        showConfirmButton: false, // Tidak ada tombol confirm
+                        timer: 2000 // Menunggu 2 detik
+                    }).then(() => {
+                        if (response.success) {
+                            loadContent('announcement.php'); // refresh ulang
+                        }
+                    });
+                })
+                .catch(() => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal!',
+                        text: 'Terjadi kesalahan saat mengunggah.',
+                    });
                 });
-            })
-            .catch(() => {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Gagal!',
-                    text: 'Terjadi kesalahan saat mengunggah.',
-                });
-            });
         });
     }
 }
@@ -75,6 +77,8 @@ function setupDeleteButtons() {
                             Swal.fire({
                                 icon: response.success ? 'success' : 'error',
                                 title: response.message,
+                                showConfirmButton: false, // Tidak ada tombol confirm
+                                timer: 2000 // Menunggu 2 detik
                             }).then(() => {
                                 if (response.success) {
                                     loadContent('announcement.php'); // refresh ulang

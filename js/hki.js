@@ -1,4 +1,5 @@
-//script detail profil user
+//== Modal ==//
+// script detail profil user
 function showProfile(userId) {
     fetch('profile_details.php?id=' + userId)
         .then(response => response.text())
@@ -13,7 +14,7 @@ function closeProfileModal() {
     document.getElementById('profileModal').style.display = 'none';
 }
 
-//script detail deskripsi
+// script detail deskripsi
 function openDescriptionModal(description) {
     document.getElementById('descriptionDetails').innerText = description;
     document.getElementById('descriptionModal').style.display = 'flex';
@@ -23,7 +24,7 @@ function closeDescriptionModal() {
     document.getElementById('descriptionModal').style.display = 'none';
 }
 
-//script detail pencipta
+// script detail pencipta
 function openModal(id) {
     fetch('widgets/creator_details.php?id=' + id)
         .then(response => response.text())
@@ -38,7 +39,7 @@ function closeModal() {
     document.getElementById('creatorModal').style.display = 'none';
 }
 
-//script detail pencipta (rekapitulasi.php)
+// script detail pencipta (rekapitulasi.php)
 function showCreator(id) {
     fetch(`widgets/rekapitulasi_creator_details.php?id=${id}`)
         .then(response => response.text())
@@ -51,3 +52,236 @@ function showCreator(id) {
 function closeModal() {
     document.getElementById("creatorModal").style.display = "none";
 }
+//== Modal ==//
+
+//== Ajax ==//
+// services/approve.php
+document.querySelectorAll('.approve-btn').forEach(button => {
+    button.addEventListener('click', function () {
+        const id = this.dataset.id;
+        const row = this.closest('tr');
+
+        const nomor_permohonan = row.querySelector("input[name='nomor_permohonan']").value;
+        const nomor_sertifikat = row.querySelector("input[name='nomor_sertifikat']").value;
+        const certificateInput = row.querySelector(`#certificate_${id}`);
+
+        const formData = new FormData();
+        formData.append('id', id);
+        formData.append('nomor_permohonan', nomor_permohonan);
+        formData.append('nomor_sertifikat', nomor_sertifikat);
+
+        if (certificateInput && certificateInput.files.length > 0) {
+            formData.append('certificate', certificateInput.files[0]);
+        }
+
+        Swal.fire({
+            title: 'Yakin ingin menyetujui?',
+            text: "Data akan diperbarui sebagai 'Terdaftar'",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#38a169',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Setujui!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch('services/approve.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(res => res.text())
+                    .then(data => {
+                        if (data.includes("Pengajuan telah disetujui")) {
+                            // Menampilkan SweetAlert untuk notifikasi berhasil
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Berhasil',
+                                text: 'Pengajuan disetujui!',
+                                showConfirmButton: false, // Tidak ada tombol confirm
+                                timer: 2000 // Menunggu 2 detik
+                            }).then(() => {
+                                // Setelah timer habis, reload halaman admin.php
+                                loadContent('admin.php');
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Gagal',
+                                text: 'Terjadi kesalahan: ' + data
+                            });
+                        }
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        Swal.fire('Error', 'Gagal menghubungi server.', 'error');
+                    });
+            }
+        });
+    });
+});
+
+// services/delete_hki.php
+document.querySelectorAll('.delete-btn').forEach(button => {
+    button.addEventListener('click', function () {
+        const id = this.dataset.id;
+        const rowId = this.dataset.row;
+        const rowElement = document.getElementById(rowId);
+
+        Swal.fire({
+            title: 'Yakin ingin menolak?',
+            text: "Data dan file terkait akan dihapus permanen!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#aaa',
+            confirmButtonText: 'Ya, Hapus!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(`services/delete_hki.php?id=${id}`)
+                    .then(res => res.text())
+                    .then(response => {
+                        if (response.includes("berhasil")) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Dihapus',
+                                text: 'Pengajuan berhasil dihapus.',
+                                timer: 2000,
+                                showConfirmButton: false
+                            });
+
+                            // Hapus baris dari tabel
+                            if (rowElement) {
+                                rowElement.remove();
+                            }
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Gagal',
+                                text: response
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        console.error(error);
+                        Swal.fire('Error', 'Gagal menghapus data.', 'error');
+                    });
+            }
+        });
+    });
+});
+
+// Edit Nomor Permohonan
+document.querySelectorAll('.edit-nomor-permohonan-btn').forEach(button => {
+    button.addEventListener('click', function () {
+        const id = this.dataset.id;
+        const input = document.querySelector(`#nomor_permohonan_${id}`);
+        const value = input.value.trim();
+
+        if (value === "") {
+            Swal.fire('Peringatan', 'Nomor Permohonan tidak boleh kosong!', 'warning');
+            return;
+        }
+
+        fetch('services/edit_nomor_permohonan.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: `id=${id}&nomor_permohonan=${encodeURIComponent(value)}`
+        })
+            .then(res => res.json())
+            .then(data => {
+                Swal.fire({
+                    icon: data.status,
+                    title: data.status === 'success' ? 'Berhasil' : 'Gagal',
+                    text: data.message,
+                    showConfirmButton: false, // Tidak ada tombol confirm
+                    timer: 2000 // Menunggu 2 detik
+                });
+            })
+            .catch(err => {
+                console.error(err);
+                Swal.fire('Error', 'Terjadi kesalahan saat menghubungi server.', 'error');
+            });
+    });
+});
+
+// Edit Nomor Sertifikat
+document.querySelectorAll('.edit-nomor-sertifikat-btn').forEach(button => {
+    button.addEventListener('click', function () {
+        const id = this.dataset.id;
+        const input = document.querySelector(`#nomor_sertifikat_${id}`);
+        const value = input.value.trim();
+
+        if (value === "") {
+            Swal.fire('Peringatan', 'Nomor Sertifikat tidak boleh kosong!', 'warning');
+            return;
+        }
+
+        fetch('services/edit_nomor_sertifikat.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: `id=${id}&nomor_sertifikat=${encodeURIComponent(value)}`
+        })
+            .then(res => res.json())
+            .then(data => {
+                Swal.fire({
+                    icon: data.status,
+                    title: data.status === 'success' ? 'Berhasil' : 'Gagal',
+                    text: data.message,
+                    showConfirmButton: false, // Tidak ada tombol confirm
+                    timer: 2000 // Menunggu 2 detik
+                });
+            })
+            .catch(err => {
+                console.error(err);
+                Swal.fire('Error', 'Terjadi kesalahan saat menghubungi server.', 'error');
+            });
+    });
+});
+
+// Edit Sertifikat
+document.querySelectorAll('.edit-certificate-btn').forEach(button => {
+    button.addEventListener('click', function () {
+        const id = this.dataset.id;
+        const input = document.querySelector(`#edit_certificate_${id}`);
+
+        if (!input || input.files.length === 0) {
+            Swal.fire('Peringatan', 'Silakan pilih file sertifikat baru.', 'warning');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('id', id);
+        formData.append('new_certificate', input.files[0]);
+
+        fetch('services/edit_certificate.php', {
+            method: 'POST',
+            body: formData
+        })
+            .then(res => res.json())
+            .then(data => {
+                Swal.fire({
+                    icon: data.status,
+                    title: data.status === 'success' ? 'Berhasil' : 'Gagal',
+                    text: data.message,
+                    showConfirmButton: false, // Tidak ada tombol confirm
+                    timer: 2000 // Menunggu 2 detik
+                });
+
+                // Perbarui tampilan download
+                if (data.status === 'success' && data.new_path) {
+                    const container = document.querySelector(`#certificate-container-${id}`);
+                    if (container) {
+                        container.innerHTML = `
+                        <a href="${data.new_path}" class="btn btn-download" download>Download</a>
+                    `;
+                    }
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                Swal.fire('Error', 'Terjadi kesalahan saat mengunggah sertifikat.', 'error');
+            });
+    });
+});
+//== Script Ajax ==//
+
+

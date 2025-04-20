@@ -37,7 +37,7 @@ $result = $conn->query($query);
     <h2>Rekapitulasi Hak Cipta Terdaftar</h2>
 
     <!-- Form Pencarian -->
-    <form method="GET" class="search-form">
+    <form method="GET" class="search-form" id="search-form">
         <input type="text" name="search" class="input-field" placeholder="Cari Data Hak Cipta"
             value="<?php echo htmlspecialchars($search); ?>">
         <button type="submit" class="btn btn-info">Cari</button>
@@ -67,21 +67,17 @@ $result = $conn->query($query);
             </thead>
             <tbody>
                 <?php while ($row = $result->fetch_assoc()) { ?>
-                    <tr>
+                    <tr id="row-<?= $row['id'] ?>">
                         <td>
                             <a href="#" onclick="showProfile(<?php echo $row['user_id']; ?>)" class="profile-link">
                                 <?php echo htmlspecialchars($row['username']); ?>
                             </a>
                         </td>
                         <td>
-                            <form action="services/edit_nomor_permohonan.php" method="POST">
-                                <input type="hidden" name="id" value="<?= $row['id']; ?>">
-                                <input type="text" name="nomor_permohonan"
-                                    value="<?= htmlspecialchars($row['nomor_permohonan'] ?? ''); ?>"
-                                    placeholder="Nomor Permohonan" class="input-field" required>
-                                <button type="submit" class="btn btn-warning"
-                                    onclick="return confirm('Yakin ingin mengedit nomor permohonan?')">Edit & Simpan</button>
-                            </form>
+                            <input type="text" id="nomor_permohonan_<?= $row['id'] ?>"
+                                value="<?= htmlspecialchars($row['nomor_permohonan'] ?? '') ?>" class="input-field">
+                            <button class="btn btn-warning edit-nomor-permohonan-btn" data-id="<?= $row['id'] ?>">Edit &
+                                Simpan</button>
                         </td>
                         <td><?= htmlspecialchars($row['jenis_permohonan']); ?></td>
                         <td><?= htmlspecialchars($row['jenis_hak_cipta']); ?></td>
@@ -97,7 +93,8 @@ $result = $conn->query($query);
                             <div><strong>Kota:</strong> <?= htmlspecialchars($row['kota_pengumuman']); ?></div>
                         </td>
                         <td>
-                            <button onclick="openModal('<?php echo $row['id']; ?>')" class="btn btn-info">Detail Pencipta</button>
+                            <button onclick="openModal('<?php echo $row['id']; ?>')" class="btn btn-info">Detail
+                                Pencipta</button>
                         </td>
                         <td>
                             <?php
@@ -113,7 +110,7 @@ $result = $conn->query($query);
                                 <?= htmlspecialchars($row['status']) ?>
                             </span>
                         </td>
-                        <td>
+                        <td id="certificate-container-<?= $row['id'] ?>">
                             <?php if (!empty($row['certificate_path'])) { ?>
                                 <a href="<?= $row['certificate_path'] ?>" class="btn btn-download" download>Download</a>
                             <?php } else { ?>
@@ -121,30 +118,23 @@ $result = $conn->query($query);
                             <?php } ?>
                         </td>
                         <td>
-                        <div class="input-wrapper">
-                            <form action="services/edit_certificate.php" method="POST" enctype="multipart/form-data">
-                                <input type="hidden" name="id" value="<?= $row['id'] ?>">
-                                <div class="input-file-wrapper">
-                                    <input type="file" name="new_certificate" class="input-file" required>
-                                </div>
-                                <button type="submit" class="btn btn-warning"
-                                    onclick="return confirm('Yakin ingin mengedit sertifikat?')">Edit</button>
-                            </form>
+                            <div class="input-wrapper">
+                                <input type="file" id="edit_certificate_<?= $row['id'] ?>" class="input-file" required>
+                                <button type="button" class="btn btn-warning edit-certificate-btn"
+                                    data-id="<?= $row['id'] ?>">Edit</button>
                             </div>
                         </td>
                         <td>
-                            <form action="services/edit_nomor_sertifikat.php" method="POST">
-                                <input type="hidden" name="id" value="<?= $row['id']; ?>">
-                                <input type="text" name="nomor_sertifikat"
-                                    value="<?= htmlspecialchars($row['nomor_sertifikat'] ?? ''); ?>"
-                                    placeholder="Nomor Sertifikat" class="input-field" required>
-                                <button type="submit" class="btn btn-warning"
-                                    onclick="return confirm('Yakin ingin mengedit nomor permohonan?')">Edit & Simpan</button>
-                            </form>
+                            <input type="text" id="nomor_sertifikat_<?= $row['id'] ?>"
+                                value="<?= htmlspecialchars($row['nomor_sertifikat'] ?? '') ?>" class="input-field">
+                            <button class="btn btn-warning edit-nomor-sertifikat-btn" data-id="<?= $row['id'] ?>">Edit &
+                                Simpan</button>
                         </td>
                         <td>
-                            <a href="services/delete_hki.php?id=<?= $row['id']; ?>" class="btn btn-danger"
-                                onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
+                            <button class="btn btn-danger delete-btn" data-id="<?= $row['id']; ?>"
+                                data-row="row-<?= $row['id']; ?>">
+                                Hapus
+                            </button>
                         </td>
                     </tr>
                 <?php } ?>
@@ -153,8 +143,8 @@ $result = $conn->query($query);
     </div>
 </div>
 
-    <!-- Modal untuk Profil User -->
-    <div id="modal-page">
+<!-- Modal untuk Profil User -->
+<div id="modal-page">
     <div id="profileModal" class="modal" style="display: none;">
         <div class="modal-content">
             <div class="modal-header">
@@ -164,32 +154,32 @@ $result = $conn->query($query);
             <div id="profileDetails"></div>
         </div>
     </div>
-    </div>
+</div>
 
-    <!-- Modal untuk Deskripsi -->
-    <div id="modal-page">
-        <div id="descriptionModal" class="modal" style="display: none;">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2>Deskripsi Ciptaan</h2>
-                    <button class="close" onclick="closeDescriptionModal()">&times;</button>
-                </div>
-                <div id="descriptionDetails"></div>
+<!-- Modal untuk Deskripsi -->
+<div id="modal-page">
+    <div id="descriptionModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Deskripsi Ciptaan</h2>
+                <button class="close" onclick="closeDescriptionModal()">&times;</button>
             </div>
+            <div id="descriptionDetails"></div>
         </div>
     </div>
+</div>
 
-    <!-- Modal untuk Detail Pencipta -->
-    <div id="modal-page">
-        <div id="creatorModal" class="modal" style="display: none;">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2>Detail Pencipta</h2>
-                    <button class="close" onclick="closeModal()">&times;</button>
-                </div>
-                <div id="creatorDetails"></div>
+<!-- Modal untuk Detail Pencipta -->
+<div id="modal-page">
+    <div id="creatorModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Detail Pencipta</h2>
+                <button class="close" onclick="closeModal()">&times;</button>
             </div>
+            <div id="creatorDetails"></div>
         </div>
     </div>
+</div>
 
 <script src="js/hki.js"></script>

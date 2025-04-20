@@ -2,28 +2,30 @@
 include '../config/config.php';
 session_start();
 
+// Set header JSON agar respons bisa diterima JS
+header('Content-Type: application/json');
+
 if ($_SESSION['role'] != 'admin') {
-    header("Location: ../login.php");
+    echo json_encode(['success' => false, 'message' => 'Unauthorized']);
     exit();
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
     $id = $_POST['id'];
-    $nomor_permohonan = isset($_POST['nomor_permohonan']) ? $_POST['nomor_permohonan'] : null;
-    $nomor_sertifikat = isset($_POST['nomor_sertifikat']) ? $_POST['nomor_sertifikat'] : null;
+    $nomor_permohonan = $_POST['nomor_permohonan'] ?? null;
+    $nomor_sertifikat = $_POST['nomor_sertifikat'] ?? null;
 
-    // Ambil user_id berdasarkan id registrasi
+    // Cari user_id dari registration
     $query = $conn->query("SELECT user_id FROM registrations WHERE id = '$id'");
     $data = $query->fetch_assoc();
     if (!$data) {
-        echo "Pendaftaran tidak ditemukan!";
+        echo json_encode(['success' => false, 'message' => 'Pendaftaran tidak ditemukan!']);
         exit();
     }
     $user_id = $data['user_id'];
 
     $certificate_path = null;
 
-    // Jika ada file yang diunggah, proses penyimpanan sertifikat
     if (!empty($_FILES["certificate"]["name"])) {
         $upload_dir = "../uploads/users/$user_id/files/$id/certificates/";
         if (!file_exists($upload_dir)) {
@@ -32,17 +34,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
 
         $file_name = "certificate_" . time() . "." . pathinfo($_FILES["certificate"]["name"], PATHINFO_EXTENSION);
         $full_path = $upload_dir . $file_name;
-        $db_file_path = "uploads/users/$user_id/files/$id/certificates/$file_name"; // Path yang disimpan tanpa '../'
+        $db_file_path = "uploads/users/$user_id/files/$id/certificates/$file_name";
 
         if (!move_uploaded_file($_FILES["certificate"]["tmp_name"], $full_path)) {
-            echo "Gagal mengunggah sertifikat.";
+            echo json_encode(['success' => false, 'message' => 'Gagal mengunggah sertifikat.']);
             exit();
         }
 
         $certificate_path = $db_file_path;
     }
 
-    // Update status menjadi "Terdaftar" dan simpan path sertifikat, nomor permohonan, serta nomor sertifikat jika ada
+    // Update status
     $update_query = "UPDATE registrations SET status='Terdaftar'";
     if ($certificate_path) {
         $update_query .= ", certificate_path='$certificate_path'";
@@ -55,11 +57,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
     }
     $update_query .= " WHERE id='$id'";
 
-    $conn->query($update_query);
-
-    echo "Pengajuan telah disetujui.";
+    if ($conn->query($update_query)) {
+        echo json_encode(['success' => true, 'message' => 'Pengajuan telah disetujui.']);
+    } else {
+        echo json_encode(['success' => false, 'message' => 'Gagal memperbarui data.']);
+    }
+} else {
+    echo json_encode(['success' => false, 'message' => 'Permintaan tidak valid']);
 }
-
-header("Location: ../admin.php");
-exit();
 ?>

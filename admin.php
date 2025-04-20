@@ -16,6 +16,10 @@ $result = $conn->query("SELECT registrations.*, users.username FROM registration
 ?>
 
 <head>
+    <!-- Sweet Alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Css -->
     <link rel="stylesheet" href="css/pengajuan.css">
     <link rel="stylesheet" href="css/modal.css">
 </head>
@@ -45,8 +49,8 @@ $result = $conn->query("SELECT registrations.*, users.username FROM registration
             </thead>
             <tbody>
                 <?php while ($row = $result->fetch_assoc()) { ?>
-                    <form action="services/approve.php" method="POST" enctype="multipart/form-data">
-                        <tr>
+                    <form id="form_<?= $row['id'] ?>" enctype="multipart/form-data">
+                        <tr id="row_<?= $row['id'] ?>">
                             <td><a href="#" onclick="showProfile(<?= $row['user_id'] ?>)"
                                     class="profile-link"><?= htmlspecialchars($row['username']) ?></a></td>
                             <td><?= htmlspecialchars($row['jenis_permohonan']) ?></td>
@@ -80,29 +84,27 @@ $result = $conn->query("SELECT registrations.*, users.username FROM registration
                             <td>
                                 <div class="input-wrapper">
                                     <label for="certificate_<?= $row['id'] ?>" class="file-label">Sertifikat</label>
-                                    <input type="hidden" name="id" value="<?= $row['id'] ?>">
                                     <div class="input-file-wrapper">
                                         <input type="file" id="certificate_<?= $row['id'] ?>" name="certificate"
-                                            class="input-file" required>
+                                            class="input-file">
                                     </div>
-                                    <div class="btn-group horizontal">
-                                        <button type="submit" class="btn btn-safe"
-                                            onclick="return confirm('Yakin ingin menyetujui pengajuan ini?')">
-                                            ✔ Setujui
-                                        </button>
-                                        <a href="services/delete_hki.php?id=<?= $row['id'] ?>" class="btn btn-danger"
-                                            onclick="return confirm('Yakin ingin menghapus?')">
-                                            ✖ Tolak
-                                        </a>
-                                    </div>
+                                    <button type="button" class="btn btn-safe approve-btn" data-id="<?= $row['id'] ?>"
+                                        data-form="form_<?= $row['id'] ?>" data-user="<?= $row['user_id'] ?>">
+                                        ✔ Setujui
+                                    </button>
+                                    <button class="btn btn-danger delete-btn" data-id="<?= $row['id'] ?>"
+                                        data-row="row_<?= $row['id'] ?>">
+                                        ✖ Tolak
+                                    </button>
                                 </div>
-                            </td>
-                        </tr>
-                    </form>
-                <?php } ?>
-            </tbody>
-        </table>
-    </div>
+        </div>
+        </td>
+        </tr>
+        </form>
+    <?php } ?>
+    </tbody>
+    </table>
+</div>
 </div>
 
 

@@ -2,8 +2,10 @@
 include '../config/config.php';
 session_start();
 
+header('Content-Type: application/json');
+
 if ($_SESSION['role'] != 'admin') {
-    echo "Unauthorized!";
+    echo json_encode(['status' => 'error', 'message' => 'Unauthorized!']);
     exit();
 }
 
@@ -13,23 +15,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'], $_POST['nomor_se
 
     // Pastikan Nomor Sertifikat tidak kosong
     if (empty($nomor_sertifikat)) {
-        echo "Nomor Sertifikat tidak boleh kosong!";
+        echo json_encode(['status' => 'error', 'message' => 'Nomor Sertifikat tidak boleh kosong!']);
         exit();
     }
 
     // Update database
     $stmt = $conn->prepare("UPDATE registrations SET nomor_sertifikat = ? WHERE id = ?");
     $stmt->bind_param("si", $nomor_sertifikat, $id);
-    
+
     if ($stmt->execute()) {
-        echo "Nomor Sertifikat berhasil diperbarui!";
+        echo json_encode(['status' => 'success', 'message' => 'Nomor Sertifikat berhasil diperbarui!']);
     } else {
-        echo "Gagal memperbarui Nomor Sertifikat!";
+        echo json_encode(['status' => 'error', 'message' => 'Gagal memperbarui Nomor Sertifikat!']);
     }
 
     $stmt->close();
+} else {
+    echo json_encode(['status' => 'error', 'message' => 'Data tidak lengkap!']);
 }
-
-header("Location: ../rekap_hki.php");
-exit();
 ?>
