@@ -59,20 +59,21 @@ if (!file_exists($profile_picture) || empty($profile['profile_picture'])) {
 
         <a href="edit_profile.php" class="btn">Edit Profil</a>
     </div><br>
-    <div>
-        <?php if ($isAdmin): ?>
-            <a href="admin.php">Dashboard</a> |
-            <a href="rekap_hki.php">Rekap HKI</a> |
-            <a href="announcement.php">Pengumuman</a> |
-            <a href="template.php">Template Dokumen</a> |
-            <a href="reset_password.php">Reset Password User |</a>
-            <a href="services/logout.php">Logout</a>
-        <?php else: ?>
-            <a href="user.php">Dashboard</a> |
-            <a href="status_pengajuan.php">Lihat Status Pengajuan</a> |
-            <a href="update_account.php">Update Data Akun</a> |
-            <a href="services/logout.php">Logout</a>
-        <?php endif; ?>
-    </div>
+    <div class="links-wrapper">
+    <?php if ($isAdmin): ?>
+        <a href="admin.php">Dashboard</a> |
+        <a href="rekap_hki.php">Rekap HKI</a> |
+        <a href="announcement.php">Pengumuman</a> |
+        <a href="template.php">Template Dokumen</a> |
+        <a href="reset_password.php">Reset Password User</a> |
+        <a href="services/logout.php">Logout</a>
+    <?php else: ?>
+        <a href="user.php">Dashboard</a> |
+        <a href="status_pengajuan.php">Lihat Status Pengajuan</a> |
+        <a href="update_account.php">Update Data Akun</a> |
+        <a href="services/logout.php">Logout</a>
+    <?php endif; ?>
+</div>
+
 
 </div>

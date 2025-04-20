@@ -11,6 +11,12 @@ if (!isset($_SESSION['user_id'])) {
 
 if (isset($_GET['id'])) {
     $user_id = $_GET['id'];
+
+    // Ambil data user (misal: tabel 'users' punya kolom 'role' atau 'level')
+    $user_data = $conn->query("SELECT * FROM users WHERE id = '$user_id'")->fetch_assoc();
+    $isAdmin = (isset($user_data['role']) && $user_data['role'] === 'admin'); // Sesuaikan fieldnya
+
+    // Ambil data profil
     $profile = $conn->query("SELECT * FROM user_profile WHERE user_id = '$user_id'")->fetch_assoc();
 
     // Jika data kosong, tampilkan pesan default
@@ -29,43 +35,35 @@ if (isset($_GET['id'])) {
     }
     ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-                body {
-            font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            width: 50%;
-            margin: 50px auto;
-            background: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
+    <head>
+        <!-- Icons -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
-        h2 {
-            color: #333;
-        }
-        p {
-            font-size: 16px;
-            margin: 5px 0;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-            <img src="<?= $profile_picture ?>" class="profile-img" alt="Foto Profil">
-            <h2><?= $nama_lengkap ?></h2>
-            
+        <!-- Font -->
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="css/modal.css">
+        <style>
+            .verified-icon {
+                color: #007bff;
+                /* Warna biru seperti centang verified */
+                margin-left: 8px;
+            }
+        </style>
+    </head>
+    <div id="modal-page">
+        <div>
+            <div class="profile-center">
+                <img src="<?= $profile_picture ?>" class="profile-img" alt="Foto Profil">
+            </div>
+            <h2 class="text-center">
+                <?= $nama_lengkap ?>
+                <?php if ($isAdmin): ?>
+                    <i class="fas fa-check-circle verified-icon" title="Admin"></i>
+                <?php endif; ?>
+            </h2>
+
             <p><strong>No. KTP:</strong> <?= $no_ktp ?></p>
             <p><strong>Telepon:</strong> <?= $telephone ?></p>
             <p><strong>Tanggal Lahir:</strong> <?= $birth_date ?></p>
@@ -73,11 +71,10 @@ if (isset($_GET['id'])) {
             <p><strong>Kewarganegaraan:</strong> <?= $nationality ?></p>
             <p><strong>Tipe Pemohon:</strong> <?= $type_of_applicant ?></p>
         </div>
-        
+
         <?php
-    } else {
-        echo "<p>Data profil tidak ditemukan.</p>";
-    }
-    ?>
-</body>
-</html>
+} else {
+    echo "<p>Data profil tidak ditemukan.</p>";
+}
+?>
+</div>

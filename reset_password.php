@@ -81,7 +81,8 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
         </div>
 
         <!-- Modal Detail User -->
-        <div id="userDetailModal" class="modal-page modal modal-hidden">
+        <div id="modal-page">
+        <div id="userDetailModal" class="modal modal-hidden">
             <div class="modal-content">
                 <div class="modal-header">
                     <h2>Detail Pengguna</h2>
@@ -91,6 +92,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
                     <!-- Konten AJAX -->
                 </div>
             </div>
+        </div>
         </div>
 
 
