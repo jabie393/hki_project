@@ -11,11 +11,15 @@
 }
 
 #template-page h2 {
-  color: #4f46e5;
+  color: #004080;
   text-align: center;
   font-weight: bold;
   padding-bottom: 20px;
   padding-top: 10px;
+}
+
+#template-page span {
+  color: #004080;
 }
 
 #template-page form {
@@ -55,7 +59,7 @@
 
 #template-page .custom-select-wrapper select:focus {
   outline: none;
-  border-color: #6366f1;
+  border-color: #004080;
   background-color: #e0e7ff;
 }
 
@@ -137,7 +141,7 @@
 }
 
 #template-page button {
-  background-color: #4f46e5;
+  background-color: #004080;
   color: white;
   padding: 10px;
   border: none;
@@ -148,17 +152,17 @@
 }
 
 #template-page button:hover {
-  background-color: #3730a3;
+  background-color: #002a5e;
 }
 
 #template-page .download-btn {
-  background-color: #3b82f6;
+  background-color: #004080;
   color: white;
 }
 
 #template-page .download-btn:hover {
   text-decoration: none;
-  background-color: #1e40af;
+  background-color: #002a5e;
 }
 
 #template-page .delete-btn {

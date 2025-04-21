@@ -48,7 +48,8 @@
   color: #ffffff;
   text-decoration: none;
   border-radius: 8px;
-  font-weight: 500;
+  cursor: pointer;
+  font-weight: 600;
   transition: background-color 0.3s ease;
 }
 

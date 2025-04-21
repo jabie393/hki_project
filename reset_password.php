@@ -80,22 +80,6 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
             <button type="button" class="button" id="showUserDetailBtn">Detail User</button>
         </div>
 
-        <!-- Modal Detail User -->
-        <div id="modal-page">
-        <div id="userDetailModal" class="modal modal-hidden">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2>Detail Pengguna</h2>
-                    <button class="close" onclick="closeProfileModal()">&times;</button>
-                </div>
-                <div id="userDetailContent">
-                    <!-- Konten AJAX -->
-                </div>
-            </div>
-        </div>
-        </div>
-
-
         <div class="nav-links">
             <a href="#" onclick="loadContent('profile.php')">Profil</a> |
             <a href="#" onclick="loadContent('admin.php')">Dashboard</a> |
@@ -107,4 +91,18 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     </div>
 
     <script src="js/reset_password.js"></script>
+</div>
+<!-- Modal Detail User -->
+<div id="modal-page">
+    <div id="userDetailModal" class="modal modal-hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Detail Pengguna</h2>
+                <button class="close" onclick="closeProfileModal()">&times;</button>
+            </div>
+            <div id="userDetailContent">
+                <!-- Konten AJAX -->
+            </div>
+        </div>
+    </div>
 </div>
