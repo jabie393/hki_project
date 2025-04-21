@@ -1,3 +1,4 @@
+<!-- Flow FE -->
 <!-- ADMIN -->
 <?php
 include 'config/config.php';
@@ -53,10 +54,11 @@ if (isset($_GET['id'])) {
         </style>
     </head>
     <div id="modal-page">
-        <div>
+        <div class="modal-container">
             <div class="profile-center">
                 <img src="<?= $profile_picture ?>" class="profile-img" alt="Foto Profil">
             </div>
+
             <h2 class="text-center">
                 <?= $nama_lengkap ?>
                 <?php if ($isAdmin): ?>
@@ -64,14 +66,31 @@ if (isset($_GET['id'])) {
                 <?php endif; ?>
             </h2>
 
-            <p><strong>No. KTP:</strong> <?= $no_ktp ?></p>
-            <p><strong>Telepon:</strong> <?= $telephone ?></p>
-            <p><strong>Tanggal Lahir:</strong> <?= $birth_date ?></p>
-            <p><strong>Jenis Kelamin:</strong> <?= $gender ?></p>
-            <p><strong>Kewarganegaraan:</strong> <?= $nationality ?></p>
-            <p><strong>Tipe Pemohon:</strong> <?= $type_of_applicant ?></p>
+            <p class="profile-row">
+                <span class="profile-label">No. KTP:</span>
+                <span class="profile-value"><?= $no_ktp ?></span>
+            </p>
+            <p class="profile-row">
+                <span class="profile-label">Telepon:</span>
+                <span class="profile-value"><?= $telephone ?></span>
+            </p>
+            <p class="profile-row">
+                <span class="profile-label">Tanggal Lahir:</span>
+                <span class="profile-value"><?= $birth_date ?></span>
+            </p>
+            <p class="profile-row">
+                <span class="profile-label">Jenis Kelamin:</span>
+                <span class="profile-value"><?= $gender ?></span>
+            </p>
+            <p class="profile-row">
+                <span class="profile-label">Kewarganegaraan:</span>
+                <span class="profile-value"><?= $nationality ?></span>
+            </p>
+            <p class="profile-row">
+                <span class="profile-label">Tipe Pemohon:</span>
+                <span class="profile-value"><?= $type_of_applicant ?></span>
+            </p>
         </div>
-
         <?php
 } else {
     echo "<p>Data profil tidak ditemukan.</p>";

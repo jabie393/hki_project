@@ -1,3 +1,4 @@
+/* === Modal Wrapper === */
 .modal {
   display: none;
   position: fixed;
@@ -9,7 +10,7 @@
   background-color: rgba(0, 0, 0, 0.6);
   justify-content: center;
   align-items: center;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Inter", sans-serif; /* Disamakan */
 }
 
 /* Modal aktif */
@@ -17,20 +18,24 @@
   display: flex !important;
 }
 
+/* === Modal Konten === */
 .modal-content {
   background-color: #ffffff;
-  padding: 25px;
-  border-radius: 12px;
-  width: 50%;
-  max-height: 80vh;
+  padding: 30px 40px;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 85vh;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   position: relative;
   animation: fadeIn 0.3s ease-in-out;
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-  border-top: 6px solid #0056b3;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  border-top: 6px solid #004080;
 }
 
+/* === Header Modal === */
 .modal-header {
   display: flex;
   justify-content: space-between;
@@ -39,39 +44,8 @@
   border-bottom: 1px solid #e5e5e5;
 }
 
-.modal-header h2 {
-  margin: 0;
-  font-size: 22px;
-  color: #004080;
-  text-align: center;
-}
-
-#modal-page p strong + i.check-icon {
-  margin-left: 10px; /* Memberikan jarak antara nama lengkap dan ikon */
-  vertical-align: middle; /* Menyelaraskan vertikal dengan teks */
-}
-
-#modal-page .check-icon {
-  color: #007bff;  /* Warna biru */
-  font-size: 20px;
-  margin-left: 10px;
-}
-
-#modal-page p {
-  font-size: 16px;
-  margin: 6px 0;
-  width: 100%;
-  text-align: left;
-  line-height: 1.6;
-}
-
-#modal-page strong {
-  color: #2c3e50;
-  min-width: 160px;
-  display: inline-block;
-}
-
-#modal-page .close {
+/* Tombol Close */
+.modal-content .close {
   font-size: 26px;
   font-weight: bold;
   cursor: pointer;
@@ -81,34 +55,71 @@
   transition: color 0.3s ease;
 }
 
-#modal-page .close:hover {
+.modal-content .close:hover {
   color: #e74c3c;
 }
 
-/* Centered Profile */
-#modal-page .profile-center {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-#modal-page .text-center {
-  text-align: center;
-  color: #004080;
-  font-size: 16pt;
-  font-weight: bold;
-  padding-bottom: 20px;
-  padding-top: 10px;
-}
-
-#modal-page .profile-img {
+/* === Profile Layout (konsisten dengan profile.css) === */
+.modal-content .profile-img {
   width: 120px;
   height: 120px;
   border-radius: 50%;
   object-fit: cover;
   border: 4px solid #004080;
-  display: inline-block;
+  margin-top: 25px;
+  margin-bottom: 15px;
 }
 
+.modal-content h2 {
+  font-size: 22px;
+  font-weight: 600;
+  color: #004080;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.modal-content .profile-center {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.modal-content .text-center {
+  text-align: center;
+  color: #004080;
+  font-size: 22px;
+  font-weight: 600;
+  padding-bottom: 10px;
+}
+
+.modal-content .fa-check-circle {
+  color: #007bff;
+  margin-left: 8px;
+}
+
+/* Info Baris */
+.modal-content .profile-row {
+  display: grid;
+  grid-template-columns: minmax(100px, 160px) 1fr;
+  gap: 12px;
+  font-size: 16px;
+  margin: 6px 0;
+  width: 100%;
+  line-height: 1.6;
+}
+
+.modal-content .profile-label {
+  font-weight: bold;
+  color: #2c3e50;
+  word-break: break-word;
+}
+
+.modal-content .profile-value {
+  flex: 1;
+  word-break: break-word;
+}
+
+/* === Scrollable === */
 #profileDetails,
 #creatorDetails,
 #userDetailContent {
@@ -118,16 +129,7 @@
   border-top: 1px solid #eee;
 }
 
-.modal-content p {
-  margin-bottom: 10px;
-  font-size: 15px;
-  color: #444;
-}
-
-.modal-content strong {
-  color: #222;
-}
-
+/* === Modal Tabel === */
 .modal-content .table-wrapper {
   overflow-x: auto;
   max-width: 100%;
@@ -148,7 +150,45 @@
   font-size: 14px;
 }
 
-/* Animation */
+/* === Responsif === */
+@media (max-width: 768px) {
+  .modal-content {
+    width: 95%;
+    padding: 25px;
+  }
+
+  .modal-content h2 {
+    font-size: 20px;
+  }
+
+  .modal-content .profile-row {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 576px) {
+  .modal-content h2 {
+    font-size: 18px;
+  }
+
+  .modal-content .profile-row {
+    font-size: 13px;
+    grid-template-columns: minmax(80px, 120px) 1fr;
+  }
+}
+
+@media (max-width: 400px) {
+  .modal-content h2 {
+    font-size: 16px;
+  }
+
+  .modal-content .profile-row {
+    font-size: 12px;
+    grid-template-columns: minmax(70px, 110px) 1fr;
+  }
+}
+
+/* === Animasi === */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -157,13 +197,5 @@
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-/* Responsif untuk HP */
-@media (max-width: 768px) {
-  #modal-page .modal-content {
-    width: 90%;
-    padding: 20px;
   }
 }
