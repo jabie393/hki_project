@@ -50,7 +50,7 @@ $result = $conn->query("SELECT * FROM announcement");
         <div class="nav">
             <a href="#" onclick="loadContent('profile.php')">Profil</a> |
             <a href="#" onclick="loadContent('rekap_hki.php')">Rekap HKI</a> |
-            <a href="#" onclick="loadContent('admin.php')">Dashboard</a> |c
+            <a href="#" onclick="loadContent('admin.php')">Dashboard</a> |
             <a href="#" onclick="loadContent('template.php')">Template Dokumen</a> |
             <a href="#" onclick="loadContent('reset_password.php')">Reset Password User</a> |
             <a href="services/logout.php">Logout</a>

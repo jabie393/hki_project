@@ -1,4 +1,6 @@
 function loadContent(url) {
+    localStorage.setItem("activePage", url);
+
     fetch(url)
         .then(response => {
             if (!response.ok) {
@@ -10,7 +12,6 @@ function loadContent(url) {
             const container = document.getElementById("content-main");
             container.innerHTML = data;
 
-            // Jalankan ulang semua <script> dalam konten yang dimuat
             const scripts = container.querySelectorAll("script");
             scripts.forEach(oldScript => {
                 const newScript = document.createElement("script");
@@ -26,7 +27,6 @@ function loadContent(url) {
                 oldScript.remove();
             });
 
-            // Re-attach search form event listener jika ada
             const searchForm = document.getElementById("search-form");
             if (searchForm) {
                 searchForm.addEventListener("submit", function (e) {
@@ -38,11 +38,24 @@ function loadContent(url) {
                         .then(response => response.text())
                         .then(data => {
                             container.innerHTML = data;
-                            // Panggil loadContent lagi agar form search bisa aktif ulang
                             loadContent("rekap_hki.php?search=" + encodeURIComponent(search));
                         });
                 });
             }
+
+            highlightActiveMenu(url);
+
+            // Tutup sidebar otomatis jika layar kecil
+            if (window.innerWidth < 768) {
+                const sidebar = document.getElementById('sidebar');
+                const toggleButton = document.getElementById('sidebar-toggle');
+                const overlay = document.getElementById('sidebar-overlay');
+
+                sidebar.classList.remove('show');
+                toggleButton.classList.remove('hidden');
+                overlay.classList.remove('show');
+            }
+
         })
         .catch(error => {
             console.error('Ada masalah dengan memuat halaman:', error);
@@ -50,9 +63,24 @@ function loadContent(url) {
         });
 }
 
+
+// Fungsi untuk memberikan highlight pada menu aktif
+function highlightActiveMenu(currentPage) {
+    document.querySelectorAll('.menu-link').forEach(link => {
+        link.classList.remove('active');
+
+        const onclickAttr = link.getAttribute('onclick');
+        if (onclickAttr) {
+            const match = onclickAttr.match(/'([^']+)'/);
+            if (match && match[1] === currentPage) {
+                link.classList.add('active');
+            }
+        }
+    });
+}
+
 // Inisialisasi pertama saat halaman dimuat
 document.addEventListener("DOMContentLoaded", function () {
-    const params = new URLSearchParams(window.location.search);
-    const loadFile = params.get('load') || 'admin.php';
-    loadContent(loadFile);
+    const lastPage = localStorage.getItem("activePage") || 'admin.php';
+    loadContent(lastPage);
 });

@@ -47,14 +47,8 @@ $(document).ready(function () {
                         icon: 'success',
                         title: 'Sukses!',
                         text: response.message,
-                        customClass: {
-                            confirmButton: 'swal2-success',  // Kelas kustom untuk tombol sukses
-                        },
-                        didOpen: () => {
-                            const confirmButton = Swal.getConfirmButton();
-                            confirmButton.style.backgroundColor = '#28a745';
-                            confirmButton.style.borderColor = '#28a745';
-                        }
+                        showConfirmButton: false, // Tidak ada tombol confirm
+                        timer: 2000 // Menunggu 2 detik
                     }).then(() => {
                         // Reset form jika sukses
                         $('#userSelect').val('').trigger('change');

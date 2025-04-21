@@ -5,7 +5,7 @@
   top: 0;
   width: 240px;
   height: 100%;
-  background: linear-gradient(145deg, #1f1c2c, #928dab);
+  background: linear-gradient(145deg, #004080, #1976d2); /* Biru kampus */
   padding: 20px 10px;
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
   z-index: 1000;
@@ -58,21 +58,6 @@
   font-size: 1.3rem;
 }
 
-/* Hamburger / Toggle Button */
-#sidebar-toggle {
-  position: fixed;
-  top: 15px;
-  left: 15px;
-  font-size: 1.8rem;
-  color: #fff;
-  background-color: #1f1c2c;
-  padding: 8px 10px;
-  border-radius: 6px;
-  cursor: pointer;
-  z-index: 1100;
-  display: none;
-}
-
 /* ========== NAVBAR ========== */
 nav {
   height: 60px;
@@ -97,6 +82,64 @@ nav .bx-menu {
   color: #333;
   cursor: pointer;
   display: none;
+}
+
+/* ==== OVERLAY FADE ==== */
+/* SIDEBAR OVERLAY */
+#sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5); /* Warna gelap */
+  z-index: 999;
+  display: none;
+}
+
+#sidebar-overlay.show {
+  display: block; /* Menampilkan overlay */
+}
+
+/* ==== TOGGLE ANIMASI ==== */
+#sidebar-toggle {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  font-size: 1.8rem;
+  color: #fff;
+  background-color: #1f1c2c;
+  padding: 8px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  z-index: 1100;
+  display: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+#sidebar-toggle.hidden {
+  opacity: 0;
+  transform: translateX(-20px);
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+#sidebar .sidebar-text {
+  box-sizing: border-box;
+  border-width: 0;
+  border-style: solid;
+  border-color: #e5e7eb;
+  cursor: pointer;
+}
+
+#sidebar .menu-link.active {
+  background-color: #ffc107; /* kuning emas */
+  color: white;
+  border-radius: 8px;
+}
+
+#sidebar .menu-link.active i {
+  color: white;
 }
 
 /* Switch mode */
@@ -137,7 +180,7 @@ nav .profile img {
   border-radius: 50%;
   object-fit: cover;
   margin-left: 20px;
-  border: 2px solid #004080;;
+  border: 2px solid #004080;
 }
 
 /* Content Layout */
