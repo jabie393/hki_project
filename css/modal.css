@@ -186,6 +186,10 @@
     font-size: 12px;
     grid-template-columns: minmax(70px, 110px) 1fr;
   }
+
+  .modal .profile-label {
+    min-width: 120px;
+  }
 }
 
 /* === Animasi === */

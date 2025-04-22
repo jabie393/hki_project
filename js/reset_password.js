@@ -67,11 +67,6 @@ $(document).ready(function () {
                         customClass: {
                             confirmButton: 'swal2-error'
                         },
-                        didOpen: () => {
-                            const confirmButton = Swal.getConfirmButton();
-                            confirmButton.style.backgroundColor = '#dc3545';
-                            confirmButton.style.borderColor = '#dc3545';
-                        }
                     });
                 }
             },
@@ -83,11 +78,6 @@ $(document).ready(function () {
                     customClass: {
                         confirmButton: 'swal2-error'
                     },
-                    didOpen: () => {
-                        const confirmButton = Swal.getConfirmButton();
-                        confirmButton.style.backgroundColor = '#dc3545';
-                        confirmButton.style.borderColor = '#dc3545';
-                    }
                 });
             }
         });

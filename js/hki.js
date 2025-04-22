@@ -79,9 +79,8 @@ document.querySelectorAll('.approve-btn').forEach(button => {
             text: "Data akan diperbarui sebagai 'Terdaftar'",
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonColor: '#38a169',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, Setujui!'
+            confirmButtonText: 'Ya, hapus!',
+            cancelButtonText: 'Batal'
         }).then((result) => {
             if (result.isConfirmed) {
                 fetch('services/approve.php', {
@@ -127,13 +126,12 @@ document.querySelectorAll('.delete-btn').forEach(button => {
         const rowElement = document.getElementById(rowId);
 
         Swal.fire({
-            title: 'Yakin ingin menolak?',
+            title: 'Yakin ingin menghapus?',
             text: "Data dan file terkait akan dihapus permanen!",
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#aaa',
-            confirmButtonText: 'Ya, Hapus!'
+            confirmButtonText: 'Ya, hapus!',
+            cancelButtonText: 'Batal'
         }).then((result) => {
             if (result.isConfirmed) {
                 fetch(`services/delete_hki.php?id=${id}`)
@@ -143,7 +141,7 @@ document.querySelectorAll('.delete-btn').forEach(button => {
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Dihapus',
-                                text: 'Pengajuan berhasil dihapus.',
+                                text: 'Hak Cipta berhasil dihapus.',
                                 timer: 2000,
                                 showConfirmButton: false
                             });

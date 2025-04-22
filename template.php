@@ -13,7 +13,7 @@ if (!$result) {
 ?>
 
 <head>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/template.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
@@ -48,27 +48,7 @@ if (!$result) {
 
         <h2>Dokumen Tersedia</h2>
         <ul id="document-list">
-            <?php
-            $types = ['surat_pernyataan', 'surat_pengalihan_hak'];
-            foreach ($types as $type):
-                $res = $conn->query("SELECT * FROM template_documents WHERE doc_type = '$type'");
-                $row = $res->fetch_assoc();
-                ?>
-                <li data-doc-type="<?= $type; ?>">
-                    <?php
-                    $label = ucwords(str_replace('_', ' ', $type)); // menghapus "_"
-                    ?>
-                    <strong><?= $label; ?>:</strong><br>
-                    <?php if ($row): ?>
-                        <span class="doc-actions">
-                            <a class="download-btn" href="<?= $row['filepath']; ?>" download><?= $row['filename']; ?></a>
-                            <a class="delete-btn" href="#" onclick="deleteDocument('<?= $type; ?>'); return false;">Hapus</a>
-                        </span>
-                    <?php else: ?>
-                        <span class="no-file">📄 Dokumen belum diunggah.</span>
-                    <?php endif; ?>
-                </li>
-            <?php endforeach; ?>
+            <?php include 'services/get_templates.php'; ?>
         </ul>
 
         <div class="nav-links">

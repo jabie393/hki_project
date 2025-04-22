@@ -28,6 +28,15 @@ selectElement.addEventListener('blur', function () {
     isDropdownOpen = false; // Menandakan dropdown tertutup
 });
 
+// Refresh Semua List //
+function refreshDocumentList() {
+    fetch('services/get_templates.php')
+        .then(res => res.text())
+        .then(html => {
+            document.getElementById('document-list').innerHTML = html;
+        });
+}
+
 
 // Pembaca File //
 const fileInput = document.getElementById('fileInput');
@@ -66,7 +75,7 @@ document.getElementById('uploadForm').addEventListener('submit', function (e) {
             timer: 2000 // Menunggu 2 detik
         }).then(() => {
             if (response.status === 'success') {
-                location.reload();
+                refreshDocumentList();
             }
         });
     })
@@ -80,9 +89,8 @@ function deleteDocument(docType) {
         title: "Yakin ingin menghapus dokumen ini?",
         icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: "#d33",
-        cancelButtonColor: "#aaa",
-        confirmButtonText: "Hapus"
+        confirmButtonText: 'Ya, hapus!',
+        cancelButtonText: 'Batal'
     }).then((result) => {
         if (result.isConfirmed) {
             fetch('services/edit_template.php?delete=' + encodeURIComponent(docType))
@@ -96,7 +104,7 @@ function deleteDocument(docType) {
                         timer: 2000 // Menunggu 2 detik
                     }).then(() => {
                         if (response.status === 'success') {
-                            location.reload();
+                            refreshDocumentList();
                         }
                     });
                 })
