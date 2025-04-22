@@ -12,21 +12,23 @@ $dashboardPage = (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') ? 'a
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-    <link rel="stylesheet" href="/hki_project/css/register.css" />
+    <link rel="stylesheet" href="css/sign.css" />
 </head>
 
 <body>
     <!-- Background Image -->
     <div class="background-image">
-        <img src="/hki_project/assets/image/bg.png" alt="Background image of a university building" />
+        <img src="assets/image/bg.png" alt="Background image of a university building" />
     </div>
 
     <!-- Header -->
     <div class="header">
         <div class="logo-container">
-            <img src="/hki_project/assets/image/logo.png" alt="University logo" />
+            <img src="assets/image/logo.png" alt="University logo" />
         </div>
     </div>
 
@@ -63,7 +65,7 @@ $dashboardPage = (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') ? 'a
                 <input type="password" id="password" name="password" placeholder="Masukkan password Anda" required autocomplete="new-password" />
             </div>
 
-            <button type="submit" class="btn-daftar">Daftar</button>
+            <button type="submit" class="btn">Daftar</button>
         </form>
         <div class="register-link">Sudah Punya Akun? <a href="login.php">Masuk</a></div>
     </div>

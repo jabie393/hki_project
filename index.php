@@ -18,33 +18,17 @@ $images = $result->fetch_all(MYSQLI_ASSOC);
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hak Kekayaan Intelektual</title>
-  <link rel="stylesheet" href="/hki_project/css/style.css">
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/modal_announcement.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <style>
-    body {
-      background: url('/hki_project/assets/image/bg.png') no-repeat center center;
-      font-family: 'Poppins', sans-serif;
-      font-size: 25px;
-      margin: 0;
-      padding: 0;
-      text-align: center;
-      background-size: cover;
-      background-attachment: fixed;
-      height: 100vh;
-      color: rgb(255, 255, 255);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-  </style>
 </head>
 
 <body>
-
-
   <!-- Modal Pop-up -->
   <div id="announcementModal" class="modal">
     <div class="modal-content">
@@ -86,7 +70,7 @@ $images = $result->fetch_all(MYSQLI_ASSOC);
 
 
   <div class="header">
-    <img src="/hki_project/assets/image/logo.png" alt="Logo Unira">
+    <img src="assets/image/logo.png" alt="Logo Unira">
   </div>
   <h1>Hak Kekayaan Intelektual</h1>
   <div class="menu">

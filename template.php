@@ -1,5 +1,3 @@
-<!-- Flow FE -->
-<!-- ADMIN -->
 <?php
 include 'config/config.php';
 session_start();
@@ -7,24 +5,30 @@ if ($_SESSION['role'] != 'admin') {
     header("Location: login.php");
     exit();
 }
+
+$result = $conn->query("SELECT * FROM template_documents");
+if (!$result) {
+    die('Query gagal: ' . $conn->error);
+}
 ?>
+
 <head>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/template.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <div id="template-page">
-
     <main>
         <h2>Upload Dokumen</h2>
-        <form action="services/edit_template.php" method="post" enctype="multipart/form-data">
+        <form id="uploadForm" enctype="multipart/form-data">
             <div class="custom-select-wrapper">
                 <select name="doc_type" required>
                     <option value="surat_pernyataan">Surat Pernyataan</option>
                     <option value="surat_pengalihan_hak">Surat Pengalihan Hak</option>
                 </select>
                 <span class="custom-arrow">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg width="12" height="12" viewBox="0 0 24 24">
                         <path d="M7 10l5 5 5-5" stroke="#4f46e5" stroke-width="2" stroke-linecap="round"
                             stroke-linejoin="round" />
                     </svg>
@@ -43,21 +47,28 @@ if ($_SESSION['role'] != 'admin') {
         </form>
 
         <h2>Dokumen Tersedia</h2>
-        <ul>
+        <ul id="document-list">
             <?php
-            $docs = ['surat_pernyataan' => 'Surat Pernyataan', 'surat_pengalihan_hak' => 'Surat Pengalihan Hak'];
-            foreach ($docs as $key => $label) {
-                $result = $conn->query("SELECT * FROM template_documents WHERE doc_type='$key'");
-                if ($row = $result->fetch_assoc()) {
-                    echo "<li><strong>$label:</strong><br><span class='doc-actions'>";
-                    echo "<a class='download-btn' href='" . $row['filepath'] . "' download>" . $row['filename'] . "</a>";
-                    echo "<a class='delete-btn' href='services/edit_template.php?delete=$key' onclick='return confirm(\"Hapus dokumen ini?\")'>Hapus</a>";
-                    echo "</span></li>";
-                } else {
-                    echo "<li><strong>$label:</strong> <em>Belum diunggah</em></li>";
-                }
-            }
-            ?>
+            $types = ['surat_pernyataan', 'surat_pengalihan_hak'];
+            foreach ($types as $type):
+                $res = $conn->query("SELECT * FROM template_documents WHERE doc_type = '$type'");
+                $row = $res->fetch_assoc();
+                ?>
+                <li data-doc-type="<?= $type; ?>">
+                    <?php
+                    $label = ucwords(str_replace('_', ' ', $type)); // menghapus "_"
+                    ?>
+                    <strong><?= $label; ?>:</strong><br>
+                    <?php if ($row): ?>
+                        <span class="doc-actions">
+                            <a class="download-btn" href="<?= $row['filepath']; ?>" download><?= $row['filename']; ?></a>
+                            <a class="delete-btn" href="#" onclick="deleteDocument('<?= $type; ?>'); return false;">Hapus</a>
+                        </span>
+                    <?php else: ?>
+                        <span class="no-file">📄 Dokumen belum diunggah.</span>
+                    <?php endif; ?>
+                </li>
+            <?php endforeach; ?>
         </ul>
 
         <div class="nav-links">

@@ -40,3 +40,69 @@ fileInput.addEventListener('change', function () {
         fileNameDisplay.textContent = 'Belum ada file dipilih';
     }
 });
+
+// Upload file via AJAX
+document.getElementById('fileInput').addEventListener('change', function () {
+    const fileName = this.files[0]?.name || "Belum ada file dipilih";
+    document.getElementById('file-name').textContent = fileName;
+});
+
+document.getElementById('uploadForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const formData = new FormData(this);
+
+    fetch('services/edit_template.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(res => res.json())
+    .then(response => {
+        Swal.fire({
+            icon: response.status,
+            title: response.status === 'success' ? 'Berhasil' : 'Gagal',
+            text: response.message,
+            showConfirmButton: false, // Tidak ada tombol confirm
+            timer: 2000 // Menunggu 2 detik
+        }).then(() => {
+            if (response.status === 'success') {
+                location.reload();
+            }
+        });
+    })
+    .catch(err => {
+        Swal.fire('Error', 'Terjadi kesalahan saat upload.', 'error');
+    });
+});
+
+function deleteDocument(docType) {
+    Swal.fire({
+        title: "Yakin ingin menghapus dokumen ini?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#aaa",
+        confirmButtonText: "Hapus"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            fetch('services/edit_template.php?delete=' + encodeURIComponent(docType))
+                .then(res => res.json())
+                .then(response => {
+                    Swal.fire({
+                        icon: response.status,
+                        title: response.status === 'success' ? 'Berhasil' : 'Gagal',
+                        text: response.message,
+                        showConfirmButton: false, // Tidak ada tombol confirm
+                        timer: 2000 // Menunggu 2 detik
+                    }).then(() => {
+                        if (response.status === 'success') {
+                            location.reload();
+                        }
+                    });
+                })
+                .catch(err => {
+                    Swal.fire('Error', 'Terjadi kesalahan saat menghapus.', 'error');
+                });
+        }
+    });
+}

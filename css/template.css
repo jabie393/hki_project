@@ -185,6 +185,13 @@
   background-color: #b91c1c;
 }
 
+#document-list .no-file {
+  display: inline-block;
+  margin-top: 4px;
+  font-style: italic;
+  color: #6b7280;
+}
+
 #template-page ul {
   list-style-type: none;
   padding-left: 0;

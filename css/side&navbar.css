@@ -5,6 +5,7 @@
   top: 0;
   width: 240px;
   height: 100%;
+  font-family: "Inter", sans-serif;
   background: linear-gradient(145deg, #004080, #1976d2); /* Biru kampus */
   padding: 20px 10px;
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
@@ -212,7 +213,7 @@ nav .profile img {
 
 /* Main content */
 #content-main {
-  padding: 80px 20px 20px; /* avoid navbar */
+  padding: 80px 20px 20px 30px; /* avoid navbar */
   flex-grow: 1;
 }
 
@@ -250,5 +251,9 @@ nav .profile img {
 
   #content {
     margin-left: 0;
+  }
+  #content-main {
+    padding: 80px 20px 20px; /* avoid navbar */
+    flex-grow: 1;
   }
 }

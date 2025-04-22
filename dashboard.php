@@ -3,8 +3,8 @@ include 'config/config.php';
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
-    exit();
+  header("Location: login.php");
+  exit();
 }
 ?>
 
@@ -14,14 +14,14 @@ if (!isset($_SESSION['user_id'])) {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <!-- Tailwind + AdminLTE + Boxicons -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css" />
-  <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Boxicons -->
   <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-  
-  <!-- Custom -->
+
+  <!-- Css -->
   <link rel="stylesheet" href="css/side&navbar.css" />
   <title>Dashboard</title>
 </head>
@@ -33,13 +33,12 @@ if (!isset($_SESSION['user_id'])) {
     <?php include "widgets/navbar.php"; ?>
 
     <main id="content-main">
+      <script src="js/ajax.js"></script>
       <script>
         loadContent('admin.php') // Ganti dengan file yang sesuai
       </script>
     </main>
   </section>
-
-  <script src="js/ajax.js"></script>
 </body>
 
 </html>

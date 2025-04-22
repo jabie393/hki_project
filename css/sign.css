@@ -6,7 +6,7 @@ body {
   justify-content: center;
   min-height: 100vh;
   position: relative;
-  font-family: "Poppins", sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
 /* Background */
@@ -85,7 +85,7 @@ body {
 }
 
 /* Tombol */
-.btn-masuk {
+.btn {
   width: 100%;
   background-color: #202f5b;
   color: white;
@@ -96,7 +96,7 @@ body {
   transition: 0.3s;
 }
 
-.btn-masuk:hover {
+.btn:hover {
   background-color: #1e40af;
 }
 
@@ -112,8 +112,7 @@ body {
 }
 
 .register-link a:hover {
-  text-decoration: underline;
-  background-color: #3b82f6;
+  color: #3b82f6;
 }
 
 /* Footer */
@@ -137,6 +136,5 @@ body {
 }
 
 .footer a:hover {
-  text-decoration: underline;
-  background-color: #1e40af;
+  color: #3b82f6;
 }

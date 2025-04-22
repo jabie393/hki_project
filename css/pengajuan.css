@@ -43,9 +43,15 @@
   white-space: nowrap;
 }
 
+#admin-section .profile-link {
+  text-align: center;
+  color: #004080;
+  text-decoration: none;
+  font-weight: bold;
+}
 #admin-section .input-field,
 #admin-section .input-file {
-  width: 100%;
+  width: 90%;
   padding: 6px;
   font-size: 13px;
   border: 1px solid #ccc;
