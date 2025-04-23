@@ -6,6 +6,8 @@ if (!isset($_SESSION['user_id'])) {
   header("Location: login.php");
   exit();
 }
+
+$role = $_SESSION['role'] ?? 'user';
 ?>
 
 <!DOCTYPE html>
@@ -35,10 +37,14 @@ if (!isset($_SESSION['user_id'])) {
     <main id="content-main">
       <script src="js/ajax.js"></script>
       <script>
-        loadContent('admin.php') // Ganti dengan file yang sesuai
+        // Menentukan halaman default berdasarkan role
+        <?php if ($role === 'admin'): ?>
+          loadContent('admin.php');
+        <?php else: ?>
+          loadContent('user.php');
+        <?php endif; ?>
       </script>
     </main>
   </section>
 </body>
-
 </html>

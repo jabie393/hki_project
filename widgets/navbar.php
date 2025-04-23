@@ -20,7 +20,7 @@ if ($user_id) {
 <!-- NAVBAR -->
 <nav>
     <i class='bx bx-menu'></i>
-    <input type="checkbox" id="switch-mode" hidden>
+    <input type="checkbox" id="switch-mode" hidden style="display: none;">
     <label for="switch-mode" class="switch-mode"></label>
 
     <a href="profile.php" class="profile">

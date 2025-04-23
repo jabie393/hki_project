@@ -23,15 +23,15 @@ $result = $conn->query("SELECT registrations.*, users.username FROM registration
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- Css -->
-    <link rel="stylesheet" href="css/pengajuan.css">
+    <link rel="stylesheet" href="css/hki.css">
     <link rel="stylesheet" href="css/modal.css">
 </head>
 
 <!-- admin.php (HTML Table Layout) -->
-<div id="admin-section">
+<div id="hki-page">
     <h2>Daftar Pengajuan HKI</h2>
     <div class="table-wrapper">
-        <table id="admin-hki-table">
+        <table id="hki-table">
             <thead>
                 <tr>
                     <th>Nama Pemohon</th>
@@ -100,13 +100,13 @@ $result = $conn->query("SELECT registrations.*, users.username FROM registration
                                         ✖ Tolak
                                     </button>
                                 </div>
-        </div>
         </td>
         </tr>
         </form>
     <?php } ?>
     </tbody>
     </table>
+    </div>
 </div>
 </div>
 

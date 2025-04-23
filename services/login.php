@@ -20,13 +20,11 @@ if ($result->num_rows === 1) {
         $_SESSION['user_username'] = $user['username'];
         $_SESSION['role'] = $user['role']; // Simpan role pengguna
 
-        // Redirect berdasarkan role
-        if ($user['role'] === 'admin') {
-            header("Location: ../dashboard.php");
-        } else {
-            header("Location: ../user.php");
-        }
+        // Tetap simpan role, tapi redirect ke dashboard untuk semua
+        $_SESSION['role'] = $user['role'];
+        header("Location: ../dashboard.php");
         exit();
+
     } else {
         $_SESSION['error_message'] = "Password salah. Silakan coba lagi.";
     }

@@ -32,11 +32,11 @@ $result = $conn->query($query);
     <!-- Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="css/pengajuan.css">
+    <link rel="stylesheet" href="css/hki.css">
     <link rel="stylesheet" href="css/modal.css">
 </head>
 
-<div id="admin-section">
+<div id="hki-page">
     <h2>Rekapitulasi Hak Cipta Terdaftar</h2>
 
     <!-- Form Pencarian -->
@@ -47,7 +47,7 @@ $result = $conn->query($query);
     </form>
 
     <div class="table-wrapper">
-        <table id="admin-hki-table">
+        <table id="hki-table">
             <thead>
                 <tr>
                     <th>Nama Pemilik</th>

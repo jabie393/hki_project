@@ -104,6 +104,7 @@
   background-color: #eef2ff;
   font-weight: 600;
   color: #333;
+  font-family: "Inter", sans-serif;
   cursor: pointer;
   appearance: none; /* Menghapus panah default */
   -webkit-appearance: none;
