@@ -1,4 +1,4 @@
-body {
+#update_account-page {
   font-family: "Inter", sans-serif;
   margin: 0;
   padding: 0;
@@ -6,7 +6,7 @@ body {
   color: #333;
 }
 
-.container {
+#update_account-page .container {
   max-width: 500px;
   margin: 50px auto;
   background: #ffffff;
@@ -15,21 +15,75 @@ body {
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
 }
 
-h2 {
+#update_account-page h2 {
   text-align: center;
   color: #4f46e5;
   margin-bottom: 30px;
 }
 
-label {
+#update_account-page label {
   display: block;
   margin-bottom: 8px;
   font-weight: 500;
 }
 
-input[type="text"],
-input[type="email"],
-input[type="password"] {
+/* Alert Style */
+/* Ganti font jadi Inter */
+.swal2-popup {
+  font-family: 'Inter', sans-serif;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* Judul alert */
+.swal2-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #1f2937; /* dark gray */
+  margin-bottom: 0.5rem;
+}
+
+/* Isi pesan */
+.swal2-html-container {
+  font-size: 1rem;
+  color: #4b5563; /* medium gray */
+}
+
+/* Tombol konfirmasi */
+.swal2-confirm {
+  background-color: #004080 !important;
+  color: #fff !important;
+  border-radius: 8px !important;
+  font-weight: 600;
+  padding: 0.5rem 1.25rem;
+}
+.swal2-confirm:hover {
+  background-color: #002a5e !important;
+}
+
+/* Tombol cancel */
+.swal2-cancel {
+  background-color: #e5e7eb !important;
+  color: #374151 !important; /* gray-700 */
+  border-radius: 8px !important;
+  font-weight: 600;
+  padding: 0.5rem 1.25rem;
+}
+
+/* Ikon status */
+.swal2-icon {
+  margin-top: 0;
+}
+
+/* Progress bar jika ada */
+.swal2-timer-progress-bar {
+  background: #4f46e5;
+}
+
+#update_account-page input[type="text"],
+#update_account-page input[type="email"],
+#update_account-page input[type="password"] {
   width: 100%;
   padding: 10px 14px;
   border: 1px solid #ccc;
@@ -39,15 +93,15 @@ input[type="password"] {
   box-sizing: border-box;
 }
 
-input[type="text"]:focus,
-input[type="email"]:focus,
-input[type="password"]:focus {
+#update_account-page input[type="text"]:focus,
+#update_account-page input[type="email"]:focus,
+#update_account-page input[type="password"]:focus {
   border-color: #007bff;
   outline: none;
   box-shadow: 0 0 4px #007bff66;
 }
 
-button {
+#update_account-page button {
   width: 100%;
   padding: 12px;
   background-color: #007bff;
@@ -59,28 +113,12 @@ button {
   transition: background-color 0.3s ease;
 }
 
-button:hover {
+#update_account-page button:hover {
   background-color: #0056b3;
 }
 
-.nav-links {
-  margin-top: 30px;
-  text-align: center;
-}
-
-.nav-links a {
-  color: #007bff;
-  text-decoration: none;
-  margin: 0 10px;
-  font-weight: 500;
-}
-
-.nav-links a:hover {
-  text-decoration: underline;
-}
-
 @media (max-width: 600px) {
-  .container {
+#update_account-page  .container {
     margin: 20px;
     padding: 20px;
   }

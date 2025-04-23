@@ -3,14 +3,14 @@ include '../config/config.php';
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
-    header("Location: ../login.php");
+    echo "Sesi tidak valid. Silakan login kembali.";
     exit();
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user_id = $_SESSION['user_id'];
 
-    // **Cek apakah profil user sudah lengkap**
+    // Cek apakah profil user sudah lengkap
     $query = $conn->prepare("SELECT nama_lengkap, no_ktp, telephone, birth_date, gender, nationality, type_of_applicant FROM user_profile WHERE user_id = ?");
     $query->bind_param("i", $user_id);
     $query->execute();
@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    // **Ambil data dari form**
+    // Ambil data dari form
     $jenis_permohonan = $_POST['jenis_permohonan'] ?? "";
     $jenis_hak_cipta = $_POST['jenis_hak_cipta'];
     $sub_jenis_hak_cipta = $_POST['sub_jenis_hak_cipta'];
@@ -33,7 +33,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $kota_pengumuman = $_POST['kota_pengumuman'] ?? "";
     $status = "Pending";
 
-    // **Simpan ke tabel registrations**
     $sql = $conn->prepare("INSERT INTO registrations (user_id, jenis_permohonan, jenis_hak_cipta, sub_jenis_hak_cipta, tanggal_pengumuman, judul_hak_cipta, deskripsi, negara_pengumuman, kota_pengumuman, status) 
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
@@ -41,12 +40,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($sql->execute()) {
         $reg_id = $conn->insert_id;
-    
-        // **Simpan data pencipta**
+
+        // Simpan data pencipta
         $stmt_pencipta = $conn->prepare("INSERT INTO creators 
             (registration_id, nik, nama, no_telepon, jenis_kelamin, alamat, negara, provinsi, kota, kecamatan, kelurahan, kode_pos) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    
+
         foreach ($_POST['nama'] as $index => $nama) {
             $nik = $_POST['nik'][$index];
             $no_telepon = $_POST['no_telepon'][$index];
@@ -63,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt_pencipta->execute();
         }
 
-        // **Buat folder berdasarkan user_id dan registration_id**
+        // Buat folder upload
         $user_dir = "../uploads/users/$user_id/files/";
         $reg_dir = $user_dir . $reg_id . "/";
 
@@ -71,7 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             mkdir($reg_dir, 0777, true);
         }
 
-        // **Simpan file di folder pendaftaran**
+        // Upload file
         $file_name = basename($_FILES["dokumen"]["name"]);
         $target_file = $reg_dir . $file_name;
 
@@ -86,11 +85,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "Gagal mengunggah dokumen.";
         }
     } else {
-        echo "Error: " . $conn->error;
+        echo "Terjadi kesalahan saat menyimpan data pendaftaran.";
     }
 
     $sql->close();
     $stmt_pencipta->close();
     $conn->close();
+} else {
+    echo "Metode tidak valid.";
 }
 ?>

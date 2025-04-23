@@ -79,7 +79,7 @@ document.querySelectorAll('.approve-btn').forEach(button => {
             text: "Data akan diperbarui sebagai 'Terdaftar'",
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonText: 'Ya, hapus!',
+            confirmButtonText: 'Ya, setujui!',
             cancelButtonText: 'Batal'
         }).then((result) => {
             if (result.isConfirmed) {
@@ -145,7 +145,6 @@ document.querySelectorAll('.delete-btn').forEach(button => {
                                 timer: 2000,
                                 showConfirmButton: false
                             });
-
                             // Hapus baris dari tabel
                             if (rowElement) {
                                 rowElement.remove();
@@ -164,6 +163,42 @@ document.querySelectorAll('.delete-btn').forEach(button => {
                     });
             }
         });
+    });
+});
+
+$(document).on('click', '.cancel-btn', function () {
+    const id = $(this).data('id');
+
+    Swal.fire({
+        title: 'Yakin ingin membatalkan?',
+        text: 'Tindakan ini tidak bisa dibatalkan!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Ya, batalkan!',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: 'services/cancel_hki.php',
+                type: 'POST',
+                data: { id: id },
+                success: function (response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Dibatalkan!',
+                        text: response,
+                        showConfirmButton: false,
+                        timer: 2000
+                    }).then(() => {
+                        // Reload tabel dengan data terbaru
+                        $('#hki-table').load('status_pengajuan.php #hki-table > *'); 
+                    });
+                },
+                error: function () {
+                    Swal.fire('Oops...', 'Gagal membatalkan pendaftaran.', 'error');
+                }
+            });
+        }
     });
 });
 
@@ -281,5 +316,3 @@ document.querySelectorAll('.edit-certificate-btn').forEach(button => {
     });
 });
 //== Script Ajax ==//
-
-

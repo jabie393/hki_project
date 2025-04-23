@@ -13,9 +13,14 @@ if (!$result) {
 ?>
 
 <head>
+    <!-- Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/template.css">
+
+    <!-- Sweet Alert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Css -->
+    <link rel="stylesheet" href="css/template.css">
 </head>
 
 <div id="template-page">

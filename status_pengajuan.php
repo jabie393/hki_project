@@ -21,6 +21,11 @@ $result = $stmt->get_result();
     <!-- Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
+    <!-- Sweet Alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Css -->
     <link rel="stylesheet" href="css/hki.css">
     <link rel="stylesheet" href="css/modal.css">
 </head>
@@ -81,8 +86,7 @@ $result = $stmt->get_result();
                     <td><?php echo htmlspecialchars($row['nomor_sertifikat'] ?? '-'); ?></td>
                     <td>
                         <?php if ($row['status'] == 'Pending') { ?>
-                            <a href="services/cancel_hki.php?id=<?php echo $row['id']; ?>" class="btn btn-danger"
-                                onclick="return confirm('Yakin ingin membatalkan?')">Batalkan</a>
+                            <button class="btn btn-danger cancel-btn" data-id="<?= $row['id'] ?>">Batalkan</button>
                         <?php } else { ?>
                             <span style="color: gray;">Tidak bisa dibatalkan</span>
                         <?php } ?>
@@ -94,29 +98,29 @@ $result = $stmt->get_result();
 
     <!-- Modal untuk Deskripsi -->
     <div id="modal-page">
-    <div id="descriptionModal" class="modal" style="display: none;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Deskripsi Ciptaan</h2>
-                <button class="close" onclick="closeDescriptionModal()">&times;</button>
+        <div id="descriptionModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Deskripsi Ciptaan</h2>
+                    <button class="close" onclick="closeDescriptionModal()">&times;</button>
+                </div>
+                <div id="descriptionDetails"></div>
             </div>
-            <div id="descriptionDetails"></div>
         </div>
     </div>
-</div>
 
     <!-- Modal untuk Detail Pencipta -->
     <div id="modal-page">
-    <div id="creatorModal" class="modal" style="display: none;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Detail Pencipta</h2>
-                <button class="close" onclick="closeModal()">&times;</button>
+        <div id="creatorModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Detail Pencipta</h2>
+                    <button class="close" onclick="closeModal()">&times;</button>
+                </div>
+                <div id="creatorDetails"></div>
             </div>
-            <div id="creatorDetails"></div>
         </div>
     </div>
-</div>
 
-<script src="js/hki.js"></script>
+    <script src="js/hki.js"></script>
 </div>

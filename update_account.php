@@ -19,75 +19,23 @@ $query->execute();
 $result = $query->get_result();
 $user = $result->fetch_assoc();
 $query->close();
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $new_username = $_POST['new_username'];
-    $new_email = $_POST['new_email'];
-    $new_password = !empty($_POST['new_password']) ? password_hash($_POST['new_password'], PASSWORD_DEFAULT) : null;
-    $old_password = $_POST['old_password'];
-
-    // Periksa apakah password lama benar
-    if (!password_verify($old_password, $user['password'])) {
-        echo "<script>alert('Password lama salah!'); window.location.href='update_account.php';</script>";
-        exit();
-    }
-
-    // Cek apakah email baru sudah digunakan oleh user lain
-    $email_check = $conn->prepare("SELECT id FROM users WHERE email = ? AND id != ?");
-    $email_check->bind_param("si", $new_email, $user_id);
-    $email_check->execute();
-    $email_check->store_result();
-    if ($email_check->num_rows > 0) {
-        echo "<script>alert('Email sudah digunakan oleh user lain!'); window.location.href='update_account.php';</script>";
-        exit();
-    }
-    $email_check->close();
-
-    // Cek apakah username baru sudah digunakan oleh user lain
-    $username_check = $conn->prepare("SELECT id FROM users WHERE username = ? AND id != ?");
-    $username_check->bind_param("si", $new_username, $user_id);
-    $username_check->execute();
-    $username_check->store_result();
-    if ($username_check->num_rows > 0) {
-        echo "<script>alert('Username sudah digunakan oleh user lain!'); window.location.href='update_account.php';</script>";
-        exit();
-    }
-    $username_check->close();
-
-    // Update username dan email
-    $query = $conn->prepare("UPDATE users SET username = ?, email = ? WHERE id = ?");
-    $query->bind_param("ssi", $new_username, $new_email, $user_id);
-    $query->execute();
-
-    // Update password jika diisi
-    if ($new_password) {
-        $query = $conn->prepare("UPDATE users SET password = ? WHERE id = ?");
-        $query->bind_param("si", $new_password, $user_id);
-        $query->execute();
-    }
-
-    echo "<script>alert('Profil berhasil diperbarui!'); window.location.href='update_account.php';</script>";
-    exit();
-}
 ?>
 
-<!DOCTYPE html>
-<html lang="id">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update Profil</title>
+    <!-- Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Sweet Alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/update_account.css">
 </head>
 
-<body>
+<div id="update_account-page">
     <div class="container">
         <h2>Update Profil</h2>
-        <form method="post">
+        <form id="updateForm">
             <label for="new_username">Username:</label>
             <input type="text" name="new_username" value="<?= htmlspecialchars($user['username']) ?>" required>
 
@@ -102,14 +50,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <button type="submit">Simpan Perubahan</button>
         </form>
-
-        <div class="nav-links">
-            <a href="profile.php">Profil</a> |
-            <a href="user.php">Dashboard</a> |
-            <a href="status_pengajuan.php">Lihat Status Pengajuan</a> |
-            <a href="services/logout.php">Logout</a>
-        </div>
     </div>
-</body>
-
-</html>
+</div>
+<script src="js/update_account.js"></script>

@@ -18,6 +18,10 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
     <!-- Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
+    <!-- Sweet Alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Css -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
     <link rel="stylesheet" href="css/user.css">
 </head>
@@ -33,7 +37,7 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
     </div>
 
     <h2>Form Pendaftaran HKI</h2>
-    <form action="services/submit_hki.php" method="POST" enctype="multipart/form-data">
+    <form id="form-hki" enctype="multipart/form-data">
         <!--Jenis Permohonan-->
         <label>Jenis Permohonan:</label><br>
         <select name="jenis_permohonan" required>

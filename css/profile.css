@@ -63,27 +63,6 @@
   margin-left: 8px;
 }
 
-/* Link navigasi */
-#profile-page .links-wrapper {
-  text-align: center;
-  margin-top: 35px;
-  padding-top: 15px;
-  border-top: 1px solid #ddd;
-}
-
-#profile-page .links-wrapper a {
-  color: #004080;
-  text-decoration: none;
-  margin: 0 8px;
-  font-weight: 500;
-  transition: color 0.3s ease;
-}
-
-#profile-page .links-wrapper a:hover {
-  color: #002a5e;
-  text-decoration: underline;
-}
-
 /* Baris info profil */
 .profile-row {
   display: grid;

@@ -144,3 +144,49 @@ function loadCountries() {
         .catch(error => console.error("Gagal memuat data negara:", error));
 }
 
+// Ajax Submit
+if (!window.formSubmitInitialized) {
+    window.formSubmitInitialized = true;
+
+    const form = document.querySelector("form");
+
+    if (form) {
+        form.addEventListener("submit", function (e) {
+            e.preventDefault();
+            const formData = new FormData(form);
+
+            fetch("services/submit_hki.php", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.text())
+            .then(result => {
+                if (result.includes("berhasil")) {
+                    Swal.fire({
+                        icon: "success",
+                        title: "Berhasil!",
+                        text: result,
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+
+                    form.reset();
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Gagal!",
+                        text: result
+                    });
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Terjadi kesalahan saat mengirim data."
+                });
+            });
+        });
+    }
+}
