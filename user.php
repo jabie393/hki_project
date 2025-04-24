@@ -23,6 +23,7 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
 
     <!-- Css -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+    <link rel="stylesheet" href="css/modal.css">
     <link rel="stylesheet" href="css/user.css">
 </head>
 
@@ -84,54 +85,29 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
         <input type="text" name="kota_pengumuman" placeholder="Nama Kota/Kabupaten" required><br><br>
         <input type="file" name="dokumen" required /><br><br>
         <label>Pencipta:</label>
-        <div id="pencipta-list">
-            <div class="pencipta">
-                <h4 class="pencipta-label">Pencipta 1</h4><br>
-
-                <label>NIK:</label><br>
-                <input type="text" name="nik[]" required><br><br>
-
-                <label>Nama:</label><br>
-                <input type="text" name="nama[]" required><br><br>
-
-                <label>No. Telepon:</label><br>
-                <input type="text" name="no_telepon[]" required><br><br>
-
-                <label>Jenis Kelamin:</label><br>
-                <select name="jenis_kelamin[]" required>
-                    <option value="Laki-laki">Laki-laki</option>
-                    <option value="Perempuan">Perempuan</option>
-                </select><br><br>
-
-                <label>Alamat:</label><br>
-                <textarea name="alamat[]" required></textarea><br><br>
-
-                <label>Negara:</label><br>
-                <select name="negara[]" class="negara-select" required>
-                    <option value="">-- Pilih Negara --</option>
-                </select><br><br>
-
-                <label>Provinsi:</label><br>
-                <input type="text" name="provinsi[]" required><br><br>
-
-                <label>Kota/Kabupaten:</label><br>
-                <input type="text" name="kota[]" required><br><br>
-
-                <label>Kecamatan:</label><br>
-                <input type="text" name="kecamatan[]" required><br><br>
-
-                <label>Kelurahan:</label><br>
-                <input type="text" name="kelurahan[]" required><br><br>
-
-                <label>Kode Pos:</label><br>
-                <input type="text" name="kode_pos[]" required><br><br>
-            </div>
-        </div>
-
+        <div id="pencipta-list" class="pencipta-container"></div>
         <br><button type="button" id="addPencipta">Tambah Pencipta</button><br><br><br>
-
+        <!-- input tersembunyi -->
+        <div id="pencipta-hidden-inputs"></div>
         <button type="submit">Kirim</button><br><br>
     </form>
 </div>
+<!-- Modal Tambah Pencipta -->
+<div id="modal-page">
+    <div id="modalPencipta" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Tambah Pencipta</h2>
+                <button class="close close-modal">&times;</button>
+            </div>
+            <form id="modalFormPencipta">
+                <?php include 'widgets/form_pencipta.php'; ?>
+                <button type="submit">Tambahkan</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
 <script src="js/user.js"></script>
 <script src="js/ajax.js"></script>

@@ -52,6 +52,9 @@ function loadContent(url) {
 
 function afterContentLoaded(url) {
     highlightActiveMenu(url);
+    if (url.includes("user.php")) {
+        initUserPage();
+    }
 
     // Fungsi loadCountries jika ada elemen negara
     if (document.querySelector("#nationality") || document.querySelector(".negara-select")) {

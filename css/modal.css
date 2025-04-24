@@ -122,7 +122,8 @@
 /* === Scrollable === */
 #profileDetails,
 #creatorDetails,
-#userDetailContent {
+#userDetailContent,
+#modalFormPencipta {
   overflow-y: auto;
   max-height: 60vh;
   padding: 15px;

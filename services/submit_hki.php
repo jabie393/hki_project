@@ -38,6 +38,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $sql->bind_param("isssssssss", $user_id, $jenis_permohonan, $jenis_hak_cipta, $sub_jenis_hak_cipta, $tanggal_pengumuman, $judul, $deskripsi, $negara_pengumuman, $kota_pengumuman, $status);
 
+    // Validasi minimal 1 pencipta harus ada
+    if (!isset($_POST["nama"]) || !is_array($_POST["nama"]) || count($_POST["nama"]) === 0) {
+        echo "Gagal: Minimal 1 pencipta harus diisi.";
+        exit;
+    }
     if ($sql->execute()) {
         $reg_id = $conn->insert_id;
 

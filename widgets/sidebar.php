@@ -59,7 +59,7 @@ $page = substr($_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"], "/") + 
             </li>
         <?php else: ?>
             <li class="sidebar-text">
-                <a class="menu-link" onclick="loadContent('user.php')">
+            <a class="menu-link" onclick="loadContent('user.php', initUserPage)">
                     <i class='bx bxs-dashboard'></i><span class="text">Dashboard</span>
                 </a>
             </li>
