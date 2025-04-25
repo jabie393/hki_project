@@ -1,39 +1,60 @@
 <div class="pencipta">
-    <label>NIK:</label><br>
-    <input type="text" name="nik[]" required><br><br>
+    <div class="form-group">
+        <label>NIK:</label>
+        <input type="text" name="nik[]" required>
+    </div>
 
-    <label>Nama:</label><br>
-    <input type="text" name="nama[]" required>
+    <div class="form-group">
+        <label>Nama:</label>
+        <input type="text" name="nama[]" required>
+    </div>
 
-    <label>No. Telepon:</label><br>
-    <input type="text" name="no_telepon[]" required><br><br>
+    <div class="form-group">
+        <label>No. Telepon:</label>
+        <input type="text" name="no_telepon[]" required>
+    </div>
 
-    <label>Jenis Kelamin:</label><br>
-    <select name="jenis_kelamin[]" required>
-        <option value="Laki-laki">Laki-laki</option>
-        <option value="Perempuan">Perempuan</option>
-    </select><br><br>
+    <div class="form-group">
+        <label>Jenis Kelamin:</label>
+        <select name="jenis_kelamin[]" required>
+            <option value="Laki-laki">Laki-laki</option>
+            <option value="Perempuan">Perempuan</option>
+        </select>
+    </div>
 
-    <label>Alamat:</label><br>
-    <textarea name="alamat[]" required></textarea><br><br>
+    <div class="form-group">
+        <label>Alamat:</label>
+        <textarea name="alamat[]" required></textarea>
+    </div>
 
-    <label>Negara:</label><br>
-    <select name="negara[]" class="negara-select" required>
-        <option value="">-- Pilih Negara --</option>
-    </select><br><br>
+    <div class="form-group">
+        <label>Negara:</label>
+        <select name="negara[]" class="negara-select" required>
+            <option value="">-- Pilih Negara --</option>
+        </select>
+    </div>
 
-    <label>Provinsi:</label><br>
-    <input type="text" name="provinsi[]" required><br><br>
+    <div class="form-group">
+        <label>Provinsi:</label>
+        <input type="text" name="provinsi[]" required>
+    </div>
+    <div class="form-group">
+        <label>Kota/Kabupaten:</label>
+        <input type="text" name="kota[]" required>
+    </div>
 
-    <label>Kota/Kabupaten:</label><br>
-    <input type="text" name="kota[]" required><br><br>
+    <div class="form-group">
+        <label>Kecamatan:</label>
+        <input type="text" name="kecamatan[]" required>
+    </div>
 
-    <label>Kecamatan:</label><br>
-    <input type="text" name="kecamatan[]" required><br><br>
+    <div class="form-group">
+        <label>Kelurahan:</label>
+        <input type="text" name="kelurahan[]" required>
+    </div>
 
-    <label>Kelurahan:</label><br>
-    <input type="text" name="kelurahan[]" required><br><br>
-
-    <label>Kode Pos:</label><br>
-    <input type="text" name="kode_pos[]" required><br><br>
+    <div class="form-group">
+        <label>Kode Pos:</label>
+        <input type="text" name="kode_pos[]" required>
+    </div>
 </div>

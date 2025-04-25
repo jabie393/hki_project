@@ -100,12 +100,12 @@ $result = $conn->query("SELECT registrations.*, users.username FROM registration
                                         ✖ Tolak
                                     </button>
                                 </div>
-        </td>
-        </tr>
-        </form>
-    <?php } ?>
-    </tbody>
-    </table>
+                            </td>
+                        </tr>
+                    </form>
+                <?php } ?>
+            </tbody>
+        </table>
     </div>
 </div>
 </div>

@@ -59,7 +59,7 @@
   color: #e74c3c;
 }
 
-/* === Profile Layout (konsisten dengan profile.css) === */
+/* === Profile Layout === */
 .modal-content .profile-img {
   width: 120px;
   height: 120px;
@@ -150,6 +150,63 @@
   text-align: left;
   font-size: 14px;
 }
+
+/* === Modal Form === */
+#modal-page .form-group {
+  margin-bottom: 20px;
+}
+
+#modal-page label {
+  font-weight: 500;
+  display: block;
+  margin-bottom: 8px;
+  color: black;
+}
+
+#modal-page input[type="text"],
+#modal-page input[type="date"],
+#modal-page input[type="file"],
+#modal-page select,
+#modal-page textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ced4da;
+  background-color: #eef2ff;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+
+#modal-page input:focus,
+#modal-page select:focus,
+#modal-page textarea:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 4px #007bff66;
+}
+
+#modal-page textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+#modal-page .btn {
+  padding: 10px 16px;
+  margin-bottom: 10px;
+  background-color: #004080;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+#modal-page .btn:hover {
+  background-color: #002a5e;
+}
+/* === Modal Form === */
 
 /* === Responsif === */
 @media (max-width: 768px) {

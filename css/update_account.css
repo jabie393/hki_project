@@ -1,30 +1,25 @@
 #update_account-page {
-  font-family: "Inter", sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #f7f9fc;
-  color: #333;
-}
-
-#update_account-page .container {
-  max-width: 500px;
-  margin: 50px auto;
-  background: #ffffff;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  margin: 40px auto;
+  font-family: 'Segoe UI', sans-serif;
 }
 
 #update_account-page h2 {
+  color: #004080;
   text-align: center;
-  color: #4f46e5;
-  margin-bottom: 30px;
+  font-weight: bold;
+  padding-bottom: 20px;
+  padding-top: 10px;
+}
+
+#update_account-page .form-group {
+  margin-bottom: 20px;
 }
 
 #update_account-page label {
+  font-weight: 500;
   display: block;
   margin-bottom: 8px;
-  font-weight: 500;
+  color: black;
 }
 
 /* Alert Style */
@@ -85,11 +80,12 @@
 #update_account-page input[type="email"],
 #update_account-page input[type="password"] {
   width: 100%;
-  padding: 10px 14px;
-  border: 1px solid #ccc;
+  padding: 10px 12px;
+  border: 1px solid #ced4da;
+  background-color: #eef2ff;
   border-radius: 8px;
   font-size: 14px;
-  margin-bottom: 20px;
+  transition: border-color 0.2s;
   box-sizing: border-box;
 }
 
@@ -102,19 +98,19 @@
 }
 
 #update_account-page button {
-  width: 100%;
-  padding: 12px;
-  background-color: #007bff;
+  padding: 10px 16px;
+  margin-bottom: 10px;
+  background-color: #004080;
+  color: #fff;
   border: none;
-  color: white;
-  font-size: 16px;
   border-radius: 8px;
+  font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.2s;
 }
 
 #update_account-page button:hover {
-  background-color: #0056b3;
+  background-color: #002a5e;
 }
 
 @media (max-width: 600px) {

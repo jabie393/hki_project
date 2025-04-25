@@ -22,7 +22,6 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- Css -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
     <link rel="stylesheet" href="css/modal.css">
     <link rel="stylesheet" href="css/user.css">
 </head>
@@ -40,56 +39,73 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
     <h2>Form Pendaftaran HKI</h2>
     <form id="form-hki" enctype="multipart/form-data">
         <!--Jenis Permohonan-->
-        <label>Jenis Permohonan:</label><br>
-        <select name="jenis_permohonan" required>
-            <option value="Usaha Mikro Kecil">Usaha Mikro Kecil</option>
-            <option value="Umum">Umum</option>
-            <option value="Lembaga Pendidikan">Lembaga Pendidikan</option>
-            <option value="Lembaga Litbang Pemerintah">Lembaga Litbang Pemerintah</option>
-        </select><br><br>
+        <div class="form-group">
+            <label>Jenis Permohonan:</label>
+            <select name="jenis_permohonan" required>
+                <option value="Usaha Mikro Kecil">Usaha Mikro Kecil</option>
+                <option value="Umum">Umum</option>
+                <option value="Lembaga Pendidikan">Lembaga Pendidikan</option>
+                <option value="Lembaga Litbang Pemerintah">Lembaga Litbang Pemerintah</option>
+            </select>
+        </div>
         <!--Jenis Hak Cipta-->
-        <label>Jenis Hak Cipta:</label><br>
-        <select name="jenis_hak_cipta" id="jenis_hak_cipta" required>
-            <option value="">-- Pilih Jenis --</option>
-            <option value="Karya Tulis">Karya Tulis</option>
-            <option value="Karya Seni">Karya Seni</option>
-            <option value="Komposisi Musik">Komposisi Musik</option>
-            <option value="Karya Audio Visual">Karya Audio Visual</option>
-            <option value="Karya Fotografi">Karya Fotografi</option>
-            <option value="Karya Drama & Koreografi">Karya Drama & Koreografi</option>
-            <option value="Karya Rekaman">Karya Rekaman</option>
-            <option value="Karya Lainnya">Karya Lainnya</option>
-        </select><br><br>
+        <div class="form-group">
+            <label>Jenis Hak Cipta:</label>
+            <select name="jenis_hak_cipta" id="jenis_hak_cipta" required>
+                <option value="">-- Pilih Jenis --</option>
+                <option value="Karya Tulis">Karya Tulis</option>
+                <option value="Karya Seni">Karya Seni</option>
+                <option value="Komposisi Musik">Komposisi Musik</option>
+                <option value="Karya Audio Visual">Karya Audio Visual</option>
+                <option value="Karya Fotografi">Karya Fotografi</option>
+                <option value="Karya Drama & Koreografi">Karya Drama & Koreografi</option>
+                <option value="Karya Rekaman">Karya Rekaman</option>
+                <option value="Karya Lainnya">Karya Lainnya</option>
+            </select>
+        </div>
         <!--Sub Jenis Hak Cipta-->
-        <label>Sub Jenis Hak Cipta:</label><br>
-        <select name="sub_jenis_hak_cipta" id="sub_jenis_hak_cipta" required>
-            <option value="">-- Pilih Sub Jenis --</option>
-        </select><br><br>
+        <div class="form-group">
+            <label>Sub Jenis Hak Cipta:</label>
+            <select name="sub_jenis_hak_cipta" id="sub_jenis_hak_cipta" required>
+                <option value="">-- Pilih Sub Jenis --</option>
+            </select>
+        </div>
         <!--Tanggal Pertama Kali Diumumkan-->
-        <label>Tanggal Pertama Kali Diumumkan:</label><br>
-        <input type="date" name="tanggal_pengumuman" required><br><br>
-
+        <div class="form-group">
+            <label>Tanggal Pertama Kali Diumumkan:</label>
+            <input type="date" name="tanggal_pengumuman" required>
+        </div>
         <!--Judul Hak Cipta-->
-        <label>Judul</label><br>
-        <input type="text" name="judul" placeholder="Judul Hak Cipta" required /><br><br>
+        <div class="form-group">
+            <label>Judul</label>
+            <input type="text" name="judul" placeholder="Judul Hak Cipta" required />
+        </div>
         <!--Deskripsi-->
-        <label>Deskripsi:</label><br>
-        <textarea name="deskripsi" placeholder="Deskripsi" required></textarea><br><br>
+        <div class="form-group">
+            <label>Deskripsi:</label>
+            <textarea name="deskripsi" placeholder="Deskripsi" required></textarea>
+        </div>
         <!--Negara Pertama Kali Diumumkan-->
-        <label>Negara Pertama Kali Diumumkan:</label><br>
-        <select name="negara_pengumuman" id="nationality" required>
-            <option value="">-- Pilih Negara --</option>
-        </select><br><br>
+        <div class="form-group">
+            <label>Negara Pertama Kali Diumumkan:</label>
+            <select name="negara_pengumuman" id="nationality" required>
+                <option value="">-- Pilih Negara --</option>
+            </select>
+        </div>
         <!--Kota Pertama Kali Diumumkan-->
-        <label>Kota/Kabupaten Pertama Kali Diumumkan:</label><br>
-        <input type="text" name="kota_pengumuman" placeholder="Nama Kota/Kabupaten" required><br><br>
-        <input type="file" name="dokumen" required /><br><br>
+        <div class="form-group">
+            <label>Kota/Kabupaten Pertama Kali Diumumkan:</label>
+            <input type="text" name="kota_pengumuman" placeholder="Nama Kota/Kabupaten" required>
+        </div>
+        <div class="form-group">
+            <input type="file" name="dokumen" required />
+        </div>
         <label>Pencipta:</label>
         <div id="pencipta-list" class="pencipta-container"></div>
-        <br><button type="button" id="addPencipta">Tambah Pencipta</button><br><br><br>
+        <button type="button" id="addPencipta">Tambah Pencipta</button>
         <!-- input tersembunyi -->
         <div id="pencipta-hidden-inputs"></div>
-        <button type="submit">Kirim</button><br><br>
+        <button type="submit">Kirim</button>
     </form>
 </div>
 <!-- Modal Tambah Pencipta -->
@@ -102,7 +118,7 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
             </div>
             <form id="modalFormPencipta">
                 <?php include 'widgets/form_pencipta.php'; ?>
-                <button type="submit">Tambahkan</button>
+                <button class="btn" type="submit">Tambahkan</button>
             </form>
         </div>
     </div>

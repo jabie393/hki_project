@@ -33,23 +33,26 @@ $query->close();
 </head>
 
 <div id="update_account-page">
-    <div class="container">
-        <h2>Update Profil</h2>
-        <form id="updateForm">
+    <h2>Update Profil</h2>
+    <form id="updateForm">
+        <div class="form-group">
             <label for="new_username">Username:</label>
             <input type="text" name="new_username" value="<?= htmlspecialchars($user['username']) ?>" required>
-
+        </div>
+        <div class="form-group">
             <label for="new_email">Email:</label>
             <input type="email" name="new_email" value="<?= htmlspecialchars($user['email']) ?>" required>
-
+        </div>
+        <div class="form-group">
             <label for="new_password">Password Baru (Opsional):</label>
             <input type="password" name="new_password" autocomplete="new-password">
-
+        </div>
+        <div class="form-group">
             <label for="old_password">Masukkan Password Lama Untuk Menyimpan Perubahan:</label>
             <input type="password" name="old_password" required autocomplete="off">
-
-            <button type="submit">Simpan Perubahan</button>
-        </form>
-    </div>
+        </div>
+        <button type="submit">Simpan Perubahan</button>
+    </form>
 </div>
+
 <script src="js/update_account.js"></script>
