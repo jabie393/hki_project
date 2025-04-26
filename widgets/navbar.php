@@ -19,12 +19,13 @@ if ($user_id) {
 
 <!-- NAVBAR -->
 <nav>
-    <i class='bx bx-menu'></i>
-    <input type="checkbox" id="switch-mode" hidden style="display: none;">
-    <label for="switch-mode" class="switch-mode"></label>
+  <i class='bx bx-menu'></i>
+  <input type="checkbox" id="switch-mode" hidden style="display: none;">
+  <label for="switch-mode" class="switch-mode"></label>
 
-    <a href="profile.php" class="profile">
-        <img src="<?= $profile_picture_path ?>" class="profile-img" alt="Foto Profil" style="width: 35px; height: 35px; border-radius: 50%; object-fit: cover;">
-    </a>
+  <!-- Sisipkan data-user-id -->
+  <a href="javascript:void(0);" class="profile">
+    <img src="<?= $profile_picture_path ?>" class="profile-img" data-user-id="<?= $user_id ?>" style="width: 35px; height: 35px; border-radius: 50%; object-fit: cover; cursor: pointer;">
+  </a>
 </nav>
 <!-- NAVBAR -->

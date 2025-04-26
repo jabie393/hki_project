@@ -20,11 +20,15 @@ $role = $_SESSION['role'] ?? 'user';
   <!-- Font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
+  <!-- F Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
   <!-- Boxicons -->
   <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 
   <!-- Css -->
   <link rel="stylesheet" href="css/side&navbar.css" />
+  <link rel="stylesheet" href="css/modal.css">
   <title>Dashboard</title>
 </head>
 
@@ -46,5 +50,21 @@ $role = $_SESSION['role'] ?? 'user';
       </script>
     </main>
   </section>
+  <!-- Modal Profil (Navbar) -->
+  <div id="modal-page">
+    <div id="modal-profile" class="modal modal-hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Profil</h2>
+          <button class="close" id="close-modal">&times;</button>
+        </div>
+        <div id="userProfileContent">
+          <!-- Konten Ajax -->
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
+<script src="js/dashboard.js"></script>
+
 </html>
