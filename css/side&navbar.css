@@ -93,7 +93,7 @@ nav .bx-menu {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5); /* Warna gelap */
+  background: rgba(0, 0, 0, 0.5);
   z-index: 999;
   display: none;
 }
@@ -109,7 +109,7 @@ nav .bx-menu {
   left: 15px;
   font-size: 1.8rem;
   color: #fff;
-  background-color: #1f1c2c;
+  background-color: #004080;;
   padding: 8px 10px;
   border-radius: 6px;
   cursor: pointer;
