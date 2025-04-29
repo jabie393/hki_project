@@ -1,47 +1,41 @@
+// Fungsi untuk memuat konten halaman secara dinamis
 function loadContent(url) {
     localStorage.setItem("activePage", url);
 
-    fetch(url)
+    const noCacheUrl = url.includes("?") ? `${url}&v=${Date.now()}` : `${url}?v=${Date.now()}`;
+
+    fetch(noCacheUrl)
         .then(response => {
-            if (!response.ok) {
-                throw new Error('Gagal memuat halaman: ' + url);
-            }
+            if (!response.ok) throw new Error('Gagal memuat halaman: ' + url);
             return response.text();
         })
         .then(data => {
             const container = document.getElementById("content-main");
             container.innerHTML = data;
 
-            // Eksekusi ulang semua script
+            // Cari semua <script> di dalam konten baru
             const scripts = container.querySelectorAll("script");
             const scriptPromises = [];
 
             scripts.forEach(oldScript => {
                 const newScript = document.createElement("script");
-
                 if (oldScript.src) {
                     newScript.src = oldScript.src;
                     newScript.async = false;
-
-                    // Promise untuk load eksternal script
-                    const scriptPromise = new Promise(resolve => {
+                    scriptPromises.push(new Promise(resolve => {
                         newScript.onload = resolve;
                         newScript.onerror = resolve;
-                    });
-                    scriptPromises.push(scriptPromise);
-
+                    }));
                     document.body.appendChild(newScript);
                 } else {
                     newScript.textContent = oldScript.textContent;
                     document.body.appendChild(newScript);
                 }
-
                 oldScript.remove();
             });
 
-            // Setelah semua script selesai dimuat
             Promise.all(scriptPromises).then(() => {
-                afterContentLoaded(url);
+                afterContentLoaded(url); // tetap kirim URL asli (tanpa ?v=...)
             });
         })
         .catch(error => {
@@ -50,20 +44,30 @@ function loadContent(url) {
         });
 }
 
+
+// Fungsi yang dipanggil setelah konten berhasil dimuat
 function afterContentLoaded(url) {
-    highlightActiveMenu(url);
-    if (url.includes("user.php")) {
-        initUserPage();
+    const cleanUrl = url.split('?')[0]; // Buang ?v=...
+
+    highlightActiveMenu(cleanUrl);
+
+    // Inisialisasi halaman spesifik
+    if (cleanUrl.endsWith("user.php")) {
+        if (typeof initUserPage === "function") initUserPage();
     }
 
-    // Fungsi loadCountries jika ada elemen negara
+    if (cleanUrl.endsWith("edit_profile.php")) {
+        if (typeof initEditProfilePage === "function") initEditProfilePage();
+    }
+
+    // Kalau ada select negara, load data negara
     if (document.querySelector("#nationality") || document.querySelector(".negara-select")) {
         if (typeof loadCountries === "function") {
             loadCountries();
         }
     }
 
-    // Handle form pencarian jika ada
+    // Kalau ada form pencarian, pasang handler submit-nya
     const searchForm = document.getElementById("search-form");
     if (searchForm) {
         searchForm.addEventListener("submit", function (e) {
@@ -75,12 +79,12 @@ function afterContentLoaded(url) {
                 .then(response => response.text())
                 .then(data => {
                     document.getElementById("content-main").innerHTML = data;
-                    loadContent("rekap_hki.php?search=" + encodeURIComponent(search));
+                    afterContentLoaded("rekap_hki.php?search=" + encodeURIComponent(search));
                 });
         });
     }
 
-    // Tutup sidebar otomatis di layar kecil
+    // Kalau di layar kecil, tutup sidebar otomatis
     if (window.innerWidth < 768) {
         const sidebar = document.getElementById('sidebar');
         const toggleButton = document.getElementById('sidebar-toggle');
@@ -92,7 +96,7 @@ function afterContentLoaded(url) {
     }
 }
 
-// Highlight menu yang aktif
+// Fungsi untuk menandai menu yang aktif di sidebar
 function highlightActiveMenu(currentPage) {
     document.querySelectorAll('.menu-link').forEach(link => {
         link.classList.remove('active');
@@ -107,8 +111,8 @@ function highlightActiveMenu(currentPage) {
     });
 }
 
-// Inisialisasi halaman saat pertama kali dimuat
+// Inisialisasi saat halaman pertama kali diload
 document.addEventListener("DOMContentLoaded", function () {
-    const lastPage = localStorage.getItem("activePage") || 'admin.php';
+    const lastPage = localStorage.getItem("activePage") || 'admin.php'; // default kalau tidak ada
     loadContent(lastPage);
 });

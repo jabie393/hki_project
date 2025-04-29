@@ -76,7 +76,37 @@ if (!file_exists($profile_picture) || empty($profile['profile_picture'])) {
         <?php endif; ?>
 
 
-
-        <a href="edit_profile.php" class="btn">Edit Profil</a>
+        <button onclick="loadEditProfile()" class="btn">✏️ Edit Profile</button>
     </div>
 </div>
+
+<script>
+    function loadEditProfile() {
+    fetch('edit_profile.php')
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById('content-main').innerHTML = html;
+
+            // Eksekusi ulang semua script yang ada di edit_profile.php
+            const container = document.getElementById('content-main');
+            const scripts = container.querySelectorAll("script");
+            scripts.forEach(oldScript => {
+                const newScript = document.createElement("script");
+                if (oldScript.src) {
+                    newScript.src = oldScript.src;
+                    newScript.async = false;
+                    document.body.appendChild(newScript);
+                } else {
+                    newScript.textContent = oldScript.textContent;
+                    document.body.appendChild(newScript);
+                }
+                oldScript.remove();
+            });
+        })
+        .catch(err => {
+            console.error('Gagal memuat edit_profile.php:', err);
+            alert('Gagal membuka Edit Profile.');
+        });
+}
+
+</script>
