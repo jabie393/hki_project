@@ -26,7 +26,7 @@ $page = substr($_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"], "/") + 
 
     <ul class="side-menu top p-0">
         <li class="sidebar-text">
-            <a class="menu-link" onclick="loadContent('profile.php')">
+            <a class="menu-link" onclick="loadContent('edit_profile.php')">
                 <i class='bx bxs-user'></i><span class="text">Profil</span>
             </a>
         </li>
@@ -57,11 +57,6 @@ $page = substr($_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"], "/") + 
                     <i class='bx bxs-key'></i><span class="text">Reset Password User</span>
                 </a>
             </li>
-            <li class="sidebar-text">
-                <a class="menu-link" onclick="loadContent('edit_profile.php')">
-                    <i class='bx bxs-cog'></i><span class="text">edit profile</span>
-                </a>
-            </li>
         <?php else: ?>
             <li class="sidebar-text">
                 <a class="menu-link" onclick="loadContent('user.php', initUserPage)">
@@ -76,11 +71,6 @@ $page = substr($_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"], "/") + 
             <li class="sidebar-text">
                 <a class="menu-link" onclick="loadContent('update_account.php')">
                     <i class='bx bxs-cog'></i><span class="text">Update Data Akun</span>
-                </a>
-            </li>
-            <li class="sidebar-text">
-                <a class="menu-link" onclick="loadContent('edit_profile.php')">
-                    <i class='bx bxs-cog'></i><span class="text">edit profile</span>
                 </a>
             </li>
         <?php endif; ?>

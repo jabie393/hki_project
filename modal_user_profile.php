@@ -50,7 +50,7 @@ if (!file_exists($profile_picture) || empty($profile['profile_picture'])) {
 <div id="modal-page">
     <div>
         <div class="profile-center">
-            <img src="<?= $profile_picture ?>" alt="Foto Profil" class="profile-img"
+            <img src="<?= $profile_picture ?>" alt="Foto Profil" class="profile-img profilePic"
                 onerror="this.src='assets/image/default-avatar.png'">
         </div>
 

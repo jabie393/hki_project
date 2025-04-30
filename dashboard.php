@@ -39,6 +39,7 @@ $role = $_SESSION['role'] ?? 'user';
     <?php include "widgets/navbar.php"; ?>
 
     <main id="content-main">
+      <script src="js/main.js"></script>
       <script src="js/ajax.js"></script>
       <script>
         // Menentukan halaman default berdasarkan role

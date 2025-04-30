@@ -29,16 +29,12 @@ function initEditProfilePage() {
                         timer: 2000,
                         showConfirmButton: false
                     }).then(() => {
-                        // Pertama, update yang sudah ada
-                        refreshAllProfilePics();
+                        refreshAllProfilePics(); // update yang sudah di DOM saat ini
 
-                        // Muat ulang edit_profile.php (untuk dapetin ulang elemen <img>)
-                        loadContent('edit_profile.php');
-
-                        // Setelah konten selesai dimuat, baru update yang baru dimuat juga
-                        setTimeout(() => {
-                            refreshAllProfilePics(); // bekerja untuk <img> baru dari edit_profile.php
-                        }, 300);
+                        // Muat ulang konten dan setelah selesai, update juga profil baru yang muncul
+                        loadContent('edit_profile.php', () => {
+                            refreshAllProfilePics(); // update juga elemen baru dari halaman edit_profile.php
+                        });
                     });
                 } else {
                     Swal.fire({
@@ -67,22 +63,42 @@ function initEditProfilePage() {
             .then(response => response.json())
             .then(data => {
                 data.sort((a, b) => a.name.common.localeCompare(b.name.common));
-                data.forEach(country => {
-                    const option = new Option(country.name.common, country.name.common);
-                    select.append(option);
+                const selects = document.querySelectorAll("#nationality, .negara-select");
+                selects.forEach(select => {
+                    select.innerHTML = '<option value="">-- Pilih Negara --</option>';
+                    data.forEach(country => {
+                        const option = document.createElement("option");
+                        option.value = country.name.common;
+                        option.textContent = country.name.common;
+                        select.appendChild(option);
+                    });
+
+                    const $select = $(select);
+
+                    // Destroy select2 dulu jika sudah ada
+                    if ($select.hasClass("select2-hidden-accessible")) {
+                        $select.select2('destroy');
+                    }
+
+                    // Inisialisasi Select2
+                    $select.select2({
+                        placeholder: "-- Pilih Negara --",
+                        allowClear: true,
+                        width: '100%',
+                        templateResult: function (state) {
+                            if (!state.id) return state.text;
+                            const country = data.find(c => c.name.common === state.text);
+                            if (country) {
+                                const flag = country.flags?.svg || '';
+                                return $(`<span><img src="${flag}" style="width: 20px; margin-right: 5px;" /> ${state.text}</span>`);
+                            }
+                            return state.text;
+                        },
+                        templateSelection: function (state) {
+                            return state.text;
+                        }
+                    });
                 });
-
-                // Destroy select2 dulu kalau sudah ada
-                if (select.hasClass("select2-hidden-accessible")) {
-                    select.select2('destroy');
-                }
-
-                select.select2({
-                    placeholder: "-- Pilih Negara --",
-                    allowClear: true,
-                    width: '100%'
-                });
-
                 $('#nationality').on('select2:open', function () {
                     document.querySelector('.select2-search__field').focus();
                 });

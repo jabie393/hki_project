@@ -2,15 +2,12 @@
   font-family: "Inter", sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f7f9fc;
-  color: #333;
+  background: linear-gradient(180deg, #eaf0f6 0%, #ffffff 100%);
+  color: #2c3e50;
 }
 
 /* Container */
 #edit_profile-page form {
-  max-width: 900px;
-  margin: 40px auto;
-  padding: 30px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
@@ -24,10 +21,11 @@
 }
 
 #edit_profile-page h2 {
-  color: #4f46e5;
-  margin-top: 0;
+  color: #004080;
   text-align: center;
-  margin-bottom: 20px;
+  font-weight: bold;
+  padding-bottom: 20px;
+  padding-top: 10px;
 }
 
 /* Field Containers */
@@ -43,13 +41,13 @@
 #edit_profile-page input[type="file"],
 select:not(.select2-hidden-accessible) {
   width: 100%;
-  height: 45px;
-  padding: 12px 14px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  font-size: 16px;
+  padding: 10px 12px;
+  border: 1px solid #ced4da;
+  background-color: #eef2ff;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border-color 0.2s;
   box-sizing: border-box;
-  transition: border-color 0.3s, box-shadow 0.3s;
 }
 
 /* Focus */
@@ -63,28 +61,40 @@ select:not(.select2-hidden-accessible) {
 /* Label */
 #edit_profile-page label {
   font-weight: 500;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
   display: block;
   color: black;
 }
 
-/* Select2 */
-/* Pastikan Select2 tetap seragam dengan input lain */
+/* Select2 Styling */
+.select2-search__field {
+  padding: 6px;
+  border-radius: 6px;
+}
+
+.select2-search__field:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 4px #007bff66;
+}
+
+.select2-results__option {
+  font-family: "Inter", sans-serif;
+}
+
+.select2-results__option[aria-selected] {
+  background-color: #eef2ff;
+}
+
 .select2-container--default .select2-selection--single {
-  border-radius: 8px !important;
-  border: 1px solid #ccc !important;
   height: 45px !important;
   display: flex;
   align-items: center;
+  border-radius: 10px;
+  border: 1px solid #ced4da!important;
+  background-color: #eef2ff!important;
   padding-left: 12px;
   padding-right: 30px;
-  box-sizing: border-box;
-}
-
-/* Untuk pastikan kontainernya juga konsisten */
-.select2-container {
-  width: 100% !important;
-  box-sizing: border-box;
 }
 
 .select2-selection__rendered {
@@ -97,26 +107,14 @@ select:not(.select2-hidden-accessible) {
   .select2-selection__arrow {
   height: 100% !important;
   top: 0 !important;
-  right: 8px !important;
-}
-
-.select2-container--default
-  .select2-selection--single
-  .select2-selection__rendered {
-  color: black !important; /* font warna hitam */
-}
-
-.select2-container--default
-  .select2-selection--single
-  .select2-selection__placeholder {
-  color: black !important;
+  right: 0 !important;
 }
 
 .select2-container--default
   .select2-selection--single
   .select2-selection__clear {
   position: absolute;
-  right: -20px;
+  right: 25px;
   top: 20px;
   transform: translateY(-50%);
   color: #dc3545;
@@ -201,18 +199,19 @@ select:not(.select2-hidden-accessible) {
 
 /* Button */
 #edit_profile-page button {
-  background-color: #007bff;
-  color: white;
-  padding: 12px 20px;
+  padding: 10px 16px;
+  margin-bottom: 10px;
+  background-color: #004080;
+  color: #fff;
   border: none;
-  border-radius: 10px;
-  font-size: 16px;
+  border-radius: 8px;
+  font-weight: bold;
   cursor: pointer;
-  transition: background 0.3s, transform 0.2s;
+  transition: background-color 0.2s;
 }
 
 #edit_profile-page button:hover {
-  background-color: #0056b3;
+  background-color: #002a5e;
 }
 
 /* Modal Cropper */
@@ -259,18 +258,57 @@ select:not(.select2-hidden-accessible) {
   border: 3px solid #ccc;
 }
 
-/* Navigation Links */
-#edit_profile-page div > a {
-  display: inline-block;
-  margin-top: 20px;
-  margin-right: 10px;
-  color: #3498db;
-  text-decoration: none;
-  font-weight: bold;
+/* Alert Style */
+.swal2-popup {
+  font-family: "Inter", sans-serif;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
 }
 
-#edit_profile-page div > a:hover {
-  text-decoration: underline;
+/* Judul alert */
+.swal2-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #1f2937; /* dark gray */
+  margin-bottom: 0.5rem;
+}
+
+/* Isi pesan */
+.swal2-html-container {
+  font-size: 1rem;
+  color: #4b5563; /* medium gray */
+}
+
+/* Tombol konfirmasi */
+.swal2-confirm {
+  background-color: #004080 !important;
+  color: #fff !important;
+  border-radius: 8px !important;
+  font-weight: 600;
+  padding: 0.5rem 1.25rem;
+}
+.swal2-confirm:hover {
+  background-color: #002a5e !important;
+}
+
+/* Tombol cancel */
+.swal2-cancel {
+  background-color: #e5e7eb !important;
+  color: #374151 !important; /* gray-700 */
+  border-radius: 8px !important;
+  font-weight: 600;
+  padding: 0.5rem 1.25rem;
+}
+
+/* Ikon status */
+.swal2-icon {
+  margin-top: 0;
+}
+
+/* Progress bar jika ada */
+.swal2-timer-progress-bar {
+  background: #4f46e5;
 }
 
 /* Responsive Stack on Mobile */

@@ -25,18 +25,17 @@ $profile_picture = file_exists("uploads/users/$user_id/profile/profile.jpg")
     <!-- Sweet Alert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="css/edit_profile.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" />
-
     <!-- Select2 -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
-
     <!-- Cropper -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/edit_profile.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" />
+
 </head>
 
 <div id="edit_profile-page">
@@ -126,7 +125,8 @@ $profile_picture = file_exists("uploads/users/$user_id/profile/profile.jpg")
 
         <div>
             <label>Foto Saat Ini:</label><br>
-            <img id="profilePagePic" class="profilePic" src="<?= $profile_picture ?>" width="100" height="100" alt="Foto Profil">
+            <img id="profilePagePic" class="profilePic" src="<?= $profile_picture ?>" width="100" height="100"
+                alt="Foto Profil">
         </div>
     </form>
 

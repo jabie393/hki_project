@@ -11,6 +11,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 .then(html => {
                     modalContent.innerHTML = html;
                     modal.style.display = 'flex';
+
+                    // Setelah konten dimuat
+                    if (typeof refreshAllProfilePics === 'function') {
+                        refreshAllProfilePics();
+                    }
                 })
                 .catch(err => {
                     modalContent.innerHTML = '<p style="color:red;">Gagal memuat data profil.</p>';
@@ -18,7 +23,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
         }
 
-        // Tutup modal
         if (e.target.id === 'close-modal' || e.target.id === 'modal-profile') {
             modal.style.display = 'none';
         }

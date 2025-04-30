@@ -21,6 +21,11 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
     <!-- Sweet Alert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    <!-- Select2 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
     <!-- Css -->
     <link rel="stylesheet" href="css/modal.css">
     <link rel="stylesheet" href="css/user.css">
@@ -87,7 +92,7 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
         </div>
         <!--Negara Pertama Kali Diumumkan-->
         <div class="form-group">
-            <label>Negara Pertama Kali Diumumkan:</label>
+            <label for="nationality">Negara Pertama Kali Diumumkan:</label>
             <select name="negara_pengumuman" id="nationality" required>
                 <option value="">-- Pilih Negara --</option>
             </select>

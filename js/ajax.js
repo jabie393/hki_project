@@ -1,5 +1,5 @@
 // Fungsi untuk memuat konten halaman secara dinamis
-function loadContent(url) {
+function loadContent(url, callback) {
     localStorage.setItem("activePage", url);
 
     const noCacheUrl = url.includes("?") ? `${url}&v=${Date.now()}` : `${url}?v=${Date.now()}`;
@@ -36,6 +36,10 @@ function loadContent(url) {
 
             Promise.all(scriptPromises).then(() => {
                 afterContentLoaded(url); // tetap kirim URL asli (tanpa ?v=...)
+
+                if (typeof callback === 'function') {
+                    callback(); // jalankan callback jika disediakan
+                }
             });
         })
         .catch(error => {

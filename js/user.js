@@ -89,7 +89,7 @@ function initUserPage() {
         }
     });
 
-    // Country
+    // ================== LOAD NEGARA ==================
     function loadCountries() {
         fetch("https://restcountries.com/v3.1/all")
             .then(response => response.json())
@@ -104,7 +104,40 @@ function initUserPage() {
                         option.textContent = country.name.common;
                         select.appendChild(option);
                     });
+
+                    const $select = $(select);
+
+                    // Destroy select2 dulu jika sudah ada
+                    if ($select.hasClass("select2-hidden-accessible")) {
+                        $select.select2('destroy');
+                    }
+
+                    // Inisialisasi Select2
+                    $select.select2({
+                        placeholder: "-- Pilih Negara --",
+                        allowClear: true,
+                        width: '100%',
+                        templateResult: function (state) {
+                            if (!state.id) return state.text;
+                            const country = data.find(c => c.name.common === state.text);
+                            if (country) {
+                                const flag = country.flags?.svg || '';
+                                return $(`<span><img src="${flag}" style="width: 20px; margin-right: 5px;" /> ${state.text}</span>`);
+                            }
+                            return state.text;
+                        },
+                        templateSelection: function (state) {
+                            return state.text;
+                        }
+                    });
                 });
+                $('#nationality').on('select2:open', function () {
+                    document.querySelector('.select2-search__field').focus();
+                });
+
+                if (selected) {
+                    select.val(selected).trigger('change');
+                }
             })
             .catch(error => console.error("Gagal memuat data negara:", error));
     }
@@ -170,28 +203,6 @@ function initUserPage() {
                 }
             });
         }
-    }
-
-    // ================== LOAD NEGARA ==================
-    function loadCountries() {
-        fetch("https://restcountries.com/v3.1/all")
-            .then(response => response.json())
-            .then(data => {
-                data.sort((a, b) => a.name.common.localeCompare(b.name.common));
-                const selects = document.querySelectorAll("#nationality, .negara-select");
-                selects.forEach(select => {
-                    const currentValue = select.value;
-                    select.innerHTML = '<option value="">-- Pilih Negara --</option>';
-                    data.forEach(country => {
-                        const option = document.createElement("option");
-                        option.value = country.name.common;
-                        option.textContent = country.name.common;
-                        if (option.value === currentValue) option.selected = true;
-                        select.appendChild(option);
-                    });
-                });
-            })
-            .catch(error => console.error("Gagal memuat data negara:", error));
     }
 
     // ================== FORM HKI SUBMISSION ==================
