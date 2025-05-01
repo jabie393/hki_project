@@ -13,9 +13,13 @@ $user_id = $_SESSION['user_id'];
 $profile = $conn->query("SELECT * FROM user_profile WHERE user_id = '$user_id'")->fetch_assoc();
 $user_role = $_SESSION['role'] ?? 'user';
 $isAdmin = ($user_role === 'admin');
-$profile_picture = file_exists("uploads/users/$user_id/profile/profile.jpg")
-    ? "uploads/users/$user_id/profile/profile.jpg"
+
+$custom_path = "uploads/users/$user_id/profile/profile.jpg";
+
+$profile_picture = file_exists($custom_path)
+    ? $custom_path . '?v=' . time()
     : "assets/image/default-avatar.png";
+
 ?>
 
 <head>
@@ -126,7 +130,7 @@ $profile_picture = file_exists("uploads/users/$user_id/profile/profile.jpg")
         <div>
             <label>Foto Saat Ini:</label><br>
             <img id="profilePagePic" class="profilePic" src="<?= $profile_picture ?>" width="100" height="100"
-                alt="Foto Profil">
+                alt="Foto Profil" onerror="this.src='assets/image/default-avatar.png'">
         </div>
     </form>
 

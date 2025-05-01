@@ -41,9 +41,11 @@ $nationality = $profile['nationality'] ?? 'Belum diisi';
 $type_of_applicant = $profile['type_of_applicant'] ?? 'Belum diisi';
 
 // Cek foto profil
-$profile_picture = "uploads/users/$user_id/profile/profile.jpg";
-if (!file_exists($profile_picture) || empty($profile['profile_picture'])) {
+$base_picture = "uploads/users/$user_id/profile/profile.jpg";
+if (!file_exists($base_picture) || empty($profile['profile_picture'])) {
     $profile_picture = "assets/image/default-avatar.png";
+} else {
+    $profile_picture = $base_picture . '?v=' . time();
 }
 ?>
 

@@ -10,10 +10,10 @@ $user_id = $_SESSION['user_id'] ?? null;
 $profile_picture_path = "assets/image/default-avatar.png"; // default
 
 if ($user_id) {
-    $custom_path = "uploads/users/$user_id/profile/profile.jpg";
-    if (file_exists($custom_path)) {
-        $profile_picture_path = $custom_path;
-    }
+  $custom_path = "uploads/users/$user_id/profile/profile.jpg";
+  if (file_exists($custom_path)) {
+      $profile_picture_path = $custom_path . '?v=' . time();
+  }
 }
 ?>
 
