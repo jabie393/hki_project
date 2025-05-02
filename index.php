@@ -1,11 +1,10 @@
 <!-- ALL -->
 <?php
 include 'config/config.php';
-
 session_start();
 
-// session role yang menunjukkan peran pengguna
-$dashboardPage = (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') ? 'admin.php' : 'user.php';
+// Jika user sudah login, arahkan ke dashboard.php
+$dashboardPage = isset($_SESSION['user_username']) ? 'dashboard.php' : 'login.php';
 
 $result = $conn->query("SELECT * FROM announcement");
 $images = $result->fetch_all(MYSQLI_ASSOC);
