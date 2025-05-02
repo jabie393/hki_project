@@ -1,6 +1,6 @@
 <?php
 include 'config/config.php'; // pastikan path-nya benar
-
+include_once 'helpers/profile_helper.php';
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
@@ -40,13 +40,8 @@ $gender = $profile['gender'] ?? 'Belum diisi';
 $nationality = $profile['nationality'] ?? 'Belum diisi';
 $type_of_applicant = $profile['type_of_applicant'] ?? 'Belum diisi';
 
-// Cek foto profil
-$base_picture = "uploads/users/$user_id/profile/profile.jpg";
-if (!file_exists($base_picture) || empty($profile['profile_picture'])) {
-    $profile_picture = "assets/image/default-avatar.png";
-} else {
-    $profile_picture = $base_picture . '?v=' . time();
-}
+// helper
+$profile_picture = getProfilePicture($user_id);
 ?>
 
 <div id="modal-page">

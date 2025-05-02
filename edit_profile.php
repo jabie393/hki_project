@@ -2,6 +2,7 @@
 <!-- ADMIN & USER -->
 <?php
 include 'config/config.php';
+include_once 'helpers/profile_helper.php'; // Tambahkan ini
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
@@ -14,12 +15,8 @@ $profile = $conn->query("SELECT * FROM user_profile WHERE user_id = '$user_id'")
 $user_role = $_SESSION['role'] ?? 'user';
 $isAdmin = ($user_role === 'admin');
 
-$custom_path = "uploads/users/$user_id/profile/profile.jpg";
-
-$profile_picture = file_exists($custom_path)
-    ? $custom_path . '?v=' . time()
-    : "assets/image/default-avatar.png";
-
+// helper
+$profile_picture = getProfilePicture($user_id);
 ?>
 
 <head>

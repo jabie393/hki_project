@@ -20,7 +20,7 @@ $page = substr($_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"], "/") + 
         <?php if ($role === 'admin'): ?>
             <span class="text">AdminHub</span>
         <?php else: ?>
-            <span class="text">Halo, <?= htmlspecialchars($username) ?>!</span>
+            <span id="sidebar-username" class="text">Halo, <?= htmlspecialchars($username) ?>!</span>
         <?php endif; ?>
     </a>
 

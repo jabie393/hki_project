@@ -64,4 +64,8 @@ if ($new_password) {
     $query->close();
 }
 
+// Perbarui session username
+$_SESSION['user_username'] = $new_username;
+
 echo json_encode(['success' => true, 'message' => 'Profil berhasil diperbarui!']);
+
