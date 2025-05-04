@@ -54,7 +54,7 @@ function closeModal() {
 }
 //== Modal ==//
 
-//== Ajax ==//
+//== Ajax (Dashboard & Rekap_hki(Admin)) ==//
 // services/approve.php
 document.querySelectorAll('.approve-btn').forEach(button => {
     button.addEventListener('click', function () {
@@ -163,42 +163,6 @@ document.querySelectorAll('.delete-btn').forEach(button => {
                     });
             }
         });
-    });
-});
-
-$(document).on('click', '.cancel-btn', function () {
-    const id = $(this).data('id');
-
-    Swal.fire({
-        title: 'Yakin ingin membatalkan?',
-        text: 'Tindakan ini tidak bisa dibatalkan!',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Ya, batalkan!',
-        cancelButtonText: 'Batal'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            $.ajax({
-                url: 'services/cancel_hki.php',
-                type: 'POST',
-                data: { id: id },
-                success: function (response) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Dibatalkan!',
-                        text: response,
-                        showConfirmButton: false,
-                        timer: 2000
-                    }).then(() => {
-                        // Reload tabel dengan data terbaru
-                        $('#hki-table').load('status_pengajuan.php #hki-table > *'); 
-                    });
-                },
-                error: function () {
-                    Swal.fire('Oops...', 'Gagal membatalkan pendaftaran.', 'error');
-                }
-            });
-        }
     });
 });
 
@@ -315,4 +279,42 @@ document.querySelectorAll('.edit-certificate-btn').forEach(button => {
             });
     });
 });
-//== Script Ajax ==//
+//== Ajax (Dashboard & Rekap_hki(Admin)) ==//
+
+//== Script Ajax (status_pengajuan) ==//
+$(document).on('click', '.cancel-btn', function () {
+    const id = $(this).data('id');
+
+    Swal.fire({
+        title: 'Yakin ingin membatalkan?',
+        text: 'Tindakan ini tidak bisa dibatalkan!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Ya, batalkan!',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: 'services/cancel_hki.php',
+                type: 'POST',
+                data: { id: id },
+                success: function (response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Dibatalkan!',
+                        text: response,
+                        showConfirmButton: false,
+                        timer: 2000
+                    }).then(() => {
+                        // Reload tabel dengan data terbaru
+                        $('#hki-table').load('status_pengajuan.php #hki-table > *'); 
+                    });
+                },
+                error: function () {
+                    Swal.fire('Oops...', 'Gagal membatalkan pendaftaran.', 'error');
+                }
+            });
+        }
+    });
+});
+//== Script Ajax (status_pengajuan) ==//
