@@ -1,22 +1,40 @@
 body {
-  background: url("../assets/image/bg.png") no-repeat center center;
+  background-color: #1a202c;
   font-family: "Inter", sans-serif;
   font-size: 25px;
   margin: 0;
   padding: 0;
   text-align: center;
-  background-size: cover;
-  background-attachment: fixed;
-  height: 100vh;
-  color: rgb(255, 255, 255);
+  min-height: 100vh;
   display: flex;
+  position: relative;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
+.background-image {
+  all: unset;
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+.background-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.bg-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.288);
+}
+
 h1 {
   color: white!important;
+  z-index: 1;
 }
 
 /* Header */
@@ -41,6 +59,7 @@ h1 {
   margin-top: 80px; /* Memberi ruang dari header */
   width: 90%; /* Agar tombol tidak terlalu besar di layar kecil */
   max-width: 400px; /* Batas maksimum tombol */
+  z-index: 1;
 }
 
 .menu button {
@@ -90,14 +109,14 @@ h1 {
   color: #3b82f6;
 }
 
-/* ✅ Media Query untuk layar kecil (HP) */
+
 @media screen and (max-width: 768px) {
   .header img {
-    height: 45px; /* Mengecilkan logo */
+    height: 45px;
   }
 
   .menu {
-    width: 100%; /* Lebar penuh pada layar kecil */
+    width: 100%;
   }
 
   .menu button {
@@ -113,6 +132,6 @@ h1 {
   }
 
   .footer a {
-    font-size: 14px;
+    font-size: 12px;
   }
 }

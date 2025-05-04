@@ -7,6 +7,7 @@ body {
   min-height: 100vh;
   position: relative;
   font-family: "Inter", sans-serif;
+  padding-top: 8px;
 }
 
 /* Background */
@@ -24,24 +25,23 @@ body {
 
 /* Header */
 .header {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background-color: #202f5b;
-  padding: 16px 0;
-  text-align: center;
+  background: #202f5b;
+  padding: 10px 20px;
   display: flex;
+  align-items: center;
   justify-content: center;
+  width: 100%;
+  position: fixed;
+  top: 0;
 }
 
-.logo-container img {
-  height: 48px;
+.header img {
+  height: 60px;
+  max-width: 100%;
 }
 
 /* Login container */
 .login-container {
-  position: relative;
   background-color: rgba(31, 41, 55, 0.75);
   padding: 32px;
   border-radius: 10px;
@@ -49,6 +49,7 @@ body {
   width: 100%;
   max-width: 400px;
   text-align: center;
+  z-index: 1;
 }
 
 .login-container h2 {
@@ -127,14 +128,34 @@ body {
   justify-content: center;
   align-items: center;
   gap: 20px;
-  flex-wrap: wrap;
+  flex-wrap: wrap; /* Agar tetap rapi di layar kecil */
 }
 
 .footer a {
   color: white;
+  text-decoration: none;
+  font-size: 16px;
   font-weight: bold;
+  padding: 8px 12px;
 }
 
 .footer a:hover {
   color: #3b82f6;
+}
+
+@media screen and (max-width: 768px) {
+  .header img {
+    height: 45px;
+  }
+
+  .footer {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .footer a {
+    font-size: 12px;
+  }
 }

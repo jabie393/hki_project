@@ -28,6 +28,23 @@ $images = $result->fetch_all(MYSQLI_ASSOC);
 </head>
 
 <body>
+  <!-- Background Image -->
+  <div class="background-image">
+    <img src="assets/image/bg.png" alt="Background image of a university building" />
+    <div class="bg-overlay"></div>
+  </div>
+
+  <div class="header"></div>
+
+  <h1>Hak Kekayaan Intelektual</h1>
+  <div class="menu">
+    <button onclick="location.href='rekapitulasi.php'">REKAPITULASI</button>
+    <button onclick="location.href='<?php echo $dashboardPage; ?>'">PENGAJUAN HKI</button>
+    <button onclick="location.href='petunjuk_pengajuan.html'">PETUNJUK PENGAJUAN HKI</button>
+  </div>
+
+  <div class="footer"></div>
+
   <!-- Modal Pop-up -->
   <div id="announcementModal" class="modal">
     <div class="modal-content">
@@ -66,39 +83,7 @@ $images = $result->fetch_all(MYSQLI_ASSOC);
     </div>
   </div>
 
-
-
-  <div class="header">
-    <img src="assets/image/logo.png" alt="Logo Unira">
-  </div>
-  <h1>Hak Kekayaan Intelektual</h1>
-  <div class="menu">
-    <button onclick="location.href='rekapitulasi.php'">REKAPITULASI</button>
-    <button onclick="location.href='<?php echo $dashboardPage; ?>'">PENGAJUAN HKI</button>
-    <button onclick="location.href='petunjuk_pengajuan.html'">PETUNJUK PENGAJUAN HKI</button>
-  </div>
-  <div class="footer">
-    <a href="rekapitulasi.php">REKAPITULASI</a>
-    <a href="index.php">BERANDA</a>
-    <a href="<?php echo $dashboardPage; ?>">PENGAJUAN HKI</a>
-  </div>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      let modal = document.getElementById('announcementModal');
-
-      // Tampilkan modal saat halaman dimuat
-      if (modal) {
-        modal.style.display = "flex";
-      }
-    });
-
-    function closeModal() {
-      document.getElementById('announcementModal').style.display = 'none';
-    }
-
-  </script>
-
+  <script src="js/index.js"></script>
 </body>
 
 </html>

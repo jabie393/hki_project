@@ -1,9 +1,13 @@
 <!-- ALL -->
 <?php
+include 'config/config.php';
 session_start();
 
-// session role yang menunjukkan peran pengguna
-$dashboardPage = (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') ? 'admin.php' : 'user.php';
+// Jika user sudah login, arahkan ke dashboard.php
+$dashboardPage = isset($_SESSION['user_username']) ? 'dashboard.php' : 'login.php';
+
+$result = $conn->query("SELECT * FROM announcement");
+$images = $result->fetch_all(MYSQLI_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -27,12 +31,7 @@ $dashboardPage = (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') ? 'a
         <img src="assets/image/bg.png" alt="Background image of a university building">
     </div>
 
-    <!-- Header -->
-    <div class="header">
-        <div class="logo-container">
-            <img src="assets/image/logo.png" alt="University logo">
-        </div>
-    </div>
+    <div class="header"></div>
 
     <!-- Login Form -->
     <div class="login-container">
@@ -60,13 +59,8 @@ $dashboardPage = (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') ? 'a
         <div class="register-link">Belum Punya Akun? <a href="register.php">Daftar</a></div>
     </div>
 
-    <!-- Footer -->
-    <div class="footer">
-        <a href="rekapitulasi.php">REKAPITULASI</a>
-        <a href="index.php">BERANDA</a>
-        <a href="<?php echo $dashboardPage; ?>">PENGAJUAN HKI</a>
-    </div>
-
+    <div class="footer"></div>
+    <script src="js/index.js"></script>
 </body>
 
 </html>
