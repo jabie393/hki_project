@@ -129,14 +129,26 @@
   color: #fff;
 }
 
+#hki-page .btn-info:hover {
+  background-color: #18b2ca;
+}
+
 #hki-page .btn-safe {
   background-color: #28a745;
   color: #fff;
 }
 
+#hki-page .btn-safe:hover {
+  background-color: #2ec251;
+}
+
 #hki-page .btn-danger {
   background-color: #dc3545;
   color: #fff;
+}
+
+#hki-page .btn-danger:hover {
+  background-color: #e63946;
 }
 
 #hki-page .btn-download {
@@ -146,9 +158,17 @@
   margin-bottom: 3px;
 }
 
+#hki-page .btn-download:hover {
+  background-color: #7a8288;
+}
+
 #hki-page .btn-primary {
   background-color: #007bff;
   color: #fff;
+}
+
+#hki-page .btn-primary:hover {
+  background-color: #0056b3;
 }
 
 #hki-page .badge {

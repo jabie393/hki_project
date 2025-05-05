@@ -1,0 +1,267 @@
+/* Style umum */
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #1a202c;
+  font-family: "Inter", sans-serif;
+}
+
+/* Background */
+.background-image {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+}
+
+.background-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.5;
+}
+
+/* Header */
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  height: 60px;
+  background: #202f5b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header img {
+  height: 60px;
+  max-width: 100%;
+}
+
+/* Footer */
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 1000;
+  height: 50px;
+  background: #202f5b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap; /* Agar tetap rapi di layar kecil */
+}
+
+.footer a {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 8px 12px;
+}
+
+.footer a:hover {
+  color: #3b82f6;
+}
+
+/* Style untuk konten halaman */
+#hki-page {
+  flex: 1;
+  margin-top: 70px; /* Beri jarak untuk header */
+  margin-bottom: 60px; /* Beri jarak untuk footer */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Style untuk judul halaman */
+#hki-page h2 {
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* Form pencarian sticky di bawah header */
+.search-form {
+  position: sticky;
+  top: 60px; /* Tinggi header */
+  padding: 10px;
+  z-index: 999; /* Pastikan form berada di atas elemen lain */
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Tambahkan bayangan untuk efek visual */
+}
+
+.input-field {
+  width: 90%;
+  padding: 6px;
+  font-size: 13px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.btn {
+  padding: 6px 12px;
+  font-size: 13px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 2px 0;
+  display: inline-block;
+  text-decoration: none;
+  text-align: center;
+}
+
+.btn-info {
+  background-color: #17a2b8;
+  color: white;
+}
+
+.btn-info:hover {
+  background-color: #18b2ca;
+}
+
+/* Style untuk tabel */
+.table-wrapper {
+  overflow-x: auto;
+  background: white;
+  border-radius: 5px;
+  margin: 20px auto;
+  padding: 5px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+}
+
+#hki-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  min-width: 1000px;
+  overflow: hidden;
+}
+
+#hki-table th,
+#hki-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+#hki-table th {
+  background-color: #003366;
+  color: white;
+  white-space: nowrap;
+}
+
+#hki-table td {
+  font-size: 12px;
+}
+
+#hki-table tr:hover {
+  background-color: #f1f5f9;
+}
+
+/* Badge style */
+.badge {
+    padding: 4px 8px;
+    border-radius: 12px;
+    color: white;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.badge-terdaftar {
+    background-color: #28a745;
+}
+
+.badge-pending {
+    background-color: #ffc107;
+}
+
+.badge-ditolak {
+    background-color: #dc3545;
+}
+
+/* Style untuk pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 5px;
+}
+
+.page-link {
+  padding: 8px 12px;
+  text-decoration: none;
+  color: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.page-link:hover {
+  background-color: #18b2ca;
+  color: white;
+}
+
+.page-link.active {
+  background-color: #003365;
+  color: white;
+  pointer-events: none;
+}
+
+/* Responsivitas untuk layar kecil */
+@media screen and (max-width: 768px) {
+  .header {
+    height: 50px;
+  }
+
+  .footer {
+    height: 40px;
+  }
+
+  #hki-page {
+    margin-top: 60px;
+    margin-bottom: 50px;
+  }
+
+  .input-field {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .search-form {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #hki-table th,
+  #hki-table td {
+    font-size: 10px;
+    padding: 8px;
+  }
+
+  .footer {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .footer a {
+    font-size: 12px;
+  }
+
+  .header img {
+    height: 45px;
+  }
+}
