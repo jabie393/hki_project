@@ -70,6 +70,7 @@ function initEditProfilePage() {
                         const option = document.createElement("option");
                         option.value = country.name.common;
                         option.textContent = country.name.common;
+                        option.setAttribute("data-flag", country.flags.svg); // Tambahkan URL bendera
                         select.appendChild(option);
                     });
 
@@ -87,18 +88,22 @@ function initEditProfilePage() {
                         width: '100%',
                         templateResult: function (state) {
                             if (!state.id) return state.text;
-                            const country = data.find(c => c.name.common === state.text);
-                            if (country) {
-                                const flag = country.flags?.svg || '';
-                                return $(`<span><img src="${flag}" style="width: 20px; margin-right: 5px;" /> ${state.text}</span>`);
-                            }
-                            return state.text;
+                            const flagUrl = $(state.element).data("flag");
+                            return $(
+                                `<span><img src="${flagUrl}" style="width: 20px; height: 15px; margin-right: 5px;" /> ${state.text}</span>`
+                            );
                         },
                         templateSelection: function (state) {
-                            return state.text;
+                            const flagUrl = $(state.element).data("flag");
+                            return state.id
+                                ? $(
+                                    `<span><img src="${flagUrl}" style="width: 20px; height: 15px; margin-right: 5px;" /> ${state.text}</span>`
+                                )
+                                : state.text;
                         }
                     });
                 });
+
                 $('#nationality').on('select2:open', function () {
                     document.querySelector('.select2-search__field').focus();
                 });

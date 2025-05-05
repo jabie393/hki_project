@@ -67,6 +67,16 @@ select:not(.select2-hidden-accessible) {
 }
 
 /* Select2 Styling */
+.select2-results__option img {
+  vertical-align: middle;
+  margin-right: 10px !important;
+}
+
+.select2-selection__rendered img {
+  vertical-align: middle;
+  margin-right: 5px !important;
+}
+
 .select2-search__field {
   padding: 6px;
   border-radius: 6px;
@@ -130,9 +140,9 @@ select:not(.select2-hidden-accessible) {
 }
 
 .select2-search__field:focus {
-  border-color: #007bff;
+  border-color: #007bff !important;
   outline: none;
-  box-shadow: 0 0 4px #007bff66;
+  box-shadow: 0 0 4px #007bff66 !important;
 }
 
 /* Image Preview */

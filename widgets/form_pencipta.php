@@ -29,7 +29,7 @@
 
     <div class="form-group">
         <label>Negara:</label>
-        <select name="negara[]" class="negara-select" required>
+        <select name="negara[]" id="nationalityform" required>
             <option value="">-- Pilih Negara --</option>
         </select>
     </div>

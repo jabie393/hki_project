@@ -1,5 +1,5 @@
 function initUserPage() {
-    loadCountries();
+    loadCountriesForMainForm();
     document.getElementById('jenis_hak_cipta').addEventListener('change', function () {
         var jenis = this.value;
         var subJenis = document.getElementById('sub_jenis_hak_cipta');
@@ -90,46 +90,35 @@ function initUserPage() {
     });
 
     // ================== LOAD NEGARA ==================
-    function loadCountries() {
+    function loadCountriesForMainForm() {
         fetch("https://restcountries.com/v3.1/all")
             .then(response => response.json())
             .then(data => {
                 data.sort((a, b) => a.name.common.localeCompare(b.name.common));
-                const selects = document.querySelectorAll("#nationality, .negara-select");
-                selects.forEach(select => {
-                    select.innerHTML = '<option value="">-- Pilih Negara --</option>';
-                    data.forEach(country => {
-                        const option = document.createElement("option");
-                        option.value = country.name.common;
-                        option.textContent = country.name.common;
-                        select.appendChild(option);
-                    });
 
-                    const $select = $(select);
+                const mainFormSelect = document.querySelector("#nationality");
+                if (!mainFormSelect) return;
 
-                    // Destroy select2 dulu jika sudah ada
-                    if ($select.hasClass("select2-hidden-accessible")) {
-                        $select.select2('destroy');
-                    }
+                mainFormSelect.innerHTML = '<option value="">-- Pilih Negara --</option>';
+                data.forEach(country => {
+                    const option = document.createElement("option");
+                    option.value = country.name.common;
+                    option.textContent = country.name.common;
+                    option.setAttribute("data-flag", country.flags.svg); // Tambahkan URL bendera
+                    mainFormSelect.appendChild(option);
+                });
 
-                    // Inisialisasi Select2
-                    $select.select2({
-                        placeholder: "-- Pilih Negara --",
-                        allowClear: true,
-                        width: '100%',
-                        templateResult: function (state) {
-                            if (!state.id) return state.text;
-                            const country = data.find(c => c.name.common === state.text);
-                            if (country) {
-                                const flag = country.flags?.svg || '';
-                                return $(`<span><img src="${flag}" style="width: 20px; margin-right: 5px;" /> ${state.text}</span>`);
-                            }
-                            return state.text;
-                        },
-                        templateSelection: function (state) {
-                            return state.text;
-                        }
-                    });
+                const $select = $(mainFormSelect);
+                if ($select.hasClass("select2-hidden-accessible")) {
+                    $select.select2('destroy');
+                }
+
+                $select.select2({
+                    templateResult: formatCountryOption,
+                    templateSelection: formatCountryOption,
+                    placeholder: "-- Pilih Negara --",
+                    allowClear: true,
+                    width: '100%'
                 });
                 $('#nationality').on('select2:open', function () {
                     document.querySelector('.select2-search__field').focus();
@@ -139,7 +128,62 @@ function initUserPage() {
                     select.val(selected).trigger('change');
                 }
             })
-            .catch(error => console.error("Gagal memuat data negara:", error));
+            .catch(error => console.error("Gagal memuat data negara untuk form utama:", error));
+    }
+
+    function loadCountriesForModalForm(selectedCountry = "") {
+        return fetch("https://restcountries.com/v3.1/all")
+            .then(response => response.json())
+            .then(data => {
+                data.sort((a, b) => a.name.common.localeCompare(b.name.common));
+
+                const modalFormSelect = document.querySelector("#nationalityform");
+                if (!modalFormSelect) return;
+
+                modalFormSelect.innerHTML = '<option value="">-- Pilih Negara --</option>';
+                data.forEach(country => {
+                    const option = document.createElement("option");
+                    option.value = country.name.common;
+                    option.textContent = country.name.common;
+                    option.setAttribute("data-flag", country.flags.svg); // Tambahkan URL bendera
+
+                    // Tandai negara yang dipilih sebelumnya
+                    if (country.name.common === selectedCountry) {
+                        option.selected = true;
+                    }
+
+                    modalFormSelect.appendChild(option);
+                });
+
+                const $select = $(modalFormSelect);
+                if ($select.hasClass("select2-hidden-accessible")) {
+                    $select.select2('destroy');
+                }
+
+                $select.select2({
+                    templateResult: formatCountryOption,
+                    templateSelection: formatCountryOption,
+                    placeholder: "-- Pilih Negara --",
+                    allowClear: true,
+                    width: '100%',
+                    dropdownParent: $(modalFormSelect).closest('.modal')
+                });
+                $('#nationalityform').on('select2:open', function () {
+                    document.querySelector('.select2-search__field').focus();
+                });
+            })
+            .catch(error => console.error("Gagal memuat data negara untuk form modal:", error));
+    }
+
+    // Fungsi untuk menampilkan bendera di dropdown
+    function formatCountryOption(option) {
+        if (!option.id) {
+            return option.text;
+        }
+        const flagUrl = $(option.element).data("flag");
+        return $(
+            `<span><img src="${flagUrl}" alt="" style="width: 20px; height: 15px; margin-right: 10px;">${option.text}</span>`
+        );
     }
 
     // Modal
@@ -153,7 +197,8 @@ function initUserPage() {
     // Tampilkan modal
     addPenciptaBtn.addEventListener("click", function () {
         modal.style.display = "flex";
-        loadCountries(); // Load negara juga di dalam modal
+        modalForm.reset();
+        loadCountriesForModalForm(); // Load negara untuk form modal
     });
 
     // Tutup modal
@@ -183,7 +228,7 @@ function initUserPage() {
         initJenisHakCipta();
         initFormSubmission();
         initModalPencipta();
-        loadCountries();
+        loadCountriesForMainForm(); // Load negara untuk form utama
     });
 
     // ================== JENIS & SUBJENIS ==================
@@ -279,9 +324,10 @@ function initUserPage() {
         let editingPencipta = null;
 
         document.getElementById("addPencipta").addEventListener("click", () => {
+            editingPencipta = null; // Reset editing state
             modal.style.display = "flex";
             modalForm.reset();
-            loadCountries();
+            loadCountriesForModalForm(); // Load negara untuk form modal
         });
 
         document.querySelector(".close-modal").addEventListener("click", () => {
@@ -304,12 +350,13 @@ function initUserPage() {
 
             const nama = formData.get("nama[]") || "Tanpa Nama";
 
+
             penciptaDiv.innerHTML = `
-            <h4 class="pencipta-label">Pencipta</h4>
-            <strong>${nama}</strong><br>
-            <button type="button" class="editPencipta">Edit</button>
-            <button type="button" class="hapusPencipta">Hapus</button>
-        `;
+                <h4 class="pencipta-label">Pencipta</h4>
+                <strong>${nama}</strong><br>
+                <button type="button" class="editPencipta">Edit</button>
+                <button type="button" class="hapusPencipta">Hapus</button>
+            `;
 
             penciptaDiv.dataset.form = JSON.stringify(Object.fromEntries(formData.entries()));
 
@@ -338,8 +385,12 @@ function initUserPage() {
                 const input = modalForm.querySelector(`[name="${key}"]`);
                 if (input) input.value = value;
             }
-            modal.style.display = "flex";
-            loadCountries();
+
+            // Pastikan negara sebelumnya terpilih
+            const selectedCountry = values["negara[]"] || ""; // Ambil negara yang dipilih sebelumnya
+            loadCountriesForModalForm(selectedCountry).then(() => {
+                modal.style.display = "flex";
+            });
         }
 
         function updatePenciptaLabels() {
