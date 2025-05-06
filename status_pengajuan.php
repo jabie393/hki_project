@@ -10,9 +10,42 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-// Gunakan prepared statement untuk keamanan
-$stmt = $conn->prepare("SELECT * FROM registrations WHERE user_id = ?");
-$stmt->bind_param("i", $user_id);
+// Ambil kata kunci pencarian jika ada
+$search = isset($_GET['search']) ? $conn->real_escape_string($_GET['search']) : '';
+
+// Pagination setup
+$defaultLimit = 5; // Default jumlah data per halaman
+$limit = isset($_GET['limit']) ? (int) $_GET['limit'] : $defaultLimit; // Ambil limit dari URL, default 5
+$page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
+$offset = ($page - 1) * $limit;
+
+// Query untuk menghitung total data
+$totalQuery = "SELECT COUNT(*) as total FROM registrations 
+               WHERE user_id = ? 
+               AND (nomor_permohonan LIKE ? 
+               OR jenis_permohonan LIKE ? 
+               OR jenis_hak_cipta LIKE ? 
+               OR sub_jenis_hak_cipta LIKE ? 
+               OR judul_hak_cipta LIKE ?)";
+$stmtTotal = $conn->prepare($totalQuery);
+$searchTerm = "%$search%";
+$stmtTotal->bind_param("ssssss", $user_id, $searchTerm, $searchTerm, $searchTerm, $searchTerm, $searchTerm);
+$stmtTotal->execute();
+$totalResult = $stmtTotal->get_result();
+$totalData = $totalResult->fetch_assoc()['total'];
+$totalPages = ceil($totalData / $limit);
+
+// Query untuk mengambil data dengan pagination
+$query = "SELECT * FROM registrations 
+          WHERE user_id = ? 
+          AND (nomor_permohonan LIKE ? 
+          OR jenis_permohonan LIKE ? 
+          OR jenis_hak_cipta LIKE ? 
+          OR sub_jenis_hak_cipta LIKE ? 
+          OR judul_hak_cipta LIKE ?)
+          LIMIT ? OFFSET ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("ssssssii", $user_id, $searchTerm, $searchTerm, $searchTerm, $searchTerm, $searchTerm, $limit, $offset);
 $stmt->execute();
 $result = $stmt->get_result();
 ?>
@@ -33,6 +66,16 @@ $result = $stmt->get_result();
 <div id="hki-page">
 
     <h2>Status Pengajuan</h2>
+
+    <!-- Form Pencarian -->
+    <form method="GET" id="search-form" class="search-form">
+        <div class="search-group">
+            <input type="text" name="search" class="input-field" placeholder="Cari Data Pengajuan"
+                value="<?php echo htmlspecialchars($search); ?>">
+            <button type="submit" class="btn btn-info">Cari</button>
+        </div>
+    </form>
+
     <div class="table-wrapper">
         <table id="hki-table">
             <tr>
@@ -94,6 +137,26 @@ $result = $stmt->get_result();
                 </tr>
             <?php } ?>
         </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination">
+        <?php if ($page > 1): ?>
+            <a href="javascript:void(0);" class="page-link"
+                onclick="loadPage(<?= $page - 1; ?>, <?= $limit; ?>, '<?= htmlspecialchars($search); ?>')">Previous</a>
+        <?php endif; ?>
+
+        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+            <a href="javascript:void(0);" class="page-link <?= $i == $page ? 'active' : ''; ?>"
+                onclick="loadPage(<?= $i; ?>, <?= $limit; ?>, '<?= htmlspecialchars($search); ?>')">
+                <?= $i; ?>
+            </a>
+        <?php endfor; ?>
+
+        <?php if ($page < $totalPages): ?>
+            <a href="javascript:void(0);" class="page-link"
+                onclick="loadPage(<?= $page + 1; ?>, <?= $limit; ?>, '<?= htmlspecialchars($search); ?>')">Next</a>
+        <?php endif; ?>
     </div>
 
     <!-- Modal untuk Deskripsi -->

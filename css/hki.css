@@ -296,3 +296,31 @@ gap: 10px;
   flex: 1 1 48%;
   min-width: 100px;
 }
+
+/* Style untuk pagination */
+#hki-page .pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 5px;
+}
+
+#hki-page .page-link {
+  padding: 8px 12px;
+  text-decoration: none;
+  color: #003365;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+#hki-page .page-link:hover {
+  background-color: #18b2ca;
+  color: white;
+}
+
+#hki-page .page-link.active {
+  background-color: #003365;
+  color: white;
+  pointer-events: none;
+}

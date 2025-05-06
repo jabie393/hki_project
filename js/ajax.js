@@ -1,6 +1,6 @@
 // Fungsi untuk memuat konten halaman secara dinamis
 function loadContent(url, callback) {
-    localStorage.setItem("activePage", url);
+    localStorage.setItem("activePage", url.split('?')[0]); // Simpan halaman aktif tanpa parameter query
 
     const noCacheUrl = url.includes("?") ? `${url}&v=${Date.now()}` : `${url}?v=${Date.now()}`;
 
@@ -48,6 +48,17 @@ function loadContent(url, callback) {
         });
 }
 
+// Fungsi untuk memuat halaman dengan parameter pagination dan pencarian
+function loadPage(page, limit, search) {
+    // Ambil halaman aktif dari localStorage
+    const activePage = localStorage.getItem("activePage") || "admin.php";
+
+    // Bangun URL berdasarkan halaman aktif
+    const url = `${activePage.split('?')[0]}?page=${page}&limit=${limit}&search=${encodeURIComponent(search)}`;
+
+    // Muat konten menggunakan loadContent
+    loadContent(url);
+}
 
 // Fungsi yang dipanggil setelah konten berhasil dimuat
 function afterContentLoaded(url) {
@@ -79,12 +90,14 @@ function afterContentLoaded(url) {
             const formData = new FormData(searchForm);
             const search = formData.get("search");
 
-            fetch("rekap_hki.php?search=" + encodeURIComponent(search))
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById("content-main").innerHTML = data;
-                    afterContentLoaded("rekap_hki.php?search=" + encodeURIComponent(search));
-                });
+            // Ambil halaman aktif dari localStorage
+            const activePage = localStorage.getItem("activePage") || "admin.php";
+
+            // Bangun URL pencarian berdasarkan halaman aktif
+            const searchUrl = `${activePage.split('?')[0]}?search=${encodeURIComponent(search)}`;
+
+            // Muat konten menggunakan loadContent
+            loadContent(searchUrl);
         });
     }
 

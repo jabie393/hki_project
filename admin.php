@@ -9,10 +9,39 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'admin') {
     exit();
 }
 
-// Ambil semua data pengajuan yang belum disetujui
-$result = $conn->query("SELECT registrations.*, users.username FROM registrations 
-                        JOIN users ON registrations.user_id = users.id 
-                        WHERE registrations.status != 'Terdaftar'");
+// Ambil kata kunci pencarian jika ada
+$search = isset($_GET['search']) ? $conn->real_escape_string($_GET['search']) : '';
+
+// Pagination setup
+$defaultLimit = 5; // Default jumlah data per halaman
+$limit = isset($_GET['limit']) ? (int) $_GET['limit'] : $defaultLimit; // Ambil limit dari URL, default 5
+$page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
+$offset = ($page - 1) * $limit;
+
+// Query untuk menghitung total data
+$totalQuery = "SELECT COUNT(*) as total FROM registrations 
+               JOIN users ON registrations.user_id = users.id 
+               WHERE registrations.status != 'Terdaftar' 
+               AND (users.username LIKE '%$search%' 
+               OR registrations.jenis_permohonan LIKE '%$search%' 
+               OR registrations.jenis_hak_cipta LIKE '%$search%' 
+               OR registrations.sub_jenis_hak_cipta LIKE '%$search%' 
+               OR registrations.judul_hak_cipta LIKE '%$search%')";
+$totalResult = $conn->query($totalQuery);
+$totalData = $totalResult->fetch_assoc()['total'];
+$totalPages = ceil($totalData / $limit);
+
+// Query untuk mengambil data dengan pagination
+$query = "SELECT registrations.*, users.username FROM registrations 
+          JOIN users ON registrations.user_id = users.id 
+          WHERE registrations.status != 'Terdaftar' 
+          AND (users.username LIKE '%$search%' 
+          OR registrations.jenis_permohonan LIKE '%$search%' 
+          OR registrations.jenis_hak_cipta LIKE '%$search%' 
+          OR registrations.sub_jenis_hak_cipta LIKE '%$search%' 
+          OR registrations.judul_hak_cipta LIKE '%$search%')
+          LIMIT $limit OFFSET $offset";
+$result = $conn->query($query);
 ?>
 
 <head>
@@ -30,6 +59,16 @@ $result = $conn->query("SELECT registrations.*, users.username FROM registration
 <!-- admin.php (HTML Table Layout) -->
 <div id="hki-page">
     <h2>Daftar Pengajuan HKI</h2>
+
+    <!-- Form Pencarian -->
+    <form method="GET" id="search-form" class="search-form">
+        <div class="search-group">
+            <input type="text" name="search" class="input-field" placeholder="Cari Data Pengajuan"
+                value="<?php echo htmlspecialchars($search); ?>">
+            <button type="submit" class="btn btn-info">Cari</button>
+        </div>
+    </form>
+
     <div class="table-wrapper">
         <table id="hki-table">
             <thead>
@@ -106,6 +145,23 @@ $result = $conn->query("SELECT registrations.*, users.username FROM registration
                 <?php } ?>
             </tbody>
         </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination">
+        <?php if ($page > 1): ?>
+            <a href="javascript:void(0);" class="page-link" onclick="loadPage(<?= $page - 1; ?>, <?= $limit; ?>, '<?= htmlspecialchars($search); ?>')">Previous</a>
+        <?php endif; ?>
+
+        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+            <a href="javascript:void(0);" class="page-link <?= $i == $page ? 'active' : ''; ?>" onclick="loadPage(<?= $i; ?>, <?= $limit; ?>, '<?= htmlspecialchars($search); ?>')">
+                <?= $i; ?>
+            </a>
+        <?php endfor; ?>
+
+        <?php if ($page < $totalPages): ?>
+            <a href="javascript:void(0);" class="page-link" onclick="loadPage(<?= $page + 1; ?>, <?= $limit; ?>, '<?= htmlspecialchars($search); ?>')">Next</a>
+        <?php endif; ?>
     </div>
 </div>
 </div>
