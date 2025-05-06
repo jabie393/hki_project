@@ -40,10 +40,12 @@ $result = $conn->query($query);
     <h2>Rekapitulasi Hak Cipta Terdaftar</h2>
 
     <!-- Form Pencarian -->
-    <form method="GET" class="search-form" id="search-form">
-        <input type="text" name="search" class="input-field" placeholder="Cari Data Hak Cipta"
-            value="<?php echo htmlspecialchars($search); ?>">
-        <button type="submit" class="btn btn-info">Cari</button>
+    <form method="GET" id="search-form" class="search-form">
+        <div class="search-group">
+            <input type="text" name="search" class="input-field" placeholder="Cari Data Hak Cipta"
+                value="<?php echo htmlspecialchars($search); ?>">
+            <button type="submit" class="btn btn-info">Cari</button>
+        </div>
     </form>
 
     <div class="table-wrapper">

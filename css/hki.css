@@ -103,6 +103,49 @@
   text-decoration: none;
   font-weight: bold;
 }
+
+/* Style untuk search group */
+#hki-page .search-group {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow: hidden;
+  background-color: white;
+}
+
+#hki-page .search-group .input-field {
+  flex: 1;
+  border: none;
+  padding: 8px;
+  margin: 0;
+  font-size: 13px;
+  outline: none;
+}
+
+#hki-page .search-group .btn {
+  border: none;
+  border-left: 1px solid #ccc;
+  background-color: #004080;
+  color: white;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+#hki-page .search-group .btn:hover {
+  background-color: #002a5e;
+}
+
+#hki-page .search-form {
+position: sticky;
+top: 55px;
+padding: 10px;
+display: flex;
+justify-content: center;
+gap: 10px;
+}
+
 #hki-page .input-field,
 #hki-page .input-file {
   width: 90%;

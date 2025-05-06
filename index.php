@@ -21,8 +21,12 @@ $images = $result->fetch_all(MYSQLI_ASSOC);
   <!-- Font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
+  <!-- Css -->
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/header&footer.css">
   <link rel="stylesheet" href="css/modal_announcement.css">
+
+  <!-- bootstrap -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </head>

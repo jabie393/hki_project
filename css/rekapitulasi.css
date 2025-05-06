@@ -1,4 +1,3 @@
-/* Style umum */
 body {
   margin: 0;
   padding: 0;
@@ -23,87 +22,34 @@ body {
   opacity: 0.5;
 }
 
-/* Header */
-.header {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 1000;
-  height: 60px;
-  background: #202f5b;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.header img {
-  height: 60px;
-  max-width: 100%;
-}
-
-/* Footer */
-.footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  z-index: 1000;
-  height: 50px;
-  background: #202f5b;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  flex-wrap: wrap; /* Agar tetap rapi di layar kecil */
-}
-
-.footer a {
-  color: white;
-  text-decoration: none;
-  font-size: 16px;
-  font-weight: bold;
-  padding: 8px 12px;
-}
-
-.footer a:hover {
-  color: #3b82f6;
-}
-
-/* Style untuk konten halaman */
+/* Style konten halaman */
 #hki-page {
   flex: 1;
-  margin-top: 70px; /* Beri jarak untuk header */
-  margin-bottom: 60px; /* Beri jarak untuk footer */
+  margin-top: 70px;
+  margin-bottom: 60px;
   padding: 20px;
   box-sizing: border-box;
 }
 
-/* Style untuk judul halaman */
-#hki-page h2 {
+/* Style container h2 dan form pencarian */
+.search-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  position: sticky;
+  top: 70px;
+  z-index: 10;
+  padding: 10px;
+}
+
+.search-header h2 {
   color: #ffffff;
   text-align: center;
   margin-bottom: 20px;
   font-size: 20px;
   font-weight: bold;
-}
-
-/* Form pencarian sticky di bawah header */
-.search-form {
-  position: sticky;
-  top: 60px; /* Tinggi header */
-  padding: 10px;
-  z-index: 999; /* Pastikan form berada di atas elemen lain */
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Tambahkan bayangan untuk efek visual */
-}
-
-.input-field {
-  width: 90%;
-  padding: 6px;
-  font-size: 13px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
 }
 
 .btn {
@@ -125,6 +71,51 @@ body {
 
 .btn-info:hover {
   background-color: #18b2ca;
+}
+
+/* Style untuk search group */
+.search-group {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow: hidden;
+  background-color: white;
+}
+
+.search-group .input-field {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  flex: 1;
+  border: none;
+  padding: 8px;
+  margin: 0;
+  font-size: 13px;
+  outline: none;
+}
+
+.search-group .btn {
+  border: none;
+  border-left: 1px solid #ccc;
+  background-color: #004080;
+  color: white;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.search-group .btn:hover {
+  background-color: #002a5e;
+}
+
+.search-form {
+  position: sticky;
+  top: 75px;
+  padding: 10px;
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
 }
 
 /* Style untuk tabel */
@@ -172,23 +163,23 @@ body {
 
 /* Badge style */
 .badge {
-    padding: 4px 8px;
-    border-radius: 12px;
-    color: white;
-    font-weight: bold;
-    font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 12px;
+  color: white;
+  font-weight: bold;
+  font-size: 12px;
 }
 
 .badge-terdaftar {
-    background-color: #28a745;
+  background-color: #28a745;
 }
 
 .badge-pending {
-    background-color: #ffc107;
+  background-color: #ffc107;
 }
 
 .badge-ditolak {
-    background-color: #dc3545;
+  background-color: #dc3545;
 }
 
 /* Style untuk pagination */
@@ -219,16 +210,7 @@ body {
   pointer-events: none;
 }
 
-/* Responsivitas untuk layar kecil */
 @media screen and (max-width: 768px) {
-  .header {
-    height: 50px;
-  }
-
-  .footer {
-    height: 40px;
-  }
-
   #hki-page {
     margin-top: 60px;
     margin-bottom: 50px;
@@ -239,29 +221,35 @@ body {
     margin-bottom: 10px;
   }
 
-  .search-form {
+  .search-header {
     flex-direction: column;
     align-items: center;
+    text-align: center;
+    gap: 10px;
+    top: 20px;
+  }
+
+  .search-header h2 {
+    text-align: center;
+    margin: 0;
+  }
+
+  .search-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .search-group {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
   }
 
   #hki-table th,
   #hki-table td {
     font-size: 10px;
     padding: 8px;
-  }
-
-  .footer {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    padding: 10px;
-  }
-
-  .footer a {
-    font-size: 12px;
-  }
-
-  .header img {
-    height: 45px;
   }
 }

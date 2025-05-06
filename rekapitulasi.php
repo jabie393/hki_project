@@ -53,7 +53,9 @@ $result = $conn->query($query);
     <!-- Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
+    <!-- Css -->
     <link rel="stylesheet" href="css/rekapitulasi.css">
+    <link rel="stylesheet" href="css/header&footer.css">
     <link rel="stylesheet" href="css/modal.css">
 </head>
 
@@ -66,14 +68,18 @@ $result = $conn->query($query);
     <div class="header"></div>
 
     <div id="hki-page">
-        <h2>Rekapitulasi Hak Cipta</h2>
+        <div class="search-header">
+            <h2>Rekapitulasi Hak Cipta</h2>
 
-        <!-- Form Pencarian -->
-        <form method="GET" class="search-form">
-            <input type="text" name="search" class="input-field" placeholder="Cari Data Hak Cipta"
-                value="<?php echo htmlspecialchars($search); ?>">
-            <button type="submit" class="btn btn-info">Cari</button>
-        </form>
+            <!-- Form Pencarian -->
+            <form method="GET" class="search-form">
+                <div class="search-group">
+                    <input type="text" name="search" class="input-field" placeholder="Cari Data Hak Cipta"
+                        value="<?php echo htmlspecialchars($search); ?>">
+                    <button type="submit" class="btn btn-info">Cari</button>
+                </div>
+            </form>
+        </div>
 
         <!-- Tabel -->
         <div class="table-wrapper">
@@ -174,24 +180,6 @@ $result = $conn->query($query);
     <div class="footer"></div>
     <script src="js/index.js"></script>
     <script src="js/hki.js"></script>
-    <script>
-        // Deteksi ukuran layar dan atur jumlah tombol pagination
-        document.addEventListener("DOMContentLoaded", function () {
-            const screenWidth = window.innerWidth;
-            let limit = 4; // Default untuk laptop
-
-            if (screenWidth <= 768) { // Jika layar kecil (HP)
-                limit = 7;
-            }
-
-            // Tambahkan parameter limit ke URL jika belum ada atau berbeda
-            const urlParams = new URLSearchParams(window.location.search);
-            if (!urlParams.has('limit') || urlParams.get('limit') != limit) {
-                urlParams.set('limit', limit);
-                window.location.search = urlParams.toString();
-            }
-        });
-    </script>
 </body>
 
 </html>

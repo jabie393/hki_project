@@ -25,3 +25,21 @@ function closeModal() {
     document.getElementById('announcementModal').style.display = 'none';
 }
 
+// Pagination (rekap_hki.php)
+// Deteksi ukuran layar dan atur jumlah tombol pagination
+document.addEventListener("DOMContentLoaded", function () {
+    const screenWidth = window.innerWidth;
+    let limit = 4; // Default untuk laptop
+
+    if (screenWidth <= 768) { // Jika layar kecil (HP)
+        limit = 7;
+    }
+
+    // Tambahkan parameter limit ke URL jika belum ada atau berbeda
+    const urlParams = new URLSearchParams(window.location.search);
+    if (!urlParams.has('limit') || urlParams.get('limit') != limit) {
+        urlParams.set('limit', limit);
+        window.location.search = urlParams.toString();
+    }
+});
+

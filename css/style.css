@@ -37,23 +37,6 @@ h1 {
   z-index: 1;
 }
 
-/* Header */
-.header {
-  background: #202f5b;
-  padding: 10px 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  position: fixed;
-  top: 0;
-}
-
-.header img {
-  height: 60px;
-  max-width: 100%;
-}
-
 /* Menu */
 .menu {
   margin-top: 80px; /* Memberi ruang dari header */
@@ -82,39 +65,7 @@ h1 {
   transform: scale(1.05);
 }
 
-/* Footer */
-.footer {
-  background: #202f5b;
-  padding: 15px;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  height: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  flex-wrap: wrap; /* Agar tetap rapi di layar kecil */
-}
-
-.footer a {
-  color: white;
-  text-decoration: none;
-  font-size: 16px;
-  font-weight: bold;
-  padding: 8px 12px;
-}
-
-.footer a:hover {
-  color: #3b82f6;
-}
-
-
 @media screen and (max-width: 768px) {
-  .header img {
-    height: 45px;
-  }
-
   .menu {
     width: 100%;
   }
@@ -122,16 +73,5 @@ h1 {
   .menu button {
     font-size: 18px;
     height: 45px;
-  }
-
-  .footer {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    padding: 10px;
-  }
-
-  .footer a {
-    font-size: 12px;
   }
 }

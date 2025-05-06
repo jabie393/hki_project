@@ -16,11 +16,17 @@ $images = $result->fetch_all(MYSQLI_ASSOC);
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
+
     <!-- Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Css -->
+    <link rel="stylesheet" href="css/sign.css">
+    <link rel="stylesheet" href="css/header&footer.css">
+
+    <!-- Tailwind & font-awesome -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-    <link rel="stylesheet" href="css/sign.css" />
 </head>
 
 <body>
@@ -36,7 +42,8 @@ $images = $result->fetch_all(MYSQLI_ASSOC);
         <form action="services/register.php" method="POST" autocomplete="off">
             <div class="form-group">
                 <label for="username">Username</label>
-                <input type="text" id="username" name="username" placeholder="Masukkan Username Anda" required autocomplete="off" 
+                <input type="text" id="username" name="username" placeholder="Masukkan Username Anda" required
+                    autocomplete="off"
                     value="<?= isset($_SESSION['input_username']) ? $_SESSION['input_username'] : ''; ?>" />
             </div>
             <?php if (isset($_SESSION['error_username'])): ?>
@@ -48,7 +55,8 @@ $images = $result->fetch_all(MYSQLI_ASSOC);
 
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" id="email" name="email" placeholder="Masukkan Email Anda" required autocomplete="off" 
+                <input type="email" id="email" name="email" placeholder="Masukkan Email Anda" required
+                    autocomplete="off"
                     value="<?= isset($_SESSION['input_email']) ? $_SESSION['input_email'] : ''; ?>" />
             </div>
             <?php if (isset($_SESSION['error_email'])): ?>
@@ -60,7 +68,8 @@ $images = $result->fetch_all(MYSQLI_ASSOC);
 
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" id="password" name="password" placeholder="Masukkan password Anda" required autocomplete="new-password" />
+                <input type="password" id="password" name="password" placeholder="Masukkan password Anda" required
+                    autocomplete="new-password" />
             </div>
 
             <button type="submit" class="btn">Daftar</button>
