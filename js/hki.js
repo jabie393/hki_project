@@ -241,7 +241,7 @@ document.querySelectorAll('.edit-certificate-btn').forEach(button => {
         const input = document.querySelector(`#edit_certificate_${id}`);
 
         if (!input || input.files.length === 0) {
-            Swal.fire('Peringatan', 'Silakan pilih file sertifikat baru.', 'warning');
+            Swal.fire('Peringatan', 'Silahkan pilih file sertifikat baru.', 'warning');
             return;
         }
 

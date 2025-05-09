@@ -132,7 +132,7 @@ function initEditProfilePage() {
                 const reader = new FileReader();
                 reader.onload = function (e) {
                     modalPreviewImage.src = e.target.result;
-                    modal.style.display = 'block';
+                    modal.style.display = 'flex'; // Ubah dari 'block' ke 'flex'
 
                     if (cropper) cropper.destroy();
                     cropper = new Cropper(modalPreviewImage, {

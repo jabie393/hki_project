@@ -116,6 +116,10 @@ nav .bx-menu {
   z-index: 1100;
   display: none;
   transition: opacity 0.3s ease, transform 0.3s ease;
+  outline: none;
+  -webkit-tap-highlight-color: transparent; /* Menghilangkan highlight pada elemen saat di-tap di Chrome */
+  -moz-tap-highlight-color: none;    /* Firefox */
+  -ms-tap-highlight-color: none;     /* Internet Explorer/Edge */
 }
 
 #sidebar-toggle.hidden {
@@ -159,6 +163,10 @@ nav .bx-menu {
   border-radius: 25px;
   position: relative;
   cursor: pointer;
+  outline: none;
+  -webkit-tap-highlight-color: transparent; /* Menghilangkan highlight pada elemen saat di-tap di Chrome */
+  -moz-tap-highlight-color: none;    /* Firefox */
+  -ms-tap-highlight-color: none;     /* Internet Explorer/Edge */
 }
 
 .switch-mode::before {
@@ -183,6 +191,13 @@ nav .bx-menu {
 }
 
 /* Profile */
+nav a.profile {
+  outline: none;
+  -webkit-tap-highlight-color: transparent; /* Menghilangkan highlight pada elemen saat di-tap di Chrome */
+  -moz-tap-highlight-color: none;    /* Firefox */
+  -ms-tap-highlight-color: none;     /* Internet Explorer/Edge */
+}
+
 nav .profile img {
   width: 35px;
   height: 35px;
@@ -223,6 +238,11 @@ nav .profile img {
 #content-main {
   padding: 80px 20px 20px 30px; /* avoid navbar */
   flex-grow: 1;
+}
+
+body.dark-mode #content-main {
+  background-color: #121212; /* Warna gelap untuk sidebar */
+  color: #ffffff; /* Warna teks sidebar */
 }
 
 /* ========== RESPONSIVE ========== */

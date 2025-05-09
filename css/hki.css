@@ -17,7 +17,7 @@
 /* Styling Sweet Alert */
 /* Ganti font jadi Inter */
 .swal2-popup {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   border-radius: 16px;
   padding: 1.5rem;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
@@ -102,6 +102,10 @@
   color: #004080;
   text-decoration: none;
   font-weight: bold;
+  outline: none;
+  -webkit-tap-highlight-color: transparent; /* Menghilangkan highlight pada elemen saat di-tap di Chrome */
+  -moz-tap-highlight-color: none;    /* Firefox */
+  -ms-tap-highlight-color: none;     /* Internet Explorer/Edge */
 }
 
 /* Style untuk search group */
@@ -138,12 +142,12 @@
 }
 
 #hki-page .search-form {
-position: sticky;
-top: 55px;
-padding: 10px;
-display: flex;
-justify-content: center;
-gap: 10px;
+  position: sticky;
+  top: 55px;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
 }
 
 #hki-page .input-field,
@@ -165,6 +169,10 @@ gap: 10px;
   display: inline-block;
   text-decoration: none;
   text-align: center;
+  outline: none;
+  -webkit-tap-highlight-color: transparent; /* Menghilangkan highlight pada elemen saat di-tap di Chrome */
+  -moz-tap-highlight-color: none;    /* Firefox */
+  -ms-tap-highlight-color: none;     /* Internet Explorer/Edge */
 }
 
 #hki-page .btn-info {
@@ -323,4 +331,131 @@ gap: 10px;
   background-color: #003365;
   color: white;
   pointer-events: none;
+}
+
+body.dark-mode #hki-page {
+  background: #121212; /* Warna latar belakang gelap */
+  color: #ffffff; /* Warna teks */
+}
+
+body.dark-mode #hki-page h2 {
+  color: #ffffff; /* Warna teks judul */
+}
+
+/* Sweet Alert */
+body.dark-mode .swal2-popup {
+  background-color: #1e1e1e;
+  color: #ffffff;
+}
+
+body.dark-mode .swal2-title {
+  color: #ffffff;
+}
+
+body.dark-mode .swal2-html-container {
+  color: #cccccc; /
+}
+
+body.dark-mode .swal2-confirm {
+  background-color: #333333 !important;
+  color: #ffffff !important;
+}
+
+body.dark-mode .swal2-confirm:hover {
+  background-color: #444444 !important;
+}
+
+body.dark-mode .swal2-cancel {
+  background-color: #444444 !important;
+  color: #ffffff !important;
+}
+
+body.dark-mode .swal2-timer-progress-bar {
+  background: #007bff;
+}
+
+/* Tabel */
+body.dark-mode #hki-page .table-wrapper {
+  background: #1e1e1e; /* Warna latar belakang tabel */
+  box-shadow: none; /* Hilangkan bayangan */
+}
+
+body.dark-mode #hki-page #hki-table th {
+  border-color: transparent;
+  background-color: #333333; /* Warna header tabel */
+  color: #ffffff; /* Warna teks header tabel */
+}
+
+body.dark-mode #hki-page #hki-table td {
+  border-color: transparent;
+  background-color: #1e1e1e; /* Warna latar belakang sel */
+  color: #ffffff; /* Warna teks sel */
+}
+
+body.dark-mode #hki-page .profile-link {
+  color: #00C6FF;
+}
+
+/* Tombol */
+body.dark-mode #hki-page .btn {
+  background-color: #333333;
+  color: #ffffff;
+  border-color: transparent;
+}
+
+body.dark-mode #hki-page .btn:hover {
+  background-color: #444444;
+}
+
+body.dark-mode #hki-page .input-field, #hki-page .input-file {
+  background-color: #333333;
+  color: white;
+}
+
+body.dark-mode #hki-page .file-label {
+  color: white;
+}
+
+body.dark-mode #hki-page .input-wrapper {
+  min-width: 250px;
+  padding: 8px;
+  background-color: #121212;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+/* Search Group */
+body.dark-mode #hki-page .search-group {
+  background-color: #1e1e1e; /* Warna latar belakang search group */
+  border: 1px solid #ccc;
+}
+
+body.dark-mode #hki-page .search-group .input-field {
+  background-color: #333333; /* Warna latar belakang input */
+  color: #ffffff; /* Warna teks input */
+}
+
+body.dark-mode #hki-page .search-group .btn {
+  background-color: #444444; /* Warna tombol search */
+  color: #ffffff; /* Warna teks tombol */
+}
+
+body.dark-mode #hki-page .search-group .btn:hover {
+  background-color: #555555; /* Warna tombol search saat hover */
+}
+
+/* Pagination */
+body.dark-mode #hki-page .pagination .page-link {
+  background-color: #333333; /* Warna latar belakang pagination */
+  color: #ffffff; /* Warna teks pagination */
+  border-color: #444444; /* Warna border pagination */
+}
+
+body.dark-mode #hki-page .pagination .page-link:hover {
+  background-color: #444444;
+}
+
+body.dark-mode #hki-page .pagination .page-link.active {
+  background-color: #555555; /* Warna latar belakang pagination aktif */
+  color: #ffffff; /* Warna teks pagination aktif */
 }

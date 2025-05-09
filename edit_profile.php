@@ -33,6 +33,7 @@ $profile_picture = getProfilePicture($user_id);
 
     <!-- Cropper -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+
     <!-- CSS -->
     <link rel="stylesheet" href="css/edit_profile.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" />

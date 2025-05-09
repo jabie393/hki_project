@@ -321,6 +321,153 @@ select:not(.select2-hidden-accessible) {
   background: #4f46e5;
 }
 
+/* Dark mode styles */
+body.dark-mode #edit_profile-page {
+  background: #121212;
+  color: #ffffff;
+}
+
+body.dark-mode #edit_profile-page h2 {
+  color: #ffffff;
+}
+
+/* Input, select2 & Native Select */
+body.dark-mode #edit_profile-page input[type="text"],
+body.dark-mode #edit_profile-page input[type="date"],
+body.dark-mode #edit_profile-page input[type="file"],
+body.dark-mode #edit_profile-page select:not(.select2-hidden-accessible) {
+  background-color: #333333;
+  color: #ffffff;
+  border: 1px solid #444444;
+}
+
+body.dark-mode #edit_profile-page input:focus,
+body.dark-mode #edit_profile-page select:focus {
+  outline: none;
+  border-color: #ffffff;
+  box-shadow: 0 0 4px #ffffffa2;
+}
+
+/* Warna ikon kalender untuk input date */
+body.dark-mode #edit_profile-page input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1); /* Membalik warna menjadi putih */
+}
+
+body.dark-mode .select2-search--dropdown {
+background-color: #333333;
+}
+
+body.dark-mode .select2-container--open .select2-dropdown {
+  border: none!important;
+}
+
+body.dark-mode .select2-container--default .select2-search--dropdown .select2-search__field {
+  background-color: #333333;
+  color: white;
+}
+
+body.dark-mode .select2-container--default .select2-search--dropdown .select2-search__field:focus {
+  border-color: #ffffff!important;
+  box-shadow: 0 0 4px #ffffffa2!important;
+}
+
+body.dark-mode .select2-search__field:focus {
+  border-color: #ffffff;
+  box-shadow: 0 0 4px #ffffff66;
+}
+
+body.dark-mode .select2-results__option[aria-selected] {
+  background-color: #333333;
+}
+
+body.dark-mode .select2-container--default .select2-selection--single {
+  border: 1px solid #444444!important;
+  background-color: #333333!important;
+}
+
+body.dark-mode .select2-results__option {
+  background-color: #333333;
+}
+
+/* Label */
+body.dark-mode #edit_profile-page label {
+  color: #ffffff;
+}
+
+/* Upload Box */
+body.dark-mode #edit_profile-page .upload-box {
+  background-color: #1e1e1e;
+  border-color: #444444;
+  color: #ffffff;
+}
+
+body.dark-mode #edit_profile-page .upload-box:hover {
+  background-color: #333333;
+  border-color: #555555;
+}
+
+/* Button */
+body.dark-mode #edit_profile-page button {
+  background-color: #333333;
+  color: #ffffff;
+}
+
+body.dark-mode #edit_profile-page button:hover {
+  background-color: #444444;
+}
+
+/* Modal Cropper */
+body.dark-mode #edit_profile-page .modal-cropper {
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+body.dark-mode #edit_profile-page .modal-content-cropper {
+  background-color: #1e1e1e;
+  color: #ffffff;
+}
+
+/* Image Preview */
+body.dark-mode #edit_profile-page #previewImage {
+  border: 1px solid #444444;
+}
+
+body.dark-mode #edit_profile-page img[src*="profile.jpg"],
+body.dark-mode #edit_profile-page img[src*="default-avatar.png"] {
+  border: 2px solid #00C6FF;
+}
+
+/* Sweet Alert */
+body.dark-mode .swal2-popup {
+  background-color: #1e1e1e;
+  color: #ffffff;
+}
+
+body.dark-mode .swal2-title {
+  color: #ffffff;
+}
+
+body.dark-mode .swal2-html-container {
+  color: #cccccc; /
+}
+
+body.dark-mode .swal2-confirm {
+  background-color: #333333 !important;
+  color: #ffffff !important;
+}
+
+body.dark-mode .swal2-confirm:hover {
+  background-color: #444444 !important;
+}
+
+body.dark-mode .swal2-cancel {
+  background-color: #444444 !important;
+  color: #ffffff !important;
+}
+
+body.dark-mode .swal2-timer-progress-bar {
+  background: #007bff;
+}
+
 /* Responsive Stack on Mobile */
 @media (max-width: 768px) {
   #edit_profile-page form {

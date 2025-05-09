@@ -29,6 +29,7 @@ $role = $_SESSION['role'] ?? 'user';
   <!-- Css -->
   <link rel="stylesheet" href="css/side&navbar.css" />
   <link rel="stylesheet" href="css/modal.css">
+  <link rel="stylesheet" href="css/globaldarkmode.css" />
   <title>Dashboard</title>
 </head>
 
@@ -67,5 +68,6 @@ $role = $_SESSION['role'] ?? 'user';
   </div>
 </body>
 <script src="js/dashboard.js"></script>
+<script src="js/darkmode.js"></script>
 
 </html>
