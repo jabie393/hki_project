@@ -36,6 +36,7 @@ $profile_picture = getProfilePicture($user_id);
 
     <!-- CSS -->
     <link rel="stylesheet" href="css/edit_profile.css" />
+    <link rel="stylesheet" href="css/modal.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" />
 
 </head>
@@ -123,7 +124,7 @@ $profile_picture = getProfilePicture($user_id);
         </div>
 
         <input type="hidden" name="cropped_image" id="croppedImageInput">
-        <button type="submit">Simpan Profil</button>
+        <button class="btn" type="submit">Simpan Profil</button>
 
         <div>
             <label>Foto Saat Ini:</label><br>
@@ -133,13 +134,18 @@ $profile_picture = getProfilePicture($user_id);
     </form>
 
     <!-- Modal Cropper -->
-    <div id="cropperModal" class="modal-cropper">
-        <div class="modal-content-cropper">
-            <span class="close-cropper" id="closeCropperModal">&times;</span>
-            <h3>Crop Foto Profil</h3>
-            <div><img id="modalPreviewImage" /></div>
-            <br>
-            <button id="confirmCropButton">Gunakan Foto Ini</button>
+    <div id="modal-page">
+        <div id="cropperModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Crop Foto Profil</h2>
+                    <button class="close" id="closeCropperModal">&times;</button>
+                </div>
+                <div class="modal-cropper-content"><img id="modalPreviewImage" /></div>
+                <div class="modal-footer">
+                    <button class="btn" id="confirmCropButton">Gunakan Foto Ini</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>

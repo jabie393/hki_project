@@ -16,6 +16,7 @@ $images = $result->fetch_all(MYSQLI_ASSOC);
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link rel="shortcut icon" href="assets/icon/fcompany.png" type="image/x-icon">
 
     <!-- Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">

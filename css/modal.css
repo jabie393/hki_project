@@ -20,7 +20,7 @@
 
 /* === Modal Konten === */
 .modal-content {
-  background-color: #ffffff;
+  background-color: white;
   padding: 30px 40px;
   border-radius: 15px;
   width: 90%;
@@ -45,6 +45,17 @@
   border-bottom: 1px solid #e5e5e5;
 }
 
+/* === Footer Modal === */
+.modal-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 15px;
+  flex-shrink: 0;
+  z-index: 1;
+  border-top: 1px solid #e5e5e5;
+}
+
 /* Tombol Close */
 .modal-content .close {
   font-size: 26px;
@@ -58,6 +69,14 @@
 
 .modal-content .close:hover {
   color: #e74c3c;
+}
+
+/* === khusus modal cropper === */
+.modal-cropper-content {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  overflow-y: auto;
+  flex: 1; /* Isi bisa scroll tapi footer tetap stay */
 }
 
 /* === Profile Layout === */
@@ -215,6 +234,103 @@
   background-color: #002a5e;
 }
 /* === Modal Form === */
+
+
+/* === Dark Mode === */
+body.dark-mode .modal {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+body.dark-mode .modal-content {
+  background-color: #1e1e1e;
+  color: #ffffff;
+  border-top: 6px solid #00C6FF;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+}
+
+body.dark-mode .modal-header {
+  border-bottom: 1px solid #444444;
+}
+
+body.dark-mode .modal-footer {
+  border-top: 1px solid #444444;
+}
+
+body.dark-mode .modal-content .close {
+  color: #cccccc; /
+}
+
+body.dark-mode .modal-content .close:hover {
+  color: #ff6b6b;
+}
+
+/* Profile Layout */
+body.dark-mode .modal-content .profile-img {
+  border: 4px solid #00C6FF;
+}
+
+body.dark-mode .modal-content h2,
+body.dark-mode .modal-content .text-center {
+  color: #ffffff;
+}
+
+body.dark-mode .modal-content .profile-label {
+  color: #cccccc;
+}
+
+body.dark-mode .modal-content .profile-value {
+  color: #ffffff;
+}
+
+/* Modal Table */
+body.dark-mode #modal-page table {
+  border-color: #444444;
+  border: transparent;
+}
+
+body.dark-mode #modal-page th {
+  background-color: #333333;
+  color: #ffffff;
+  border:transparent
+}
+
+body.dark-mode #modal-page td {
+  background-color: #1e1e1e;
+  color: #ffffff;
+  border: transparent;
+}
+
+/* Modal Form */
+body.dark-mode #modal-page input[type="text"],
+body.dark-mode #modal-page input[type="date"],
+body.dark-mode #modal-page input[type="file"],
+body.dark-mode #modal-page select,
+body.dark-mode #modal-page textarea {
+  background-color: #333333;
+  color: #ffffff;
+  border: 1px solid #444444;
+}
+
+body.dark-mode #modal-page input:focus,
+body.dark-mode #modal-page select:focus,
+body.dark-mode #modal-page textarea:focus {
+border-color: #ffffff;
+box-shadow: 0 0 4px #ffffffa2;
+}
+
+body.dark-mode #modal-page label {
+  color: #ffffff;
+}
+
+/* Modal Buttons */
+body.dark-mode #modal-page .btn {
+  background-color: #333333;
+  color: #ffffff;
+}
+
+body.dark-mode #modal-page .btn:hover {
+  background-color: #444444;
+}
 
 /* === Responsif === */
 @media (max-width: 768px) {
