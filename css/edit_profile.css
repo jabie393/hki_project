@@ -145,6 +145,11 @@ select:not(.select2-hidden-accessible) {
   box-shadow: 0 0 4px #007bff66 !important;
 }
 
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+  background-color: #004080;
+  color: white;
+}
+
 /* Image Preview */
 #previewImage {
   max-width: 100%;
@@ -286,7 +291,7 @@ select:not(.select2-hidden-accessible) {
   background: #4f46e5;
 }
 
-/* Dark mode styles */
+/*=== Dark mode styles ===*/
 body.dark-mode #edit_profile-page {
   background: #121212;
   color: #ffffff;
@@ -352,6 +357,10 @@ body.dark-mode .select2-container--default .select2-selection--single {
 
 body.dark-mode .select2-results__option {
   background-color: #333333;
+}
+
+body.dark-mode .select2-container--default .select2-results__option--highlighted[aria-selected] {
+  background-color: #1E1E1E;
 }
 
 /* Label */
@@ -422,6 +431,7 @@ body.dark-mode .swal2-cancel {
 body.dark-mode .swal2-timer-progress-bar {
   background: #007bff;
 }
+/*=== Dark mode styles ===*/
 
 /* Responsive Stack on Mobile */
 @media (max-width: 768px) {

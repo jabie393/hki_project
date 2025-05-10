@@ -42,10 +42,10 @@ if (!$result) {
 
             <div class="custom-file-upload">
                 <input type="file" name="file" id="fileInput" required>
-                <div class="upload-box">
+                <label for="fileInput" class="upload-box">
                     <span class="upload-icon">📁</span>
                     <span id="upload-text">Klik untuk memilih file</span>
-                </div>
+                </label>
             </div>
             <span id="file-name">Belum ada file dipilih</span>
             <button type="submit">Upload</button>
@@ -55,15 +55,6 @@ if (!$result) {
         <ul id="document-list">
             <?php include 'services/get_templates.php'; ?>
         </ul>
-
-        <div class="nav-links">
-            <a href="profile.php">Profil</a> |
-            <a href="admin.php">Dashboard</a> |
-            <a href="rekap_hki.php">Rekap HKI</a> |
-            <a href="announcement.php">Pengumuman</a> |
-            <a href="reset_password.php">Reset Password</a> |
-            <a href="services/logout.php">Logout</a>
-        </div>
     </main>
     <script src="js/template.js"></script>
 </div>

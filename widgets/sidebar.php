@@ -15,7 +15,7 @@ $page = substr($_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"], "/") + 
 </div>
 <div id="sidebar-overlay" onclick="closeSidebar()"></div>
 <section id="sidebar">
-    <a href="#" class="brand">
+    <a href="" class="brand">
         <i class='bx bxs-smile'></i>
         <?php if ($role === 'admin'): ?>
             <span class="text">AdminHub</span>

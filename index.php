@@ -23,7 +23,7 @@ $images = $result->fetch_all(MYSQLI_ASSOC);
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
   <!-- Css -->
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/index.css">
   <link rel="stylesheet" href="css/header&footer.css">
   <link rel="stylesheet" href="css/modal_announcement.css">
 

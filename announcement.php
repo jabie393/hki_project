@@ -26,10 +26,10 @@ $result = $conn->query("SELECT * FROM announcement");
         <form id="announcementForm" enctype="multipart/form-data">
             <div class="custom-file-upload">
                 <input type="file" name="image" id="fileInput" required>
-                <div class="upload-box">
+                <label for="fileInput" class="upload-box">
                     <span class="upload-icon">📃</span>
                     <span id="upload-text">Klik untuk memilih file pengumuman</span>
-                </div>
+                </label>
             </div>
             <span id="file-name">Belum ada file dipilih</span>
             <button type="submit">Upload</button>
@@ -46,15 +46,6 @@ $result = $conn->query("SELECT * FROM announcement");
                 </li>
             <?php endwhile; ?>
         </ul>
-
-        <div class="nav">
-            <a href="#" onclick="loadContent('profile.php')">Profil</a> |
-            <a href="#" onclick="loadContent('rekap_hki.php')">Rekap HKI</a> |
-            <a href="#" onclick="loadContent('admin.php')">Dashboard</a> |
-            <a href="#" onclick="loadContent('template.php')">Template Dokumen</a> |
-            <a href="#" onclick="loadContent('reset_password.php')">Reset Password User</a> |
-            <a href="services/logout.php">Logout</a>
-        </div>
     </main>
 
     <script src="js/announcement.js"></script>

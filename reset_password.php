@@ -70,15 +70,6 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
         <div id="detailButtonWrapper" style="display: none; margin-top: 15px;">
             <button type="button" class="button" id="showUserDetailBtn">Detail User</button>
         </div>
-
-        <div class="nav-links">
-            <a href="#" onclick="loadContent('profile.php')">Profil</a> |
-            <a href="#" onclick="loadContent('admin.php')">Dashboard</a> |
-            <a href="#" onclick="loadContent('rekap_hki.php')">Rekap HKI</a> |
-            <a href="#" onclick="loadContent('announcement.php')">Pengumuman</a> |
-            <a href="#" onclick="loadContent('template.php')">Template Dokumen</a> |
-            <a href="services/logout.php">Logout</a>
-        </div>
     </div>
 
     <script src="js/reset_password.js"></script>

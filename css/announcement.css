@@ -112,6 +112,26 @@
   cursor: pointer;
 }
 
+#announcement-page .custom-file-upload .upload-box {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #a5b4fc;
+  background-color: #eef2ff;
+  color: #4f46e5;
+  padding: 30px 20px;
+  border-radius: 12px;
+  text-align: center;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+#announcement-page .custom-file-upload .upload-box:hover {
+  background-color: #e0e7ff;
+  border-color: #6366f1;
+}
+
 #announcement-page .upload-box {
   display: flex;
   flex-direction: column;
@@ -222,17 +242,106 @@
   text-decoration: underline;
 }
 
-#announcement-page .nav {
-  text-align: center;
-  margin-top: 40px;
-  font-size: 15px;
+/*=== Dark mode styles ===*/
+body.dark-mode #announcement-page {
+  background: #121212;
+  color: #ffffff;
 }
 
-#announcement-page .nav a {
-  color: #374151;
-  margin-right: 10px;
+body.dark-mode #announcement-page h2,
+body.dark-mode #announcement-page h3 {
+  color: #ffffff;
 }
 
-#announcement-page .nav a:hover {
-  color: #1d4ed8;
+body.dark-mode #announcement-page span {
+  color: #ffffff;
 }
+
+/* Form input and upload box */
+body.dark-mode #announcement-page input[type="file"] {
+  background-color: #333333;
+  color: #ffffff;
+  border: 1px solid #444444;
+}
+
+body.dark-mode #announcement-page input[type="file"]:focus {
+  border-color: #ffffff;
+  box-shadow: 0 0 4px #ffffff66;
+}
+
+body.dark-mode #announcement-page .upload-box {
+  background-color: #1e1e1e;
+  border-color: #444444;
+  color: #ffffff;
+}
+
+body.dark-mode #announcement-page .upload-box:hover {
+  background-color: #333333;
+  border-color: #555555;
+}
+
+/* Buttons */
+body.dark-mode #announcement-page button {
+  background-color: #333333;
+  color: #ffffff;
+}
+
+body.dark-mode #announcement-page button:hover {
+  background-color: #444444;
+}
+
+body.dark-mode #announcement-page .delete-btn {
+  background-color: #b91c1c;
+  color: #ffffff;
+}
+
+body.dark-mode #announcement-page .delete-btn:hover {
+  background-color: #7f1d1d;
+}
+
+/* List items */
+body.dark-mode #announcement-page ul {
+  background-color: transparent;
+}
+
+body.dark-mode #announcement-page li {
+  background-color: #1e1e1e;
+}
+
+body.dark-mode #announcement-page li:hover {
+  transform: translateY(-4px);
+  background-color: #333333;
+}
+
+/* Sweet Alert */
+body.dark-mode .swal2-popup {
+  background-color: #1e1e1e;
+  color: #ffffff;
+}
+
+body.dark-mode .swal2-title {
+  color: #ffffff;
+}
+
+body.dark-mode .swal2-html-container {
+  color: #cccccc; /
+}
+
+body.dark-mode .swal2-confirm {
+  background-color: #333333 !important;
+  color: #ffffff !important;
+}
+
+body.dark-mode .swal2-confirm:hover {
+  background-color: #444444 !important;
+}
+
+body.dark-mode .swal2-cancel {
+  background-color: #444444 !important;
+  color: #ffffff !important;
+}
+
+body.dark-mode .swal2-timer-progress-bar {
+  background: #007bff;
+}
+/*=== Dark mode styles ===*/
