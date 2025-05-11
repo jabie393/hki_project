@@ -47,17 +47,17 @@ $profile_picture = getProfilePicture($user_id);
 
         <div>
             <label for="nama_lengkap">Nama Lengkap:</label>
-            <input type="text" name="nama_lengkap" id="nama_lengkap" value="<?= $profile['nama_lengkap'] ?? '' ?>">
+            <input type="text" spellcheck="false" name="nama_lengkap" id="nama_lengkap" value="<?= $profile['nama_lengkap'] ?? '' ?>">
         </div>
 
         <div>
             <label for="no_ktp">Nomor KTP:</label>
-            <input type="text" name="no_ktp" id="no_ktp" value="<?= $profile['no_ktp'] ?? '' ?>">
+            <input type="number" spellcheck="false" name="no_ktp" id="no_ktp" value="<?= $profile['no_ktp'] ?? '' ?>">
         </div>
 
         <div>
             <label for="telephone">No. Telepon:</label>
-            <input type="text" name="telephone" id="telephone" value="<?= $profile['telephone'] ?? '' ?>">
+            <input type="tel" spellcheck="false" name="telephone" id="telephone" value="<?= $profile['telephone'] ?? '' ?>">
         </div>
 
         <div>

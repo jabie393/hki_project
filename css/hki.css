@@ -104,8 +104,8 @@
   font-weight: bold;
   outline: none;
   -webkit-tap-highlight-color: transparent; /* Menghilangkan highlight pada elemen saat di-tap di Chrome */
-  -moz-tap-highlight-color: none;    /* Firefox */
-  -ms-tap-highlight-color: none;     /* Internet Explorer/Edge */
+  -moz-tap-highlight-color: none; /* Firefox */
+  -ms-tap-highlight-color: none; /* Internet Explorer/Edge */
 }
 
 /* Style untuk search group */
@@ -155,8 +155,35 @@
   width: 90%;
   padding: 6px;
   font-size: 13px;
+  border: 1px solid #ced4da;
+  background-color: white;
+  border-radius: 5px;
+}
+
+#hki-page .input-field:focus,
+#hki-page .input-file:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 4px #007bff66;
+}
+
+#hki-page .input-field-search {
   border: 1px solid #ccc;
   border-radius: 5px;
+  flex: 1;
+  border: none;
+  padding: 8px;
+  margin: 0;
+  font-size: 13px;
+  outline: none;
+}
+
+#hki-page .input-field:-webkit-autofill,
+#hki-page .input-field-search:-webkit-autofill {
+  background-color: white;
+  color: black;
+  -webkit-text-fill-color: black;
+  transition: background-color 5000s ease-in-out 0s;
 }
 
 #hki-page .btn {
@@ -171,8 +198,8 @@
   text-align: center;
   outline: none;
   -webkit-tap-highlight-color: transparent; /* Menghilangkan highlight pada elemen saat di-tap di Chrome */
-  -moz-tap-highlight-color: none;    /* Firefox */
-  -ms-tap-highlight-color: none;     /* Internet Explorer/Edge */
+  -moz-tap-highlight-color: none; /* Firefox */
+  -ms-tap-highlight-color: none; /* Internet Explorer/Edge */
 }
 
 #hki-page .btn-info {
@@ -353,7 +380,7 @@ body.dark-mode .swal2-title {
 }
 
 body.dark-mode .swal2-html-container {
-  color: #cccccc; /
+  color: #cccccc;
 }
 
 body.dark-mode .swal2-confirm {
@@ -393,7 +420,7 @@ body.dark-mode #hki-page #hki-table td {
 }
 
 body.dark-mode #hki-page .profile-link {
-  color: #00C6FF;
+  color: #00c6ff;
 }
 
 /* Tombol */
@@ -407,9 +434,20 @@ body.dark-mode #hki-page .btn:hover {
   background-color: #444444;
 }
 
-body.dark-mode #hki-page .input-field, #hki-page .input-file {
+body.dark-mode #hki-page .input-field-search,
+body.dark-mode #hki-page .input-field,
+body.dark-mode #hki-page .input-file {
   background-color: #333333;
   color: white;
+}
+
+body.dark-mode #hki-page .input-field:-webkit-autofill,
+body.dark-mode #hki-page .input-field-search:-webkit-autofill {
+  background-color: #333333 !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 0px 1000px #333333 inset !important;
+  -webkit-text-fill-color: #ffffff !important;
+  transition: background-color 5000s ease-in-out 0s;
 }
 
 body.dark-mode #hki-page .file-label {

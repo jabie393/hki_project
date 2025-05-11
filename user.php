@@ -83,7 +83,7 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
         <!--Judul Hak Cipta-->
         <div class="form-group">
             <label>Judul</label>
-            <input type="text" name="judul" placeholder="Judul Hak Cipta" required />
+            <input type="text" spellcheck="false" name="judul" placeholder="Judul Hak Cipta" required />
         </div>
         <!--Deskripsi-->
         <div class="form-group">
@@ -100,7 +100,7 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
         <!--Kota Pertama Kali Diumumkan-->
         <div class="form-group">
             <label>Kota/Kabupaten Pertama Kali Diumumkan:</label>
-            <input type="text" name="kota_pengumuman" placeholder="Nama Kota/Kabupaten" required>
+            <input type="text" spellcheck="false" name="kota_pengumuman" placeholder="Nama Kota/Kabupaten" required>
         </div>
         <div class="form-group">
             <input type="file" name="dokumen" required />

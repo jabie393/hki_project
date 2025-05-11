@@ -67,7 +67,7 @@ $result = $conn->query($query);
     <!-- Form Pencarian -->
     <form method="GET" id="search-form" class="search-form">
         <div class="search-group">
-            <input type="text" name="search" class="input-field" placeholder="Cari Data Hak Cipta"
+            <input type="text" spellcheck="false" name="search" class="input-field-search" placeholder="Cari Data Hak Cipta"
                 value="<?php echo htmlspecialchars($search); ?>">
             <button type="submit" class="btn btn-info">Cari</button>
         </div>
@@ -104,7 +104,7 @@ $result = $conn->query($query);
                             </a>
                         </td>
                         <td>
-                            <input type="text" id="nomor_permohonan_<?= $row['id'] ?>"
+                            <input type="text" spellcheck="false" id="nomor_permohonan_<?= $row['id'] ?>"
                                 value="<?= htmlspecialchars($row['nomor_permohonan'] ?? '') ?>" class="input-field">
                             <button class="btn btn-warning edit-nomor-permohonan-btn" data-id="<?= $row['id'] ?>">Edit &
                                 Simpan</button>
@@ -155,7 +155,7 @@ $result = $conn->query($query);
                             </div>
                         </td>
                         <td>
-                            <input type="text" id="nomor_sertifikat_<?= $row['id'] ?>"
+                            <input type="text" spellcheck="false" id="nomor_sertifikat_<?= $row['id'] ?>"
                                 value="<?= htmlspecialchars($row['nomor_sertifikat'] ?? '') ?>" class="input-field">
                             <button class="btn btn-warning edit-nomor-sertifikat-btn" data-id="<?= $row['id'] ?>">Edit &
                                 Simpan</button>

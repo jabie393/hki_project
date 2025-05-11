@@ -1,6 +1,6 @@
 #update_account-page {
   margin: 40px auto;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: "Segoe UI", sans-serif;
 }
 
 #update_account-page h2 {
@@ -25,7 +25,7 @@
 /* Alert Style */
 /* Ganti font jadi Inter */
 .swal2-popup {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   border-radius: 16px;
   padding: 1.5rem;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
@@ -113,8 +113,92 @@
   background-color: #002a5e;
 }
 
+/*=== Dark mode styles ===*/
+body.dark-mode #update_account-page {
+  background: #121212;
+  color: #ffffff;
+}
+
+body.dark-mode #update_account-page h2 {
+  color: #ffffff;
+}
+
+body.dark-mode #update_account-page label {
+  color: #ffffff;
+}
+
+body.dark-mode #update_account-page input[type="text"],
+body.dark-mode #update_account-page input[type="email"],
+body.dark-mode #update_account-page input[type="password"] {
+  background-color: #333333;
+  color: #ffffff;
+  border: 1px solid #444444;
+}
+
+body.dark-mode #update_account-page input[type="text"]:focus,
+body.dark-mode #update_account-page input[type="email"]:focus,
+body.dark-mode #update_account-page input[type="password"]:focus {
+  outline: none;
+  border-color: #ffffff;
+  box-shadow: 0 0 4px #ffffffa2;
+}
+
+/* Autofill styles for dark mode */
+body.dark-mode #update_account-page input[type="text"]:-webkit-autofill,
+body.dark-mode #update_account-page input[type="email"]:-webkit-autofill,
+body.dark-mode #update_account-page input[type="password"]:-webkit-autofill {
+  background-color: #333333 !important;
+  color: #ffffff !important;
+  border: 1px solid #444444 !important;
+  box-shadow: 0 0 0px 1000px #333333 inset !important;
+  -webkit-text-fill-color: #ffffff !important; /* Pastikan teks tetap terang */
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+body.dark-mode #update_account-page button {
+  background-color: #333333;
+  color: #ffffff;
+}
+
+body.dark-mode #update_account-page button:hover {
+  background-color: #444444;
+}
+
+/* Sweet Alert */
+body.dark-mode .swal2-popup {
+  background-color: #1e1e1e;
+  color: #ffffff;
+}
+
+body.dark-mode .swal2-title {
+  color: #ffffff;
+}
+
+body.dark-mode .swal2-html-container {
+  color: #cccccc;
+}
+
+body.dark-mode .swal2-confirm {
+  background-color: #333333 !important;
+  color: #ffffff !important;
+}
+
+body.dark-mode .swal2-confirm:hover {
+  background-color: #444444 !important;
+}
+
+body.dark-mode .swal2-cancel {
+  background-color: #444444 !important;
+  color: #ffffff !important;
+}
+
+body.dark-mode .swal2-timer-progress-bar {
+  background: #007bff;
+}
+/*=== End of Dark mode styles ===*/
+
 @media (max-width: 600px) {
-#update_account-page  .container {
+  #update_account-page .container {
     margin: 20px;
     padding: 20px;
   }

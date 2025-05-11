@@ -191,6 +191,8 @@
 }
 
 #modal-page input[type="text"],
+#modal-page input[type="number"],
+#modal-page input[type="tel"],
 #modal-page input[type="date"],
 #modal-page input[type="file"],
 #modal-page select,
@@ -213,6 +215,14 @@
   box-shadow: 0 0 4px #007bff66;
 }
 
+/* Sembunyikan spinner pada input number */
+#modal-page input[type="number"]::-webkit-inner-spin-button,
+#modal-page input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+
 #modal-page textarea {
   resize: vertical;
   min-height: 100px;
@@ -233,8 +243,6 @@
 #modal-page .btn:hover {
   background-color: #002a5e;
 }
-/* === Modal Form === */
-
 
 /* === Dark Mode === */
 body.dark-mode .modal {
@@ -244,7 +252,7 @@ body.dark-mode .modal {
 body.dark-mode .modal-content {
   background-color: #1e1e1e;
   color: #ffffff;
-  border-top: 6px solid #00C6FF;
+  border-top: 6px solid #00c6ff;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
 }
 
@@ -257,7 +265,7 @@ body.dark-mode .modal-footer {
 }
 
 body.dark-mode .modal-content .close {
-  color: #cccccc; /
+  color: #cccccc;
 }
 
 body.dark-mode .modal-content .close:hover {
@@ -266,7 +274,7 @@ body.dark-mode .modal-content .close:hover {
 
 /* Profile Layout */
 body.dark-mode .modal-content .profile-img {
-  border: 4px solid #00C6FF;
+  border: 4px solid #00c6ff;
 }
 
 body.dark-mode .modal-content h2,
@@ -291,7 +299,7 @@ body.dark-mode #modal-page table {
 body.dark-mode #modal-page th {
   background-color: #333333;
   color: #ffffff;
-  border:transparent
+  border: transparent;
 }
 
 body.dark-mode #modal-page td {
@@ -302,6 +310,8 @@ body.dark-mode #modal-page td {
 
 /* Modal Form */
 body.dark-mode #modal-page input[type="text"],
+body.dark-mode #modal-page input[type="number"],
+body.dark-mode #modal-page input[type="tel"],
 body.dark-mode #modal-page input[type="date"],
 body.dark-mode #modal-page input[type="file"],
 body.dark-mode #modal-page select,
@@ -314,12 +324,28 @@ body.dark-mode #modal-page textarea {
 body.dark-mode #modal-page input:focus,
 body.dark-mode #modal-page select:focus,
 body.dark-mode #modal-page textarea:focus {
-border-color: #ffffff;
-box-shadow: 0 0 4px #ffffffa2;
+  border-color: #ffffff;
+  box-shadow: 0 0 4px #ffffffa2;
 }
 
 body.dark-mode #modal-page label {
   color: #ffffff;
+}
+
+/* Autofill styles for dark mode */
+body.dark-mode #modal-page input[type="text"]:-webkit-autofill,
+body.dark-mode #modal-page input[type="number"]:-webkit-autofill,
+body.dark-mode #modal-page input[type="date"]:-webkit-autofill,
+body.dark-mode #modal-page input[type="tel"]:-webkit-autofill,
+body.dark-mode #modal-page input[type="file"]:-webkit-autofill,
+body.dark-mode #modal-page select:-webkit-autofill,
+body.dark-mode #modal-page textarea:-webkit-autofill {
+  background-color: #333333 !important;
+  color: #ffffff !important;
+  border: 1px solid #444444 !important;
+  box-shadow: 0 0 0px 1000px #333333 inset !important;
+  -webkit-text-fill-color: #ffffff !important;
+  transition: background-color 5000s ease-in-out 0s;
 }
 
 /* Modal Buttons */

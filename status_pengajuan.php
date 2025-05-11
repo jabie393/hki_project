@@ -70,7 +70,7 @@ $result = $stmt->get_result();
     <!-- Form Pencarian -->
     <form method="GET" id="search-form" class="search-form">
         <div class="search-group">
-            <input type="text" name="search" class="input-field" placeholder="Cari Data Pengajuan"
+            <input type="text" name="search" class="input-field-search" placeholder="Cari Data Pengajuan"
                 value="<?php echo htmlspecialchars($search); ?>">
             <button type="submit" class="btn btn-info">Cari</button>
         </div>
