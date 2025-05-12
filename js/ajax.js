@@ -71,6 +71,14 @@ function afterContentLoaded(url) {
         if (typeof initUserPage === "function") initUserPage();
     }
 
+    if (cleanUrl.endsWith("user.php")) {
+        if (typeof initFormSubmission === "function") initFormSubmission();
+    }
+
+    if (cleanUrl.endsWith("user.php")) {
+        if (typeof initModalPencipta === "function") initModalPencipta();
+    }
+
     if (cleanUrl.endsWith("edit_profile.php")) {
         if (typeof initEditProfilePage === "function") initEditProfilePage();
     }

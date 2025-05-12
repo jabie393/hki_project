@@ -57,37 +57,24 @@ function initUserPage() {
         }
     });
 
+    // ================== JENIS & SUBJENIS ==================
+    function initJenisHakCipta() {
+        const jenisSelect = document.getElementById("jenis_hak_cipta");
+        const subJenisSelect = document.getElementById("sub_jenis_hak_cipta");
 
+        const options = { /* tetap sama seperti sebelumnya, tidak diubah */ };
 
-    // Fungsi untuk memperbarui label pencipta dan tombol hapus
-    function updatePenciptaLabels() {
-        let penciptaDivs = document.querySelectorAll(".pencipta");
-        penciptaDivs.forEach((div, index) => {
-            let label = div.querySelector(".pencipta-label");
-            if (!label) {
-                label = document.createElement("h4");
-                label.classList.add("pencipta-label");
-                div.insertBefore(label, div.firstChild);
-            }
-            label.textContent = "Pencipta " + (index + 1);
-        });
-
-        let deleteButtons = document.querySelectorAll(".hapusPencipta");
-        if (penciptaDivs.length > 1) {
-            deleteButtons.forEach(btn => btn.style.display = "inline-block");
-        } else {
-            deleteButtons.forEach(btn => btn.style.display = "none");
+        if (jenisSelect && subJenisSelect) {
+            jenisSelect.addEventListener("change", function () {
+                const jenis = this.value;
+                subJenisSelect.innerHTML = "";
+                if (options[jenis]) {
+                    subJenisSelect.innerHTML = '<option value="">-- Pilih Sub Jenis --</option>' +
+                        options[jenis].map(option => `<option value="${option}">${option}</option>`).join("");
+                }
+            });
         }
     }
-
-    // Hapus pencipta yang ada
-    document.addEventListener("click", function (event) {
-        if (event.target.classList.contains("hapusPencipta")) {
-            let penciptaDiv = event.target.closest(".pencipta");
-            penciptaDiv.remove();
-            updatePenciptaLabels();
-        }
-    });
 
     // ================== LOAD NEGARA ==================
     function loadCountriesForMainForm() {
@@ -123,12 +110,200 @@ function initUserPage() {
                 $('#nationality').on('select2:open', function () {
                     document.querySelector('.select2-search__field').focus();
                 });
-
-                if (selected) {
-                    select.val(selected).trigger('change');
-                }
             })
             .catch(error => console.error("Gagal memuat data negara untuk form utama:", error));
+    }
+
+    // Fungsi untuk menampilkan bendera di dropdown
+    function formatCountryOption(option) {
+        if (!option.id) {
+            return option.text;
+        }
+        const flagUrl = $(option.element).data("flag");
+        return $(
+            `<span><img src="${flagUrl}" alt="" style="width: 20px; height: 15px; margin-right: 10px;">${option.text}</span>`
+        );
+    }
+
+    // ================= INIT =================
+    document.addEventListener("DOMContentLoaded", function () {
+        initJenisHakCipta();
+        initFormSubmission();
+    });
+}
+
+// ================== FORM HKI SUBMISSION ==================
+function initFormSubmission() {
+    const form = document.querySelector("#form-hki");
+    if (!form) return;
+
+    form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const penciptaDivs = document.querySelectorAll("#pencipta-list .pencipta");
+
+        // Validasi: pastikan minimal 1 pencipta diisi
+        if (penciptaDivs.length === 0) {
+            Swal.fire({
+                icon: "warning",
+                title: "Perhatian",
+                text: "Minimal 1 pencipta harus ditambahkan sebelum mengirim form."
+            });
+            return;
+        }
+
+        const hiddenInputsContainer = document.getElementById("pencipta-hidden-inputs");
+        hiddenInputsContainer.innerHTML = "";
+
+        penciptaDivs.forEach(div => {
+            const data = JSON.parse(div.dataset.form);
+            for (const [key, value] of Object.entries(data)) {
+                const input = document.createElement("input");
+                input.type = "hidden";
+                input.name = key;
+                input.value = value;
+                hiddenInputsContainer.appendChild(input);
+            }
+        });
+
+        const formData = new FormData(form);
+
+        fetch("services/submit_hki.php", {
+            method: "POST",
+            body: formData
+        })
+            .then(response => response.text())
+            .then(result => {
+                Swal.fire({
+                    icon: result.includes("berhasil") ? "success" : "error",
+                    title: result.includes("berhasil") ? "Berhasil!" : "Gagal!",
+                    text: result,
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+
+                if (result.includes("berhasil")) {
+                    form.reset(); // Reset semua input dalam form
+                    document.getElementById("pencipta-list").innerHTML = ""; // Kosongkan daftar pencipta
+
+                    // Reset elemen Select2
+                    $('#jenis_hak_cipta').val(null).trigger('change');
+                    $('#sub_jenis_hak_cipta').val(null).trigger('change');
+                    $('#nationality').val(null).trigger('change');
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Terjadi kesalahan saat mengirim data."
+                });
+            });
+    });
+}
+
+// Fungsi untuk memperbarui label pencipta dan tombol hapus
+function updatePenciptaLabels() {
+    let penciptaDivs = document.querySelectorAll(".pencipta");
+    penciptaDivs.forEach((div, index) => {
+        let label = div.querySelector(".pencipta-label");
+        if (!label) {
+            label = document.createElement("h4");
+            label.classList.add("pencipta-label");
+            div.insertBefore(label, div.firstChild);
+        }
+        label.textContent = "Pencipta " + (index + 1);
+    });
+
+    let deleteButtons = document.querySelectorAll(".hapusPencipta");
+    if (penciptaDivs.length > 1) {
+        deleteButtons.forEach(btn => btn.style.display = "inline-block");
+    } else {
+        deleteButtons.forEach(btn => btn.style.display = "none");
+    }
+}
+
+// Hapus pencipta yang ada
+document.addEventListener("click", function (event) {
+    if (event.target.classList.contains("hapusPencipta")) {
+        let penciptaDiv = event.target.closest(".pencipta");
+        penciptaDiv.remove();
+        updatePenciptaLabels();
+    }
+});
+
+// ================== MODAL PENCIPTA ==================
+function initModalPencipta() {
+    const modal = document.getElementById("modalPencipta");
+    const modalForm = document.getElementById("modalFormPencipta");
+    const penciptaList = document.getElementById("pencipta-list");
+    let editingPencipta = null;
+
+    // Pastikan listener hanya ditambahkan sekali
+    if (!modalForm.dataset.listenerAdded) {
+        modalForm.dataset.listenerAdded = true;
+
+        modalForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const formData = new FormData(modalForm);
+            const penciptaDiv = document.createElement("div");
+            penciptaDiv.classList.add("pencipta");
+
+            const nama = formData.get("nama[]") || "Tanpa Nama";
+
+            penciptaDiv.innerHTML = `
+                <h4 class="pencipta-label">Pencipta</h4>
+                <strong>${nama}</strong><br>
+                <button type="button" class="editPencipta">Edit</button>
+                <button type="button" class="hapusPencipta">Hapus</button>
+            `;
+
+            penciptaDiv.dataset.form = JSON.stringify(Object.fromEntries(formData.entries()));
+
+            penciptaDiv.querySelector(".editPencipta").onclick = () => openModalForEdit(penciptaDiv);
+            penciptaDiv.querySelector(".hapusPencipta").onclick = () => {
+                penciptaDiv.remove();
+                updatePenciptaLabels();
+            };
+
+            if (editingPencipta) {
+                // Jika sedang mengedit, ganti elemen yang ada
+                editingPencipta.replaceWith(penciptaDiv);
+                editingPencipta = null; // Reset variabel setelah proses edit selesai
+            } else {
+                // Jika tidak sedang mengedit, tambahkan pencipta baru
+                penciptaList.appendChild(penciptaDiv);
+            }
+
+            modal.style.display = "none";
+            modalForm.reset();
+            updatePenciptaLabels();
+        });
+    }
+
+    function openModalForEdit(div) {
+        editingPencipta = div;
+        const values = JSON.parse(div.dataset.form);
+        for (const [key, value] of Object.entries(values)) {
+            const input = modalForm.querySelector(`[name="${key}"]`);
+            if (input) input.value = value;
+        }
+
+        const selectedCountry = values["negara[]"] || "";
+        loadCountriesForModalForm(selectedCountry).then(() => {
+            modal.style.display = "flex";
+        });
+    }
+
+    function updatePenciptaLabels() {
+        document.querySelectorAll(".pencipta-label").forEach((label, index) => {
+            label.textContent = `Pencipta ${index + 1}`;
+        });
+
+        document.querySelectorAll(".hapusPencipta").forEach((btn, i, arr) => {
+            btn.style.display = arr.length > 1 ? "inline-block" : "none";
+        });
     }
 
     function loadCountriesForModalForm(selectedCountry = "") {
@@ -174,7 +349,6 @@ function initUserPage() {
             })
             .catch(error => console.error("Gagal memuat data negara untuk form modal:", error));
     }
-
     // Fungsi untuk menampilkan bendera di dropdown
     function formatCountryOption(option) {
         if (!option.id) {
@@ -188,16 +362,14 @@ function initUserPage() {
 
     // Modal
     // ==== Modal Tambah Pencipta ====
-    const modal = document.getElementById("modalPencipta");
-    const modalForm = document.getElementById("modalFormPencipta");
     const addPenciptaBtn = document.getElementById("addPencipta");
     const closeModalBtn = document.querySelector(".close-modal");
-    const penciptaList = document.getElementById("pencipta-list");
 
     // Tampilkan modal
     addPenciptaBtn.addEventListener("click", function () {
         modal.style.display = "flex";
         modalForm.reset();
+        editingPencipta = null; // Reset editingPencipta saat menambah pencipta baru
         loadCountriesForModalForm(); // Load negara untuk form modal
     });
 
@@ -205,6 +377,7 @@ function initUserPage() {
     closeModalBtn.addEventListener("click", function () {
         modal.style.display = "none";
         modalForm.reset();
+        editingPencipta = null; // Reset editingPencipta saat modal ditutup
     });
 
     // Klik di luar konten modal = tutup
@@ -212,195 +385,14 @@ function initUserPage() {
         if (e.target === modal) {
             modal.style.display = "none";
             modalForm.reset();
+            editingPencipta = null; // Reset editingPencipta saat modal ditutup
         }
     });
 
-    // Submit form modal
     // Cegah duplikasi event listener
     if (!window.formSubmitInitialized) {
         window.formSubmitInitialized = true;
         initFormSubmission();
         initModalPencipta();
-    }
-
-    // ================= INIT =================
-    document.addEventListener("DOMContentLoaded", function () {
-        initJenisHakCipta();
-        initFormSubmission();
-        initModalPencipta();
-        loadCountriesForMainForm(); // Load negara untuk form utama
-    });
-
-    // ================== JENIS & SUBJENIS ==================
-    function initJenisHakCipta() {
-        const jenisSelect = document.getElementById("jenis_hak_cipta");
-        const subJenisSelect = document.getElementById("sub_jenis_hak_cipta");
-
-        const options = { /* tetap sama seperti sebelumnya, tidak diubah */ };
-
-        if (jenisSelect && subJenisSelect) {
-            jenisSelect.addEventListener("change", function () {
-                const jenis = this.value;
-                subJenisSelect.innerHTML = "";
-                if (options[jenis]) {
-                    subJenisSelect.innerHTML = '<option value="">-- Pilih Sub Jenis --</option>' +
-                        options[jenis].map(option => `<option value="${option}">${option}</option>`).join("");
-                }
-            });
-        }
-    }
-
-    // ================== FORM HKI SUBMISSION ==================
-    function initFormSubmission() {
-        const form = document.querySelector("#form-hki");
-        if (!form) return;
-
-        form.addEventListener("submit", function (e) {
-            e.preventDefault();
-
-            const penciptaDivs = document.querySelectorAll("#pencipta-list .pencipta");
-
-            // Validasi: pastikan minimal 1 pencipta diisi
-            if (penciptaDivs.length === 0) {
-                Swal.fire({
-                    icon: "warning",
-                    title: "Perhatian",
-                    text: "Minimal 1 pencipta harus ditambahkan sebelum mengirim form."
-                });
-                return;
-            }
-
-            const hiddenInputsContainer = document.getElementById("pencipta-hidden-inputs");
-            hiddenInputsContainer.innerHTML = "";
-
-            penciptaDivs.forEach(div => {
-                const data = JSON.parse(div.dataset.form);
-                for (const [key, value] of Object.entries(data)) {
-                    const input = document.createElement("input");
-                    input.type = "hidden";
-                    input.name = key;
-                    input.value = value;
-                    hiddenInputsContainer.appendChild(input);
-                }
-            });
-
-            const formData = new FormData(form);
-
-            fetch("services/submit_hki.php", {
-                method: "POST",
-                body: formData
-            })
-                .then(response => response.text())
-                .then(result => {
-                    Swal.fire({
-                        icon: result.includes("berhasil") ? "success" : "error",
-                        title: result.includes("berhasil") ? "Berhasil!" : "Gagal!",
-                        text: result,
-                        timer: 2000,
-                        showConfirmButton: false
-                    });
-
-                    if (result.includes("berhasil")) {
-                        form.reset();
-                        document.getElementById("pencipta-list").innerHTML = "";
-                    }
-                })
-                .catch(error => {
-                    console.error("Error:", error);
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops...",
-                        text: "Terjadi kesalahan saat mengirim data."
-                    });
-                });
-        });
-    }
-
-    // ================== MODAL PENCIPTA ==================
-    function initModalPencipta() {
-        const modal = document.getElementById("modalPencipta");
-        const modalForm = document.getElementById("modalFormPencipta");
-        const penciptaList = document.getElementById("pencipta-list");
-        let editingPencipta = null;
-
-        document.getElementById("addPencipta").addEventListener("click", () => {
-            editingPencipta = null; // Reset editing state
-            modal.style.display = "flex";
-            modalForm.reset();
-            loadCountriesForModalForm(); // Load negara untuk form modal
-        });
-
-        document.querySelector(".close-modal").addEventListener("click", () => {
-            modal.style.display = "none";
-            modalForm.reset();
-        });
-
-        window.addEventListener("click", (e) => {
-            if (e.target === modal) {
-                modal.style.display = "none";
-                modalForm.reset();
-            }
-        });
-
-        modalForm.addEventListener("submit", (e) => {
-            e.preventDefault();
-            const formData = new FormData(modalForm);
-            const penciptaDiv = document.createElement("div");
-            penciptaDiv.classList.add("pencipta");
-
-            const nama = formData.get("nama[]") || "Tanpa Nama";
-
-
-            penciptaDiv.innerHTML = `
-                <h4 class="pencipta-label">Pencipta</h4>
-                <strong>${nama}</strong><br>
-                <button type="button" class="editPencipta">Edit</button>
-                <button type="button" class="hapusPencipta">Hapus</button>
-            `;
-
-            penciptaDiv.dataset.form = JSON.stringify(Object.fromEntries(formData.entries()));
-
-            penciptaDiv.querySelector(".editPencipta").onclick = () => openModalForEdit(penciptaDiv);
-            penciptaDiv.querySelector(".hapusPencipta").onclick = () => {
-                penciptaDiv.remove();
-                updatePenciptaLabels();
-            };
-
-            if (editingPencipta) {
-                editingPencipta.replaceWith(penciptaDiv);
-                editingPencipta = null;
-            } else {
-                penciptaList.appendChild(penciptaDiv);
-            }
-
-            modal.style.display = "none";
-            modalForm.reset();
-            updatePenciptaLabels();
-        });
-
-        function openModalForEdit(div) {
-            editingPencipta = div;
-            const values = JSON.parse(div.dataset.form);
-            for (const [key, value] of Object.entries(values)) {
-                const input = modalForm.querySelector(`[name="${key}"]`);
-                if (input) input.value = value;
-            }
-
-            // Pastikan negara sebelumnya terpilih
-            const selectedCountry = values["negara[]"] || ""; // Ambil negara yang dipilih sebelumnya
-            loadCountriesForModalForm(selectedCountry).then(() => {
-                modal.style.display = "flex";
-            });
-        }
-
-        function updatePenciptaLabels() {
-            document.querySelectorAll(".pencipta-label").forEach((label, index) => {
-                label.textContent = `Pencipta ${index + 1}`;
-            });
-
-            document.querySelectorAll(".hapusPencipta").forEach((btn, i, arr) => {
-                btn.style.display = arr.length > 1 ? "inline-block" : "none";
-            });
-        }
     }
 }

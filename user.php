@@ -93,7 +93,9 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
         <!--Negara Pertama Kali Diumumkan-->
         <div class="form-group">
             <label for="nationality">Negara Pertama Kali Diumumkan:</label>
-            <select name="negara_pengumuman" id="nationality" required>
+            <select name="negara_pengumuman" id="nationality" required
+                oninvalid="this.setCustomValidity('Silakan pilih negara terlebih dahulu.')"
+                oninput="this.setCustomValidity('')">
                 <option value="">-- Pilih Negara --</option>
             </select>
         </div>
@@ -129,6 +131,4 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
     </div>
 </div>
 
-
 <script src="js/user.js"></script>
-<script src="js/ajax.js"></script>
