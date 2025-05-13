@@ -3,7 +3,7 @@ include '../config/config.php';
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
-    header("Location: ../login.php");
+    header("Location: ../login");
     exit();
 }
 
@@ -23,11 +23,13 @@ $result = $stmt->get_result();
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detail Pencipta</title>
 </head>
+
 <body>
     <table border="1">
         <tr>
@@ -60,4 +62,5 @@ $result = $stmt->get_result();
         <?php } ?>
     </table>
 </body>
+
 </html>

@@ -1,9 +1,8 @@
 <?php
 session_start();
-$dashboardPage = isset($_SESSION['user_username']) ? 'dashboard.php' : 'login.php';
+$dashboardPage = isset($_SESSION['user_username']) ? 'dashboard' : 'login';
 ?>
 
-  <a href="rekapitulasi.php">REKAPITULASI</a>
-  <a href="index.php">BERANDA</a>
-  <a href="<?php echo $dashboardPage; ?>">PENGAJUAN HKI</a>
-
+<a href="rekapitulasi">REKAPITULASI</a>
+<a href="index">BERANDA</a>
+<a href="<?php echo $dashboardPage; ?>">PENGAJUAN HKI</a>

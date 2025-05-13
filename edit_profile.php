@@ -6,7 +6,7 @@ include_once 'helpers/profile_helper.php'; // Tambahkan ini
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
+    header("Location: login");
     exit();
 }
 
@@ -47,7 +47,8 @@ $profile_picture = getProfilePicture($user_id);
 
         <div>
             <label for="nama_lengkap">Nama Lengkap:</label>
-            <input type="text" spellcheck="false" name="nama_lengkap" id="nama_lengkap" value="<?= $profile['nama_lengkap'] ?? '' ?>">
+            <input type="text" spellcheck="false" name="nama_lengkap" id="nama_lengkap"
+                value="<?= $profile['nama_lengkap'] ?? '' ?>">
         </div>
 
         <div>
@@ -57,7 +58,8 @@ $profile_picture = getProfilePicture($user_id);
 
         <div>
             <label for="telephone">No. Telepon:</label>
-            <input type="tel" spellcheck="false" name="telephone" id="telephone" value="<?= $profile['telephone'] ?? '' ?>">
+            <input type="tel" spellcheck="false" name="telephone" id="telephone"
+                value="<?= $profile['telephone'] ?? '' ?>">
         </div>
 
         <div>

@@ -45,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             mkdir($user_folder . "/files", 0777, true);   // Untuk file lain
         }
 
-        echo "<script>alert('Pembuatan akun berhasil! Silakan login.'); window.location.href='../login.php';</script>";
+        echo "<script>alert('Pembuatan akun berhasil! Silakan login.'); window.location.href='../login';</script>";
         exit();
     } else {
         $_SESSION['error_general'] = "Gagal mendaftar. Coba lagi.";

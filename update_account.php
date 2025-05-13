@@ -6,7 +6,7 @@ include 'config/config.php';
 
 // Pastikan user sudah login
 if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
+    header("Location: login");
     exit();
 }
 
@@ -37,11 +37,13 @@ $query->close();
     <form id="updateForm">
         <div class="form-group">
             <label for="new_username">Username:</label>
-            <input type="text" spellcheck="false" name="new_username" value="<?= htmlspecialchars($user['username']) ?>" required>
+            <input type="text" spellcheck="false" name="new_username" value="<?= htmlspecialchars($user['username']) ?>"
+                required>
         </div>
         <div class="form-group">
             <label for="new_email">Email:</label>
-            <input type="email" spellcheck="false" name="new_email" value="<?= htmlspecialchars($user['email']) ?>" required>
+            <input type="email" spellcheck="false" name="new_email" value="<?= htmlspecialchars($user['email']) ?>"
+                required>
         </div>
         <div class="form-group">
             <label for="new_password">Password Baru (Opsional):</label>

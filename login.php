@@ -3,8 +3,8 @@
 include 'config/config.php';
 session_start();
 
-// Jika user sudah login, arahkan ke dashboard.php
-$dashboardPage = isset($_SESSION['user_username']) ? 'dashboard.php' : 'login.php';
+// Jika user sudah login, arahkan ke dashboard
+$dashboardPage = isset($_SESSION['user_username']) ? 'dashboard' : 'login';
 
 $result = $conn->query("SELECT * FROM announcement");
 $images = $result->fetch_all(MYSQLI_ASSOC);
@@ -61,7 +61,7 @@ $images = $result->fetch_all(MYSQLI_ASSOC);
 
             <button type="submit" class="btn">Masuk</button>
         </form>
-        <div class="register-link">Belum Punya Akun? <a href="register.php">Daftar</a></div>
+        <div class="register-link">Belum Punya Akun? <a href="register">Daftar</a></div>
     </div>
 
     <div class="footer"></div>

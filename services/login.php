@@ -22,7 +22,7 @@ if ($result->num_rows === 1) {
 
         // Tetap simpan role, tapi redirect ke dashboard untuk semua
         $_SESSION['role'] = $user['role'];
-        header("Location: ../dashboard.php");
+        header("Location: ../dashboard");
         exit();
 
     } else {
@@ -33,6 +33,6 @@ if ($result->num_rows === 1) {
 }
 
 // Redirect kembali ke login jika ada kesalahan
-header("Location: ../login.php");
+header("Location: ../login");
 exit();
 ?>

@@ -204,6 +204,7 @@ $result = $conn->query($query);
 
     <div class="footer"></div>
     <script src="js/index.js"></script>
+    <script src="js/rekapitulasi.js"></script>
     <script src="js/hki.js"></script>
 </body>
 

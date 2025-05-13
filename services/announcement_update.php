@@ -3,7 +3,7 @@ include '../config/config.php';
 session_start();
 
 if (!isset($_SESSION['role']) || $_SESSION['role'] != 'admin') {
-    header("Location: ../login.php");
+    header("Location: ../login");
     exit();
 }
 

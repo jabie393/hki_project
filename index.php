@@ -3,8 +3,8 @@
 include 'config/config.php';
 session_start();
 
-// Jika user sudah login, arahkan ke dashboard.php
-$dashboardPage = isset($_SESSION['user_username']) ? 'dashboard.php' : 'login.php';
+// Jika user sudah login, arahkan ke dashboard
+$dashboardPage = isset($_SESSION['user_username']) ? 'dashboard' : 'login';
 
 $result = $conn->query("SELECT * FROM announcement");
 $images = $result->fetch_all(MYSQLI_ASSOC);
@@ -43,9 +43,9 @@ $images = $result->fetch_all(MYSQLI_ASSOC);
 
   <h1>Hak Kekayaan Intelektual</h1>
   <div class="menu">
-    <button onclick="location.href='rekapitulasi.php'">REKAPITULASI</button>
+    <button onclick="location.href='rekapitulasi'">REKAPITULASI</button>
     <button onclick="location.href='<?php echo $dashboardPage; ?>'">PENGAJUAN HKI</button>
-    <button onclick="location.href='petunjuk_pengajuan.html'">PETUNJUK PENGAJUAN HKI</button>
+    <button onclick="location.href='guide'">PETUNJUK PENGAJUAN HKI</button>
   </div>
 
   <div class="footer"></div>
