@@ -4,7 +4,10 @@ include 'config/config.php';
 session_start();
 
 // Jika user sudah login, arahkan ke dashboard
-$dashboardPage = isset($_SESSION['user_username']) ? 'dashboard' : 'login';
+if (isset($_SESSION['user_username'])) {
+    header("Location: dashboard");
+    exit();
+}
 
 $result = $conn->query("SELECT * FROM announcement");
 $images = $result->fetch_all(MYSQLI_ASSOC);
@@ -20,6 +23,9 @@ $images = $result->fetch_all(MYSQLI_ASSOC);
 
     <!-- Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Sweet Alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- Css -->
     <link rel="stylesheet" href="css/sign.css">
@@ -51,14 +57,6 @@ $images = $result->fetch_all(MYSQLI_ASSOC);
                 <input type="password" id="password" name="password" placeholder="Masukkan password Anda" required>
             </div>
 
-            <!-- Flash Message Permanen -->
-            <?php if (isset($_SESSION['error_message'])): ?>
-                <div class="mt-2 mb-4 text-red-500 text-sm">
-                    <i class="fas fa-exclamation-circle"></i> <?= $_SESSION['error_message']; ?>
-                </div>
-                <?php unset($_SESSION['error_message']); ?>
-            <?php endif; ?>
-
             <button type="submit" class="btn">Masuk</button>
         </form>
         <div class="register-link">Belum Punya Akun? <a href="register">Daftar</a></div>
@@ -66,6 +64,19 @@ $images = $result->fetch_all(MYSQLI_ASSOC);
 
     <div class="footer"></div>
     <script src="js/index.js"></script>
-</body>
 
+    <!-- SweetAlert Messages -->
+    <?php if (isset($_SESSION['error_message'])): ?>
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal Login',
+                text: '<?= $_SESSION['error_message']; ?>',
+                confirmButtonText: 'OK'
+            });
+        </script>
+        <?php unset($_SESSION['error_message']); ?>
+    <?php endif; ?>
+
+</body>
 </html>

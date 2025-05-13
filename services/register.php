@@ -17,39 +17,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     while ($row = $result->fetch_assoc()) {
         if ($row['email'] == $email) {
             $_SESSION['error_email'] = "Email sudah terdaftar. Gunakan email lain.";
+            $_SESSION['input_email'] = $email;
         }
-        if ($row['username'] == $username) { //
+        if ($row['username'] == $username) {
             $_SESSION['error_username'] = "Username sudah terdaftar. Gunakan username lain.";
+            $_SESSION['input_username'] = $username;
         }
     }
 
     if (isset($_SESSION['error_email']) || isset($_SESSION['error_username'])) {
-        header("Location: ../register.php");
+        header("Location: ../register");
         exit();
     }
 
-    // Perbaiki query INSERT agar menggunakan 'username'
+    // Insert user ke database
     $query = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("sss", $username, $email, $password);
 
     if ($stmt->execute()) {
-        // Ambil ID user yang baru dibuat
         $user_id = $stmt->insert_id;
-
-        // Buat direktori user berdasarkan user_id
         $user_folder = "../uploads/users/" . $user_id;
         if (!file_exists($user_folder)) {
             mkdir($user_folder, 0777, true);
-            mkdir($user_folder . "/profile", 0777, true); // Untuk foto profil
-            mkdir($user_folder . "/files", 0777, true);   // Untuk file lain
+            mkdir($user_folder . "/profile", 0777, true);
+            mkdir($user_folder . "/files", 0777, true);
         }
-
-        echo "<script>alert('Pembuatan akun berhasil! Silakan login.'); window.location.href='../login';</script>";
+        $_SESSION['register_success'] = true;
+        header("Location: ../register");
         exit();
     } else {
         $_SESSION['error_general'] = "Gagal mendaftar. Coba lagi.";
-        header("Location: ../register.php");
+        header("Location: ../register");
         exit();
     }
 }

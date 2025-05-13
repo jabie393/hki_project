@@ -21,6 +21,9 @@ $images = $result->fetch_all(MYSQLI_ASSOC);
     <!-- Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
+    <!-- Sweet Alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <!-- Css -->
     <link rel="stylesheet" href="css/sign.css">
     <link rel="stylesheet" href="css/header&footer.css">
@@ -45,27 +48,15 @@ $images = $result->fetch_all(MYSQLI_ASSOC);
                 <label for="username">Username</label>
                 <input type="text" id="username" name="username" placeholder="Masukkan Username Anda" required
                     autocomplete="off"
-                    value="<?= isset($_SESSION['input_username']) ? $_SESSION['input_username'] : ''; ?>" />
+                    value="<?= isset($_SESSION['error_username']) || isset($_SESSION['error_email']) ? '' : (isset($_SESSION['input_username']) ? $_SESSION['input_username'] : ''); ?>" />
             </div>
-            <?php if (isset($_SESSION['error_username'])): ?>
-                <div class="mt-2 mb-3 text-red-500 text-sm">
-                    <i class="fas fa-exclamation-circle"></i> <?= $_SESSION['error_username']; ?>
-                </div>
-                <?php unset($_SESSION['error_username']); ?>
-            <?php endif; ?>
 
             <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" placeholder="Masukkan Email Anda" required
                     autocomplete="off"
-                    value="<?= isset($_SESSION['input_email']) ? $_SESSION['input_email'] : ''; ?>" />
+                    value="<?= isset($_SESSION['error_username']) || isset($_SESSION['error_email']) ? '' : (isset($_SESSION['input_email']) ? $_SESSION['input_email'] : ''); ?>" />
             </div>
-            <?php if (isset($_SESSION['error_email'])): ?>
-                <div class="mt-2 mb-3 text-red-500 text-sm">
-                    <i class="fas fa-exclamation-circle"></i> <?= $_SESSION['error_email']; ?>
-                </div>
-                <?php unset($_SESSION['error_email']); ?>
-            <?php endif; ?>
 
             <div class="form-group">
                 <label for="password">Password</label>
@@ -81,6 +72,40 @@ $images = $result->fetch_all(MYSQLI_ASSOC);
     <div class="footer"></div>
 
     <script src="js/index.js"></script>
+
+    <!-- SweetAlert Messages -->
+    <?php if (isset($_SESSION['error_username']) || isset($_SESSION['error_email'])): ?>
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal Mendaftar',
+                html: `<?= isset($_SESSION['error_username']) ? $_SESSION['error_username'] . '<br>' : '' ?>
+                       <?= isset($_SESSION['error_email']) ? $_SESSION['error_email'] . '<br>' : '' ?>`,
+                confirmButtonText: 'OK'
+            });
+        </script>
+        <?php
+        unset($_SESSION['error_username']);
+        unset($_SESSION['error_email']);
+        unset($_SESSION['input_username']);
+        unset($_SESSION['input_email']);
+        ?>
+    <?php endif; ?>
+
+    <?php if (isset($_SESSION['register_success'])): ?>
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Pendaftaran Berhasil!',
+                text: 'Silakan login untuk melanjutkan.',
+                showConfirmButton: false, // Tidak ada tombol confirm
+                timer: 3500 // Menunggu
+            }).then(() => {
+                window.location.href = 'login';
+            });
+        </script>
+        <?php unset($_SESSION['register_success']); ?>
+    <?php endif; ?>
 </body>
 
 </html>

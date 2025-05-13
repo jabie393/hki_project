@@ -18,13 +18,9 @@ if ($result->num_rows === 1) {
     if (password_verify($password, $user['password'])) {
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['user_username'] = $user['username'];
-        $_SESSION['role'] = $user['role']; // Simpan role pengguna
-
-        // Tetap simpan role, tapi redirect ke dashboard untuk semua
         $_SESSION['role'] = $user['role'];
         header("Location: ../dashboard");
         exit();
-
     } else {
         $_SESSION['error_message'] = "Password salah. Silakan coba lagi.";
     }
