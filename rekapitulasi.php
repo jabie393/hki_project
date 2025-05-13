@@ -135,19 +135,43 @@ $result = $conn->query($query);
         <div class="pagination">
             <?php if ($page > 1): ?>
                 <a href="?search=<?= htmlspecialchars($search); ?>&page=<?= $page - 1; ?>&limit=<?= $limit; ?>"
-                    class="page-link">Previous</a>
+                    class="page-link prev">‹</a>
             <?php endif; ?>
 
-            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+            <!-- Always show first page -->
+            <a href="?search=<?= htmlspecialchars($search); ?>&page=1&limit=<?= $limit; ?>"
+                class="page-link <?= $page == 1 ? 'active' : ''; ?>">1</a>
+
+            <!-- Middle pages -->
+            <?php
+            $start = max(2, $page - 1);
+            $end = min($totalPages - 1, $page + 1);
+
+            if ($start > 2) {
+                echo '<span class="ellipsis">...</span>';
+            }
+
+            for ($i = $start; $i <= $end; $i++): ?>
                 <a href="?search=<?= htmlspecialchars($search); ?>&page=<?= $i; ?>&limit=<?= $limit; ?>"
                     class="page-link <?= $i == $page ? 'active' : ''; ?>">
                     <?= $i; ?>
                 </a>
             <?php endfor; ?>
 
+            <!-- Always show last page if more than one page -->
+            <?php if ($totalPages > 1): ?>
+                <?php if ($end < $totalPages - 1): ?>
+                    <span class="ellipsis">...</span>
+                <?php endif; ?>
+                <a href="?search=<?= htmlspecialchars($search); ?>&page=<?= $totalPages; ?>&limit=<?= $limit; ?>"
+                    class="page-link <?= $page == $totalPages ? 'active' : ''; ?>">
+                    <?= $totalPages; ?>
+                </a>
+            <?php endif; ?>
+
             <?php if ($page < $totalPages): ?>
                 <a href="?search=<?= htmlspecialchars($search); ?>&page=<?= $page + 1; ?>&limit=<?= $limit; ?>"
-                    class="page-link">Next</a>
+                    class="page-link next">›</a>
             <?php endif; ?>
         </div>
     </div>

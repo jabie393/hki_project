@@ -7,7 +7,7 @@ if (session_status() == PHP_SESSION_NONE) {
 
 $user_id = $_SESSION['user_id'] ?? null;
 
-$profile_picture_path = "assets/image/default-avatar.png"; // default
+$profile_picture_path = "assets/image/default-avatar.png?v=" . time(); // default dengan cache busting
 
 if ($user_id) {
   $custom_path = "uploads/users/$user_id/profile/profile.jpg";
@@ -24,7 +24,8 @@ if ($user_id) {
   <label for="switch-mode" class="switch-mode"></label>
 
   <a href="javascript:void(0);" class="profile">
-    <img src="<?= $profile_picture_path ?>" class="profile-img profilePic" data-user-id="<?= $user_id ?>" style="width: 35px; height: 35px; border-radius: 50%; object-fit: cover; cursor: pointer;">
+    <img src="<?= $profile_picture_path ?>" class="profile-img profilePic" data-user-id="<?= $user_id ?>"
+      style="width: 35px; height: 35px; border-radius: 50%; object-fit: cover; cursor: pointer;">
   </a>
 </nav>
 <!-- NAVBAR -->

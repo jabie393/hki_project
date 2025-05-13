@@ -1,9 +1,23 @@
 function refreshAllProfilePics() {
-    document.querySelectorAll('.profilePic').forEach(img => {
-        const baseSrc = img.src.split('?')[0];
-        img.src = `${baseSrc}?v=${Date.now()}`; // cache bust
-    });
+    const userId = document.querySelector('.profile-img').dataset.userId;
+    const defaultAvatar = 'assets/image/default-avatar.png';
+    const profilePath = `uploads/users/${userId}/profile/profile.jpg`;
+
+    fetch(profilePath + '?v=' + Date.now(), { method: 'HEAD' })
+        .then(response => {
+            const newSrc = response.ok ? profilePath + '?v=' + Date.now() : defaultAvatar + '?v=' + Date.now();
+            document.querySelectorAll('.profilePic').forEach(img => {
+                img.src = newSrc;
+            });
+        })
+        .catch(() => {
+            // Jika gagal, tetap pakai default avatar dengan cache busting
+            document.querySelectorAll('.profilePic').forEach(img => {
+                img.src = defaultAvatar + '?v=' + Date.now();
+            });
+        });
 }
+
 
 function initEditProfilePage() {
     const form = document.getElementById('profileForm');

@@ -43,3 +43,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
+// Hapus semua query string
+document.addEventListener("DOMContentLoaded", function () {
+    const url = new URL(window.location);
+    url.search = '';
+    window.history.replaceState({}, document.title, url.pathname);
+});

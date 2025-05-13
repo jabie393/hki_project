@@ -142,20 +142,44 @@ $result = $stmt->get_result();
     <!-- Pagination -->
     <div class="pagination">
         <?php if ($page > 1): ?>
-            <a href="javascript:void(0);" class="page-link"
-                onclick="loadPage(<?= $page - 1; ?>, <?= $limit; ?>, '<?= htmlspecialchars($search); ?>')">Previous</a>
+            <a href="javascript:void(0);" class="page-link prev"
+                onclick="loadPage(<?= $page - 1; ?>, <?= $limit; ?>, '<?= htmlspecialchars($search); ?>')">‹</a>
         <?php endif; ?>
 
-        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+        <!-- Always show first page -->
+        <a href="javascript:void(0);" class="page-link <?= $page == 1 ? 'active' : ''; ?>"
+            onclick="loadPage(1, <?= $limit; ?>, '<?= htmlspecialchars($search); ?>')">1</a>
+
+        <!-- Middle pages -->
+        <?php
+        $start = max(2, $page - 1);
+        $end = min($totalPages - 1, $page + 1);
+
+        if ($start > 2) {
+            echo '<span class="ellipsis">...</span>';
+        }
+
+        for ($i = $start; $i <= $end; $i++): ?>
             <a href="javascript:void(0);" class="page-link <?= $i == $page ? 'active' : ''; ?>"
                 onclick="loadPage(<?= $i; ?>, <?= $limit; ?>, '<?= htmlspecialchars($search); ?>')">
                 <?= $i; ?>
             </a>
         <?php endfor; ?>
 
+        <!-- Always show last page if more than one page -->
+        <?php if ($totalPages > 1): ?>
+            <?php if ($end < $totalPages - 1): ?>
+                <span class="ellipsis">...</span>
+            <?php endif; ?>
+            <a href="javascript:void(0);" class="page-link <?= $page == $totalPages ? 'active' : ''; ?>"
+                onclick="loadPage(<?= $totalPages; ?>, <?= $limit; ?>, '<?= htmlspecialchars($search); ?>')">
+                <?= $totalPages; ?>
+            </a>
+        <?php endif; ?>
+
         <?php if ($page < $totalPages): ?>
-            <a href="javascript:void(0);" class="page-link"
-                onclick="loadPage(<?= $page + 1; ?>, <?= $limit; ?>, '<?= htmlspecialchars($search); ?>')">Next</a>
+            <a href="javascript:void(0);" class="page-link next"
+                onclick="loadPage(<?= $page + 1; ?>, <?= $limit; ?>, '<?= htmlspecialchars($search); ?>')">›</a>
         <?php endif; ?>
     </div>
 

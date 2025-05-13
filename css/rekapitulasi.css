@@ -182,31 +182,63 @@ body {
   background-color: #dc3545;
 }
 
-/* Style untuk pagination */
+/* Modern Pagination Style */
 .pagination {
   display: flex;
   justify-content: center;
   margin-top: 20px;
-  gap: 5px;
+  gap: 8px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .page-link {
-  padding: 8px 12px;
+  padding: 10px 16px;
   text-decoration: none;
-  color: white;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  color: #003365;
+  border-radius: 6px;
   font-size: 14px;
+  transition: all 0.3s ease;
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
 }
 
 .page-link:hover {
-  background-color: #18b2ca;
+  background-color: #003365;
   color: white;
+  border-color: #003365;
+  box-shadow: 0 4px 12px rgba(0, 51, 101, 0.2);
 }
 
 .page-link.active {
   background-color: #003365;
   color: white;
+  border-color: #003365;
+  pointer-events: none;
+  box-shadow: 0 4px 12px rgba(0, 51, 101, 0.3);
+}
+
+.page-link.prev,
+.page-link.next {
+  padding: 10px 16px;
+  font-weight: bold;
+  background-color: #f0f0f0;
+  color: #666;
+  border-color: #ddd;
+}
+
+.page-link.prev:hover,
+.page-link.next:hover {
+  background-color: #003365;
+  color: white;
+  border-color: #003365;
+}
+
+.ellipsis {
+  padding: 10px 16px;
+  color: #888;
+  background-color: transparent;
+  border: none;
+  font-weight: bold;
   pointer-events: none;
 }
 
