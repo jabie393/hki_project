@@ -99,7 +99,7 @@ $images = $result->fetch_all(MYSQLI_ASSOC);
                 title: 'Pendaftaran Berhasil!',
                 text: 'Silakan login untuk melanjutkan.',
                 showConfirmButton: false, // Tidak ada tombol confirm
-                timer: 3500 // Menunggu
+                timer: 3000 // Menunggu
             }).then(() => {
                 window.location.href = 'login';
             });

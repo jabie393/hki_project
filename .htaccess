@@ -5,3 +5,6 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^([^/]+)$ $1.php [L]
 
+RewriteEngine On
+RewriteCond %{QUERY_STRING} ^i=1$
+RewriteRule ^(.*)$ /$1? [R=301,L]

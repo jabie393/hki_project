@@ -146,9 +146,15 @@ function initEditProfilePage() {
                 const reader = new FileReader();
                 reader.onload = function (e) {
                     modalPreviewImage.src = e.target.result;
-                    modal.style.display = 'flex'; // Ubah dari 'block' ke 'flex'
+                    modal.style.display = 'flex';
 
-                    if (cropper) cropper.destroy();
+                    // Hancurkan instance cropper sebelumnya jika ada
+                    if (cropper) {
+                        cropper.destroy();
+                        cropper = null; // Cropper di-reset
+                    }
+
+                    // Buat instance cropper baru
                     cropper = new Cropper(modalPreviewImage, {
                         aspectRatio: 1,
                         viewMode: 1,
@@ -179,14 +185,30 @@ function initEditProfilePage() {
     if (closeModal) {
         closeModal.addEventListener('click', function () {
             modal.style.display = 'none';
-            if (cropper) cropper.destroy();
+
+            // Hancurkan instance cropper saat modal ditutup
+            if (cropper) {
+                cropper.destroy();
+                cropper = null; // Cropper di-reset
+            }
         });
     }
 
     window.addEventListener('click', function (event) {
         if (event.target == modal) {
             modal.style.display = 'none';
-            if (cropper) cropper.destroy();
+
+            // Hancurkan instance cropper saat modal ditutup
+            if (cropper) {
+                cropper.destroy();
+                cropper = null; // Cropper di-reset
+            }
         }
     });
 }
+
+
+// ==== Scripct menonaktifkan right click pada cropper ==== //
+document.getElementById("modal-page").addEventListener("contextmenu", function (e) {
+    e.preventDefault();
+});

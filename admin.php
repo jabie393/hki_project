@@ -93,7 +93,7 @@ $result = $conn->query($query);
                 <?php while ($row = $result->fetch_assoc()) { ?>
                     <form id="form_<?= $row['id'] ?>" enctype="multipart/form-data">
                         <tr id="row_<?= $row['id'] ?>">
-                            <td><a href="#" onclick="showProfile(<?= $row['user_id'] ?>)"
+                            <td><a href="javascript:void(0)" onclick="showProfile(<?= $row['user_id'] ?>)"
                                     class="profile-link"><?= htmlspecialchars($row['username']) ?></a></td>
                             <td><?= htmlspecialchars($row['jenis_permohonan']) ?></td>
                             <td><?= htmlspecialchars($row['jenis_hak_cipta']) ?></td>

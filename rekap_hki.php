@@ -99,7 +99,7 @@ $result = $conn->query($query);
                 <?php while ($row = $result->fetch_assoc()) { ?>
                     <tr id="row-<?= $row['id'] ?>">
                         <td>
-                            <a href="#" onclick="showProfile(<?php echo $row['user_id']; ?>)" class="profile-link">
+                            <a href="javascript:void(0)" onclick="showProfile(<?php echo $row['user_id']; ?>)" class="profile-link">
                                 <?php echo htmlspecialchars($row['username']); ?>
                             </a>
                         </td>
