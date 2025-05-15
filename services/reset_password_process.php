@@ -13,6 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user_id = $_POST['user_id'];
     $new_username = $_POST['new_username'];
     $new_email = $_POST['new_email'];
+    $new_role = $_POST['new_role']; // Ambil role dari input
     $new_password = !empty($_POST['new_password']) ? password_hash($_POST['new_password'], PASSWORD_DEFAULT) : null;
 
     // Validasi email
@@ -37,9 +38,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     $username_check->close();
 
-    // Update username dan email
-    $query = $conn->prepare("UPDATE users SET username = ?, email = ? WHERE id = ?");
-    $query->bind_param("ssi", $new_username, $new_email, $user_id);
+    // Update username, email, dan role
+    $query = $conn->prepare("UPDATE users SET username = ?, email = ?, role = ? WHERE id = ?");
+    $query->bind_param("sssi", $new_username, $new_email, $new_role, $user_id);
     $query->execute();
 
     // Update password jika diisi

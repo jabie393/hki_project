@@ -59,6 +59,15 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
             </div>
 
             <div class="form-group">
+                <label for="new_role" class="custom-label">Role:</label>
+                <select id="new_role" name="new_role" class="custom-input" required>
+                <option value="" disabled selected></option>
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
+
+            <div class="form-group">
                 <label for="new_password" class="custom-label">Password Baru (Opsional):</label>
                 <input type="password" name="new_password" class="custom-input" autocomplete="new-password">
             </div>

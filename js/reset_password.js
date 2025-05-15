@@ -21,12 +21,39 @@ $(document).ready(function () {
                 success: function (data) {
                     $('#new_username').val(data.username);
                     $('#new_email').val(data.email);
+
+                    // Set role pada Select2 dan ubah placeholder
+                    $('#new_role')
+                        .val(data.role) // Set nilai role
+                        .trigger('change') // Perbarui Select2
+                        .select2({
+                            placeholder: `Role saat ini: ${data.role}`, // Ubah placeholder
+                            allowClear: true,
+                            width: '100%',
+                            minimumResultsForSearch: Infinity // Nonaktifkan search bar
+                        });
                 }
             });
         } else {
             $('#new_username').val('');
             $('#new_email').val('');
+            $('#new_role')
+                .val('') // Reset nilai role
+                .trigger('change') // Perbarui Select2
+                .select2({
+                    placeholder: "Pilih User Terlebih Dahulu", // Kembalikan placeholder default
+                    allowClear: true,
+                    width: '100%',
+                    minimumResultsForSearch: Infinity // Nonaktifkan search bar
+                });
         }
+    });
+
+    $('#new_role').select2({
+        placeholder: "Pilih User Terlebih Dahulu",
+        allowClear: true,
+        width: '100%',
+        minimumResultsForSearch: Infinity  // Menonaktifkan search bar
     });
 
     // Menangani submit form reset password
