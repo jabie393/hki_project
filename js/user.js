@@ -137,6 +137,14 @@ function initFormSubmission() {
     const form = document.querySelector("#form-hki");
     if (!form) return;
 
+    // Cegah duplikasi event listener
+    if (form.dataset.listenerAdded === "true") {
+        return;
+    }
+    form.dataset.listenerAdded = "true";
+
+    const submitButton = form.querySelector("button[type='submit']");
+
     form.addEventListener("submit", function (e) {
         e.preventDefault();
 
@@ -168,38 +176,89 @@ function initFormSubmission() {
 
         const formData = new FormData(form);
 
-        fetch("services/submit_hki.php", {
-            method: "POST",
-            body: formData
-        })
-            .then(response => response.text())
-            .then(result => {
-                Swal.fire({
-                    icon: result.includes("berhasil") ? "success" : "error",
-                    title: result.includes("berhasil") ? "Berhasil!" : "Gagal!",
-                    text: result,
-                    timer: 2000,
-                    showConfirmButton: false
+        // Tampilkan SweetAlert untuk progres
+        Swal.fire({
+            title: "Mengunggah Pengajuan...",
+            html: `
+                <div id="progress-container">
+                <div id="progress-bar-container">
+                    <div id="progress-bar"></div>
+                </div>
+                    <p id="progress-text">0%</p>
+                </div>
+            `,
+            allowOutsideClick: false,
+            showConfirmButton: false,
+            didOpen: () => {
+                const xhr = new XMLHttpRequest();
+                const startTime = Date.now(); // Catat waktu mulai
+
+                // Perbarui progres upload
+                xhr.upload.addEventListener("progress", function (e) {
+                    if (e.lengthComputable) {
+                        const percentComplete = Math.round((e.loaded / e.total) * 100);
+                        const progressBar = document.getElementById("progress-bar");
+                        const progressText = document.getElementById("progress-text");
+
+                        progressBar.style.width = `${percentComplete}%`;
+                        progressText.textContent = `${percentComplete}%`;
+                    }
                 });
 
-                if (result.includes("berhasil")) {
-                    form.reset(); // Reset semua input dalam form
-                    document.getElementById("pencipta-list").innerHTML = ""; // Kosongkan daftar pencipta
+                // Kirim data form
+                xhr.open("POST", "services/submit_hki.php", true);
+                xhr.onload = function () {
+                    const elapsedTime = Date.now() - startTime; // Hitung waktu yang telah berlalu
+                    const delay = Math.max(1500 - elapsedTime, 0); // Hitung delay agar minimal 1.5 detik
 
-                    // Reset elemen Select2
-                    $('#jenis_hak_cipta').val(null).trigger('change');
-                    $('#sub_jenis_hak_cipta').val(null).trigger('change');
-                    $('#nationality').val(null).trigger('change');
-                }
-            })
-            .catch(error => {
-                console.error("Error:", error);
-                Swal.fire({
-                    icon: "error",
-                    title: "Oops...",
-                    text: "Terjadi kesalahan saat mengirim data."
-                });
-            });
+                    setTimeout(() => {
+                        Swal.close(); // Tutup SweetAlert progres setelah delay
+
+                        Swal.fire({
+                            icon: xhr.responseText.includes("berhasil") ? "success" : "error",
+                            title: xhr.responseText.includes("berhasil") ? "Berhasil!" : "Gagal!",
+                            text: xhr.responseText,
+                            showConfirmButton: false, // Tidak ada tombol confirm
+                            timer: 2000 // Menunggu 2 detik
+                        });
+
+                        if (xhr.responseText.includes("berhasil")) {
+                            // Reset semua input dalam form
+                            form.reset();
+
+                            // Kosongkan daftar pencipta
+                            document.getElementById("pencipta-list").innerHTML = "";
+
+                            // Reset elemen Select2
+                            $('#jenis_hak_cipta').val(null).trigger('change');
+                            $('#sub_jenis_hak_cipta').val(null).trigger('change');
+                            $('#nationality').val(null).trigger('change');
+
+                            // Kosongkan semua input Select2 lainnya (jika ada)
+                            $('.select2-hidden-accessible').val(null).trigger('change');
+                        }
+                    }, delay);
+                };
+
+                xhr.onerror = function () {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Terjadi kesalahan saat mengirim data."
+                    });
+                };
+
+                xhr.onloadend = function () {
+                    // Aktifkan kembali tombol submit setelah proses selesai
+                    submitButton.disabled = false;
+                };
+
+                xhr.send(formData);
+            }
+        });
+
+        // Nonaktifkan tombol submit
+        submitButton.disabled = true;
     });
 }
 
@@ -396,3 +455,8 @@ function initModalPencipta() {
         initModalPencipta();
     }
 }
+
+// Pastikan fungsi ini dipanggil saat halaman dimuat
+document.addEventListener("DOMContentLoaded", function () {
+    initFormSubmission();
+});

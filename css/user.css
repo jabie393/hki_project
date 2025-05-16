@@ -255,6 +255,35 @@
   background: #4f46e5;
 }
 
+/* styles for progress bar */
+#progress-container {
+  width: 100%;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+#progress-bar-container {
+  background-color: #f3f3f3;
+  border-radius: 5px;
+}
+
+#progress-bar {
+  background-color: #004080;
+  border-radius: 5px;
+  height: 20px;
+  transition: width 0.4s ease;
+  width: 0%;
+  height: 20px;
+}
+
+#progress-text {
+  margin-top: 30px;
+  font-size: 14px;
+  font-weight: bold;
+  color: black;
+}
+
 /*=== Dark mode styles ===*/
 body.dark-mode #user-page {
   background: #121212;
@@ -427,5 +456,22 @@ body.dark-mode .swal2-cancel {
 
 body.dark-mode .swal2-timer-progress-bar {
   background: #007bff;
+}
+
+/* Dark mode styles for progress bar */
+body.dark-mode #progress-container {
+  background-color: #1e1e1e;
+}
+
+body.dark-mode #progress-bar-container {
+  background-color: #333333;
+}
+
+body.dark-mode #progress-bar {
+  background-color: #00c6ff;
+}
+
+body.dark-mode #progress-text {
+  color: #ffffff;
 }
 /*=== End of Dark mode styles ===*/
