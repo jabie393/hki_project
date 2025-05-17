@@ -61,6 +61,7 @@ $result = $stmt->get_result();
     <!-- Css -->
     <link rel="stylesheet" href="css/hki.css">
     <link rel="stylesheet" href="css/modal.css">
+    <link rel="stylesheet" href="css/alert.css">
 </head>
 
 <div id="hki-page">

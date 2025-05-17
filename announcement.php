@@ -21,6 +21,7 @@ $result = $conn->query("SELECT * FROM announcement");
 
     <!-- Css -->
     <link rel="stylesheet" href="css/announcement.css">
+    <link rel="stylesheet" href="css/alert.css">
 </head>
 
 <div id="announcement-page">

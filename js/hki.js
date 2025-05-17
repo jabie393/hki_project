@@ -83,36 +83,68 @@ document.querySelectorAll('.approve-btn').forEach(button => {
             cancelButtonText: 'Batal'
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch('services/approve.php', {
-                    method: 'POST',
-                    body: formData
-                })
-                    .then(res => res.text())
-                    .then(data => {
-                        if (data.includes("Pengajuan telah disetujui")) {
-                            // Menampilkan SweetAlert untuk notifikasi berhasil
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Berhasil',
-                                text: 'Pengajuan disetujui!',
-                                showConfirmButton: false, // Tidak ada tombol confirm
-                                timer: 2000 // Menunggu 2 detik
-                            }).then(() => {
-                                // Setelah timer habis, reload halaman admin.php
-                                loadContent('admin.php');
-                            });
-                        } else {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Gagal',
-                                text: 'Terjadi kesalahan: ' + data
-                            });
-                        }
-                    })
-                    .catch(err => {
-                        console.error(err);
-                        Swal.fire('Error', 'Gagal menghubungi server.', 'error');
-                    });
+                Swal.fire({
+                    title: "Memproses Persetujuan...",
+                    html: `
+                        <div id="progress-container">
+                            <div id="progress-bar-container">
+                                <div id="progress-bar"></div>
+                            </div>
+                            <p id="progress-text">0%</p>
+                        </div>
+                    `,
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                    didOpen: () => {
+                        const xhr = new XMLHttpRequest();
+                        const startTime = Date.now(); // Catat waktu mulai
+
+                        xhr.upload.addEventListener("progress", function (e) {
+                            if (e.lengthComputable) {
+                                const percentComplete = Math.round((e.loaded / e.total) * 100);
+                                const progressBar = document.getElementById("progress-bar");
+                                const progressText = document.getElementById("progress-text");
+
+                                progressBar.style.width = `${percentComplete}%`;
+                                progressText.textContent = `${percentComplete}%`;
+                            }
+                        });
+
+                        xhr.open("POST", "services/approve.php", true);
+                        xhr.onload = function () {
+                            const elapsedTime = Date.now() - startTime; // Hitung waktu yang telah berlalu
+                            const delay = Math.max(1500 - elapsedTime, 0); // Hitung delay agar minimal 1,5 detik
+
+                            setTimeout(() => {
+                                Swal.close();
+
+                                if (xhr.responseText.includes("Pengajuan telah disetujui")) {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Berhasil',
+                                        text: 'Pengajuan disetujui!',
+                                        showConfirmButton: false,
+                                        timer: 2000
+                                    }).then(() => {
+                                        loadContent('admin.php');
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Gagal',
+                                        text: 'Terjadi kesalahan: ' + xhr.responseText
+                                    });
+                                }
+                            }, delay);
+                        };
+
+                        xhr.onerror = function () {
+                            Swal.fire('Error', 'Gagal menghubungi server.', 'error');
+                        };
+
+                        xhr.send(formData);
+                    }
+                });
             }
         });
     });
@@ -249,34 +281,68 @@ document.querySelectorAll('.edit-certificate-btn').forEach(button => {
         formData.append('id', id);
         formData.append('new_certificate', input.files[0]);
 
-        fetch('services/edit_certificate.php', {
-            method: 'POST',
-            body: formData
-        })
-            .then(res => res.json())
-            .then(data => {
-                Swal.fire({
-                    icon: data.status,
-                    title: data.status === 'success' ? 'Berhasil' : 'Gagal',
-                    text: data.message,
-                    showConfirmButton: false, // Tidak ada tombol confirm
-                    timer: 2000 // Menunggu 2 detik
+        Swal.fire({
+            title: "Mengunggah Sertifikat...",
+            html: `
+                <div id="progress-container">
+                    <div id="progress-bar-container">
+                        <div id="progress-bar"></div>
+                    </div>
+                    <p id="progress-text">0%</p>
+                </div>
+            `,
+            allowOutsideClick: false,
+            showConfirmButton: false,
+            didOpen: () => {
+                const xhr = new XMLHttpRequest();
+                const startTime = Date.now(); // Catat waktu mulai
+
+                xhr.upload.addEventListener("progress", function (e) {
+                    if (e.lengthComputable) {
+                        const percentComplete = Math.round((e.loaded / e.total) * 100);
+                        const progressBar = document.getElementById("progress-bar");
+                        const progressText = document.getElementById("progress-text");
+
+                        progressBar.style.width = `${percentComplete}%`;
+                        progressText.textContent = `${percentComplete}%`;
+                    }
                 });
 
-                // Perbarui tampilan download
-                if (data.status === 'success' && data.new_path) {
-                    const container = document.querySelector(`#certificate-container-${id}`);
-                    if (container) {
-                        container.innerHTML = `
-                        <a href="${data.new_path}" class="btn btn-download" download>Download</a>
-                    `;
-                    }
-                }
-            })
-            .catch(err => {
-                console.error(err);
-                Swal.fire('Error', 'Terjadi kesalahan saat mengunggah sertifikat.', 'error');
-            });
+                xhr.open("POST", "services/edit_certificate.php", true);
+                xhr.onload = function () {
+                    const elapsedTime = Date.now() - startTime; // Hitung waktu yang telah berlalu
+                    const delay = Math.max(1500 - elapsedTime, 0); // Hitung delay agar minimal 1,5 detik
+
+                    setTimeout(() => {
+                        Swal.close();
+
+                        const response = JSON.parse(xhr.responseText);
+                        Swal.fire({
+                            icon: response.status,
+                            title: response.status === 'success' ? 'Berhasil' : 'Gagal',
+                            text: response.message,
+                            showConfirmButton: false,
+                            timer: 2000
+                        });
+
+                        if (response.status === 'success' && response.new_path) {
+                            const container = document.querySelector(`#certificate-container-${id}`);
+                            if (container) {
+                                container.innerHTML = `
+                                    <a href="${response.new_path}" class="btn btn-download" download>Download</a>
+                                `;
+                            }
+                        }
+                    }, delay);
+                };
+
+                xhr.onerror = function () {
+                    Swal.fire('Error', 'Terjadi kesalahan saat mengunggah sertifikat.', 'error');
+                };
+
+                xhr.send(formData);
+            }
+        });
     });
 });
 //== Ajax (Dashboard & Rekap_hki(Admin)) ==//

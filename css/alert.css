@@ -1,0 +1,157 @@
+/* Styling Sweet Alert */
+.swal2-popup {
+  font-family: "Inter", sans-serif;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* Judul alert */
+.swal2-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+}
+
+/* Isi pesan */
+.swal2-html-container {
+  font-size: 1rem;
+  color: #4b5563; /* medium gray */
+}
+
+/* Tombol konfirmasi */
+.swal2-confirm {
+  background-color: #004080 !important;
+  color: #fff !important;
+  border-radius: 8px !important;
+  font-weight: 600;
+  padding: 0.5rem 1.25rem;
+  --swal2-action-button-outline: none !important;
+}
+
+.swal2-confirm:hover {
+  background-color: #002a5e !important;
+}
+
+/* Tombol cancel */
+.swal2-cancel {
+  background-color: #e5e7eb !important;
+  color: #374151 !important; /* gray-700 */
+  border-radius: 8px !important;
+  font-weight: 600;
+  padding: 0.5rem 1.25rem;
+  --swal2-action-button-outline: none !important;
+}
+
+/* Ikon status */
+.swal2-icon {
+  margin-top: 0;
+}
+
+/* Progress bar jika ada */
+.swal2-timer-progress-bar {
+  background: #4f46e5;
+}
+
+/* styles for progress bar */
+#progress-container {
+  width: 100%;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+#progress-bar-container {
+  background-color: #f3f3f3;
+  border-radius: 5px;
+}
+
+#progress-bar {
+  background-color: #004080;
+  border-radius: 5px;
+  height: 20px;
+  transition: width 0.4s ease;
+  width: 0%;
+  height: 20px;
+}
+
+#progress-text {
+  margin-top: 30px;
+  font-size: 14px;
+  font-weight: bold;
+  color: black;
+}
+
+/*=== Dark mode styles ===*/
+/* Sweet Alert */
+body.dark-mode .swal2-popup {
+  background-color: #1e1e1e;
+  color: #ffffff;
+}
+
+body.dark-mode .swal2-title {
+  color: #ffffff;
+}
+
+body.dark-mode .swal2-html-container {
+  color: #cccccc;
+}
+
+body.dark-mode .swal2-confirm {
+  background-color: #333333 !important;
+  color: #ffffff !important;
+}
+
+body.dark-mode .swal2-confirm:hover {
+  background-color: #444444 !important;
+}
+
+body.dark-mode .swal2-cancel {
+  background-color: #444444 !important;
+  color: #ffffff !important;
+}
+
+body.dark-mode .swal2-timer-progress-bar {
+  background: #007bff;
+}
+
+/* Dark mode styles for progress bar */
+body.dark-mode #progress-container {
+  background-color: #1e1e1e;
+}
+
+body.dark-mode #progress-bar-container {
+  background-color: #333333;
+}
+
+body.dark-mode #progress-bar {
+  background-color: #00c6ff;
+}
+
+body.dark-mode #progress-text {
+  color: #ffffff;
+}
+/*=== End of Dark mode styles ===*/
+
+/* Responsiveness for SweetAlert2 */
+@media (max-width: 768px) {
+  .swal2-popup {
+    width: 90% !important; /* Adjust width for smaller screens */
+    padding: 1rem !important; /* Adjust padding */
+  }
+
+  .swal2-title {
+    font-size: 1.2rem !important; /* Smaller font size for titles */
+  }
+
+  .swal2-html-container {
+    font-size: 0.9rem !important; /* Adjust font size for content */
+  }
+
+  .swal2-confirm,
+  .swal2-cancel {
+    font-size: 0.9rem !important; /* Adjust button font size */
+    padding: 0.4rem 1rem !important; /* Adjust button padding */
+  }
+}

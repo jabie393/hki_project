@@ -27,6 +27,7 @@ $images = $result->fetch_all(MYSQLI_ASSOC);
     <!-- Css -->
     <link rel="stylesheet" href="css/sign.css">
     <link rel="stylesheet" href="css/header&footer.css">
+    <link rel="stylesheet" href="css/alert.css">
 
     <!-- Tailwind & font-awesome -->
     <script src="https://cdn.tailwindcss.com"></script>

@@ -249,59 +249,6 @@ select:not(.select2-hidden-accessible) {
   border: 3px solid #ccc;
 }
 
-/* Alert Style */
-.swal2-popup {
-  font-family: "Inter", sans-serif;
-  border-radius: 16px;
-  padding: 1.5rem;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-}
-
-/* Judul alert */
-.swal2-title {
-  font-size: 1.4rem;
-  font-weight: 600;
-  color: #1f2937; /* dark gray */
-  margin-bottom: 0.5rem;
-}
-
-/* Isi pesan */
-.swal2-html-container {
-  font-size: 1rem;
-  color: #4b5563; /* medium gray */
-}
-
-/* Tombol konfirmasi */
-.swal2-confirm {
-  background-color: #004080 !important;
-  color: #fff !important;
-  border-radius: 8px !important;
-  font-weight: 600;
-  padding: 0.5rem 1.25rem;
-}
-.swal2-confirm:hover {
-  background-color: #002a5e !important;
-}
-
-/* Tombol cancel */
-.swal2-cancel {
-  background-color: #e5e7eb !important;
-  color: #374151 !important; /* gray-700 */
-  border-radius: 8px !important;
-  font-weight: 600;
-  padding: 0.5rem 1.25rem;
-}
-
-/* Ikon status */
-.swal2-icon {
-  margin-top: 0;
-}
-
-/* Progress bar jika ada */
-.swal2-timer-progress-bar {
-  background: #4f46e5;
-}
-
 /*=== Dark mode styles ===*/
 body.dark-mode #edit_profile-page {
   background: #121212;
@@ -437,38 +384,6 @@ body.dark-mode #edit_profile-page #previewImage {
 body.dark-mode #edit_profile-page img[src*="profile.jpg"],
 body.dark-mode #edit_profile-page img[src*="default-avatar.png"] {
   border: 2px solid #00c6ff;
-}
-
-/* Sweet Alert */
-body.dark-mode .swal2-popup {
-  background-color: #1e1e1e;
-  color: #ffffff;
-}
-
-body.dark-mode .swal2-title {
-  color: #ffffff;
-}
-
-body.dark-mode .swal2-html-container {
-  color: #cccccc;
-}
-
-body.dark-mode .swal2-confirm {
-  background-color: #333333 !important;
-  color: #ffffff !important;
-}
-
-body.dark-mode .swal2-confirm:hover {
-  background-color: #444444 !important;
-}
-
-body.dark-mode .swal2-cancel {
-  background-color: #444444 !important;
-  color: #ffffff !important;
-}
-
-body.dark-mode .swal2-timer-progress-bar {
-  background: #007bff;
 }
 /*=== End of Dark mode styles ===*/
 

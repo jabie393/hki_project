@@ -30,6 +30,7 @@ $query->close();
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/update_account.css">
+    <link rel="stylesheet" href="css/alert.css">
 </head>
 
 <div id="update_account-page">
