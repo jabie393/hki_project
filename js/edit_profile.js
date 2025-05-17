@@ -29,44 +29,79 @@ function initEditProfilePage() {
 
         const formData = new FormData(form);
 
-        fetch('services/submit_profile.php', {
-            method: 'POST',
-            body: formData
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === 'success') {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Berhasil',
-                        text: data.message,
-                        timer: 2000,
-                        showConfirmButton: false
-                    }).then(() => {
-                        refreshAllProfilePics(); // update yang sudah di DOM saat ini
+        Swal.fire({
+            title: "Mengupdate Profil...",
+            html: `
+                <div id="progress-container">
+                    <div id="progress-bar-container">
+                        <div id="progress-bar"></div>
+                    </div>
+                    <p id="progress-text">0%</p>
+                </div>
+            `,
+            allowOutsideClick: false,
+            showConfirmButton: false,
+            didOpen: () => {
+                const xhr = new XMLHttpRequest();
+                const startTime = Date.now(); // Catat waktu mulai
 
-                        // Muat ulang konten dan setelah selesai, update juga profil baru yang muncul
-                        loadContent('edit_profile.php', () => {
-                            refreshAllProfilePics(); // update juga elemen baru dari halaman edit_profile.php
-                        });
-                    });
-                } else {
+                xhr.upload.addEventListener("progress", function (e) {
+                    if (e.lengthComputable) {
+                        const percentComplete = Math.round((e.loaded / e.total) * 100);
+                        const progressBar = document.getElementById("progress-bar");
+                        const progressText = document.getElementById("progress-text");
+
+                        progressBar.style.width = `${percentComplete}%`;
+                        progressText.textContent = `${percentComplete}%`;
+                    }
+                });
+
+                xhr.open("POST", "services/submit_profile.php", true);
+                xhr.onload = function () {
+                    const elapsedTime = Date.now() - startTime; // Hitung waktu yang telah berlalu
+                    const delay = Math.max(1500 - elapsedTime, 0); // Hitung delay agar minimal 1,5 detik
+
+                    setTimeout(() => {
+                        Swal.close();
+
+                        const response = JSON.parse(xhr.responseText);
+                        if (response.status === 'success') {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Berhasil',
+                                text: response.message,
+                                timer: 2000,
+                                showConfirmButton: false
+                            }).then(() => {
+                                refreshAllProfilePics(); // Update gambar profil di DOM
+
+                                // Muat ulang konten dan update elemen baru
+                                loadContent('edit_profile.php', () => {
+                                    refreshAllProfilePics();
+                                });
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Gagal',
+                                text: response.message
+                            });
+                        }
+                    }, delay);
+                };
+
+                xhr.onerror = function () {
                     Swal.fire({
                         icon: 'error',
-                        title: 'Gagal',
-                        text: data.message
+                        title: 'Oops!',
+                        text: 'Terjadi kesalahan saat mengupdate profil.'
                     });
-                }
-            })
+                };
 
-            .catch(error => {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops!',
-                    text: 'Terjadi kesalahan saat mengirim data.'
-                });
-            });
-    },);
+                xhr.send(formData);
+            }
+        });
+    });
 
     // ==== Load Negara ====
     const select = $("#nationality");

@@ -21,6 +21,7 @@ if (!$result) {
 
     <!-- Css -->
     <link rel="stylesheet" href="css/template.css">
+    <link rel="stylesheet" href="css/alert.css">
 </head>
 
 <div id="template-page">

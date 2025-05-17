@@ -51,36 +51,71 @@ fileInput.addEventListener('change', function () {
 });
 
 // Upload file via AJAX
-document.getElementById('fileInput').addEventListener('change', function () {
-    const fileName = this.files[0]?.name || "Belum ada file dipilih";
-    document.getElementById('file-name').textContent = fileName;
-});
-
 document.getElementById('uploadForm').addEventListener('submit', function (e) {
     e.preventDefault();
 
     const formData = new FormData(this);
 
-    fetch('services/edit_template.php', {
-        method: 'POST',
-        body: formData
-    })
-    .then(res => res.json())
-    .then(response => {
-        Swal.fire({
-            icon: response.status,
-            title: response.status === 'success' ? 'Berhasil' : 'Gagal',
-            text: response.message,
-            showConfirmButton: false, // Tidak ada tombol confirm
-            timer: 2000 // Menunggu 2 detik
-        }).then(() => {
-            if (response.status === 'success') {
-                refreshDocumentList();
-            }
-        });
-    })
-    .catch(err => {
-        Swal.fire('Error', 'Terjadi kesalahan saat upload.', 'error');
+    Swal.fire({
+        title: "Mengunggah File...",
+        html: `
+            <div id="progress-container">
+                <div id="progress-bar-container">
+                    <div id="progress-bar"></div>
+                </div>
+                <p id="progress-text">0%</p>
+            </div>
+        `,
+        allowOutsideClick: false,
+        showConfirmButton: false,
+        didOpen: () => {
+            const xhr = new XMLHttpRequest();
+            const startTime = Date.now(); // Catat waktu mulai
+
+            xhr.upload.addEventListener("progress", function (e) {
+                if (e.lengthComputable) {
+                    const percentComplete = Math.round((e.loaded / e.total) * 100);
+                    const progressBar = document.getElementById("progress-bar");
+                    const progressText = document.getElementById("progress-text");
+
+                    progressBar.style.width = `${percentComplete}%`;
+                    progressText.textContent = `${percentComplete}%`;
+                }
+            });
+
+            xhr.open("POST", "services/edit_template.php", true);
+            xhr.onload = function () {
+                const elapsedTime = Date.now() - startTime; // Hitung waktu yang telah berlalu
+                const delay = Math.max(1500 - elapsedTime, 0); // Hitung delay agar minimal 1,5 detik
+
+                setTimeout(() => {
+                    Swal.close();
+
+                    const response = JSON.parse(xhr.responseText);
+                    Swal.fire({
+                        icon: response.status === 'success' ? 'success' : 'error',
+                        title: response.status === 'success' ? 'Berhasil' : 'Gagal',
+                        text: response.message,
+                        showConfirmButton: false,
+                        timer: 2000
+                    }).then(() => {
+                        if (response.status === 'success') {
+                            refreshDocumentList();
+                        }
+                    });
+                }, delay);
+            };
+
+            xhr.onerror = function () {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Gagal!',
+                    text: 'Terjadi kesalahan saat mengunggah.',
+                });
+            };
+
+            xhr.send(formData);
+        }
     });
 });
 
