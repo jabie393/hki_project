@@ -137,7 +137,6 @@ body.dark-mode #progress-text {
 /* Responsiveness for SweetAlert2 */
 @media (max-width: 768px) {
   .swal2-popup {
-    width: 90% !important; /* Adjust width for smaller screens */
     padding: 1rem !important; /* Adjust padding */
   }
 
