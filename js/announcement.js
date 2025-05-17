@@ -98,7 +98,7 @@ function setupDeleteButtons() {
 
             Swal.fire({
                 title: 'Yakin ingin menghapus?',
-                text: "Gambar ini tidak bisa dikembalikan!",
+                text: "Pengumuman ini tidak bisa dikembalikan!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#e3342f',

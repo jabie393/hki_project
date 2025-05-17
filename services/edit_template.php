@@ -26,9 +26,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         if (move_uploaded_file($fileTmp, $targetFile)) {
             $conn->query("INSERT INTO template_documents (doc_type, filename, filepath) VALUES ('$docType', '$fileName', '$dbFilePath')");
-            echo json_encode(['status' => 'success', 'message' => 'Upload berhasil.']);
+            echo json_encode(['status' => 'success', 'message' => 'Dokumen berhasil diunggah.']);
         } else {
-            echo json_encode(['status' => 'error', 'message' => 'Upload gagal.']);
+            echo json_encode(['status' => 'error', 'message' => 'Dokumen gagal diunggah.']);
         }
     }
     exit();

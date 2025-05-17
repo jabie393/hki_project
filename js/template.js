@@ -46,7 +46,7 @@ fileInput.addEventListener('change', function () {
     if (fileInput.files.length > 0) {
         fileNameDisplay.textContent = fileInput.files[0].name;
     } else {
-        fileNameDisplay.textContent = 'Belum ada file dipilih';
+        fileNameDisplay.textContent = 'Belum ada dokumen yang dipilih';
     }
 });
 
@@ -57,7 +57,7 @@ document.getElementById('uploadForm').addEventListener('submit', function (e) {
     const formData = new FormData(this);
 
     Swal.fire({
-        title: "Mengunggah File...",
+        title: "Mengunggah Dokumen...",
         html: `
             <div id="progress-container">
                 <div id="progress-bar-container">

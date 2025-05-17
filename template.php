@@ -45,10 +45,10 @@ if (!$result) {
                 <input type="file" name="file" id="fileInput" required>
                 <label for="fileInput" class="upload-box">
                     <span class="upload-icon">📁</span>
-                    <span id="upload-text">Klik untuk memilih file</span>
+                    <span id="upload-text">Klik untuk memilih dokumen</span>
                 </label>
             </div>
-            <span id="file-name">Belum ada file dipilih</span>
+            <span id="file-name">Belum ada dokumen yang dipilih</span>
             <button type="submit">Upload</button>
         </form>
 
