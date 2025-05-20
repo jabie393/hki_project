@@ -150,7 +150,7 @@ $result = $conn->query($query);
                         </td>
                         <td>
                             <div class="input-wrapper">
-                                <input type="file" id="edit_certificate_<?= $row['id'] ?>" class="input-file" required>
+                                <input type="file" id="edit_certificate_<?= $row['id'] ?>" class="input-file" accept="image/*,.pdf,.doc,.docx,.zip,.rar,.7z,.tar,.gz" required>
                                 <button type="button" class="btn btn-warning edit-certificate-btn"
                                     data-id="<?= $row['id'] ?>">Edit</button>
                             </div>

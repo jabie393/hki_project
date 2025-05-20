@@ -163,21 +163,39 @@ function initEditProfilePage() {
             })
             .catch(error => console.error("Gagal memuat data negara:", error));
     }
+}
 
-    // ==== CropperJS Upload ====
-    let cropper;
+// ==== Scripct menonaktifkan right click pada cropper ==== //
+document.getElementById("modal-page").addEventListener("contextmenu", function (e) {
+    e.preventDefault();
+});
+
+function setupProfilePictureInput() {
     const input = document.getElementById('profilePictureInput');
     const modal = document.getElementById('cropperModal');
-    const closeModal = document.getElementById('closeCropperModal');
     const modalPreviewImage = document.getElementById('modalPreviewImage');
-    const confirmCropButton = document.getElementById('confirmCropButton');
     const croppedImageInput = document.getElementById('croppedImageInput');
     const previewCircle = document.getElementById('previewCroppedCircle');
+    let cropper;
 
     if (input) {
         input.addEventListener('change', function (event) {
             const file = event.target.files[0];
+            const maxSize = 5 * 1024 * 1024; // 5MB in bytes
+
             if (file) {
+                // Validasi ukuran file
+                if (file.size > maxSize) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Ukuran Foto Terlalu Besar',
+                        text: 'Ukuran foto melebihi batas maksimal 5MB. Silakan kompres atau pilih foto lain.',
+                    });
+                    input.value = ''; // Reset input file
+                    return;
+                }
+
+                // Jika validasi berhasil, buka modal cropper
                 const reader = new FileReader();
                 reader.onload = function (e) {
                     modalPreviewImage.src = e.target.result;
@@ -186,14 +204,14 @@ function initEditProfilePage() {
                     // Hancurkan instance cropper sebelumnya jika ada
                     if (cropper) {
                         cropper.destroy();
-                        cropper = null; // Cropper di-reset
+                        cropper = null;
                     }
 
                     // Buat instance cropper baru
                     cropper = new Cropper(modalPreviewImage, {
                         aspectRatio: 1,
                         viewMode: 1,
-                        autoCropArea: 1
+                        autoCropArea: 1,
                     });
                 };
                 reader.readAsDataURL(file);
@@ -201,6 +219,7 @@ function initEditProfilePage() {
         });
     }
 
+    const confirmCropButton = document.getElementById('confirmCropButton');
     if (confirmCropButton) {
         confirmCropButton.addEventListener('click', function () {
             if (!cropper) return alert("Cropper belum siap!");
@@ -217,6 +236,7 @@ function initEditProfilePage() {
         });
     }
 
+    const closeModal = document.getElementById('closeCropperModal');
     if (closeModal) {
         closeModal.addEventListener('click', function () {
             modal.style.display = 'none';
@@ -224,26 +244,12 @@ function initEditProfilePage() {
             // Hancurkan instance cropper saat modal ditutup
             if (cropper) {
                 cropper.destroy();
-                cropper = null; // Cropper di-reset
+                cropper = null;
             }
         });
     }
-
-    window.addEventListener('click', function (event) {
-        if (event.target == modal) {
-            modal.style.display = 'none';
-
-            // Hancurkan instance cropper saat modal ditutup
-            if (cropper) {
-                cropper.destroy();
-                cropper = null; // Cropper di-reset
-            }
-        }
-    });
 }
 
-
-// ==== Scripct menonaktifkan right click pada cropper ==== //
-document.getElementById("modal-page").addEventListener("contextmenu", function (e) {
-    e.preventDefault();
+document.addEventListener('DOMContentLoaded', function () {
+    setupProfilePictureInput();
 });

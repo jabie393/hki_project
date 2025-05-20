@@ -18,6 +18,38 @@
   margin-bottom: 20px;
 }
 
+#user-page .custom-file-input {
+  opacity: 0;
+  position: absolute;
+  z-index: -1;
+  overflow: hidden;
+}
+
+#user-page .custom-file-label {
+  font-size: 13px;
+  color: white!important;
+  background-color: #004080;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-block!important;
+  margin-top: 5px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.2s;
+}
+
+#user-page .custom-file-label:hover {
+  background-color: #002a5e;
+}
+
+#user-page .file-name {
+  margin-left: 10px;
+  font-style: italic;
+  font-size: 0.9em;
+  color: grey;
+}
+
+
 #user-page label {
   font-weight: 500;
   display: block;
@@ -30,7 +62,6 @@
 #user-page input[type="file"],
 #user-page select,
 #user-page textarea {
-  width: 100%;
   padding: 10px 12px;
   border: 1px solid #ced4da;
   background-color: #eef2ff;
@@ -38,6 +69,13 @@
   font-size: 14px;
   transition: border-color 0.2s;
   box-sizing: border-box;
+}
+
+#user-page input[type="text"],
+#user-page input[type="date"],
+#user-page select,
+#user-page textarea {
+  width: 100%;
 }
 
 #user-page input:focus,
@@ -300,6 +338,15 @@ body.dark-mode
   background-color: #1e1e1e;
 }
 
+body.dark-mode #user-page button {
+  background-color: #333333;
+  color: #ffffff;
+}
+
+body.dark-mode #user-page button:hover {
+  background-color: #444444;
+}
+
 /* Label */
 body.dark-mode #user-page label {
   color: #ffffff;
@@ -316,12 +363,12 @@ body.dark-mode #user-page button:hover {
 }
 
 /* Download buttons */
-body.dark-mode #user-page .download-btn button {
+body.dark-mode #user-page .custom-file-label {
   background-color: #333333;
   color: #ffffff;
 }
 
-body.dark-mode #user-page .download-btn button:hover {
+body.dark-mode #user-page .custom-file-label:hover {
   background-color: #444444;
 }
 

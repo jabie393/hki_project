@@ -131,7 +131,7 @@ $result = $conn->query($query);
                                     <label for="certificate_<?= $row['id'] ?>" class="file-label">Sertifikat</label>
                                     <div class="input-file-wrapper">
                                         <input type="file" id="certificate_<?= $row['id'] ?>" name="certificate"
-                                            class="input-file">
+                                            class="input-file" accept="image/*,.pdf,.doc,.docx,.zip,.rar,.7z,.tar,.gz">
                                     </div>
                                     <button type="button" class="btn btn-safe approve-btn" data-id="<?= $row['id'] ?>"
                                         data-form="form_<?= $row['id'] ?>" data-user="<?= $row['user_id'] ?>">

@@ -69,18 +69,14 @@ function afterContentLoaded(url) {
     // Inisialisasi halaman spesifik
     if (cleanUrl.endsWith("user.php")) {
         if (typeof initUserPage === "function") initUserPage();
-    }
-
-    if (cleanUrl.endsWith("user.php")) {
+        if (typeof setupFileValidation === "function") setupFileValidation();
         if (typeof initFormSubmission === "function") initFormSubmission();
-    }
-
-    if (cleanUrl.endsWith("user.php")) {
         if (typeof initModalPencipta === "function") initModalPencipta();
     }
 
     if (cleanUrl.endsWith("edit_profile.php")) {
         if (typeof initEditProfilePage === "function") initEditProfilePage();
+        if (typeof setupProfilePictureInput === "function") setupProfilePictureInput();
     }
 
     // Kalau ada select negara, load data negara

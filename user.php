@@ -106,8 +106,16 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
             <input type="text" spellcheck="false" name="kota_pengumuman" placeholder="Nama Kota/Kabupaten" required>
         </div>
         <div class="form-group">
-            <input type="file" name="dokumen" required />
+            <label>Lampiran Dokumen:</label>
+            <label for="fileInput" class="custom-file-label">📁 Pilih Dokumen</label>
+            <input type="file" name="dokumen" id="fileInput" class="custom-file-input"
+                accept=".pdf,.doc,.docx,.zip,.rar,.7z,.tar,.gz" required 
+                oninvalid="this.setCustomValidity('Belum ada dokumen.')"
+                oninput="this.setCustomValidity('')"/>
+            <span id="file-name" class="file-name">Belum ada dokumen</span><br>
+            <small><em><span style="color: red; font-size: 0.8em;">* </span>Ukuran maksimal dokumen 30MB</em></small>
         </div>
+
         <label>Pencipta:</label>
         <div id="pencipta-list" class="pencipta-container"></div>
         <button type="button" id="addPencipta">Tambah Pencipta</button>
@@ -133,3 +141,6 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
 </div>
 
 <script src="js/user.js"></script>
+<script>
+
+</script>

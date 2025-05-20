@@ -116,6 +116,7 @@ $profile_picture = getProfilePicture($user_id);
             <label for="profilePictureInput" class="upload-box">
                 <span class="upload-icon">🖼️</span>
                 <span id="upload-text">Klik untuk memilih foto profil</span>
+                <small style="color: grey; font-size: 0.8rem;"><em><span style="color: red; font-size: 0.8em;">* </span>Ukuran maksimal foto 5MB</em></small>
             </label>
             <input type="file" id="profilePictureInput" accept="image/*">
         </div>

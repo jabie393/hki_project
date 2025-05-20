@@ -30,7 +30,7 @@ $result = $conn->query("SELECT * FROM announcement");
 
         <form id="announcementForm" enctype="multipart/form-data">
             <div class="custom-file-upload">
-                <input type="file" name="image" id="fileInput" required>
+                <input type="file" name="image" id="fileInput" accept="image/*" required>
                 <label for="fileInput" class="upload-box">
                     <span class="upload-icon">📃</span>
                     <span id="upload-text">Klik untuk memilih file pengumuman</span>

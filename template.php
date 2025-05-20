@@ -42,7 +42,7 @@ if (!$result) {
             </div>
 
             <div class="custom-file-upload">
-                <input type="file" name="file" id="fileInput" required>
+                <input type="file" name="file" id="fileInput" accept=".pdf,.doc,.docx" required>
                 <label for="fileInput" class="upload-box">
                     <span class="upload-icon">📁</span>
                     <span id="upload-text">Klik untuk memilih dokumen</span>

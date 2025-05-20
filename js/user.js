@@ -124,12 +124,6 @@ function initUserPage() {
             `<span><img src="${flagUrl}" alt="" style="width: 20px; height: 15px; margin-right: 10px;">${option.text}</span>`
         );
     }
-
-    // ================= INIT =================
-    document.addEventListener("DOMContentLoaded", function () {
-        initJenisHakCipta();
-        initFormSubmission();
-    });
 }
 
 // ================== FORM HKI SUBMISSION ==================
@@ -236,6 +230,9 @@ function initFormSubmission() {
 
                             // Kosongkan semua input Select2 lainnya (jika ada)
                             $('.select2-hidden-accessible').val(null).trigger('change');
+
+                            // Reset tampilan nama file
+                            document.getElementById('file-name').textContent = "Belum ada dokumen";
                         }
                     }, delay);
                 };
@@ -459,4 +456,43 @@ function initModalPencipta() {
 // Pastikan fungsi ini dipanggil saat halaman dimuat
 document.addEventListener("DOMContentLoaded", function () {
     initFormSubmission();
+    setupFileValidation();
+});
+
+// ================== VALIDASI FILE ==================
+function setupFileValidation() {
+    const fileInput = document.getElementById('fileInput');
+    const fileNameDisplay = document.getElementById('file-name');
+
+    if (fileInput) {
+        fileInput.addEventListener('change', function () {
+            const file = fileInput.files[0];
+            const maxSize = 30 * 1024 * 1024; // 30MB in bytes
+
+            if (file) {
+                // Validasi ukuran file
+                if (file.size > maxSize) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Ukuran Dokumen Terlalu Besar',
+                        text: 'Ukuran dokumen melebihi batas maksimal 30MB. Silakan kompres atau pilih dokumen lain.',
+                    }).then(() => {
+                        // Reset input file dan tampilan nama file
+                        fileInput.value = ''; // Reset input file
+                        fileNameDisplay.textContent = 'Belum ada dokumen'; // Reset tampilan nama file
+                    });
+                } else {
+                    // Jika validasi berhasil, perbarui tampilan nama file
+                    fileNameDisplay.textContent = file.name;
+                }
+            } else {
+                // Jika tidak ada file yang dipilih, reset tampilan nama file
+                fileNameDisplay.textContent = 'Belum ada dokumen';
+            }
+        });
+    }
+}
+document.getElementById('fileInput').addEventListener('change', function(e) {
+    const fileName = e.target.files[0]?.name || "Belum ada dokumen";
+    document.getElementById('file-name').textContent = fileName;
 });
