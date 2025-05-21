@@ -468,12 +468,29 @@ function setupFileValidation() {
         fileInput.addEventListener('change', function () {
             const file = fileInput.files[0];
             const maxSize = 30 * 1024 * 1024; // 30MB in bytes
+            const allowedExtensions = ['pdf', 'doc', 'docx', 'zip', 'rar', '7z', 'tar', 'gz'];
 
             if (file) {
+                const fileExtension = file.name.split('.').pop().toLowerCase();
+
+                // Validasi ekstensi file
+                if (!allowedExtensions.includes(fileExtension)) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Dokumen Tidak Valid',
+                        text: `Hanya Dokumen dengan ekstensi berikut yang diizinkan: ${allowedExtensions.join(', ')}.`,
+                    }).then(() => {
+                        // Reset input file dan tampilan nama file
+                        fileInput.value = ''; // Reset input file
+                        fileNameDisplay.textContent = 'Belum ada dokumen'; // Reset tampilan nama file
+                    });
+                    return;
+                }
+
                 // Validasi ukuran file
                 if (file.size > maxSize) {
                     Swal.fire({
-                        icon: 'error',
+                        icon: 'warning',
                         title: 'Ukuran Dokumen Terlalu Besar',
                         text: 'Ukuran dokumen melebihi batas maksimal 30MB. Silakan kompres atau pilih dokumen lain.',
                     }).then(() => {

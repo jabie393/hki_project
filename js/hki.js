@@ -345,6 +345,27 @@ document.querySelectorAll('.edit-certificate-btn').forEach(button => {
         });
     });
 });
+
+// Validasi file saat diinput
+document.querySelectorAll('input[type="file"]').forEach(input => {
+    input.addEventListener('change', function () {
+        const allowedExtensions = ['pdf', 'doc', 'docx', 'zip', 'rar', '7z', 'tar', 'gz', 'jpg', 'jpeg', 'png'];
+        const file = this.files[0];
+
+        if (file) {
+            const fileExtension = file.name.split('.').pop().toLowerCase();
+
+            if (!allowedExtensions.includes(fileExtension)) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'File Sertifikat Tidak Valid',
+                    text: `Hanya Sertifikat dengan ekstensi berikut yang diizinkan: ${allowedExtensions.join(', ')}.`,
+                });
+                this.value = ''; // Reset input file
+            }
+        }
+    });
+});
 //== Ajax (Dashboard & Rekap_hki(Admin)) ==//
 
 //== Script Ajax (status_pengajuan) ==//

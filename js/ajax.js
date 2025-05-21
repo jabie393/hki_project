@@ -79,6 +79,10 @@ function afterContentLoaded(url) {
         if (typeof setupProfilePictureInput === "function") setupProfilePictureInput();
     }
 
+    if (cleanUrl.endsWith("template.php")) {
+        if (typeof initTemplatePage === "function") initTemplatePage();
+    }
+
     // Kalau ada select negara, load data negara
     if (document.querySelector("#nationality") || document.querySelector(".negara-select")) {
         if (typeof loadCountries === "function") {
