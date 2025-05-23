@@ -34,28 +34,58 @@
         </select>
     </div>
 
-    <div class="form-group">
-        <label>Provinsi:</label>
-        <input type="text" name="provinsi[]" spellcheck="false" required>
+    <!-- Form Indonesia -->
+    <div id="indonesia-form" style="display: none;">
+        <div class="form-group">
+            <label>Provinsi:</label>
+            <select name="provinsi[]" class="provinsi"></select>
+        </div>
+
+        <div class="form-group">
+            <label>Kabupaten/Kota:</label>
+            <select name="kota[]" class="kabupaten"></select>
+        </div>
+
+        <div class="form-group">
+            <label>Kecamatan:</label>
+            <select name="kecamatan[]" class="kecamatan"></select>
+        </div>
+
+        <div class="form-group">
+            <label>Kelurahan:</label>
+            <select name="kelurahan[]" class="kelurahan"></select>
+        </div>
+
+        <div class="form-group">
+            <label>Kode Pos:</label>
+            <input type="text" class="kodepos" name="kode_pos[]" />
+        </div>
     </div>
 
-    <div class="form-group">
-        <label>Kota/Kabupaten:</label>
-        <input type="text" name="kota[]" spellcheck="false" required>
-    </div>
+    <!-- Form Luar Indonesia -->
+    <div id="non-indonesia-form" style="display: none;">
+        <div class="form-group">
+            <label>State:</label>
+            <select name="provinsi[]" class="state"></select>
+        </div>
 
-    <div class="form-group">
-        <label>Kecamatan:</label>
-        <input type="text" name="kecamatan[]" spellcheck="false" required>
-    </div>
+        <div class="form-group">
+            <label>City:</label>
+            <select name="kota[]" class="city"></select>
+        </div>
 
-    <div class="form-group">
-        <label>Kelurahan:</label>
-        <input type="text" name="kelurahan[]" spellcheck="false" required>
-    </div>
+        <div class="form-group">
+        <label>District (manual):</label>
+        <input type="text" name="kecamatan[]" class="manual-kecamatan" />
+        </div>
 
-    <div class="form-group">
-        <label>Kode Pos:</label>
-        <input type="number" name="kode_pos[]" spellcheck="false" required>
+        <div class="form-group">
+        <label>Village (manual):</label>
+        <input type="text" name="kelurahan[]" class="manual-kelurahan" />
+        </div>
+
+        <div class="form-group">
+        <label>Zip Code (manual):</label>
+        <input type="text" name="kode_pos[]" class="manual-kodepos" />
+        </div>
     </div>
-</div>
