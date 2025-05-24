@@ -73,25 +73,27 @@ function initModalPencipta() {
         const values = JSON.parse(div.dataset.form);
         modalForm.reset();
 
-        const selectedCountry = values["negara[]"] || "";
+        const selectedCountryName = values["negara[]"] || "";
 
         // Tampilkan modal lebih awal agar elemen render
         modal.style.display = "flex";
 
-        loadCountriesForModalForm(selectedCountry).then(() => {
+        loadCountriesForModalForm(selectedCountryName).then(() => {
             const nationalitySelect = document.getElementById("nationalityform");
-            nationalitySelect.value = selectedCountry;
-            nationalitySelect.dispatchEvent(new Event("change")); // Toggle tampilan Indonesia vs non-Indonesia
+            nationalitySelect.value = selectedCountryName;
+            nationalitySelect.dispatchEvent(new Event("change"));
 
-            const isIndonesia = selectedCountry === "ID";
+            // Ambil kode ISO2 dari option terpilih
+            const selectedCountryCode = nationalitySelect.options[nationalitySelect.selectedIndex].dataset.iso2;
 
-            // Setelah load negara
+            const isIndonesia = selectedCountryName.toLowerCase() === "indonesia";
+
             if (isIndonesia) {
                 loadIndonesianRegionsWithValues(values).then(() => {
-                    // selesai load wilayah Indonesia
+                    // Selesai load wilayah Indonesia
                 });
             } else {
-                loadCSCStatesWithValues(selectedCountry, values).then(() => {
+                loadCSCStatesWithValues(selectedCountryCode, values).then(() => {
                     // SET INPUT MANUAL NON-INDONESIA
                     const kec = modalForm.querySelector(".manual-kecamatan");
                     const kel = modalForm.querySelector(".manual-kelurahan");
@@ -105,7 +107,6 @@ function initModalPencipta() {
 
             // Set input biasa (nama, nik, telepon, dsb)
             for (const [key, value] of Object.entries(values)) {
-                // Lewati yang di-handle manual
                 if (["provinsi[]", "kota[]", "kecamatan[]", "kelurahan[]", "kode_pos[]"].includes(key)) {
                     continue;
                 }
@@ -189,48 +190,42 @@ function initModalPencipta() {
         });
     }
 
-    function loadCSCStatesWithValues(selectedCountry, values) {
+    function loadCSCStatesWithValues(selectedCountryCode, values) {
         return new Promise((resolve) => {
             const stateSelect = document.querySelector(".state");
             const citySelect = document.querySelector(".city");
 
-            const state = values["provinsi[]"];
-            const city = values["kota[]"];
+            const stateName = values["provinsi[]"];
+            const cityName = values["kota[]"];
 
-            // Kosongkan & aktifkan dropdown
             stateSelect.innerHTML = '<option value="">Loading state...</option>';
             citySelect.innerHTML = '<option value="">Pilih City</option>';
             citySelect.disabled = true;
 
-            // 1. Load states
-            fetch(`${configCSC.cUrl}/${selectedCountry}/states`, {
-                headers: { "X-CSCAPI-KEY": configCSC.ckey }
-            })
+            fetch(`${configCSC.cUrl}/${selectedCountryCode}/states`, { headers: { "X-CSCAPI-KEY": configCSC.ckey } })
                 .then(res => res.json())
                 .then(states => {
                     stateSelect.innerHTML = '<option value="">-- Pilih State --</option>';
                     states.forEach(s => {
                         const opt = document.createElement("option");
-                        opt.value = s.iso2;
+                        opt.value = s.name;
                         opt.textContent = s.name;
+                        opt.dataset.iso2 = s.iso2;
                         stateSelect.appendChild(opt);
                     });
 
-                    // Set selected state
-                    if (state) {
-                        stateSelect.value = state;
+                    // Set state (nama) dan trigger event change manual
+                    if (stateName) {
+                        stateSelect.value = stateName;
                         stateSelect.dispatchEvent(new Event("change"));
                     }
 
-                    // 2. Setelah state dipilih, load city
-                    stateSelect.addEventListener("change", function onStateChange() {
-                        const stateCode = this.value;
-                        if (!stateCode) return;
+                    // Karena tahu state-nya, load kotanya manual
+                    const selectedStateOption = Array.from(stateSelect.options).find(opt => opt.value === stateName);
+                    const selectedStateIso2 = selectedStateOption ? selectedStateOption.dataset.iso2 : null;
 
-                        // hanya panggil sekali
-                        stateSelect.removeEventListener("change", onStateChange);
-
-                        fetch(`${configCSC.cUrl}/${selectedCountry}/states/${stateCode}/cities`, {
+                    if (selectedStateIso2) {
+                        fetch(`${configCSC.cUrl}/${selectedCountryCode}/states/${selectedStateIso2}/cities`, {
                             headers: { "X-CSCAPI-KEY": configCSC.ckey }
                         })
                             .then(res => res.json())
@@ -245,23 +240,25 @@ function initModalPencipta() {
 
                                 citySelect.disabled = false;
 
-                                if (city) {
-                                    citySelect.value = city;
+                                // Set city kalau ada
+                                if (cityName) {
+                                    citySelect.value = cityName;
                                 }
 
-                                resolve(); // semua selesai
+                                resolve();
                             });
-                    });
+                    } else {
+                        resolve();
+                    }
                 });
         });
     }
 
-    const indonesiaKeyword = "ID";
 
     // Handler negara
     document.getElementById("nationalityform").addEventListener("change", function () {
-        const selectedCountry = this.value;
-        const isIndonesia = selectedCountry === "ID";
+        const selectedCountryCode = this.options[this.selectedIndex].dataset.iso2;
+        const isIndonesia = selectedCountryCode === "ID";
 
         const indoForm = document.getElementById("indonesia-form");
         const nonIndoForm = document.getElementById("non-indonesia-form");
@@ -283,7 +280,7 @@ function initModalPencipta() {
             nonIndoForm.querySelectorAll("input").forEach(el => el.disabled = false);
             indoForm.querySelectorAll("select, input").forEach(el => el.disabled = true);
 
-            loadCSCStates(selectedCountry);
+            loadCSCStates(selectedCountryCode);
         }
     });
 
@@ -409,14 +406,16 @@ function initModalPencipta() {
             .then(data => {
                 data.forEach(state => {
                     const option = document.createElement("option");
-                    option.value = state.iso2;
+                    option.value = state.name;
                     option.textContent = state.name;
+                    option.dataset.iso2 = state.iso2;
                     stateSelect.appendChild(option);
                 });
             });
 
         stateSelect.addEventListener("change", () => {
-            const stateCode = stateSelect.value;
+            const selectedStateIso2 = stateSelect.options[stateSelect.selectedIndex].dataset.iso2; // 🔴 ambil kode ISO dari data-iso2
+            const stateCode = selectedStateIso2;
             citySelect.innerHTML = '<option value="">Pilih City</option>';
             citySelect.disabled = false;
 
@@ -442,18 +441,17 @@ function initModalPencipta() {
         const countrySelect = document.getElementById("nationalityform");
         countrySelect.innerHTML = '<option value="">Loading countries...</option>';
 
-        return fetch(configCSC.cUrl, { // Tambahkan return di sini
-            headers: {
-                "X-CSCAPI-KEY": configCSC.ckey
-            }
+        return fetch(configCSC.cUrl, {
+            headers: { "X-CSCAPI-KEY": configCSC.ckey }
         })
             .then(response => response.json())
             .then(countries => {
                 countrySelect.innerHTML = '<option value="">-- Pilih Negara --</option>';
                 countries.forEach(country => {
                     const option = document.createElement("option");
-                    option.value = country.iso2;
+                    option.value = country.name;
                     option.textContent = country.name;
+                    option.dataset.iso2 = country.iso2;
 
                     // Tandai negara yang dipilih sebelumnya
                     if (country.iso2 === selectedCountry) {
@@ -468,6 +466,7 @@ function initModalPencipta() {
                 countrySelect.innerHTML = '<option value="">Gagal memuat negara</option>';
             });
     }
+
 
     // Fungsi untuk menampilkan bendera di dropdown
     function formatCountryOption(option) {
@@ -489,8 +488,35 @@ function initModalPencipta() {
     addPenciptaBtn.addEventListener("click", function () {
         modal.style.display = "flex";
         modalForm.reset();
-        editingPencipta = null; // Reset editingPencipta saat menambah pencipta baru
-        loadCountriesForModalForm(); // Load negara untuk form modal
+        editingPencipta = null;
+        loadCountriesForModalForm(); // Load ulang dropdown negara
+
+        // Reset form agar hanya dropdown negara aktif, lainnya disembunyikan
+        const indoForm = document.getElementById("indonesia-form");
+        const nonIndoForm = document.getElementById("non-indonesia-form");
+        indoForm.style.display = "none";
+        nonIndoForm.style.display = "none";
+
+        // Reset dropdown Indonesia
+        const provinsiSelect = document.querySelector(".provinsi");
+        const kabupatenSelect = document.querySelector(".kabupaten");
+        const kecamatanSelect = document.querySelector(".kecamatan");
+        const kelurahanSelect = document.querySelector(".kelurahan");
+        const kodeposInput = document.querySelector(".kodepos");
+
+        if (provinsiSelect) provinsiSelect.innerHTML = '<option value="">Pilih Provinsi</option>';
+        if (kabupatenSelect) kabupatenSelect.innerHTML = '<option value="">Pilih Kabupaten</option>';
+        if (kecamatanSelect) kecamatanSelect.innerHTML = '<option value="">Pilih Kecamatan</option>';
+        if (kelurahanSelect) kelurahanSelect.innerHTML = '<option value="">Pilih Kelurahan</option>';
+        if (kodeposInput) kodeposInput.value = "";
+
+        // Reset dropdown non-Indonesia
+        const stateSelect = document.querySelector(".state");
+        const citySelect = document.querySelector(".city");
+        if (stateSelect) stateSelect.innerHTML = '<option value="">Pilih State</option>';
+        if (citySelect) citySelect.innerHTML = '<option value="">Pilih City</option>';
+        if (stateSelect) stateSelect.disabled = true;
+        if (citySelect) citySelect.disabled = true;
     });
 
     // Tutup modal
