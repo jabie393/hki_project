@@ -136,6 +136,24 @@
   background-color: #002a5e;
 }
 
+/* Style form error */
+.error-field {
+  border-color: #ff4444 !important;
+  outline: none;
+  box-shadow: 0 0 4px #ff4444c4 !important;
+}
+
+/* Animasi untuk shake */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-5px); }
+  40%, 80% { transform: translateX(5px); }
+}
+
+.error-field {
+  animation: shake 0.5s ease-in-out;
+}
+
 /* Select2 Styling */
 .select2-results__option img {
   vertical-align: middle;
