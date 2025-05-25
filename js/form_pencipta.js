@@ -670,6 +670,14 @@ function initModalPencipta() {
         );
     }
 
+    // Fungsi untuk menghapus kelas error dari semua field
+    function clearErrorFields() {
+        const errorFields = document.querySelectorAll('.error-field');
+        errorFields.forEach(field => {
+            field.classList.remove('error-field');
+        });
+    }
+
     // Modal
     // ==== Modal Tambah Pencipta ====
     const addPenciptaBtn = document.getElementById("addPencipta");
@@ -680,7 +688,12 @@ function initModalPencipta() {
         modal.style.display = "flex";
         modalForm.reset();
         editingPencipta = null;
-        loadCountriesForModalForm(); // Load ulang dropdown negara
+
+        // Hapus semua error field sebelum memulai
+        clearErrorFields();
+
+        // Load ulang dropdown negara
+        loadCountriesForModalForm();
 
         // Reset form agar hanya dropdown negara aktif, lainnya disembunyikan
         const indoForm = document.getElementById("indonesia-form");
