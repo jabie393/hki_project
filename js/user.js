@@ -57,31 +57,27 @@ function initUserPage() {
         }
     });
 
-    // ================== JENIS & SUBJENIS ==================
-    function initJenisHakCipta() {
-        const jenisSelect = document.getElementById("jenis_hak_cipta");
-        const subJenisSelect = document.getElementById("sub_jenis_hak_cipta");
-
-        const options = { /* tetap sama seperti sebelumnya, tidak diubah */ };
-
-        if (jenisSelect && subJenisSelect) {
-            jenisSelect.addEventListener("change", function () {
-                const jenis = this.value;
-                subJenisSelect.innerHTML = "";
-                if (options[jenis]) {
-                    subJenisSelect.innerHTML = '<option value="">-- Pilih Sub Jenis --</option>' +
-                        options[jenis].map(option => `<option value="${option}">${option}</option>`).join("");
-                }
-            });
-        }
-    }
-
     // ================== LOAD NEGARA ==================
     function loadCountriesForMainForm() {
-        fetch("https://restcountries.com/v3.1/all")
-            .then(response => response.json())
+        // Konfigurasi API
+        const configCSC = {
+            cUrl: 'https://api.countrystatecity.in/v1/countries',
+            ckey: 'NHhvOEcyWk50N2Vna3VFTE00bFp3MjFKR0ZEOUhkZlg4RTk1MlJlaA=='
+        };
+
+        fetch(configCSC.cUrl, {
+            headers: {
+                "X-CSCAPI-KEY": configCSC.ckey
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
             .then(data => {
-                data.sort((a, b) => a.name.common.localeCompare(b.name.common));
+                data.sort((a, b) => a.name.localeCompare(b.name));
 
                 const mainFormSelect = document.querySelector("#nationality");
                 if (!mainFormSelect) return;
@@ -89,12 +85,13 @@ function initUserPage() {
                 mainFormSelect.innerHTML = '<option value="">-- Pilih Negara --</option>';
                 data.forEach(country => {
                     const option = document.createElement("option");
-                    option.value = country.name.common;
-                    option.textContent = country.name.common;
-                    option.setAttribute("data-flag", country.flags.svg); // Tambahkan URL bendera
+                    option.value = country.name;
+                    option.textContent = country.name;
+                    option.setAttribute("data-flag", `https://flagcdn.com/w20/${country.iso2.toLowerCase()}.png`);
                     mainFormSelect.appendChild(option);
                 });
 
+                // Inisialisasi Select2 (kode tetap sama)
                 const $select = $(mainFormSelect);
                 if ($select.hasClass("select2-hidden-accessible")) {
                     $select.select2('destroy');
@@ -107,11 +104,20 @@ function initUserPage() {
                     allowClear: true,
                     width: '100%'
                 });
+
                 $('#nationality').on('select2:open', function () {
                     document.querySelector('.select2-search__field').focus();
                 });
             })
-            .catch(error => console.error("Gagal memuat data negara untuk form utama:", error));
+            .catch(error => {
+                console.error("Gagal memuat data negara:", error);
+                // Fallback: Jika API gagal, tampilkan pesan error atau gunakan data statis
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Gagal Memuat Data Negara',
+                    text: 'Tidak dapat memuat daftar negara. Silakan coba lagi nanti.'
+                });
+            });
     }
 
     // Fungsi untuk menampilkan bendera di dropdown
@@ -157,26 +163,27 @@ function initFormSubmission() {
         const hiddenInputsContainer = document.getElementById("pencipta-hidden-inputs");
         hiddenInputsContainer.innerHTML = "";
 
+        // Daftar field yang harus ada
+        const requiredFields = [
+            'nik[]', 'nama[]', 'no_telepon[]', 'jenis_kelamin[]', 'alamat[]',
+            'negara[]', 'provinsi[]', 'kota[]', 'kecamatan[]', 'kelurahan[]', 'kode_pos[]'
+        ];
+
         penciptaDivs.forEach(div => {
             const data = JSON.parse(div.dataset.form);
 
-            for (const [key, value] of Object.entries(data)) {
-                if (Array.isArray(value)) {
-                    value.forEach(v => {
-                        const input = document.createElement("input");
-                        input.type = "hidden";
-                        input.name = key; // Contoh: "kode_pos[]"
-                        input.value = v.toString().trim().replace(/,+$/, ""); // hapus koma
-                        hiddenInputsContainer.appendChild(input);
-                    });
-                } else {
-                    const input = document.createElement("input");
-                    input.type = "hidden";
-                    input.name = key;
-                    input.value = value.toString().trim().replace(/,+$/, "");
-                    hiddenInputsContainer.appendChild(input);
-                }
-            }
+            // Pastikan semua field ada
+            requiredFields.forEach(field => {
+                const input = document.createElement("input");
+                input.type = "hidden";
+                input.name = field;
+
+                // Ambil nilai dari data atau gunakan "-" jika tidak ada
+                const fieldName = field.replace('[]', '');
+                input.value = data[field] || "-";
+
+                hiddenInputsContainer.appendChild(input);
+            });
         });
 
 

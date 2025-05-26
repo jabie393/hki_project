@@ -5,12 +5,39 @@ function initModalPencipta() {
     const penciptaList = document.getElementById("pencipta-list");
     let editingPencipta = null;
 
+    const stateSelect = document.querySelector(".state");
+    const citySelect = document.querySelector(".city");
+
     // Pastikan listener hanya ditambahkan sekali
     if (!modalForm.dataset.listenerAdded) {
         modalForm.dataset.listenerAdded = true;
 
-        modalForm.addEventListener("submit", (e) => {
+        modalForm.addEventListener("submit", function (e) {
             e.preventDefault();
+
+            // Untuk negara tanpa state, set nilai default
+            const countrySelect = document.getElementById("nationalityform");
+            const countryCode = countrySelect.options[countrySelect.selectedIndex]?.dataset.iso2;
+
+            if (countryCode && countryCode !== "ID" && !countryHasStates(countryCode)) {
+                document.querySelectorAll('input[name="provinsi[]"]').forEach(el => el.value = "-");
+                document.querySelectorAll('input[name="kota[]"]').forEach(el => el.value = "-");
+                document.querySelectorAll('input[name="kecamatan[]"]').forEach(el => el.value = "-");
+                document.querySelectorAll('input[name="kelurahan[]"]').forEach(el => el.value = "-");
+                document.querySelectorAll('input[name="kode_pos[]"]').forEach(el => el.value = "-");
+            }
+
+            // Ambil elemen form
+            const negaraSelect = document.getElementById("nationalityform");
+            const selectedCountryCode = negaraSelect.options[negaraSelect.selectedIndex].dataset.iso2;
+            const isIndonesia = selectedCountryCode === "ID";
+
+            // Jika negara non-Indonesia dan tidak memiliki state
+            if (!isIndonesia && negaraSelect.value && !countryHasStates(selectedCountryCode)) {
+                // Force set nilai untuk negara tanpa state
+                document.querySelector('input[name="kecamatan[]"]').value = "-";
+                document.querySelector('input[name="kelurahan[]"]').value = "-";
+            }
 
             // Cek apakah form Indonesia aktif
             const isIndonesiaFormActive = document.getElementById('indonesia-form').style.display !== 'none';
@@ -25,6 +52,13 @@ function initModalPencipta() {
                 // Skip field dari form yang tidak aktif
                 if (isIndonesiaFormActive && field.closest('#non-indonesia-form')) return;
                 if (!isIndonesiaFormActive && field.closest('#indonesia-form')) return;
+
+                // Skip field state/city jika dropdown disabled atau tidak tersedia
+                if ((field.name === 'provinsi[]' || field.name === 'kota[]') && field.disabled) return;
+
+                // Skip field district dan village jika tidak required
+                if ((field.name === 'kecamatan[]' || field.name === 'kelurahan[]') &&
+                    !field.classList.contains('required-field')) return;
 
                 // Validasi khusus untuk dropdown
                 if (field.tagName === 'SELECT') {
@@ -178,6 +212,9 @@ function initModalPencipta() {
         const values = JSON.parse(div.dataset.form);
         modalForm.reset();
 
+        // Hapus semua error field sebelum memulai
+        clearErrorFields();
+
         const selectedCountryName = values["negara[]"] || "";
 
         // Tampilkan modal lebih awal agar elemen render
@@ -257,9 +294,8 @@ function initModalPencipta() {
     }
 
     // Handler negara
-    $(document).on("change", "#nationalityform", function () {
+    $(document).on("change", "#nationalityform", async function () {
         const selectedCountryCode = this.options[this.selectedIndex].dataset.iso2;
-
         const isIndonesia = selectedCountryCode === "ID";
         const indoForm = document.getElementById("indonesia-form");
         const nonIndoForm = document.getElementById("non-indonesia-form");
@@ -269,16 +305,36 @@ function initModalPencipta() {
             nonIndoForm.style.display = "none";
             indoForm.querySelectorAll("select, input").forEach(el => el.disabled = false);
             nonIndoForm.querySelectorAll("input").forEach(el => el.disabled = true);
-
             loadIndonesianRegions();
         } else if (selectedCountryCode) {
-            // pastikan selectedCountryCode valid sebelum loadCSCStates
             indoForm.style.display = "none";
             nonIndoForm.style.display = "block";
             nonIndoForm.querySelectorAll("input").forEach(el => el.disabled = false);
             indoForm.querySelectorAll("select, input").forEach(el => el.disabled = true);
 
-            loadCSCStates(selectedCountryCode);
+            // Cek apakah negara memiliki state
+            const hasStates = await countryHasStates(selectedCountryCode);
+
+            if (!hasStates) {
+                // Negara tanpa state (seperti Antartica)
+                $(stateSelect).empty().append('<option value="">-- Tidak tersedia --</option>').prop('disabled', true);
+                $(citySelect).empty().append('<option value="">-- Tidak tersedia --</option>').prop('disabled', true);
+
+                // Nonaktifkan required field untuk semua field alamat
+                document.querySelector('.manual-kecamatan').classList.remove('required-field');
+                document.querySelector('.manual-kelurahan').classList.remove('required-field');
+
+                // Isi otomatis dengan "-"
+                document.querySelector('.manual-kecamatan').value = "-";
+                document.querySelector('.manual-kelurahan').value = "-";
+            } else {
+                // Negara dengan state, load seperti biasa
+                loadCSCStates(selectedCountryCode);
+
+                // Aktifkan required field
+                document.querySelector('.manual-kecamatan').classList.add('required-field');
+                document.querySelector('.manual-kelurahan').classList.add('required-field');
+            }
         } else {
             // Jika tidak ada country selected
             indoForm.style.display = "none";
@@ -286,7 +342,84 @@ function initModalPencipta() {
         }
     });
 
+    // Event ketika state dipilih
+    $(stateSelect).on('change', async function () {
+        const selectedStateIso2 = $(this).find(':selected').data('iso2');
+        const stateCode = selectedStateIso2;
+        const selectedCountryCode = $('#nationalityform').find(':selected').data('iso2');
 
+        // Reset city dropdown
+        $(citySelect).empty().append('<option value="">Loading cities...</option>').prop('disabled', true);
+
+        if (!stateCode || !selectedCountryCode) return;
+
+        try {
+            // Cek apakah state memiliki city
+            const hasCities = await stateHasCities(selectedCountryCode, stateCode);
+
+            if (!hasCities) {
+                $(citySelect).empty().append('<option value="">-- Tidak tersedia --</option>').prop('disabled', true);
+
+                // Nonaktifkan required field untuk city, district, dan village
+                document.querySelector('.manual-kecamatan').classList.remove('required-field');
+                document.querySelector('.manual-kelurahan').classList.remove('required-field');
+
+                // Isi otomatis dengan "-"
+                document.querySelector('.manual-kecamatan').value = "-";
+                document.querySelector('.manual-kelurahan').value = "-";
+                return;
+            }
+
+            // Jika memiliki city, lanjutkan dengan load city normal
+            const response = await fetch(`${configCSC.cUrl}/${selectedCountryCode}/states/${stateCode}/cities`, {
+                headers: { "X-CSCAPI-KEY": configCSC.ckey }
+            });
+            const cities = await response.json();
+
+            $(citySelect).empty().append('<option value="">-- Pilih City --</option>').prop('disabled', false);
+
+            cities.forEach(c => {
+                const option = new Option(c.name, c.name);
+                $(citySelect).append(option);
+            });
+
+            // Aktifkan kembali required field
+            document.querySelector('.manual-kecamatan').classList.add('required-field');
+            document.querySelector('.manual-kelurahan').classList.add('required-field');
+
+        } catch (error) {
+            console.error("Error loading cities:", error);
+            $(citySelect).empty().append('<option value="">Error loading cities</option>');
+        }
+    });
+
+    // Fungsi untuk mengecek apakah negara memiliki state
+    async function countryHasStates(countryCode) {
+        try {
+            const response = await fetch(`${configCSC.cUrl}/${countryCode}/states`, {
+                headers: { "X-CSCAPI-KEY": configCSC.ckey }
+            });
+            const states = await response.json();
+            return states && states.length > 0;
+        } catch (error) {
+            console.error("Error checking states:", error);
+            return false;
+        }
+    }
+
+    // Fungsi untuk mengecek apakah state memiliki city
+    async function stateHasCities(countryCode, stateIso2) {
+        try {
+            const response = await fetch(`${configCSC.cUrl}/${countryCode}/states/${stateIso2}/cities`, {
+                headers: { "X-CSCAPI-KEY": configCSC.ckey }
+            });
+            const cities = await response.json();
+            return cities && cities.length > 0;
+        } catch (error) {
+            console.error("Error checking cities:", error);
+            return false;
+        }
+    }
 
     // Fungsi untuk memuat data wilayah Indonesia dengan Select2
     function loadIndonesianRegions() {
@@ -529,13 +662,32 @@ function initModalPencipta() {
     }
 
     // Fungsi untuk memuat data state dan city dengan nilai yang sudah ada (untuk edit)
-    function loadCSCStatesWithValues(selectedCountryCode, values) {
-        return new Promise((resolve) => {
+    async function loadCSCStatesWithValues(selectedCountryCode, values) {
+        return new Promise(async (resolve) => {
             const stateSelect = document.querySelector(".state");
             const citySelect = document.querySelector(".city");
 
             const stateName = values["provinsi[]"];
             const cityName = values["kota[]"];
+
+            // Cek apakah negara memiliki state
+            const hasStates = await countryHasStates(selectedCountryCode);
+
+            if (!hasStates) {
+                // Negara tanpa state (seperti Antartica)
+                $(stateSelect).empty().append('<option value="">-- Tidak tersedia --</option>').prop('disabled', true);
+                $(citySelect).empty().append('<option value="">-- Tidak tersedia --</option>').prop('disabled', true);
+
+                // Nonaktifkan required field
+                document.querySelector('.manual-kecamatan').classList.remove('required-field');
+                document.querySelector('.manual-kelurahan').classList.remove('required-field');
+
+                // Isi otomatis dengan "-"
+                document.querySelector('.manual-kecamatan').value = "-";
+                document.querySelector('.manual-kelurahan').value = "-";
+                resolve();
+                return;
+            }
 
             // Inisialisasi Select2
             initializeSelect2(stateSelect, "Pilih State");
@@ -545,65 +697,86 @@ function initModalPencipta() {
             $(stateSelect).empty().append('<option value="">Loading state...</option>').prop('disabled', false);
             $(citySelect).empty().append('<option value="">Pilih City</option>').prop('disabled', true);
 
-            fetch(`${configCSC.cUrl}/${selectedCountryCode}/states`, {
-                headers: { "X-CSCAPI-KEY": configCSC.ckey }
-            })
-                .then(res => res.json())
-                .then(states => {
-                    $(stateSelect).empty().append('<option value="">-- Pilih State --</option>');
-
-                    states.forEach(s => {
-                        const option = new Option(s.name, s.name);
-                        option.dataset.iso2 = s.iso2;
-                        $(stateSelect).append(option);
-                    });
-
-                    // Set state jika ada nilai sebelumnya
-                    if (stateName) {
-                        $(stateSelect).val(stateName).trigger('change');
-
-                        // Load cities untuk state yang dipilih
-                        const selectedStateOption = $(stateSelect).find(`option[value="${stateName}"]`);
-                        const selectedStateIso2 = selectedStateOption.data('iso2');
-
-                        if (selectedStateIso2) {
-                            fetch(`${configCSC.cUrl}/${selectedCountryCode}/states/${selectedStateIso2}/cities`, {
-                                headers: { "X-CSCAPI-KEY": configCSC.ckey }
-                            })
-                                .then(res => res.json())
-                                .then(cities => {
-                                    $(citySelect).empty().append('<option value="">-- Pilih City --</option>');
-
-                                    cities.forEach(c => {
-                                        const option = new Option(c.name, c.name);
-                                        $(citySelect).append(option);
-                                    });
-
-                                    $(citySelect).prop('disabled', false);
-
-                                    // Set city jika ada nilai sebelumnya
-                                    if (cityName) {
-                                        $(citySelect).val(cityName);
-                                    }
-
-                                    // Isi input manual
-                                    const kec = modalForm.querySelector(".manual-kecamatan");
-                                    const kel = modalForm.querySelector(".manual-kelurahan");
-                                    const kode = modalForm.querySelector(".manual-kodepos");
-
-                                    if (kec) kec.value = values["kecamatan[]"] || "";
-                                    if (kel) kel.value = values["kelurahan[]"] || "";
-                                    if (kode) kode.value = values["kode_pos[]"] || "";
-
-                                    resolve();
-                                });
-                        } else {
-                            resolve();
-                        }
-                    } else {
-                        resolve();
-                    }
+            try {
+                const response = await fetch(`${configCSC.cUrl}/${selectedCountryCode}/states`, {
+                    headers: { "X-CSCAPI-KEY": configCSC.ckey }
                 });
+                const states = await response.json();
+
+                $(stateSelect).empty().append('<option value="">-- Pilih State --</option>');
+
+                states.forEach(s => {
+                    const option = new Option(s.name, s.name);
+                    option.dataset.iso2 = s.iso2;
+                    $(stateSelect).append(option);
+                });
+
+                // Set state jika ada nilai sebelumnya
+                if (stateName) {
+                    $(stateSelect).val(stateName).trigger('change');
+
+                    // Load cities untuk state yang dipilih
+                    const selectedStateOption = $(stateSelect).find(`option[value="${stateName}"]`);
+                    const selectedStateIso2 = selectedStateOption.data('iso2');
+
+                    if (selectedStateIso2) {
+                        // Cek apakah state memiliki city
+                        const hasCities = await stateHasCities(selectedCountryCode, selectedStateIso2);
+
+                        if (!hasCities) {
+                            $(citySelect).empty().append('<option value="">-- Tidak tersedia --</option>').prop('disabled', true);
+
+                            // Nonaktifkan required field
+                            document.querySelector('.manual-kecamatan').classList.remove('required-field');
+                            document.querySelector('.manual-kelurahan').classList.remove('required-field');
+
+                            // Isi otomatis dengan "-"
+                            document.querySelector('.manual-kecamatan').value = "-";
+                            document.querySelector('.manual-kelurahan').value = "-";
+                            document.querySelector('.manual-kodepos').value = "-";
+                            resolve();
+                            return;
+                        }
+
+                        const cityResponse = await fetch(`${configCSC.cUrl}/${selectedCountryCode}/states/${selectedStateIso2}/cities`, {
+                            headers: { "X-CSCAPI-KEY": configCSC.ckey }
+                        });
+                        const cities = await cityResponse.json();
+
+                        $(citySelect).empty().append('<option value="">-- Pilih City --</option>');
+                        cities.forEach(c => {
+                            const option = new Option(c.name, c.name);
+                            $(citySelect).append(option);
+                        });
+
+                        $(citySelect).prop('disabled', false);
+
+                        // Set city jika ada nilai sebelumnya
+                        if (cityName) {
+                            $(citySelect).val(cityName);
+                        }
+
+                        // Aktifkan required field
+                        document.querySelector('.manual-kecamatan').classList.add('required-field');
+                        document.querySelector('.manual-kelurahan').classList.add('required-field');
+                    }
+                }
+
+                // Isi input manual
+                const kec = modalForm.querySelector(".manual-kecamatan");
+                const kel = modalForm.querySelector(".manual-kelurahan");
+                const kode = modalForm.querySelector(".manual-kodepos");
+
+                if (kec) kec.value = values["kecamatan[]"] || "";
+                if (kel) kel.value = values["kelurahan[]"] || "";
+                if (kode) kode.value = values["kode_pos[]"] || "";
+
+                resolve();
+            } catch (error) {
+                console.error("Error loading states:", error);
+                $(stateSelect).empty().append('<option value="">Error loading states</option>');
+                resolve();
+            }
         });
     }
 
@@ -633,6 +806,7 @@ function initModalPencipta() {
                         option.selected = true;
                     }
 
+                    option.dataset.flag = `https://flagcdn.com/w20/${country.iso2.toLowerCase()}.png`; // URL bendera
                     countrySelect.appendChild(option);
                 });
                 // Inisialisasi Select2 setelah isi diubah
@@ -641,6 +815,8 @@ function initModalPencipta() {
                     $select.select2("destroy");
                 }
                 $select.select2({
+                    templateResult: formatCountryOption,
+                    templateSelection: formatCountryOption,
                     placeholder: "-- Pilih Negara --",
                     width: "100%",
                     allowClear: true,
@@ -694,6 +870,11 @@ function initModalPencipta() {
 
         // Load ulang dropdown negara
         loadCountriesForModalForm();
+
+        // Reset nilai manual untuk non-Indonesia form
+        document.querySelector('.manual-kecamatan').value = "";
+        document.querySelector('.manual-kelurahan').value = "";
+        document.querySelector('.manual-kodepos').value = "";
 
         // Reset form agar hanya dropdown negara aktif, lainnya disembunyikan
         const indoForm = document.getElementById("indonesia-form");

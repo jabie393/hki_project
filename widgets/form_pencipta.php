@@ -66,7 +66,7 @@
 
         <div class="form-group">
             <label>Kode Pos:</label>
-            <input type="text" class="kodepos" name="kode_pos[]" readonly />
+            <input type="text" class="kodepos" name="kode_pos[]" placeholder="Kode Pos" readonly />
         </div>
     </div>
 
@@ -74,26 +74,26 @@
     <div id="non-indonesia-form" style="display: none;">
         <div class="form-group">
             <label>State:</label>
-            <select name="provinsi[]" class="state"></select>
+            <select name="provinsi[]" class="state required-field"></select>
         </div>
 
         <div class="form-group">
             <label>City:</label>
-            <select name="kota[]" class="city"></select>
+            <select name="kota[]" class="city required-field"></select>
         </div>
 
         <div class="form-group">
-            <label>District (manual):</label>
-            <input type="text" name="kecamatan[]" class="manual-kecamatan" />
+            <label>District:</label>
+            <input type="text" name="kecamatan[]" class="manual-kecamatan required-field" placeholder="Manual Input" />
         </div>
 
         <div class="form-group">
-            <label>Village (manual):</label>
-            <input type="text" name="kelurahan[]" class="manual-kelurahan" />
+            <label>Village:</label>
+            <input type="text" name="kelurahan[]" class="manual-kelurahan required-field" placeholder="Manual Input"/>
         </div>
 
         <div class="form-group">
-            <label>Zip Code (manual):</label>
-            <input type="text" name="kode_pos[]" class="manual-kodepos" />
+            <label>Postal Code:</label>
+            <input type="text" name="kode_pos[]" class="manual-kodepos required-field" placeholder="Manual Input"/>
         </div>
     </div>

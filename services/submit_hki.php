@@ -63,6 +63,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $kelurahan = $_POST['kelurahan'][$index];
             $kode_pos = $_POST['kode_pos'][$index];
 
+            // Berikan nilai default "-" jika field tidak ada
+            $provinsi = isset($_POST['provinsi'][$index]) ? $_POST['provinsi'][$index] : "-";
+            $kota = isset($_POST['kota'][$index]) ? $_POST['kota'][$index] : "-";
+            $kecamatan = isset($_POST['kecamatan'][$index]) ? $_POST['kecamatan'][$index] : "-";
+            $kelurahan = isset($_POST['kelurahan'][$index]) ? $_POST['kelurahan'][$index] : "-";
+            $kode_pos = isset($_POST['kode_pos'][$index]) ? $_POST['kode_pos'][$index] : "-";
+
             $stmt_pencipta->bind_param("isssssssssss", $reg_id, $nik, $nama, $no_telepon, $jenis_kelamin, $alamat, $negara, $provinsi, $kota, $kecamatan, $kelurahan, $kode_pos);
             $stmt_pencipta->execute();
         }
