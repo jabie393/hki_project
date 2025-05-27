@@ -83,15 +83,25 @@ function initUserPage() {
                 if (!mainFormSelect) return;
 
                 mainFormSelect.innerHTML = '<option value="">-- Pilih Negara --</option>';
+
+                // Cari dan tandai Indonesia sebagai default
+                let defaultCountrySet = false;
                 data.forEach(country => {
                     const option = document.createElement("option");
                     option.value = country.name;
                     option.textContent = country.name;
                     option.setAttribute("data-flag", `https://flagcdn.com/w20/${country.iso2.toLowerCase()}.png`);
+
+                    // Set Indonesia sebagai selected
+                    if (country.name === 'Indonesia') {
+                        option.selected = true;
+                        defaultCountrySet = true;
+                    }
+
                     mainFormSelect.appendChild(option);
                 });
 
-                // Inisialisasi Select2 (kode tetap sama)
+                // Inisialisasi Select2
                 const $select = $(mainFormSelect);
                 if ($select.hasClass("select2-hidden-accessible")) {
                     $select.select2('destroy');
@@ -108,10 +118,19 @@ function initUserPage() {
                 $('#nationality').on('select2:open', function () {
                     document.querySelector('.select2-search__field').focus();
                 });
+
+                // Tambahkan event listener untuk perubahan negara
+                $('#nationality').on('change', function () {
+                    toggleCityInput(this.value);
+                });
+
+                // Jika Indonesia adalah default, aktifkan dropdown kota
+                if (defaultCountrySet) {
+                    toggleCityInput('Indonesia');
+                }
             })
             .catch(error => {
                 console.error("Gagal memuat data negara:", error);
-                // Fallback: Jika API gagal, tampilkan pesan error atau gunakan data statis
                 Swal.fire({
                     icon: 'error',
                     title: 'Gagal Memuat Data Negara',
@@ -129,6 +148,86 @@ function initUserPage() {
         return $(
             `<span><img src="${flagUrl}" alt="" style="width: 20px; height: 15px; margin-right: 10px;">${option.text}</span>`
         );
+    }
+
+    // Fungsi untuk toggle antara dropdown dan input text
+    function toggleCityInput(country) {
+        const citySelect = document.getElementById('kota_pengumuman');
+        const cityInput = document.getElementById('kota_pengumuman_input');
+
+        if (country === 'Indonesia') {
+            // Tampilkan dropdown dan sembunyikan input
+            citySelect.style.display = 'block';
+            citySelect.required = true;
+            citySelect.disabled = false;
+            citySelect.setAttribute('name', 'kota_pengumuman');
+
+            cityInput.style.display = 'none';
+            cityInput.required = false;
+            cityInput.disabled = true;
+            cityInput.removeAttribute('name');
+
+            // Inisialisasi Select2 untuk dropdown kota
+            if (!$(citySelect).hasClass("select2-hidden-accessible")) {
+                $(citySelect).select2({
+                    placeholder: "-- Pilih Kota/Kabupaten --",
+                    width: '100%'
+                });
+            }
+
+            // Load data kota dari API Ibnux
+            loadIndonesianCities();
+        } else {
+            // Tampilkan input dan sembunyikan dropdown
+            citySelect.style.display = 'none';
+            citySelect.required = false;
+            citySelect.disabled = true;
+            citySelect.removeAttribute('name');
+
+            cityInput.style.display = 'block';
+            cityInput.required = true;
+            cityInput.disabled = false;
+            cityInput.setAttribute('name', 'kota_pengumuman');
+
+            // Hancurkan Select2 jika sudah diinisialisasi
+            if ($(citySelect).hasClass("select2-hidden-accessible")) {
+                $(citySelect).select2('destroy');
+            }
+        }
+    }
+
+    // Fungsi untuk memuat data kota Indonesia dari API Ibnux
+    async function loadIndonesianCities() {
+        const $citySelect = $('#kota_pengumuman');
+        $citySelect.html('<option value="">-- Memuat data kota... --</option>');
+
+        try {
+            // Step 1: Fetch semua provinsi
+            const provResponse = await fetch('https://ibnux.github.io/data-indonesia/propinsi.json');
+            const provinsi = await provResponse.json();
+
+            // Step 2: Fetch semua kabupaten/kota (paralel)
+            const allCitiesPromises = provinsi.map(async (prov) => {
+                const res = await fetch(`https://ibnux.github.io/data-indonesia/kabupaten/${prov.id}.json`);
+                const cities = await res.json();
+                cities.forEach(city => city.provinsi = prov.nama);
+                return cities;
+            });
+
+            const allCitiesArrays = await Promise.all(allCitiesPromises);
+            const allCities = allCitiesArrays.flat();
+
+            // Step 3: Isi dropdown
+            $citySelect.html('<option value="">-- Pilih Kota/Kabupaten --</option>');
+            allCities.forEach(city => {
+                const option = new Option(`${city.nama} (${city.provinsi})`, city.nama, false, false);
+                $citySelect.append(option);
+            });
+
+        } catch (error) {
+            console.error('Gagal memuat data kota:', error);
+            $citySelect.html('<option value="">-- Gagal memuat data kota --</option>');
+        }
     }
 }
 
@@ -279,10 +378,33 @@ function initFormSubmission() {
 }
 
 
-// Pastikan fungsi ini dipanggil saat halaman dimuat
+// Fungsi dipanggil saat halaman dimuat
 document.addEventListener("DOMContentLoaded", function () {
     initFormSubmission();
     setupFileValidation();
+    initUserPage();
+
+    // Menangani perubahan form saat submit
+    document.getElementById('form-hki').addEventListener('submit', function (e) {
+        // Pastikan nilai yang benar dikirim
+        const country = document.getElementById('nationality').value;
+        const citySelect = document.getElementById('kota_pengumuman');
+        const cityInput = document.getElementById('kota_pengumuman_input');
+
+        if (country === 'Indonesia') {
+            // Nonaktifkan input jika dropdown yang aktif
+            cityInput.disabled = true;
+            cityInput.removeAttribute('name'); // Hapus name attribute dari input
+            citySelect.disabled = false;
+            citySelect.setAttribute('name', 'kota_pengumuman'); // Set name untuk select
+        } else {
+            // Nonaktifkan select jika input yang aktif
+            citySelect.disabled = true;
+            citySelect.removeAttribute('name'); // Hapus name attribute dari select
+            cityInput.disabled = false;
+            cityInput.setAttribute('name', 'kota_pengumuman'); // Set name untuk input
+        }
+    });
 });
 
 // ================== VALIDASI FILE ==================

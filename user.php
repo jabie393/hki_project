@@ -48,6 +48,7 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
         <div class="form-group">
             <label>Jenis Permohonan:</label>
             <select name="jenis_permohonan" required>
+                <option value="">-- Pilih Jenis Permohonan --</option>
                 <option value="Usaha Mikro Kecil">Usaha Mikro Kecil</option>
                 <option value="Umum">Umum</option>
                 <option value="Lembaga Pendidikan">Lembaga Pendidikan</option>
@@ -103,15 +104,25 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
         <!--Kota Pertama Kali Diumumkan-->
         <div class="form-group">
             <label>Kota/Kabupaten Pertama Kali Diumumkan:</label>
-            <input type="text" spellcheck="false" name="kota_pengumuman" placeholder="Nama Kota/Kabupaten" required>
+            <div id="kota-container">
+                <select id="kota_pengumuman" name="kota_pengumuman" class="form-select" style="display: none;" required 
+                oninvalid="this.setCustomValidity('Silakan pilih kota terlebih dahulu.')"
+                oninput="this.setCustomValidity('')">
+                    <option value="">-- Pilih Kota/Kabupaten --</option>
+                </select>
+                <input type="text" spellcheck="false" name="kota_pengumuman" id="kota_pengumuman_input"
+                    placeholder="City (Manual Input)" style="display: none;" required
+                    oninvalid="this.setCustomValidity('Please fill in the city name first.')"
+                    oninput="this.setCustomValidity('')">
+            </div>
         </div>
+        <!--Lampiran-->
         <div class="form-group">
             <label>Lampiran Dokumen:</label>
             <label for="fileInput" class="custom-file-label">📁 Pilih Dokumen</label>
             <input type="file" name="dokumen" id="fileInput" class="custom-file-input"
                 accept=".pdf,.doc,.docx,.zip,.rar,.7z,.tar,.gz" required
-                oninvalid="this.setCustomValidity('Belum ada dokumen.')"
-                oninput="this.setCustomValidity('')"/>
+                oninvalid="this.setCustomValidity('Belum ada dokumen.')" oninput="this.setCustomValidity('')" />
             <span id="file-name" class="file-name">Belum ada dokumen</span><br>
             <small><em><span style="color: red; font-size: 0.8em;">* </span>Ukuran maksimal dokumen 30MB</em></small>
         </div>

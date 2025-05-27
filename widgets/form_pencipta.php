@@ -17,6 +17,7 @@
     <div class="form-group">
         <label>Jenis Kelamin:</label>
         <select name="jenis_kelamin[]" class="required-field">
+            <option value="">-- Pilih Jenis Kelamin --</option>
             <option value="Laki-laki">Laki-laki</option>
             <option value="Perempuan">Perempuan</option>
         </select>

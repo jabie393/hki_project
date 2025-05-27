@@ -77,7 +77,7 @@ $profile_picture = getProfilePicture($user_id);
 
         <div class="form-group">
             <label for="nationality">Kewarganegaraan:</label>
-            <select name="nationality" id="nationality" data-selected="<?= $profile['nationality'] ?? '' ?>">
+            <select name="nationality" id="nationality_profile" data-selected="<?= $profile['nationality'] ?? '' ?>">
                 <option value="">-- Pilih Negara --</option>
             </select>
         </div>
@@ -116,7 +116,8 @@ $profile_picture = getProfilePicture($user_id);
             <label for="profilePictureInput" class="upload-box">
                 <span class="upload-icon">🖼️</span>
                 <span id="upload-text">Klik untuk memilih foto profil</span>
-                <small style="color: grey; font-size: 0.8rem;"><em><span style="color: red; font-size: 0.8em;">* </span>Ukuran maksimal foto 5MB</em></small>
+                <small style="color: grey; font-size: 0.8rem;"><em><span style="color: red; font-size: 0.8em;">*
+                        </span>Ukuran maksimal foto 5MB</em></small>
             </label>
             <input type="file" id="profilePictureInput" accept="image/*">
         </div>
