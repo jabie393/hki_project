@@ -39,28 +39,28 @@
     <div id="indonesia-form" style="display: none;">
         <div class="form-group">
             <label>Provinsi:</label>
-            <select name="provinsi[]" class="provinsi required-field">
+            <select name="provinsi[]" class="provinsi required-field auto-search">
                 <option value="">-- Pilih Provinsi --</option>
             </select>
         </div>
 
         <div class="form-group">
             <label>Kabupaten/Kota:</label>
-            <select name="kota[]" class="kabupaten required-field">
+            <select name="kota[]" class="kabupaten required-field auto-search">
                 <option value="">-- Pilih Kabupaten/Kota --</option>
             </select>
         </div>
 
         <div class="form-group">
             <label>Kecamatan:</label>
-            <select name="kecamatan[]" class="kecamatan required-field">
+            <select name="kecamatan[]" class="kecamatan required-field auto-search">
                 <option value="">-- Pilih Kecamatan --</option>
             </select>
         </div>
 
         <div class="form-group">
             <label>Kelurahan:</label>
-            <select name="kelurahan[]" class="kelurahan required-field">
+            <select name="kelurahan[]" class="kelurahan required-field auto-search">
                 <option value="">-- Pilih Kelurahan --</option>
             </select>
         </div>
@@ -75,12 +75,12 @@
     <div id="non-indonesia-form" style="display: none;">
         <div class="form-group">
             <label>State:</label>
-            <select name="provinsi[]" class="state required-field"></select>
+            <select name="provinsi[]" class="state required-field auto-search"></select>
         </div>
 
         <div class="form-group">
             <label>City:</label>
-            <select name="kota[]" class="city required-field"></select>
+            <select name="kota[]" class="city required-field auto-search"></select>
         </div>
 
         <div class="form-group">

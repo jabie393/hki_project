@@ -823,6 +823,10 @@ function initModalPencipta() {
                     dropdownParent: $('#modalPencipta')
                 });
 
+                $('#nationalityform').on('select2:open', function () {
+                    document.querySelector('.select2-search__field').focus();
+                });
+
                 // Tambahkan trigger change jika ada selectedCountry
                 if (selectedCountry) {
                     $select.trigger("change");
@@ -946,6 +950,9 @@ function initModalPencipta() {
             width: "100%",
             allowClear: true,
             dropdownParent: $('#modalPencipta')
+        });
+        $('.auto-search').on('select2:open', function () {
+            document.querySelector('.select2-search__field').focus();
         });
     }
 }

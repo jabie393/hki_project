@@ -47,7 +47,9 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
         <!--Jenis Permohonan-->
         <div class="form-group">
             <label>Jenis Permohonan:</label>
-            <select name="jenis_permohonan" required>
+            <select name="jenis_permohonan" class="auto-search" required
+                oninvalid="this.setCustomValidity('Silakan pilih jenis permohonan terlebih dahulu.')"
+                oninput="this.setCustomValidity('')">
                 <option value="">-- Pilih Jenis Permohonan --</option>
                 <option value="Usaha Mikro Kecil">Usaha Mikro Kecil</option>
                 <option value="Umum">Umum</option>
@@ -58,7 +60,9 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
         <!--Jenis Hak Cipta-->
         <div class="form-group">
             <label>Jenis Hak Cipta:</label>
-            <select name="jenis_hak_cipta" id="jenis_hak_cipta" required>
+            <select name="jenis_hak_cipta" id="jenis_hak_cipta" class="auto-search" required
+                oninvalid="this.setCustomValidity('Silakan pilih jenis hak cipta terlebih dahulu.')"
+                oninput="this.setCustomValidity('')">
                 <option value="">-- Pilih Jenis --</option>
                 <option value="Karya Tulis">Karya Tulis</option>
                 <option value="Karya Seni">Karya Seni</option>
@@ -73,24 +77,32 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
         <!--Sub Jenis Hak Cipta-->
         <div class="form-group">
             <label>Sub Jenis Hak Cipta:</label>
-            <select name="sub_jenis_hak_cipta" id="sub_jenis_hak_cipta" required>
+            <select name="sub_jenis_hak_cipta" id="sub_jenis_hak_cipta" class="auto-search" required
+                oninvalid="this.setCustomValidity('Silakan pilih sub jenis hak cipta terlebih dahulu.')"
+                oninput="this.setCustomValidity('')">
                 <option value="">-- Pilih Sub Jenis --</option>
             </select>
         </div>
         <!--Tanggal Pertama Kali Diumumkan-->
         <div class="form-group">
             <label>Tanggal Pertama Kali Diumumkan:</label>
-            <input type="date" name="tanggal_pengumuman" required>
+            <input type="date" id="tanggal_pengumuman" name="tanggal_pengumuman" required
+                oninvalid="this.setCustomValidity('Silakan isi tanggal pengumuman terlebih dahulu.')"
+                oninput="this.setCustomValidity('')" />
         </div>
         <!--Judul Hak Cipta-->
         <div class="form-group">
             <label>Judul</label>
-            <input type="text" spellcheck="false" name="judul" placeholder="Judul Hak Cipta" required />
+            <input type="text" spellcheck="false" name="judul" placeholder="Judul Hak Cipta" required
+                oninvalid="this.setCustomValidity('Silakan isi judul hak cipta terlebih dahulu.')"
+                oninput="this.setCustomValidity('')" />
         </div>
         <!--Deskripsi-->
         <div class="form-group">
             <label>Deskripsi:</label>
-            <textarea name="deskripsi" placeholder="Deskripsi" required></textarea>
+            <textarea name="deskripsi" placeholder="Deskripsi" required
+                oninvalid="this.setCustomValidity('Silakan deskripsikan hak cipta terlebih dahulu.')"
+                oninput="this.setCustomValidity('')"></textarea>
         </div>
         <!--Negara Pertama Kali Diumumkan-->
         <div class="form-group">
@@ -105,9 +117,9 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
         <div class="form-group">
             <label>Kota/Kabupaten Pertama Kali Diumumkan:</label>
             <div id="kota-container">
-                <select id="kota_pengumuman" name="kota_pengumuman" class="form-select" style="display: none;" required 
-                oninvalid="this.setCustomValidity('Silakan pilih kota terlebih dahulu.')"
-                oninput="this.setCustomValidity('')">
+                <select id="kota_pengumuman" name="kota_pengumuman" class="form-select auto-search" style="display: none;" required
+                    oninvalid="this.setCustomValidity('Silakan pilih kota terlebih dahulu.')"
+                    oninput="this.setCustomValidity('')">
                     <option value="">-- Pilih Kota/Kabupaten --</option>
                 </select>
                 <input type="text" spellcheck="false" name="kota_pengumuman" id="kota_pengumuman_input"
@@ -126,7 +138,7 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
             <span id="file-name" class="file-name">Belum ada dokumen</span><br>
             <small><em><span style="color: red; font-size: 0.8em;">* </span>Ukuran maksimal dokumen 30MB</em></small>
         </div>
-
+        <!--List Pencipta-->
         <label>Pencipta:</label>
         <div id="pencipta-list" class="pencipta-container"></div>
         <button type="button" id="addPencipta">Tambah Pencipta</button>
@@ -153,6 +165,3 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
 
 <script src="js/user.js"></script>
 <script src="js/form_pencipta.js"></script>
-<script>
-
-</script>

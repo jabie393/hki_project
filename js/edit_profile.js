@@ -18,9 +18,8 @@ function refreshAllProfilePics() {
         });
 }
 
-
 function initEditProfilePage() {
-    loadCountriesForProfile()
+    loadCountriesForProfile();
     const form = document.getElementById('profileForm');
     if (!form) return;
 
@@ -107,64 +106,88 @@ function initEditProfilePage() {
     // ==== Load Negara ====
     function loadCountriesForProfile() {
         const select = $("#nationality_profile");
-        if (select.length) {
-            const selected = select.data("selected");
+        if (!select.length) return;
 
-            fetch("https://restcountries.com/v3.1/all")
-                .then(response => response.json())
-                .then(data => {
-                    data.sort((a, b) => a.name.common.localeCompare(b.name.common));
-                    const selects = document.querySelectorAll("#nationality_profile, .negara-select");
-                    selects.forEach(select => {
-                        select.innerHTML = '<option value="">-- Pilih Negara --</option>';
-                        data.forEach(country => {
-                            const option = document.createElement("option");
-                            option.value = country.name.common;
-                            option.textContent = country.name.common;
-                            option.setAttribute("data-flag", country.flags.svg); // Tambahkan URL bendera
-                            select.appendChild(option);
-                        });
+        const selected = select.data("selected");
 
-                        const $select = $(select);
+        // Konfigurasi API CSC
+        const configCSC = {
+            cUrl: 'https://api.countrystatecity.in/v1/countries',
+            ckey: 'NHhvOEcyWk50N2Vna3VFTE00bFp3MjFKR0ZEOUhkZlg4RTk1MlJlaA=='
+        };
 
-                        // Destroy select2 dulu jika sudah ada
-                        if ($select.hasClass("select2-hidden-accessible")) {
-                            $select.select2('destroy');
-                        }
+        fetch(configCSC.cUrl, {
+            headers: {
+                "X-CSCAPI-KEY": configCSC.ckey
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                data.sort((a, b) => a.name.localeCompare(b.name));
 
-                        // Inisialisasi Select2
-                        $select.select2({
-                            placeholder: "-- Pilih Negara --",
-                            allowClear: true,
-                            width: '100%',
-                            templateResult: function (state) {
-                                if (!state.id) return state.text;
-                                const flagUrl = $(state.element).data("flag");
-                                return $(
-                                    `<span><img src="${flagUrl}" style="width: 20px; height: 15px; margin-right: 5px;" /> ${state.text}</span>`
-                                );
-                            },
-                            templateSelection: function (state) {
-                                const flagUrl = $(state.element).data("flag");
-                                return state.id
-                                    ? $(
-                                        `<span><img src="${flagUrl}" style="width: 20px; height: 15px; margin-right: 5px;" /> ${state.text}</span>`
-                                    )
-                                    : state.text;
-                            }
-                        });
+                const selects = document.querySelectorAll("#nationality_profile, .negara-select");
+                selects.forEach(select => {
+                    select.innerHTML = '<option value="">-- Pilih Negara --</option>';
+
+                    data.forEach(country => {
+                        const option = document.createElement("option");
+                        option.value = country.name;
+                        option.textContent = country.name;
+                        option.setAttribute("data-flag", `https://flagcdn.com/w20/${country.iso2.toLowerCase()}.png`);
+                        select.appendChild(option);
                     });
 
-                    $('#nationality_profile').on('select2:open', function () {
-                        document.querySelector('.select2-search__field').focus();
-                    });
+                    const $select = $(select);
 
-                    if (selected) {
-                        select.val(selected).trigger('change');
+                    // Destroy select2 dulu jika sudah ada
+                    if ($select.hasClass("select2-hidden-accessible")) {
+                        $select.select2('destroy');
                     }
-                })
-                .catch(error => console.error("Gagal memuat data negara:", error));
-        }
+
+                    // Inisialisasi Select2
+                    $select.select2({
+                        placeholder: "-- Pilih Negara --",
+                        allowClear: true,
+                        width: '100%',
+                        templateResult: function (state) {
+                            if (!state.id) return state.text;
+                            const flagUrl = $(state.element).data("flag");
+                            return $(
+                                `<span><img src="${flagUrl}" style="width: 20px; height: 15px; margin-right: 5px;" /> ${state.text}</span>`
+                            );
+                        },
+                        templateSelection: function (state) {
+                            const flagUrl = $(state.element).data("flag");
+                            return state.id
+                                ? $(
+                                    `<span><img src="${flagUrl}" style="width: 20px; height: 15px; margin-right: 5px;" /> ${state.text}</span>`
+                                )
+                                : state.text;
+                        }
+                    });
+                });
+
+                $('#nationality_profile').on('select2:open', function () {
+                    document.querySelector('.select2-search__field').focus();
+                });
+
+                if (selected) {
+                    select.val(selected).trigger('change');
+                }
+            })
+            .catch(error => {
+                console.error("Gagal memuat data negara:", error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Gagal Memuat Data Negara',
+                    text: 'Tidak dapat memuat daftar negara. Silakan coba lagi nanti.'
+                });
+            });
     }
 }
 

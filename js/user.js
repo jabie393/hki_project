@@ -1,59 +1,114 @@
 function initUserPage() {
     loadCountriesForMainForm();
-    document.getElementById('jenis_hak_cipta').addEventListener('change', function () {
+
+     // ================= Membuka datepicker di Chrome ===================
+    document.getElementById('tanggal_pengumuman').addEventListener('click', function () {
+        this.showPicker();
+    });
+
+    // ================== INITIALIZE SELECT2 ==================
+    // Inisialisasi Select2 untuk jenis permohonan jika belum ada
+    if (!$('select[name="jenis_permohonan"]').hasClass("select2-hidden-accessible")) {
+        $('select[name="jenis_permohonan"]').select2({
+            placeholder: "-- Pilih Jenis Permohonan --",
+            allowClear: true,
+            width: '100%'
+        });
+    }
+
+    // Inisialisasi Select2 untuk jenis hak cipta jika belum ada
+    if (!$('#jenis_hak_cipta').hasClass("select2-hidden-accessible")) {
+        $('#jenis_hak_cipta').select2({
+            placeholder: "-- Pilih Jenis --",
+            allowClear: true,
+            width: '100%'
+        });
+    }
+
+    // Inisialisasi Select2 untuk sub jenis hak cipta jika belum ada
+    if (!$('#sub_jenis_hak_cipta').hasClass("select2-hidden-accessible")) {
+        $('#sub_jenis_hak_cipta').select2({
+            placeholder: "-- Pilih Sub Jenis --",
+            allowClear: true,
+            width: '100%',
+            disabled: true
+        });
+    }
+
+    // auto focus pada input pencarian Select2
+    $('.auto-search').on('select2:open', function () {
+        document.querySelector('.select2-search__field').focus();
+    });
+
+
+    // Event listener untuk perubahan jenis hak cipta
+    $('#jenis_hak_cipta').on('change', function () {
         var jenis = this.value;
-        var subJenis = document.getElementById('sub_jenis_hak_cipta');
-        subJenis.innerHTML = '';
 
-        var options = {
-            "Karya Tulis": [
-                "Karya Tulis Lainnya", "Naskah Drama / Pertunjukan", "Naskah Karya Siaran",
-                "Buku", "Karya Tulis", "Terjemahan", "Tafsir", "Saduran", "Bunga Rampai",
-                "Perwajahan Karya Tulis", "Naskah Film", "Karya Tulis (Artikel)",
-                "Karya Tulis (Skripsi)", "Karya Tulis (Disertasi)", "Karya Tulis (Tesis)",
-                "Naskah Karya Sinematografi", "Modul", "Novel", "e-Book", "Cerita Bergambar",
-                "Komik", "Buku Panduan / Petunjuk", "Atlas", "Buku Saku", "Buku Pelajaran",
-                "Diktat", "Buku Mewarnai", "Dongeng", "Majalah", "Kamus", "Ensiklopedia",
-                "Biografi", "Booklet", "Jurnal", "Makalah", "Proposal Penelitian",
-                "Resensi", "Resume / Ringkasan", "Sinopsis", "Karya Ilmiah", "Laporan Penelitian", "Puisi"
-            ],
-            "Karya Seni": [
-                "Seni Gambar", "Alat Peraga", "Pamflet", "Seni Rupa", "Seni Lukis",
-                "Seni Patung", "Seni Pahat", "Kaligrafi", "Seni Motif", "Arsitektur",
-                "Peta", "Brosur", "Seni Terapan", "Karya Seni Rupa", "Ukiran", "Kolase",
-                "Seni Ilustrasi", "Sketsa", "Diorama", "Karya Seni Batik", "Seni Songket",
-                "Motif Tenun Ikat", "Motif Tapis", "Motif Ulos", "Motif Sasirangan",
-                "Seni Motif Lainnya", "Flyer", "Leaflet", "Poster", "Banner", "Spanduk",
-                "Baliho", "Seni Umum"
-            ],
-            "Komposisi Musik": [
-                "Musik Karawitan", "Lagu (Musik Dengan Teks)", "Musik Tanpa Teks", "Aransemen", "Musik",
-                "Musik Klasik", "Musik Jazz", "Musik Gospel", "Musik Blues", "Musik Rhythm and Blues",
-                "Musik Funk", "Musik Rock", "Musik Metal", "Musik Elektronik", "Musik Ska, Reggae, Dub",
-                "Musik Hip Hop, Rap, Rapcore", "Musik Pop", "Musik Latin", "Musik Country", "Musk Dangdut"
-            ],
-            "Karya Audio Visual": [
-                "Film", "Karya Rekaman Video", "Kuliah", "Karya Siaran Media Televisi dan Film", "Karya Siaran Media Radio", "Karya Siaran Video",
-                "Karya Sinematografi", "Film Dokumenter", "Film Iklan", "Film Kartun", "Reportase", "Film Cerita", "Karya Siaran"
-            ],
-            "Karya Fotografi": [
-                "Karya Fotografi", "Potret"
-            ],
-            "Karya Drama & Koreografi": [
-                "Drama / Pertunjukan", "Pewayangan", "Pantomim", "Koreografi", "Seni Pertunjukan", "Tari (Sendra Tari)", "Drama Musikal",
-                "Ludruk", "Lenong", "Ketoprak", "Komedi / Lawak", "Seni Akrobat", "Opera", "Pentas Musik", "Sulap", "Sirkus"
-            ],
-            "Karya Rekaman": [
-                "Ceramah", "Pidato", "Karya Rekaman Suara atau Bunyi", "Khutbah"
-            ],
-            "Karya Lainnya": [
-                "Basis Data", "Kompilasi Ciptaan / Data", "Permainan Video", "Program Komputer"
-            ]
-        };
+        // Reset dan disable dulu
+        var $subJenis = $('#sub_jenis_hak_cipta');
+        $subJenis.empty().val(null).trigger('change');
+        $subJenis.prop('disabled', !jenis); // Disable jika jenis kosong
 
-        if (options[jenis]) {
-            subJenis.innerHTML = '<option value="">-- Pilih Sub Jenis --</option>' +
-                options[jenis].map(option => `<option value="${option}">${option}</option>`).join('');
+        if (jenis) {
+            var options = {
+                "Karya Tulis": [
+                    "Karya Tulis Lainnya", "Naskah Drama / Pertunjukan", "Naskah Karya Siaran",
+                    "Buku", "Karya Tulis", "Terjemahan", "Tafsir", "Saduran", "Bunga Rampai",
+                    "Perwajahan Karya Tulis", "Naskah Film", "Karya Tulis (Artikel)",
+                    "Karya Tulis (Skripsi)", "Karya Tulis (Disertasi)", "Karya Tulis (Tesis)",
+                    "Naskah Karya Sinematografi", "Modul", "Novel", "e-Book", "Cerita Bergambar",
+                    "Komik", "Buku Panduan / Petunjuk", "Atlas", "Buku Saku", "Buku Pelajaran",
+                    "Diktat", "Buku Mewarnai", "Dongeng", "Majalah", "Kamus", "Ensiklopedia",
+                    "Biografi", "Booklet", "Jurnal", "Makalah", "Proposal Penelitian",
+                    "Resensi", "Resume / Ringkasan", "Sinopsis", "Karya Ilmiah", "Laporan Penelitian", "Puisi"
+                ],
+                "Karya Seni": [
+                    "Seni Gambar", "Alat Peraga", "Pamflet", "Seni Rupa", "Seni Lukis",
+                    "Seni Patung", "Seni Pahat", "Kaligrafi", "Seni Motif", "Arsitektur",
+                    "Peta", "Brosur", "Seni Terapan", "Karya Seni Rupa", "Ukiran", "Kolase",
+                    "Seni Ilustrasi", "Sketsa", "Diorama", "Karya Seni Batik", "Seni Songket",
+                    "Motif Tenun Ikat", "Motif Tapis", "Motif Ulos", "Motif Sasirangan",
+                    "Seni Motif Lainnya", "Flyer", "Leaflet", "Poster", "Banner", "Spanduk",
+                    "Baliho", "Seni Umum"
+                ],
+                "Komposisi Musik": [
+                    "Musik Karawitan", "Lagu (Musik Dengan Teks)", "Musik Tanpa Teks", "Aransemen", "Musik",
+                    "Musik Klasik", "Musik Jazz", "Musik Gospel", "Musik Blues", "Musik Rhythm and Blues",
+                    "Musik Funk", "Musik Rock", "Musik Metal", "Musik Elektronik", "Musik Ska, Reggae, Dub",
+                    "Musik Hip Hop, Rap, Rapcore", "Musik Pop", "Musik Latin", "Musik Country", "Musk Dangdut"
+                ],
+                "Karya Audio Visual": [
+                    "Film", "Karya Rekaman Video", "Kuliah", "Karya Siaran Media Televisi dan Film", "Karya Siaran Media Radio", "Karya Siaran Video",
+                    "Karya Sinematografi", "Film Dokumenter", "Film Iklan", "Film Kartun", "Reportase", "Film Cerita", "Karya Siaran"
+                ],
+                "Karya Fotografi": [
+                    "Karya Fotografi", "Potret"
+                ],
+                "Karya Drama & Koreografi": [
+                    "Drama / Pertunjukan", "Pewayangan", "Pantomim", "Koreografi", "Seni Pertunjukan", "Tari (Sendra Tari)", "Drama Musikal",
+                    "Ludruk", "Lenong", "Ketoprak", "Komedi / Lawak", "Seni Akrobat", "Opera", "Pentas Musik", "Sulap", "Sirkus"
+                ],
+                "Karya Rekaman": [
+                    "Ceramah", "Pidato", "Karya Rekaman Suara atau Bunyi", "Khutbah"
+                ],
+                "Karya Lainnya": [
+                    "Basis Data", "Kompilasi Ciptaan / Data", "Permainan Video", "Program Komputer"
+                ]
+            };
+
+            if (options[jenis]) {
+                // Tambahkan opsi default
+                $subJenis.append(new Option("-- Pilih Sub Jenis --", "", true, true));
+
+                // Tambahkan semua opsi
+                options[jenis].forEach(option => {
+                    $subJenis.append(new Option(option, option));
+                });
+
+                // Enable select dan trigger change
+                $subJenis.prop('disabled', false).trigger('change');
+            }
         }
     });
 
@@ -343,7 +398,7 @@ function initFormSubmission() {
 
                             // Reset elemen Select2
                             $('#jenis_hak_cipta').val(null).trigger('change');
-                            $('#sub_jenis_hak_cipta').val(null).trigger('change');
+                            $('#sub_jenis_hak_cipta').val(null).prop('disabled', true).trigger('change');
                             $('#nationality').val(null).trigger('change');
 
                             // Kosongkan semua input Select2 lainnya (jika ada)

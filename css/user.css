@@ -77,6 +77,11 @@
   width: 100%;
 }
 
+#user-page input[type="date"] {
+  color: #999;
+  font-weight: bold;
+}
+
 #user-page input[type="file"] {
   width: 0%;
 }
