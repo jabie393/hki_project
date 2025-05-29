@@ -44,7 +44,7 @@ $(document).ready(function () {
                     placeholder: "Pilih User Terlebih Dahulu", // Kembalikan placeholder default
                     allowClear: true,
                     width: '100%',
-                    minimumResultsForSearch: Infinity // Nonaktifkan search bar
+                    minimumResultsForSearch: Infinity
                 });
         }
     });
@@ -53,7 +53,7 @@ $(document).ready(function () {
         placeholder: "Pilih User Terlebih Dahulu",
         allowClear: true,
         width: '100%',
-        minimumResultsForSearch: Infinity  // Menonaktifkan search bar
+        minimumResultsForSearch: Infinity
     });
 
     // Menangani submit form reset password

@@ -64,12 +64,16 @@ function initModalPencipta() {
                 if (field.tagName === 'SELECT') {
                     if (!field.value.trim()) {
                         isValid = false;
+                        // Tambahkan kelas error ke select asli dan container Select2
                         field.classList.add('error-field');
+                        $(field).next('.select2-container').addClass('error-field');
                         emptyFields.push(getFieldLabel(field));
                     } else {
                         field.classList.remove('error-field');
+                        $(field).next('.select2-container').removeClass('error-field');
                     }
                 }
+
                 // Validasi untuk input biasa
                 else if (!field.value.trim()) {
                     isValid = false;
@@ -267,6 +271,11 @@ function initModalPencipta() {
                 const input = modalForm.querySelector(`[name="${key}"]`);
                 if (input) {
                     input.value = Array.isArray(value) ? value[0] : value;
+
+                    // Trigger change untuk Select2 jika ada nilai
+                    if ($(input).hasClass('select2-hidden-accessible')) {
+                        $(input).trigger('change');
+                    }
                 }
             }
 
@@ -852,10 +861,78 @@ function initModalPencipta() {
 
     // Fungsi untuk menghapus kelas error dari semua field
     function clearErrorFields() {
-        const errorFields = document.querySelectorAll('.error-field');
-        errorFields.forEach(field => {
-            field.classList.remove('error-field');
+        // Hapus kelas error dari semua elemen input/select
+        document.querySelectorAll('.error-field').forEach(el => {
+            el.classList.remove('error-field');
         });
+
+        // Hapus kelas error dari semua container Select2
+        document.querySelectorAll('.select2-container').forEach(el => {
+            el.classList.remove('error-field');
+        });
+
+        // Hapus juga dari elemen Select2 yang mungkin memiliki kelas error
+        $('.select2-container').removeClass('error-field');
+
+        // Pastikan dropdown negara juga direset
+        const nationalitySelect = document.getElementById("nationalityform");
+        if (nationalitySelect) {
+            nationalitySelect.classList.remove('error-field');
+            $(nationalitySelect).next('.select2-container').removeClass('error-field');
+        }
+    }
+
+    // Fungsi untuk menghandle perubahan nilai field
+    function setupFieldChangeHandlers() {
+        const modalForm = document.getElementById("modalFormPencipta");
+
+        // Handler untuk input biasa
+        modalForm.querySelectorAll('input, textarea').forEach(field => {
+            field.addEventListener('input', function () {
+                if (this.value.trim()) {
+                    this.classList.remove('error-field');
+                }
+            });
+        });
+
+        // Handler untuk select (baik native maupun Select2)
+        const handleSelectChange = function (select) {
+            if (select.value) {
+                select.classList.remove('error-field');
+                const select2Container = $(select).next('.select2-container');
+                if (select2Container.length) {
+                    select2Container.removeClass('error-field');
+                }
+            }
+        };
+
+        modalForm.querySelectorAll('select').forEach(select => {
+            // Handler untuk perubahan native
+            select.addEventListener('change', function () {
+                handleSelectChange(this);
+            });
+
+            // Handler khusus untuk Select2
+            if ($(select).hasClass('select2-hidden-accessible')) {
+                $(select).on('select2:select select2:unselect select2:clear', function (e) {
+                    handleSelectChange(this);
+                });
+            }
+        });
+
+        // Tambahkan handler khusus untuk dropdown negara
+        const nationalitySelect = document.getElementById("nationalityform");
+        if (nationalitySelect) {
+            // Handler untuk perubahan native
+            nationalitySelect.addEventListener('change', function () {
+                handleSelectChange(this);
+            });
+
+            // Handler untuk Select2
+            $(nationalitySelect).on('select2:select select2:unselect select2:clear', function (e) {
+                handleSelectChange(this);
+            });
+        }
     }
 
     // Modal
@@ -868,6 +945,20 @@ function initModalPencipta() {
         modal.style.display = "flex";
         modalForm.reset();
         editingPencipta = null;
+
+        // Reset dropdown jenis kelamin
+        const jenisKelaminSelect = $('#jenis_kelamin');
+        jenisKelaminSelect.val('').trigger('change');
+
+        // Paksa update placeholder Select2
+        jenisKelaminSelect.select2({
+            placeholder: "-- Pilih Jenis Kelamin --",
+            allowClear: true,
+            width: '100%',
+            minimumResultsForSearch: Infinity,
+            dropdownParent: $('#modalPencipta')
+        });
+        setupFieldChangeHandlers();
 
         // Hapus semua error field sebelum memulai
         clearErrorFields();
@@ -893,11 +984,13 @@ function initModalPencipta() {
         const kelurahanSelect = document.querySelector(".kelurahan");
         const kodeposInput = document.querySelector(".kodepos");
 
+        // Re-inisialisasi Select2 untuk dropdown Indonesia
         initializeSelect2(provinsiSelect, "Pilih Provinsi");
         initializeSelect2(kabupatenSelect, "Pilih Kabupaten/Kota");
         initializeSelect2(kecamatanSelect, "Pilih Kecamatan");
         initializeSelect2(kelurahanSelect, "Pilih Kelurahan");
 
+        // Kosongkan dan disable dropdown dependen
         $(provinsiSelect).empty().append('<option value="">Pilih Provinsi</option>');
         $(kabupatenSelect).empty().append('<option value="">Pilih Kabupaten/Kota</option>').prop('disabled', true);
         $(kecamatanSelect).empty().append('<option value="">Pilih Kecamatan</option>').prop('disabled', true);
@@ -950,9 +1043,17 @@ function initModalPencipta() {
             width: "100%",
             allowClear: true,
             dropdownParent: $('#modalPencipta')
+        }).on('select2:select select2:unselect select2:clear', function (e) {
+            // Langsung tangani perubahan Select2 saat inisialisasi
+            if (this.value) {
+                this.classList.remove('error-field');
+                $(this).next('.select2-container').removeClass('error-field');
+            }
         });
+
         $('.auto-search').on('select2:open', function () {
             document.querySelector('.select2-search__field').focus();
         });
     }
+    setupFieldChangeHandlers();
 }

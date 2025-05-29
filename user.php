@@ -86,7 +86,7 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
         <!--Tanggal Pertama Kali Diumumkan-->
         <div class="form-group">
             <label>Tanggal Pertama Kali Diumumkan:</label>
-            <input type="date" id="tanggal_pengumuman" name="tanggal_pengumuman" required
+            <input type="date" onclick="this.showPicker()" id="tanggal_pengumuman" class="custom-date" name="tanggal_pengumuman" required
                 oninvalid="this.setCustomValidity('Silakan isi tanggal pengumuman terlebih dahulu.')"
                 oninput="this.setCustomValidity('')" />
         </div>
@@ -117,7 +117,8 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
         <div class="form-group">
             <label>Kota/Kabupaten Pertama Kali Diumumkan:</label>
             <div id="kota-container">
-                <select id="kota_pengumuman" name="kota_pengumuman" class="form-select auto-search" style="display: none;" required
+                <select id="kota_pengumuman" name="kota_pengumuman" class="form-select auto-search"
+                    style="display: none;" required
                     oninvalid="this.setCustomValidity('Silakan pilih kota terlebih dahulu.')"
                     oninput="this.setCustomValidity('')">
                     <option value="">-- Pilih Kota/Kabupaten --</option>

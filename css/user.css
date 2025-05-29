@@ -79,7 +79,7 @@
 
 #user-page input[type="date"] {
   color: #999;
-  font-weight: bold;
+  font-weight: 600;
 }
 
 #user-page input[type="file"] {
@@ -92,6 +92,12 @@
   border-color: #007bff;
   outline: none;
   box-shadow: 0 0 4px #007bff66;
+}
+
+.custom-date {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
 #user-page textarea {
@@ -142,21 +148,41 @@
 }
 
 /* Style form error */
+.select2-container.error-field + .select2-container {
+  border-color: #ff4444 !important;
+  outline: none;
+  box-shadow: 0 0 4px #ff4444c4 !important;
+  animation: shake 0.5s ease-in-out;
+}
+
+.select2-container.error-field .select2-selection {
+  border-color: #ff4444 !important;
+  outline: none;
+  box-shadow: 0 0 4px #ff4444c4 !important;
+  animation: shake 0.5s ease-in-out;
+}
+
 .error-field {
   border-color: #ff4444 !important;
   outline: none;
   box-shadow: 0 0 4px #ff4444c4 !important;
+  animation: shake 0.5s ease-in-out;
 }
 
 /* Animasi untuk shake */
 @keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  20%, 60% { transform: translateX(-5px); }
-  40%, 80% { transform: translateX(5px); }
-}
-
-.error-field {
-  animation: shake 0.5s ease-in-out;
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20%,
+  60% {
+    transform: translateX(-5px);
+  }
+  40%,
+  80% {
+    transform: translateX(5px);
+  }
 }
 
 /* Select2 Styling */
@@ -284,12 +310,16 @@ body.dark-mode #user-page h2 {
 
 /* Input, select, textarea */
 body.dark-mode #user-page input[type="text"],
-body.dark-mode #user-page input[type="date"],
 body.dark-mode #user-page input[type="file"],
 body.dark-mode #user-page select,
 body.dark-mode #user-page textarea {
   background-color: #333333;
   color: #ffffff;
+  border: 1px solid #444444;
+}
+
+body.dark-mode #user-page input[type="date"] {
+  background-color: #333333;
   border: 1px solid #444444;
 }
 
@@ -322,6 +352,7 @@ body.dark-mode
   filter: invert(1); /* Membalik warna menjadi putih */
 }
 
+/* Select2 styles for dark mode */
 body.dark-mode .select2-search--dropdown {
   background-color: #333333;
 }

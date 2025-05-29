@@ -1,10 +1,17 @@
+// ================= MEMBUKA DATEPICKER ===================
+document.addEventListener("DOMContentLoaded", function () {
+    const dateInput = document.getElementById('tanggal_pengumuman');
+    if (dateInput) {
+        dateInput.addEventListener('click', function (e) {
+            if (e.isTrusted && this.showPicker) {
+                this.showPicker();
+            }
+        });
+    }
+});
+
 function initUserPage() {
     loadCountriesForMainForm();
-
-     // ================= Membuka datepicker di Chrome ===================
-    document.getElementById('tanggal_pengumuman').addEventListener('click', function () {
-        this.showPicker();
-    });
 
     // ================== INITIALIZE SELECT2 ==================
     // Inisialisasi Select2 untuk jenis permohonan jika belum ada
