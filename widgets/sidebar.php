@@ -59,12 +59,17 @@ $page = substr($_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"], "/") + 
             </li>
         <?php else: ?>
             <li class="sidebar-text">
-                <a class="menu-link" onclick="loadContent('user.php', initUserPage)">
+                <a class="menu-link" onclick="loadContent('status_pengajuan.php')">
                     <i class='bx bxs-dashboard'></i><span class="text">Dashboard</span>
                 </a>
             </li>
             <li class="sidebar-text">
-                <a class="menu-link" onclick="loadContent('status_pengajuan.php')">
+                <a class="menu-link" onclick="loadContent('user.php')">
+                    <i class='bx bxs-file-plus'></i><span class="text">Permohonan Baru</span>
+                </a>
+            </li>
+            <li class="sidebar-text">
+                <a class="menu-link" onclick="loadContent('#')">
                     <i class='bx bxs-folder'></i><span class="text">Status Pengajuan</span>
                 </a>
             </li>

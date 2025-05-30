@@ -1,5 +1,10 @@
-// ================= MEMBUKA DATEPICKER ===================
+// ================= MEMANGGIL FUNGSI SAAT HALAMAN DIMUAT ===================
 document.addEventListener("DOMContentLoaded", function () {
+    initFormSubmission();
+    setupFileValidation();
+    initUserPage();
+
+    // ================= MEMBUKA DATEPICKER ===================
     const dateInput = document.getElementById('tanggal_pengumuman');
     if (dateInput) {
         dateInput.addEventListener('click', function (e) {
@@ -8,6 +13,27 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     }
+    // Menangani perubahan form saat submit
+    document.getElementById('form-hki').addEventListener('submit', function (e) {
+        // Pastikan nilai yang benar dikirim
+        const country = document.getElementById('nationality').value;
+        const citySelect = document.getElementById('kota_pengumuman');
+        const cityInput = document.getElementById('kota_pengumuman_input');
+
+        if (country === 'Indonesia') {
+            // Nonaktifkan input jika dropdown yang aktif
+            cityInput.disabled = true;
+            cityInput.removeAttribute('name'); // Hapus name attribute dari input
+            citySelect.disabled = false;
+            citySelect.setAttribute('name', 'kota_pengumuman'); // Set name untuk select
+        } else {
+            // Nonaktifkan select jika input yang aktif
+            citySelect.disabled = true;
+            citySelect.removeAttribute('name'); // Hapus name attribute dari select
+            cityInput.disabled = false;
+            cityInput.setAttribute('name', 'kota_pengumuman'); // Set name untuk input
+        }
+    });
 });
 
 function initUserPage() {
@@ -15,8 +41,8 @@ function initUserPage() {
 
     // ================== INITIALIZE SELECT2 ==================
     // Inisialisasi Select2 untuk jenis permohonan jika belum ada
-    if (!$('select[name="jenis_permohonan"]').hasClass("select2-hidden-accessible")) {
-        $('select[name="jenis_permohonan"]').select2({
+    if (!$('#jenis_permohonan').hasClass("select2-hidden-accessible")) {
+        $('#jenis_permohonan').select2({
             placeholder: "-- Pilih Jenis Permohonan --",
             allowClear: true,
             width: '100%'
@@ -404,9 +430,13 @@ function initFormSubmission() {
                             document.getElementById("pencipta-list").innerHTML = "";
 
                             // Reset elemen Select2
+                            $('#jenis_permohonan').val(null).trigger('change');
                             $('#jenis_hak_cipta').val(null).trigger('change');
                             $('#sub_jenis_hak_cipta').val(null).prop('disabled', true).trigger('change');
-                            $('#nationality').val(null).trigger('change');
+
+                            // Reset negara
+                            $('#nationality').val('Indonesia').trigger('change');
+                            toggleCityInput('Indonesia');
 
                             // Kosongkan semua input Select2 lainnya (jika ada)
                             $('.select2-hidden-accessible').val(null).trigger('change');
@@ -438,36 +468,6 @@ function initFormSubmission() {
         submitButton.disabled = true;
     });
 }
-
-
-// Fungsi dipanggil saat halaman dimuat
-document.addEventListener("DOMContentLoaded", function () {
-    initFormSubmission();
-    setupFileValidation();
-    initUserPage();
-
-    // Menangani perubahan form saat submit
-    document.getElementById('form-hki').addEventListener('submit', function (e) {
-        // Pastikan nilai yang benar dikirim
-        const country = document.getElementById('nationality').value;
-        const citySelect = document.getElementById('kota_pengumuman');
-        const cityInput = document.getElementById('kota_pengumuman_input');
-
-        if (country === 'Indonesia') {
-            // Nonaktifkan input jika dropdown yang aktif
-            cityInput.disabled = true;
-            cityInput.removeAttribute('name'); // Hapus name attribute dari input
-            citySelect.disabled = false;
-            citySelect.setAttribute('name', 'kota_pengumuman'); // Set name untuk select
-        } else {
-            // Nonaktifkan select jika input yang aktif
-            citySelect.disabled = true;
-            citySelect.removeAttribute('name'); // Hapus name attribute dari select
-            cityInput.disabled = false;
-            cityInput.setAttribute('name', 'kota_pengumuman'); // Set name untuk input
-        }
-    });
-});
 
 // ================== VALIDASI FILE ==================
 function setupFileValidation() {

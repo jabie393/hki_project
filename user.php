@@ -47,7 +47,7 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
         <!--Jenis Permohonan-->
         <div class="form-group">
             <label>Jenis Permohonan:</label>
-            <select name="jenis_permohonan" class="auto-search" required
+            <select name="jenis_permohonan" id="jenis_permohonan" class="auto-search" required
                 oninvalid="this.setCustomValidity('Silakan pilih jenis permohonan terlebih dahulu.')"
                 oninput="this.setCustomValidity('')">
                 <option value="">-- Pilih Jenis Permohonan --</option>
