@@ -48,7 +48,7 @@ $role = $_SESSION['role'] ?? 'user';
         <?php if ($role === 'admin'): ?>
           loadContent('admin.php');
         <?php else: ?>
-          loadContent('status_pengajuan.php');
+          loadContent('user.php');
         <?php endif; ?>
       </script>
     </main>

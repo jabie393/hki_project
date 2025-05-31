@@ -39,6 +39,89 @@ document.addEventListener("DOMContentLoaded", function () {
 function initUserPage() {
     loadCountriesForMainForm();
 
+    // Fungsi untuk toggle antara dropdown dan input text
+    function toggleCityInput(country) {
+        const citySelect = document.getElementById('kota_pengumuman');
+        const cityInput = document.getElementById('kota_pengumuman_input');
+
+        if (country === 'Indonesia') {
+            // Tampilkan dropdown dan sembunyikan input
+            citySelect.style.display = 'block';
+            citySelect.required = true;
+            citySelect.disabled = false;
+            citySelect.setAttribute('name', 'kota_pengumuman');
+
+            cityInput.style.display = 'none';
+            cityInput.required = false;
+            cityInput.disabled = true;
+            cityInput.removeAttribute('name');
+
+            // Inisialisasi Select2 untuk dropdown kota
+            if (!$(citySelect).hasClass("select2-hidden-accessible")) {
+                $(citySelect).select2({
+                    placeholder: "-- Pilih Kota/Kabupaten --",
+                    width: '100%'
+                });
+            }
+
+            // Load data kota dari API Ibnux
+            loadIndonesianCities();
+        } else {
+            // Tampilkan input dan sembunyikan dropdown
+            citySelect.style.display = 'none';
+            citySelect.required = false;
+            citySelect.disabled = true;
+            citySelect.removeAttribute('name');
+
+            cityInput.style.display = 'block';
+            cityInput.required = true;
+            cityInput.disabled = false;
+            cityInput.setAttribute('name', 'kota_pengumuman');
+
+            // Hancurkan Select2 jika sudah diinisialisasi
+            if ($(citySelect).hasClass("select2-hidden-accessible")) {
+                $(citySelect).select2('destroy');
+            }
+        }
+    }
+
+    // Ekspor fungsi ke konteks global
+    window.toggleCityInput = toggleCityInput;
+
+    // Fungsi untuk memuat data kota Indonesia dari API Ibnux
+    async function loadIndonesianCities() {
+        const $citySelect = $('#kota_pengumuman');
+        $citySelect.html('<option value="">-- Memuat data kota... --</option>');
+
+        try {
+            // Step 1: Fetch semua provinsi
+            const provResponse = await fetch('https://ibnux.github.io/data-indonesia/propinsi.json');
+            const provinsi = await provResponse.json();
+
+            // Step 2: Fetch semua kabupaten/kota (paralel)
+            const allCitiesPromises = provinsi.map(async (prov) => {
+                const res = await fetch(`https://ibnux.github.io/data-indonesia/kabupaten/${prov.id}.json`);
+                const cities = await res.json();
+                cities.forEach(city => city.provinsi = prov.nama);
+                return cities;
+            });
+
+            const allCitiesArrays = await Promise.all(allCitiesPromises);
+            const allCities = allCitiesArrays.flat();
+
+            // Step 3: Isi dropdown
+            $citySelect.html('<option value="">-- Pilih Kota/Kabupaten --</option>');
+            allCities.forEach(city => {
+                const option = new Option(`${city.nama} (${city.provinsi})`, city.nama, false, false);
+                $citySelect.append(option);
+            });
+
+        } catch (error) {
+            console.error('Gagal memuat data kota:', error);
+            $citySelect.html('<option value="">-- Gagal memuat data kota --</option>');
+        }
+    }
+
     // ================== INITIALIZE SELECT2 ==================
     // Inisialisasi Select2 untuk jenis permohonan jika belum ada
     if (!$('#jenis_permohonan').hasClass("select2-hidden-accessible")) {
@@ -237,86 +320,6 @@ function initUserPage() {
             `<span><img src="${flagUrl}" alt="" style="width: 20px; height: 15px; margin-right: 10px;">${option.text}</span>`
         );
     }
-
-    // Fungsi untuk toggle antara dropdown dan input text
-    function toggleCityInput(country) {
-        const citySelect = document.getElementById('kota_pengumuman');
-        const cityInput = document.getElementById('kota_pengumuman_input');
-
-        if (country === 'Indonesia') {
-            // Tampilkan dropdown dan sembunyikan input
-            citySelect.style.display = 'block';
-            citySelect.required = true;
-            citySelect.disabled = false;
-            citySelect.setAttribute('name', 'kota_pengumuman');
-
-            cityInput.style.display = 'none';
-            cityInput.required = false;
-            cityInput.disabled = true;
-            cityInput.removeAttribute('name');
-
-            // Inisialisasi Select2 untuk dropdown kota
-            if (!$(citySelect).hasClass("select2-hidden-accessible")) {
-                $(citySelect).select2({
-                    placeholder: "-- Pilih Kota/Kabupaten --",
-                    width: '100%'
-                });
-            }
-
-            // Load data kota dari API Ibnux
-            loadIndonesianCities();
-        } else {
-            // Tampilkan input dan sembunyikan dropdown
-            citySelect.style.display = 'none';
-            citySelect.required = false;
-            citySelect.disabled = true;
-            citySelect.removeAttribute('name');
-
-            cityInput.style.display = 'block';
-            cityInput.required = true;
-            cityInput.disabled = false;
-            cityInput.setAttribute('name', 'kota_pengumuman');
-
-            // Hancurkan Select2 jika sudah diinisialisasi
-            if ($(citySelect).hasClass("select2-hidden-accessible")) {
-                $(citySelect).select2('destroy');
-            }
-        }
-    }
-
-    // Fungsi untuk memuat data kota Indonesia dari API Ibnux
-    async function loadIndonesianCities() {
-        const $citySelect = $('#kota_pengumuman');
-        $citySelect.html('<option value="">-- Memuat data kota... --</option>');
-
-        try {
-            // Step 1: Fetch semua provinsi
-            const provResponse = await fetch('https://ibnux.github.io/data-indonesia/propinsi.json');
-            const provinsi = await provResponse.json();
-
-            // Step 2: Fetch semua kabupaten/kota (paralel)
-            const allCitiesPromises = provinsi.map(async (prov) => {
-                const res = await fetch(`https://ibnux.github.io/data-indonesia/kabupaten/${prov.id}.json`);
-                const cities = await res.json();
-                cities.forEach(city => city.provinsi = prov.nama);
-                return cities;
-            });
-
-            const allCitiesArrays = await Promise.all(allCitiesPromises);
-            const allCities = allCitiesArrays.flat();
-
-            // Step 3: Isi dropdown
-            $citySelect.html('<option value="">-- Pilih Kota/Kabupaten --</option>');
-            allCities.forEach(city => {
-                const option = new Option(`${city.nama} (${city.provinsi})`, city.nama, false, false);
-                $citySelect.append(option);
-            });
-
-        } catch (error) {
-            console.error('Gagal memuat data kota:', error);
-            $citySelect.html('<option value="">-- Gagal memuat data kota --</option>');
-        }
-    }
 }
 
 // ================== FORM HKI SUBMISSION ==================
@@ -372,7 +375,6 @@ function initFormSubmission() {
                 hiddenInputsContainer.appendChild(input);
             });
         });
-
 
         const formData = new FormData(form);
 
@@ -434,9 +436,11 @@ function initFormSubmission() {
                             $('#jenis_hak_cipta').val(null).trigger('change');
                             $('#sub_jenis_hak_cipta').val(null).prop('disabled', true).trigger('change');
 
-                            // Reset negara
-                            $('#nationality').val('Indonesia').trigger('change');
-                            toggleCityInput('Indonesia');
+                            // Reset negara ke Indonesia
+                            const nationalitySelect = $('#nationality');
+                            nationalitySelect.val('Indonesia').trigger('change');
+
+                            initUserPage(); // Memastikan toggleCityInput dipanggil ulang
 
                             // Kosongkan semua input Select2 lainnya (jika ada)
                             $('.select2-hidden-accessible').val(null).trigger('change');
