@@ -109,7 +109,7 @@ nav .bx-menu {
   left: 15px;
   font-size: 1.8rem;
   color: #fff;
-  background-color: #004080;;
+  background-color: #004080;
   padding: 8px 10px;
   border-radius: 6px;
   cursor: pointer;
@@ -118,8 +118,8 @@ nav .bx-menu {
   transition: opacity 0.3s ease, transform 0.3s ease;
   outline: none;
   -webkit-tap-highlight-color: transparent; /* Menghilangkan highlight pada elemen saat di-tap di Chrome */
-  -moz-tap-highlight-color: none;    /* Firefox */
-  -ms-tap-highlight-color: none;     /* Internet Explorer/Edge */
+  -moz-tap-highlight-color: none; /* Firefox */
+  -ms-tap-highlight-color: none; /* Internet Explorer/Edge */
 }
 
 #sidebar-toggle.hidden {
@@ -140,9 +140,9 @@ nav .bx-menu {
 /* Nonaktifkan seleksi teks untuk elemen sidebar */
 #sidebar .menu-link {
   -webkit-user-select: none; /* Safari */
-  -moz-user-select: none;    /* Firefox */
-  -ms-user-select: none;     /* Internet Explorer/Edge */
-  user-select: none;         /* Standard */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Standard */
 }
 
 #sidebar .menu-link.active {
@@ -165,8 +165,8 @@ nav .bx-menu {
   cursor: pointer;
   outline: none;
   -webkit-tap-highlight-color: transparent; /* Menghilangkan highlight pada elemen saat di-tap di Chrome */
-  -moz-tap-highlight-color: none;    /* Firefox */
-  -ms-tap-highlight-color: none;     /* Internet Explorer/Edge */
+  -moz-tap-highlight-color: none; /* Firefox */
+  -ms-tap-highlight-color: none; /* Internet Explorer/Edge */
 }
 
 .switch-mode::before {
@@ -194,8 +194,8 @@ nav .bx-menu {
 nav a.profile {
   outline: none;
   -webkit-tap-highlight-color: transparent; /* Menghilangkan highlight pada elemen saat di-tap di Chrome */
-  -moz-tap-highlight-color: none;    /* Firefox */
-  -ms-tap-highlight-color: none;     /* Internet Explorer/Edge */
+  -moz-tap-highlight-color: none; /* Firefox */
+  -ms-tap-highlight-color: none; /* Internet Explorer/Edge */
 }
 
 nav .profile img {
@@ -280,8 +280,51 @@ body.dark-mode #content-main {
   #content {
     margin-left: 0;
   }
+
   #content-main {
     padding: 80px 20px 20px; /* avoid navbar */
     flex-grow: 1;
   }
+}
+
+/* Dark mode styles */
+body.dark-mode {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+body.dark-mode nav .profile img {
+  border: 2px solid #00c6ff;
+}
+
+body.dark-mode nav {
+  background-color: #1e1e1e;
+}
+
+body.dark-mode #sidebar {
+  background: #1e1e1e;
+  background-color: #1e1e1e;
+  color: #ffffff;
+}
+
+body.dark-mode #sidebar-toggle {
+  color: #fff;
+  background-color: #00c6ff;
+}
+
+body.dark-mode #sidebar .menu-link {
+  color: #ffffff; /* Warna teks menu */
+}
+
+body.dark-mode #sidebar .menu-link.active {
+  background-color: #333333; /* Warna menu aktif */
+  color: #ffffff; /* Warna teks menu aktif */
+}
+
+body.dark-mode #sidebar .menu-link.active i {
+  color: #ffffff; /* Warna ikon menu aktif */
+}
+
+body.dark-mode #sidebar .brand {
+  color: #ffffff; /* Warna teks brand */
 }

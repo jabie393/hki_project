@@ -1,0 +1,70 @@
+#user-page {
+  font-family: "Inter", sans-serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(180deg, #eaf0f6 0%, #ffffff 100%);
+  color: #2c3e50;
+}
+
+#user-page .section {
+  background: #fff;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#user-page .section h3 {
+  background: #f5f6fa;
+  margin: 0;
+  padding: 10px 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+#user-page .table-wrapper {
+  overflow-x: auto;
+  background: #fff;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+#user-page .hki-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  min-width: 1000px;
+}
+
+#user-page .hki-table th,
+#user-page .hki-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+  vertical-align: top;
+}
+
+#user-page .hki-table th {
+  background-color: #003366;
+  color: #fff;
+  white-space: nowrap;
+}
+
+table.dataTable {
+  width: 100% !important;
+  margin-bottom: 20px !important;
+}
+
+#user-page .card-container {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+#user-page .card {
+  flex: 1;
+  background: linear-gradient(to right, #004080 0%, #1976d2 100%);
+  color: #FFC107;
+  border-radius: 10px;
+  text-align: center;
+  padding: 20px;
+}

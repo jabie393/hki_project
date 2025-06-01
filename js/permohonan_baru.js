@@ -1,9 +1,5 @@
 // ================= MEMANGGIL FUNGSI SAAT HALAMAN DIMUAT ===================
 document.addEventListener("DOMContentLoaded", function () {
-    initFormSubmission();
-    setupFileValidation();
-    initUserPage();
-
     // ================= MEMBUKA DATEPICKER ===================
     const dateInput = document.getElementById('tanggal_pengumuman');
     if (dateInput) {
@@ -13,27 +9,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     }
-    // Menangani perubahan form saat submit
-    document.getElementById('form-hki').addEventListener('submit', function (e) {
-        // Pastikan nilai yang benar dikirim
-        const country = document.getElementById('nationality').value;
-        const citySelect = document.getElementById('kota_pengumuman');
-        const cityInput = document.getElementById('kota_pengumuman_input');
-
-        if (country === 'Indonesia') {
-            // Nonaktifkan input jika dropdown yang aktif
-            cityInput.disabled = true;
-            cityInput.removeAttribute('name'); // Hapus name attribute dari input
-            citySelect.disabled = false;
-            citySelect.setAttribute('name', 'kota_pengumuman'); // Set name untuk select
-        } else {
-            // Nonaktifkan select jika input yang aktif
-            citySelect.disabled = true;
-            citySelect.removeAttribute('name'); // Hapus name attribute dari select
-            cityInput.disabled = false;
-            cityInput.setAttribute('name', 'kota_pengumuman'); // Set name untuk input
-        }
-    });
 });
 
 function initUserPage() {

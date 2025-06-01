@@ -67,6 +67,10 @@ function afterContentLoaded(url) {
     highlightActiveMenu(cleanUrl);
 
     // Inisialisasi halaman spesifik
+    if (cleanUrl.endsWith("user.php")) {
+        if (typeof pagination === "function") pagination();
+    }
+
     if (cleanUrl.endsWith("permohonan_baru.php")) {
         if (typeof initUserPage === "function") initUserPage();
         if (typeof setupFileValidation === "function") setupFileValidation();

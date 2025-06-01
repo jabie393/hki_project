@@ -31,7 +31,6 @@ $role = $_SESSION['role'] ?? 'user';
   <!-- Css -->
   <link rel="stylesheet" href="css/side&navbar.css" />
   <link rel="stylesheet" href="css/modal.css">
-  <link rel="stylesheet" href="css/globaldarkmode.css" />
 </head>
 
 <body>
@@ -42,13 +41,14 @@ $role = $_SESSION['role'] ?? 'user';
 
     <main id="content-main">
       <script src="js/main.js"></script>
-      <script src="js/ajax.js"></script>
       <script>
         // Menentukan halaman default berdasarkan role
         <?php if ($role === 'admin'): ?>
           loadContent('admin.php');
         <?php else: ?>
-          loadContent('user.php');
+          if (typeof loadContent === "function") {
+            loadContent('user.php');
+          }
         <?php endif; ?>
       </script>
     </main>
@@ -68,6 +68,7 @@ $role = $_SESSION['role'] ?? 'user';
     </div>
   </div>
 </body>
+<script src="js/ajax.js"></script>
 <script src="js/dashboard.js"></script>
 <script src="js/darkmode.js"></script>
 

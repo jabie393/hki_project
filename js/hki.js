@@ -1,3 +1,9 @@
+//== Pagination user.php ==//
+function pagination() {
+    $('#approvedTable').DataTable();
+    $('#pendingTable').DataTable();
+};
+
 //== Modal ==//
 // script detail profil user
 function showProfile(userId) {

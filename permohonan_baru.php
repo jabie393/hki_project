@@ -32,7 +32,7 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
     <link rel="stylesheet" href="css/alert.css">
 </head>
 
-<div id="user-page">
+<div id="permohonan_baru-page">
     <div class="download-container">
         <a href="services/download_template.php?doc_type=surat_pernyataan" class="download-btn">
             <button>Surat Pernyataan</button>
