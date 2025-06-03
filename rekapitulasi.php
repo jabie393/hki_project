@@ -135,7 +135,7 @@ $result = $conn->query($query);
         <div class="pagination">
             <?php if ($page > 1): ?>
                 <a href="?search=<?= htmlspecialchars($search); ?>&page=<?= $page - 1; ?>&limit=<?= $limit; ?>"
-                    class="page-link prev">‹</a>
+                    class="page-link prev">&laquo;</a>
             <?php endif; ?>
 
             <!-- Always show first page -->
@@ -171,7 +171,7 @@ $result = $conn->query($query);
 
             <?php if ($page < $totalPages): ?>
                 <a href="?search=<?= htmlspecialchars($search); ?>&page=<?= $page + 1; ?>&limit=<?= $limit; ?>"
-                    class="page-link next">›</a>
+                    class="page-link next">&raquo;</a>
             <?php endif; ?>
         </div>
     </div>

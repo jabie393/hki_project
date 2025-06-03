@@ -144,7 +144,7 @@ $result = $stmt->get_result();
     <div class="pagination">
         <?php if ($page > 1): ?>
             <a href="javascript:void(0);" class="page-link prev"
-                onclick="loadPage(<?= $page - 1; ?>, <?= $limit; ?>, '<?= htmlspecialchars($search); ?>')">‹</a>
+                onclick="loadPage(<?= $page - 1; ?>, <?= $limit; ?>, '<?= htmlspecialchars($search); ?>')">&laquo;</a>
         <?php endif; ?>
 
         <!-- Always show first page -->
@@ -180,7 +180,7 @@ $result = $stmt->get_result();
 
         <?php if ($page < $totalPages): ?>
             <a href="javascript:void(0);" class="page-link next"
-                onclick="loadPage(<?= $page + 1; ?>, <?= $limit; ?>, '<?= htmlspecialchars($search); ?>')">›</a>
+                onclick="loadPage(<?= $page + 1; ?>, <?= $limit; ?>, '<?= htmlspecialchars($search); ?>')">&raquo;</a>
         <?php endif; ?>
     </div>
 

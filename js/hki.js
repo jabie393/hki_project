@@ -1,7 +1,45 @@
 //== Pagination user.php ==//
 function pagination() {
-    $('#approvedTable').DataTable();
-    $('#pendingTable').DataTable();
+    $('#approvedTable').DataTable({
+        dom: '<"dtable-header"lf>rtip',
+        scrollX: true,
+        autoWidth: false,
+        language: {
+            search: "",
+            lengthMenu: "_MENU_",
+            paginate: {
+                previous: '&laquo;', // «
+                next: '&raquo;'      // »
+            },
+            info: "Menampilkan _START_ sampai _END_ dari total _TOTAL_ hak cipta",
+            infoEmpty: "Hak cipta tidak ditemukan",
+            infoFiltered: "(Hasil pencarian dari _MAX_ total hak cipta)",
+        },
+        initComplete: function () {
+            // Placeholder
+            $('.dataTables_filter input[type="search"]').attr('placeholder', 'Cari hak cipta...');
+        },
+    });
+    $('#pendingTable').DataTable({
+        dom: '<"dtable-header"lf>rtip',
+        scrollX: true,
+        autoWidth: false,
+        language: {
+            search: "",
+            lengthMenu: "_MENU_",
+            paginate: {
+                previous: '&laquo;', // «
+                next: '&raquo;'      // »
+            },
+            info: "Menampilkan _START_ sampai _END_ dari total _TOTAL_ hak cipta",
+            infoEmpty: "Hak cipta tidak ditemukan",
+            infoFiltered: "(Hasil pencarian dari _MAX_ total hak cipta)",
+        },
+        initComplete: function () {
+            // Placeholder
+            $('.dataTables_filter input[type="search"]').attr('placeholder', 'Cari hak cipta...');
+        }
+    });
 };
 
 //== Modal ==//
@@ -400,7 +438,7 @@ $(document).on('click', '.cancel-btn', function () {
                         timer: 2000
                     }).then(() => {
                         // Reload tabel dengan data terbaru
-                        $('#hki-table').load('status_pengajuan.php #hki-table > *'); 
+                        $('#hki-table').load('status_pengajuan.php #hki-table > *');
                     });
                 },
                 error: function () {

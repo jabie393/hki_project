@@ -149,12 +149,13 @@
 }
 
 #hki-page .btn-info {
-  background-color: #17a2b8;
+  background-color: #004080;
   color: #fff;
+  transition: background-color 0.2s;
 }
 
 #hki-page .btn-info:hover {
-  background-color: #18b2ca;
+  background-color: #002a5e;
 }
 
 #hki-page .btn-safe {
@@ -318,7 +319,7 @@
   padding: 10px 16px;
   font-weight: bold;
   background-color: #f0f0f0;
-  color: #666;
+  color: #003365;
   border-color: #ddd;
 }
 
@@ -438,10 +439,12 @@ body.dark-mode #hki-page .pagination .page-link {
 
 body.dark-mode #hki-page .pagination .page-link:hover {
   background-color: #444444;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.11);
 }
 
 body.dark-mode #hki-page .pagination .page-link.active {
   background-color: #555555; /* Warna latar belakang pagination aktif */
   color: #ffffff; /* Warna teks pagination aktif */
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.11);
 }
 /*=== End of Dark mode styles ===*/

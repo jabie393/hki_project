@@ -6,6 +6,15 @@
   color: #2c3e50;
 }
 
+#user-page .card {
+  flex: 1;
+  background: linear-gradient(to right, #004080 0%, #1976d2 100%);
+  color: #ffc107;
+  border-radius: 10px;
+  text-align: center;
+  padding: 20px;
+}
+
 #user-page .section {
   background: #fff;
   border-radius: 10px;
@@ -14,10 +23,26 @@
 }
 
 #user-page .section h3 {
-  background: #f5f6fa;
+  color: #004080;
+  font-weight: bold;
   margin: 0;
-  padding: 10px 20px;
-  border-bottom: 1px solid #ddd;
+  padding: 30px 20px 10px;
+}
+
+/* Input dan select di dalam user-page */
+#user-page input[type="search"],
+#user-page select {
+  border: 1px solid #ced4da;
+  background-color: #eef2ff;
+  border-radius: 8px;
+  transition: border-color 0.2s;
+}
+
+#user-page input:focus,
+#user-page select:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 4px #007bff66;
 }
 
 #user-page .table-wrapper {
@@ -25,14 +50,13 @@
   background: #fff;
   border-radius: 10px;
   padding: 10px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 #user-page .hki-table {
   width: 100%;
   border-collapse: collapse;
   font-size: 14px;
-  min-width: 1000px;
+  table-layout: fixed;
 }
 
 #user-page .hki-table th,
@@ -41,6 +65,7 @@
   border: 1px solid #ddd;
   text-align: left;
   vertical-align: top;
+  box-sizing: border-box;
 }
 
 #user-page .hki-table th {
@@ -60,11 +85,268 @@ table.dataTable {
   gap: 15px;
   margin-bottom: 20px;
 }
-#user-page .card {
-  flex: 1;
-  background: linear-gradient(to right, #004080 0%, #1976d2 100%);
-  color: #FFC107;
-  border-radius: 10px;
+
+#user-page .btn {
+  padding: 6px 12px;
+  font-size: 13px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 2px 0;
+  display: inline-block;
+  text-decoration: none;
   text-align: center;
-  padding: 20px;
+  outline: none;
+  -webkit-tap-highlight-color: transparent; /* Menghilangkan highlight pada elemen saat di-tap di Chrome */
+  -moz-tap-highlight-color: none; /* Firefox */
+  -ms-tap-highlight-color: none; /* Internet Explorer/Edge */
+}
+
+#user-page .btn-info {
+  background-color: #004080;
+  color: #fff;
+  transition: background-color 0.2s;
+}
+
+#user-page .btn-info:hover {
+  background-color: #002a5e;
+}
+
+/* DataTables controls responsive & sticky */
+.dtable-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap; /* Responsif jika sempit */
+  margin-bottom: 1rem;
+  gap: 10px;
+}
+/* Input pencarian tetap proporsional */
+.dataTables_filter input {
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+/* Select di length menu */
+.dataTables_length select {
+  padding: 5px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+.dataTables_scrollHeadInner,
+.dataTables_scrollHeadInner table,
+.dataTables_scrollBody table {
+  width: 100% !important;
+}
+.dataTables_scrollHead {
+  border-bottom: none !important;
+  margin-bottom: 0 !important;
+  background: transparent !important;
+  height: 38px;
+}
+.dataTables_scrollHeadInner table {
+  border-bottom: none !important;
+}
+.dataTables_scrollBody table {
+  margin-top: 0 !important;
+}
+.dataTables_wrapper.no-footer .dataTables_scrollBody {
+  border-bottom: none;
+}
+.dataTables_wrapper .dataTables_length,
+.dataTables_wrapper .dataTables_filter,
+.dataTables_wrapper .dataTables_info,
+.dataTables_wrapper .dataTables_paginate {
+  font-size: small;
+  padding: 8px 0;
+  z-index: 2;
+}
+
+/* Style tombol pagination DataTables */
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+  color: #003365 !important;
+  cursor: pointer;
+  padding: 10px 16px;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+  background: #003365 !important;
+  color: white;
+  border-color: #003365;
+  box-shadow: 0 4px 12px rgba(0, 51, 101, 0.2);
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+  background-color: #003365;
+  color: white !important;
+  border-color: #003365;
+  pointer-events: none;
+  box-shadow: 0 4px 12px rgba(0, 51, 101, 0.3);
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover {
+  background: transparent !important;
+}
+
+/* === Dark mode styles === */
+body.dark-mode #user-page {
+  background: #121212;
+  color: #ffffff;
+}
+
+body.dark-mode #user-page .card {
+  background: linear-gradient(to right, #222 0%, #333 100%);
+  color: #ffc107;
+}
+
+body.dark-mode #user-page .section,
+body.dark-mode #user-page .table-wrapper {
+  background: #1e1e1e;
+  box-shadow: none;
+}
+
+body.dark-mode #user-page .section h3 {
+  color: #ffffff;
+}
+
+/* Input dan select di dalam user-page */
+body.dark-mode #user-page input[type="search"],
+body.dark-mode #user-page select {
+  background-color: #333333;
+  color: #ffffff;
+  border: 1px solid #444444;
+}
+
+body.dark-mode #user-page input:focus,
+body.dark-mode #user-page select:focus {
+  outline: none;
+  border-color: #ffffff;
+  box-shadow: 0 0 4px #ffffffa2;
+}
+
+body.dark-mode #user-page .hki-table th {
+  border-color: #333333;
+  background-color: #333333;
+  color: #ffffff;
+}
+
+body.dark-mode #user-page .hki-table td {
+  border-color: transparent;
+  background-color: #1e1e1e;
+  color: #ffffff;
+}
+
+body.dark-mode #user-page .btn {
+  background-color: #333333;
+  color: #ffffff;
+  border-color: transparent;
+}
+
+body.dark-mode #user-page .btn:hover {
+  background-color: #444444;
+}
+
+body.dark-mode .dataTables_wrapper .dataTables_paginate .paginate_button {
+  background-color: #333333;
+  color: #ffffff !important;
+  border: 1px solid #444444;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.11);
+}
+
+body.dark-mode .dataTables_wrapper .dataTables_paginate .paginate_button:hover,
+body.dark-mode
+  .dataTables_wrapper
+  .dataTables_paginate
+  .paginate_button.current {
+  background-color: #555555 !important;
+  color: #fff !important;
+  border-color: #555555;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.11);
+}
+
+body.dark-mode .dataTables_wrapper .dataTables_info,
+body.dark-mode .dataTables_wrapper .dataTables_length,
+body.dark-mode .dataTables_wrapper .dataTables_filter {
+  background: #1e1e1e;
+  color: #fff;
+}
+
+body.dark-mode .dataTables_filter input,
+body.dark-mode .dataTables_length select {
+  background-color: #333333;
+  color: #fff;
+  border: 1px solid #444444;
+}
+body.dark-mode
+  .dataTables_wrapper
+  .dataTables_paginate
+  .paginate_button.disabled {
+  background: transparent !important;
+  border: none;
+  box-shadow: none;
+}
+/* === End of Dark mode styles === */
+
+@media (max-width: 768px) {
+  .dataTables_scrollHead {
+    height: 28px;
+  }
+  .dataTables_wrapper .dataTables_filter {
+    margin-top: 0;
+  }
+  .dataTables_wrapper .dataTables_info {
+    font-size: 11px;
+    text-align: start;
+  }
+  .dataTables_wrapper .dataTables_paginate {
+    text-align: center;
+    margin-top: 10px;
+  }
+  #user-page .section {
+    border-radius: 6px;
+    margin-bottom: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    padding: 6px;
+  }
+  #user-page .section h3 {
+    font-size: 16px;
+    padding: 8px 12px;
+  }
+  #user-page .table-wrapper {
+    border-radius: 6px;
+  }
+  #user-page .hki-table {
+    font-size: 12px;
+  }
+  #user-page .hki-table th,
+  #user-page .hki-table td {
+    padding: 6px;
+    font-size: 12px;
+  }
+  #user-page .card {
+    padding: 12px;
+  }
+  #user-page .card p {
+    font-size: 13px;
+  }
+}
+
+/* Untuk layar sangat kecil */
+@media (max-width: 480px) {
+  #user-page .section h3 {
+    font-size: 14px;
+    padding: 6px 8px;
+  }
+  #user-page .hki-table {
+    font-size: 11px;
+  }
+  #user-page .card p {
+    font-size: 11px;
+  }
+  .dataTables_wrapper .dataTables_info {
+    font-size: 10px;
+  }
 }

@@ -18,9 +18,9 @@ $stmtRegistered->execute();
 $registeredResult = $stmtRegistered->get_result();
 $registeredCount = $registeredResult->fetch_assoc()['total'];
 
-// Query untuk menghitung pasca hak cipta terdaftar (status 'Post-Registration')
+// Query untuk menghitung pasca hak cipta terdaftar (status 'Pending')
 $postRegisteredQuery = "SELECT COUNT(*) as total FROM registrations 
-                       WHERE user_id = ? AND status = 'Post-Registration'";
+                       WHERE user_id = ? AND status = 'Pending'";
 $stmtPostRegistered = $conn->prepare($postRegisteredQuery);
 $stmtPostRegistered->bind_param("s", $user_id);
 $stmtPostRegistered->execute();
@@ -95,7 +95,7 @@ $postRegisteredCount = $postRegisteredResult->fetch_assoc()['total'];
                             <?php }
                         } else { ?>
                             <tr>
-                                <td><?php echo "Belum ada hak cipta yang disetujui"; ?></td>
+                                <td><?php echo "-"; ?></td>
                                 <td>-</td>
                                 <td>-</td>
                             </tr>
@@ -108,7 +108,7 @@ $postRegisteredCount = $postRegisteredResult->fetch_assoc()['total'];
         <div class="section">
             <h3>Hak Cipta Yang Belum Disetujui</h3>
             <div class="table-wrapper">
-                <table id="pendingTable" class="display hki-table">
+                <table id="pendingTable" class="hki-table">
                     <thead>
                         <tr>
                             <th>Judul</th>
@@ -141,7 +141,7 @@ $postRegisteredCount = $postRegisteredResult->fetch_assoc()['total'];
                             <?php }
                         } else { ?>
                             <tr>
-                                <td><?php echo "Belum ada hak cipta yang diajukan"; ?></td>
+                                <td><?php echo "-"; ?></td>
                                 <td>-</td>
                                 <td>-</td>
                             </tr>
