@@ -95,7 +95,7 @@ $result = $stmt->get_result();
                 <th>Aksi</th>
             </tr>
             <?php while ($row = $result->fetch_assoc()) { ?>
-                <tr>
+                <tr id="row-<?= $row['id'] ?>">
                     <td><?php echo htmlspecialchars($row['nomor_pengajuan'] ?? '-'); ?></td>
                     <td><?php echo htmlspecialchars($row['jenis_pengajuan']); ?></td>
                     <td><?php echo htmlspecialchars($row['jenis_hak_cipta']); ?></td>
@@ -130,7 +130,7 @@ $result = $stmt->get_result();
                     <td><?php echo htmlspecialchars($row['nomor_sertifikat'] ?? '-'); ?></td>
                     <td>
                         <?php if ($row['status'] == 'Pending') { ?>
-                            <button class="btn btn-danger cancel-btn" data-id="<?= $row['id'] ?>">Batalkan</button>
+                            <button class="btn btn-danger cancel-btn" data-id="<?= $row['id'] ?>" data-row="row-<?= $row['id'] ?>">Batalkan</button>
                         <?php } else { ?>
                             <span style="color: gray;">Tidak bisa dibatalkan</span>
                         <?php } ?>

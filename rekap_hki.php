@@ -57,6 +57,9 @@ $result = $conn->query($query);
     <!-- Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
+    <!-- Sweet Alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <link rel="stylesheet" href="css/hki.css">
     <link rel="stylesheet" href="css/modal.css">
     <link rel="stylesheet" href="css/alert.css">
@@ -153,7 +156,8 @@ $result = $conn->query($query);
                             <div class="input-wrapper">
                                 <div class="button-row">
                                     <div class="custom-file-container">
-                                        <label for="edit_certificate_<?= $row['id'] ?>" class="custom-file-label btn btn-info">Pilih
+                                        <label for="edit_certificate_<?= $row['id'] ?>"
+                                            class="custom-file-label btn btn-info">Pilih
                                             File</label>
                                         <input type="file" id="edit_certificate_<?= $row['id'] ?>" class="input-file"
                                             accept="image/*,.pdf,.doc,.docx,.zip,.rar,.7z,.tar,.gz" required>

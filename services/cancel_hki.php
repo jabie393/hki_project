@@ -2,9 +2,11 @@
 include '../config/config.php';
 session_start();
 
+header('Content-Type: application/json');
+
 if (!isset($_SESSION['user_id'])) {
     http_response_code(403);
-    echo "Unauthorized";
+    echo json_encode(['success' => false, 'message' => 'Unauthorized']);
     exit();
 }
 
@@ -35,10 +37,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
 
         $conn->query("DELETE FROM registrations WHERE id = '$id'");
 
-        echo "Pendaftaran berhasil dibatalkan!";
+        echo json_encode(['success' => true, 'message' => 'Pendaftaran berhasil dibatalkan!']);
     } else {
         http_response_code(400);
-        echo "Tidak bisa dibatalkan.";
+        echo json_encode(['success' => false, 'message' => 'Tidak bisa dibatalkan.']);
     }
 }
 ?>

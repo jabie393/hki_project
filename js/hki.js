@@ -385,6 +385,11 @@ document.querySelectorAll('.edit-certificate-btn').forEach(button => {
                                     <a href="${response.new_path}" class="btn btn-download" download>Download</a>
                                 `;
                             }
+                            // Reset file name display & input
+                            const fileNameElement = document.getElementById('file-name-' + id);
+                            if (fileNameElement) fileNameElement.textContent = "Tidak ada file yang dipilih";
+                            const fileInput = document.getElementById('edit_certificate_' + id);
+                            if (fileInput) fileInput.value = '';
                         }
                     }, delay);
                 };
@@ -422,39 +427,53 @@ document.querySelectorAll('input[type="file"]').forEach(input => {
 //== Ajax (Dashboard & Rekap_hki(Admin)) ==//
 
 //== Script Ajax (status_pengajuan) ==//
-$(document).on('click', '.cancel-btn', function () {
-    const id = $(this).data('id');
+document.querySelectorAll('.cancel-btn').forEach(button => {
+    button.addEventListener('click', function () {
+        const id = this.dataset.id;
+        const rowId = this.dataset.row;
+        const rowElement = document.getElementById(rowId);
 
-    Swal.fire({
-        title: 'Yakin ingin membatalkan?',
-        text: 'Tindakan ini tidak bisa dibatalkan!',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Ya, batalkan!',
-        cancelButtonText: 'Batal'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            $.ajax({
-                url: 'services/cancel_hki.php',
-                type: 'POST',
-                data: { id: id },
-                success: function (response) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Dibatalkan!',
-                        text: response,
-                        showConfirmButton: false,
-                        timer: 2000
-                    }).then(() => {
-                        // Reload tabel dengan data terbaru
-                        $('#hki-table').load('status_pengajuan.php #hki-table > *');
-                    });
-                },
-                error: function () {
+        Swal.fire({
+            title: 'Yakin ingin membatalkan?',
+            text: 'Tindakan ini tidak bisa dibatalkan!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, batalkan!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch('services/cancel_hki.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: `id=${encodeURIComponent(id)}`
+                })
+                .then(res => res.json())
+                .then(response => {
+                    if (response.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Dibatalkan!',
+                            text: response.message,
+                            showConfirmButton: false,
+                            timer: 2000
+                        });
+                        if (rowElement) {
+                            rowElement.remove();
+                        }
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Gagal',
+                            text: response.message
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
                     Swal.fire('Oops...', 'Gagal membatalkan pendaftaran.', 'error');
-                }
-            });
-        }
+                });
+            }
+        });
     });
 });
 //== Script Ajax (status_pengajuan) ==//
