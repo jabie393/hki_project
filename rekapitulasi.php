@@ -87,7 +87,7 @@ $result = $conn->query($query);
             <table id="hki-table">
                 <thead>
                     <tr>
-                        <th>Nomor Permohonan</th>
+                        <th>Nomor Pengajuan</th>
                         <th>Jenis Ciptaan</th>
                         <th>Tanggal Pengumuman</th>
                         <th>Judul</th>

@@ -85,7 +85,7 @@ if (isset($_GET['id'])) {
                 <span class="profile-value"><?= $nationality ?></span>
             </p>
             <p class="profile-row">
-                <span class="profile-label">Tipe Pemohon:</span>
+                <span class="profile-label">Tipe Pengaju:</span>
                 <span class="profile-value"><?= $type_of_applicant ?></span>
             </p>
         </div>

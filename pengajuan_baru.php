@@ -27,7 +27,7 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
     <!-- Css -->
-    <link rel="stylesheet" href="css/permohonan_baru.css">
+    <link rel="stylesheet" href="css/pengajuan_baru.css">
     <link rel="stylesheet" href="css/modal.css">
     <link rel="stylesheet" href="css/alert.css">
 </head>
@@ -44,13 +44,13 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
 
     <h2>Form Pendaftaran HKI</h2>
     <form id="form-hki" enctype="multipart/form-data">
-        <!--Jenis Permohonan-->
+        <!--Jenis Pengajuan-->
         <div class="form-group">
-            <label>Jenis Permohonan:</label>
+            <label>Jenis Pengajuan:</label>
             <select name="jenis_permohonan" id="jenis_permohonan" class="auto-search" required
                 oninvalid="this.setCustomValidity('Silakan pilih jenis permohonan terlebih dahulu.')"
                 oninput="this.setCustomValidity('')">
-                <option value="">-- Pilih Jenis Permohonan --</option>
+                <option value="">-- Pilih Jenis Pengajuan --</option>
                 <option value="Usaha Mikro Kecil">Usaha Mikro Kecil</option>
                 <option value="Umum">Umum</option>
                 <option value="Lembaga Pendidikan">Lembaga Pendidikan</option>
@@ -164,5 +164,5 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
     </div>
 </div>
 
-<script src="js/permohonan_baru.js"></script>
+<script src="js/pengajuan_baru.js"></script>
 <script src="js/form_pencipta.js"></script>

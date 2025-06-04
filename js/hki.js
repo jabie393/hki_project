@@ -242,7 +242,7 @@ document.querySelectorAll('.delete-btn').forEach(button => {
     });
 });
 
-// Edit Nomor Permohonan
+// Edit Nomor Pengajuan
 document.querySelectorAll('.edit-nomor-permohonan-btn').forEach(button => {
     button.addEventListener('click', function () {
         const id = this.dataset.id;
@@ -250,7 +250,7 @@ document.querySelectorAll('.edit-nomor-permohonan-btn').forEach(button => {
         const value = input.value.trim();
 
         if (value === "") {
-            Swal.fire('Peringatan', 'Nomor Permohonan tidak boleh kosong!', 'warning');
+            Swal.fire('Peringatan', 'Nomor Pengajuan tidak boleh kosong!', 'warning');
             return;
         }
 

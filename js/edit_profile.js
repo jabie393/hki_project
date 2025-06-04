@@ -20,6 +20,34 @@ function refreshAllProfilePics() {
 
 function initEditProfilePage() {
     loadCountriesForProfile();
+
+    // ================= MEMBUKA DATEPICKER ===================
+    const dateInput = document.getElementById('birth_date');
+    if (dateInput) {
+        dateInput.addEventListener('click', function (e) {
+            if (e.isTrusted && this.showPicker) {
+                this.showPicker();
+            }
+        });
+    }
+
+    // ================== INITIALIZE SELECT2 ==================
+    $('#gender').select2({
+        placeholder: "-- Pilih Jenis Kelamin --",
+        allowClear: true,
+        width: '100%',
+        minimumResultsForSearch: Infinity,
+    });
+    $('#type_of_applicant').select2({
+        placeholder: "-- Pilih Tipe Pengaju --",
+        allowClear: true,
+        width: '100%'
+    });
+    // auto focus pada input pencarian Select2
+    $('.auto-search').on('select2:open', function () {
+        document.querySelector('.select2-search__field').focus();
+    });
+
     const form = document.getElementById('profileForm');
     if (!form) return;
 

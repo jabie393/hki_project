@@ -64,8 +64,8 @@ $page = substr($_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"], "/") + 
                 </a>
             </li>
             <li class="sidebar-text">
-                <a class="menu-link" onclick="loadContent('permohonan_baru.php')">
-                    <i class='bx bxs-file-plus'></i><span class="text">Permohonan Baru</span>
+                <a class="menu-link" onclick="loadContent('pengajuan_baru.php')">
+                    <i class='bx bxs-file-plus'></i><span class="text">Pengajuan Baru</span>
                 </a>
             </li>
             <li class="sidebar-text">

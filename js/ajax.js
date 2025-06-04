@@ -71,7 +71,7 @@ function afterContentLoaded(url) {
         if (typeof pagination === "function") pagination();
     }
 
-    if (cleanUrl.endsWith("permohonan_baru.php")) {
+    if (cleanUrl.endsWith("pengajuan_baru.php")) {
         if (typeof initUserPage === "function") initUserPage();
         if (typeof setupFileValidation === "function") setupFileValidation();
         if (typeof initFormSubmission === "function") initFormSubmission();

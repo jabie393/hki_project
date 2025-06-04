@@ -70,6 +70,7 @@ $profile_picture = getProfilePicture($user_id);
         <div>
             <label for="gender">Jenis Kelamin:</label>
             <select name="gender" id="gender">
+            <option value="">-- Pilih Jenis Kelamin --</option>
                 <option value="Laki-laki" <?= isset($profile['gender']) && $profile['gender'] == 'Laki-laki' ? 'selected' : '' ?>>Laki-laki</option>
                 <option value="Perempuan" <?= isset($profile['gender']) && $profile['gender'] == 'Perempuan' ? 'selected' : '' ?>>Perempuan</option>
             </select>
@@ -84,9 +85,9 @@ $profile_picture = getProfilePicture($user_id);
 
         <?php if (!$isAdmin): ?>
             <div>
-                <label for="type_of_applicant">Tipe Pemohon:</label>
-                <select name="type_of_applicant" id="type_of_applicant">
-                    <option value="">-- Pilih Tipe --</option>
+                <label for="type_of_applicant">Tipe Pengaju:</label>
+                <select name="type_of_applicant" id="type_of_applicant" class="auto-search">
+                    <option value="">-- Pilih Tipe Pengaju --</option>
                     <?php
                     $applicant_types = [
                         "Kementerian dan Lembaga",

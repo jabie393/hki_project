@@ -13,9 +13,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'], $_POST['nomor_pe
     $id = $_POST['id'];
     $nomor_permohonan = trim($_POST['nomor_permohonan']);
 
-    // Pastikan Nomor Permohonan tidak kosong
+    // Pastikan Nomor Pengajuan tidak kosong
     if (empty($nomor_permohonan)) {
-        echo json_encode(['status' => 'error', 'message' => 'Nomor Permohonan tidak boleh kosong!']);
+        echo json_encode(['status' => 'error', 'message' => 'Nomor Pengajuan tidak boleh kosong!']);
         exit();
     }
 
@@ -24,9 +24,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'], $_POST['nomor_pe
     $stmt->bind_param("si", $nomor_permohonan, $id);
 
     if ($stmt->execute()) {
-        echo json_encode(['status' => 'success', 'message' => 'Nomor Permohonan berhasil diperbarui!']);
+        echo json_encode(['status' => 'success', 'message' => 'Nomor Pengajuan berhasil diperbarui!']);
     } else {
-        echo json_encode(['status' => 'error', 'message' => 'Gagal memperbarui Nomor Permohonan!']);
+        echo json_encode(['status' => 'error', 'message' => 'Gagal memperbarui Nomor Pengajuan!']);
     }
 
     $stmt->close();

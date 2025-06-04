@@ -99,7 +99,7 @@ $profile_picture = getProfilePicture($user_id);
         </p>
 
         <p class="profile-row">
-            <span class="profile-label">Tipe Pemohon:</span>
+            <span class="profile-label">Tipe Pengaju:</span>
             <span class="profile-value"><?= htmlspecialchars($type_of_applicant) ?></span>
         </p>
     </div>

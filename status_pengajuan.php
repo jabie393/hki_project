@@ -80,8 +80,8 @@ $result = $stmt->get_result();
     <div class="table-wrapper">
         <table id="hki-table">
             <tr>
-                <th>Nomor Permohonan</th>
-                <th>Jenis Permohonan</th>
+                <th>Nomor Pengajuan</th>
+                <th>Jenis Pengajuan</th>
                 <th>Jenis Ciptaan</th>
                 <th>Sub Jenis Ciptaan</th>
                 <th>Tanggal Pengumuman</th>

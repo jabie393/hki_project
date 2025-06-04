@@ -101,7 +101,7 @@ function initUserPage() {
     // Inisialisasi Select2 untuk jenis permohonan jika belum ada
     if (!$('#jenis_permohonan').hasClass("select2-hidden-accessible")) {
         $('#jenis_permohonan').select2({
-            placeholder: "-- Pilih Jenis Permohonan --",
+            placeholder: "-- Pilih Jenis Pengajuan --",
             allowClear: true,
             width: '100%'
         });

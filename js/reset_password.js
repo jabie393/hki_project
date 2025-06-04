@@ -184,7 +184,7 @@ $('#showUserDetailBtn').click(function () {
                                 <span class="profile-value">${data.nationality || '-'}</span>
                             </p>
                             <p class="profile-row">
-                                <span class="profile-label">Tipe Pemohon:</span>
+                                <span class="profile-label">Tipe Pengaju:</span>
                                 <span class="profile-value">${data.type_of_applicant || '-'}</span>
                             </p>
                         </div>

@@ -52,6 +52,12 @@ select:not(.select2-hidden-accessible) {
   box-sizing: border-box;
 }
 
+#birth_date {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
 /* Focus */
 #edit_profile-page input:focus,
 #edit_profile-page select:focus {
