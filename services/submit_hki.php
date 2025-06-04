@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Ambil data dari form
-    $jenis_permohonan = $_POST['jenis_permohonan'] ?? "";
+    $jenis_pengajuan = $_POST['jenis_pengajuan'] ?? "";
     $jenis_hak_cipta = $_POST['jenis_hak_cipta'];
     $sub_jenis_hak_cipta = $_POST['sub_jenis_hak_cipta'];
     $tanggal_pengumuman = $_POST['tanggal_pengumuman'] ?? NULL;
@@ -33,10 +33,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $kota_pengumuman = $_POST['kota_pengumuman'] ?? "";
     $status = "Pending";
 
-    $sql = $conn->prepare("INSERT INTO registrations (user_id, jenis_permohonan, jenis_hak_cipta, sub_jenis_hak_cipta, tanggal_pengumuman, judul_hak_cipta, deskripsi, negara_pengumuman, kota_pengumuman, status) 
+    $sql = $conn->prepare("INSERT INTO registrations (user_id, jenis_pengajuan, jenis_hak_cipta, sub_jenis_hak_cipta, tanggal_pengumuman, judul_hak_cipta, deskripsi, negara_pengumuman, kota_pengumuman, status) 
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-    $sql->bind_param("isssssssss", $user_id, $jenis_permohonan, $jenis_hak_cipta, $sub_jenis_hak_cipta, $tanggal_pengumuman, $judul, $deskripsi, $negara_pengumuman, $kota_pengumuman, $status);
+    $sql->bind_param("isssssssss", $user_id, $jenis_pengajuan, $jenis_hak_cipta, $sub_jenis_hak_cipta, $tanggal_pengumuman, $judul, $deskripsi, $negara_pengumuman, $kota_pengumuman, $status);
 
     // Validasi minimal 1 pencipta harus ada
     if (!isset($_POST["nama"]) || !is_array($_POST["nama"]) || count($_POST["nama"]) === 0) {

@@ -1,33 +1,10 @@
-// Panah Dropdown //
-const selectElement = document.querySelector('.custom-select-wrapper select');
-const customArrow = document.querySelector('.custom-arrow');
-let isDropdownOpen = false;
-
-// Event untuk menangani klik pada dropdown
-selectElement.addEventListener('click', function () {
-    // Jika dropdown terbuka, ubah panah ke atas, jika tidak ke bawah
-    if (isDropdownOpen) {
-        customArrow.style.transform = "translateY(-50%) rotate(0deg)"; // Panah menghadap ke bawah
-    } else {
-        customArrow.style.transform = "translateY(-50%) rotate(180deg)"; // Panah menghadap ke atas
-    }
-
-    // Toggle status dropdown (terbuka/tutup)
-    isDropdownOpen = !isDropdownOpen;
+// ================== INITIALIZE SELECT2 ==================
+$('#template').select2({
+    placeholder: "-- Pilih Template Dokumen --",
+    allowClear: true,
+    width: '100%',
+    minimumResultsForSearch: Infinity,
 });
-
-// Event ketika opsi dipilih, memastikan panah menghadap ke bawah
-selectElement.addEventListener('change', function () {
-    customArrow.style.transform = "translateY(-50%) rotate(0deg)"; // Panah kembali ke bawah setelah memilih opsi
-    isDropdownOpen = false; // Menandakan dropdown tertutup
-});
-
-// Event untuk memastikan panah menghadap ke bawah saat dropdown tertutup
-selectElement.addEventListener('blur', function () {
-    customArrow.style.transform = "translateY(-50%) rotate(0deg)"; // Panah menghadap ke bawah
-    isDropdownOpen = false; // Menandakan dropdown tertutup
-});
-
 // Refresh Semua List //
 function refreshDocumentList() {
     fetch('services/get_templates.php')
@@ -170,6 +147,11 @@ function initTemplatePage() {
                         }).then(() => {
                             if (response.status === 'success') {
                                 refreshDocumentList();
+                                // Reset Select2 ke placeholder
+                                $('#template').val('').trigger('change');
+                                // Reset file input dan file-name
+                                fileInput.value = '';
+                                fileNameDisplay.textContent = 'Belum ada dokumen yang dipilih';
                             }
                         });
                     }, delay);

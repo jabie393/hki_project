@@ -9,19 +9,19 @@ if ($_SESSION['role'] != 'admin') {
     exit();
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'], $_POST['nomor_permohonan'])) {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'], $_POST['nomor_pengajuan'])) {
     $id = $_POST['id'];
-    $nomor_permohonan = trim($_POST['nomor_permohonan']);
+    $nomor_pengajuan = trim($_POST['nomor_pengajuan']);
 
     // Pastikan Nomor Pengajuan tidak kosong
-    if (empty($nomor_permohonan)) {
+    if (empty($nomor_pengajuan)) {
         echo json_encode(['status' => 'error', 'message' => 'Nomor Pengajuan tidak boleh kosong!']);
         exit();
     }
 
     // Update database
-    $stmt = $conn->prepare("UPDATE registrations SET nomor_permohonan = ? WHERE id = ?");
-    $stmt->bind_param("si", $nomor_permohonan, $id);
+    $stmt = $conn->prepare("UPDATE registrations SET nomor_pengajuan = ? WHERE id = ?");
+    $stmt->bind_param("si", $nomor_pengajuan, $id);
 
     if ($stmt->execute()) {
         echo json_encode(['status' => 'success', 'message' => 'Nomor Pengajuan berhasil diperbarui!']);

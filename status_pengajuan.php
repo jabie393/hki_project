@@ -22,8 +22,8 @@ $offset = ($page - 1) * $limit;
 // Query untuk menghitung total data
 $totalQuery = "SELECT COUNT(*) as total FROM registrations 
                WHERE user_id = ? 
-               AND (nomor_permohonan LIKE ? 
-               OR jenis_permohonan LIKE ? 
+               AND (nomor_pengajuan LIKE ? 
+               OR jenis_pengajuan LIKE ? 
                OR jenis_hak_cipta LIKE ? 
                OR sub_jenis_hak_cipta LIKE ? 
                OR judul_hak_cipta LIKE ?)";
@@ -38,8 +38,8 @@ $totalPages = ceil($totalData / $limit);
 // Query untuk mengambil data dengan pagination
 $query = "SELECT * FROM registrations 
           WHERE user_id = ? 
-          AND (nomor_permohonan LIKE ? 
-          OR jenis_permohonan LIKE ? 
+          AND (nomor_pengajuan LIKE ? 
+          OR jenis_pengajuan LIKE ? 
           OR jenis_hak_cipta LIKE ? 
           OR sub_jenis_hak_cipta LIKE ? 
           OR judul_hak_cipta LIKE ?)
@@ -96,8 +96,8 @@ $result = $stmt->get_result();
             </tr>
             <?php while ($row = $result->fetch_assoc()) { ?>
                 <tr>
-                    <td><?php echo htmlspecialchars($row['nomor_permohonan'] ?? '-'); ?></td>
-                    <td><?php echo htmlspecialchars($row['jenis_permohonan']); ?></td>
+                    <td><?php echo htmlspecialchars($row['nomor_pengajuan'] ?? '-'); ?></td>
+                    <td><?php echo htmlspecialchars($row['jenis_pengajuan']); ?></td>
                     <td><?php echo htmlspecialchars($row['jenis_hak_cipta']); ?></td>
                     <td><?php echo htmlspecialchars($row['sub_jenis_hak_cipta']); ?></td>
                     <td><?php echo htmlspecialchars($row['tanggal_pengumuman']); ?></td>

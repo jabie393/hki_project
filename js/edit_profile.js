@@ -1,5 +1,5 @@
 function refreshAllProfilePics() {
-    const userId = document.querySelector('.profile-img').dataset.userId;
+    const userId = document.querySelector('.profileimg').dataset.userId;
     const defaultAvatar = 'assets/image/default-avatar.png';
     const profilePath = `uploads/users/${userId}/profile/profile.jpg`;
 

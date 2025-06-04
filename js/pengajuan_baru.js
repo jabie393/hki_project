@@ -98,9 +98,9 @@ function initUserPage() {
     }
 
     // ================== INITIALIZE SELECT2 ==================
-    // Inisialisasi Select2 untuk jenis permohonan jika belum ada
-    if (!$('#jenis_permohonan').hasClass("select2-hidden-accessible")) {
-        $('#jenis_permohonan').select2({
+    // Inisialisasi Select2 untuk jenis pengajuan jika belum ada
+    if (!$('#jenis_pengajuan').hasClass("select2-hidden-accessible")) {
+        $('#jenis_pengajuan').select2({
             placeholder: "-- Pilih Jenis Pengajuan --",
             allowClear: true,
             width: '100%'
@@ -407,7 +407,7 @@ function initFormSubmission() {
                             document.getElementById("pencipta-list").innerHTML = "";
 
                             // Reset elemen Select2
-                            $('#jenis_permohonan').val(null).trigger('change');
+                            $('#jenis_pengajuan').val(null).trigger('change');
                             $('#jenis_hak_cipta').val(null).trigger('change');
                             $('#sub_jenis_hak_cipta').val(null).prop('disabled', true).trigger('change');
 

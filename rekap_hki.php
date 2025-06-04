@@ -22,8 +22,8 @@ $totalQuery = "SELECT COUNT(*) as total FROM registrations
                JOIN users ON registrations.user_id = users.id 
                WHERE registrations.status = 'Terdaftar' 
                AND (users.username LIKE '%$search%' 
-               OR registrations.nomor_permohonan LIKE '%$search%' 
-               OR registrations.jenis_permohonan LIKE '%$search%' 
+               OR registrations.nomor_pengajuan LIKE '%$search%' 
+               OR registrations.jenis_pengajuan LIKE '%$search%' 
                OR registrations.jenis_hak_cipta LIKE '%$search%' 
                OR registrations.sub_jenis_hak_cipta LIKE '%$search%' 
                OR registrations.tanggal_pengumuman LIKE '%$search%' 
@@ -40,8 +40,8 @@ $query = "SELECT registrations.*, users.username FROM registrations
           JOIN users ON registrations.user_id = users.id 
           WHERE registrations.status = 'Terdaftar' 
           AND (users.username LIKE '%$search%' 
-          OR registrations.nomor_permohonan LIKE '%$search%' 
-          OR registrations.jenis_permohonan LIKE '%$search%' 
+          OR registrations.nomor_pengajuan LIKE '%$search%' 
+          OR registrations.jenis_pengajuan LIKE '%$search%' 
           OR registrations.jenis_hak_cipta LIKE '%$search%' 
           OR registrations.sub_jenis_hak_cipta LIKE '%$search%' 
           OR registrations.tanggal_pengumuman LIKE '%$search%' 
@@ -100,17 +100,18 @@ $result = $conn->query($query);
                 <?php while ($row = $result->fetch_assoc()) { ?>
                     <tr id="row-<?= $row['id'] ?>">
                         <td>
-                            <a href="javascript:void(0)" onclick="showProfile(<?php echo $row['user_id']; ?>)" class="profile-link">
+                            <a href="javascript:void(0)" onclick="showProfile(<?php echo $row['user_id']; ?>)"
+                                class="profile-link">
                                 <?php echo htmlspecialchars($row['username']); ?>
                             </a>
                         </td>
-                        <td>
-                            <input type="text" spellcheck="false" id="nomor_permohonan_<?= $row['id'] ?>"
-                                value="<?= htmlspecialchars($row['nomor_permohonan'] ?? '') ?>" class="input-field">
-                            <button class="btn btn-warning edit-nomor-permohonan-btn" data-id="<?= $row['id'] ?>">Edit &
+                        <td class="aksi-buttons">
+                            <input type="text" spellcheck="false" id="nomor_pengajuan_<?= $row['id'] ?>"
+                                value="<?= htmlspecialchars($row['nomor_pengajuan'] ?? '') ?>" class="input-field">
+                            <button class="btn btn-safe edit-nomor-pengajuan-btn" data-id="<?= $row['id'] ?>">Edit &
                                 Simpan</button>
                         </td>
-                        <td><?= htmlspecialchars($row['jenis_permohonan']); ?></td>
+                        <td><?= htmlspecialchars($row['jenis_pengajuan']); ?></td>
                         <td><?= htmlspecialchars($row['jenis_hak_cipta']); ?></td>
                         <td><?= htmlspecialchars($row['sub_jenis_hak_cipta']); ?></td>
                         <td><?= htmlspecialchars($row['tanggal_pengumuman']); ?></td>
@@ -150,15 +151,23 @@ $result = $conn->query($query);
                         </td>
                         <td>
                             <div class="input-wrapper">
-                                <input type="file" id="edit_certificate_<?= $row['id'] ?>" class="input-file" accept="image/*,.pdf,.doc,.docx,.zip,.rar,.7z,.tar,.gz" required>
-                                <button type="button" class="btn btn-warning edit-certificate-btn"
-                                    data-id="<?= $row['id'] ?>">Edit</button>
+                                <div class="button-row">
+                                    <div class="custom-file-container">
+                                        <label for="edit_certificate_<?= $row['id'] ?>" class="custom-file-label btn btn-info">Pilih
+                                            File</label>
+                                        <input type="file" id="edit_certificate_<?= $row['id'] ?>" class="input-file"
+                                            accept="image/*,.pdf,.doc,.docx,.zip,.rar,.7z,.tar,.gz" required>
+                                    </div>
+                                    <button type="button" class="btn btn-safe edit-certificate-btn"
+                                        data-id="<?= $row['id'] ?>">Edit</button>
+                                </div>
+                                <span class="file-name" id="file-name-<?= $row['id'] ?>">Tidak ada file yang dipilih</span>
                             </div>
                         </td>
-                        <td>
+                        <td class="aksi-buttons">
                             <input type="text" spellcheck="false" id="nomor_sertifikat_<?= $row['id'] ?>"
                                 value="<?= htmlspecialchars($row['nomor_sertifikat'] ?? '') ?>" class="input-field">
-                            <button class="btn btn-warning edit-nomor-sertifikat-btn" data-id="<?= $row['id'] ?>">Edit &
+                            <button class="btn btn-safe edit-nomor-sertifikat-btn" data-id="<?= $row['id'] ?>">Edit &
                                 Simpan</button>
                         </td>
                         <td>

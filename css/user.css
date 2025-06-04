@@ -62,7 +62,6 @@
 #user-page .hki-table th,
 #user-page .hki-table td {
   padding: 10px;
-  border: 1px solid #ddd;
   text-align: left;
   vertical-align: top;
   box-sizing: border-box;
@@ -234,7 +233,6 @@ body.dark-mode #user-page .hki-table th {
 }
 
 body.dark-mode #user-page .hki-table td {
-  border-color: transparent;
   background-color: #1e1e1e;
   color: #ffffff;
 }

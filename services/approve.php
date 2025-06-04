@@ -12,7 +12,7 @@ if ($_SESSION['role'] != 'admin') {
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
     $id = $_POST['id'];
-    $nomor_permohonan = $_POST['nomor_permohonan'] ?? null;
+    $nomor_pengajuan = $_POST['nomor_pengajuan'] ?? null;
     $nomor_sertifikat = $_POST['nomor_sertifikat'] ?? null;
 
     // Cari user_id dari registration
@@ -49,8 +49,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
     if ($certificate_path) {
         $update_query .= ", certificate_path='$certificate_path'";
     }
-    if ($nomor_permohonan) {
-        $update_query .= ", nomor_permohonan='$nomor_permohonan'";
+    if ($nomor_pengajuan) {
+        $update_query .= ", nomor_pengajuan='$nomor_pengajuan'";
     }
     if ($nomor_sertifikat) {
         $update_query .= ", nomor_sertifikat='$nomor_sertifikat'";

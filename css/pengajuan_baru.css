@@ -1,4 +1,4 @@
-#permohonan_baru-page {
+#pengajuan_baru-page {
   font-family: "Inter", sans-serif;
   margin: 0;
   padding: 0;
@@ -6,7 +6,7 @@
   color: #2c3e50;
 }
 
-#permohonan_baru-page h2 {
+#pengajuan_baru-page h2 {
   color: #004080;
   text-align: center;
   font-weight: bold;
@@ -14,18 +14,18 @@
   padding-top: 10px;
 }
 
-#permohonan_baru-page .form-group {
+#pengajuan_baru-page .form-group {
   margin-bottom: 20px;
 }
 
-#permohonan_baru-page .custom-file-input {
+#pengajuan_baru-page .custom-file-input {
   opacity: 0;
   position: absolute;
   z-index: -1;
   overflow: hidden;
 }
 
-#permohonan_baru-page .custom-file-label {
+#pengajuan_baru-page .custom-file-label {
   font-size: 13px;
   color: white !important;
   background-color: #004080;
@@ -38,29 +38,29 @@
   transition: background-color 0.2s;
 }
 
-#permohonan_baru-page .custom-file-label:hover {
+#pengajuan_baru-page .custom-file-label:hover {
   background-color: #002a5e;
 }
 
-#permohonan_baru-page .file-name {
+#pengajuan_baru-page .file-name {
   margin-left: 10px;
   font-style: italic;
   font-size: 0.9em;
   color: grey;
 }
 
-#permohonan_baru-page label {
+#pengajuan_baru-page label {
   font-weight: 500;
   display: block;
   margin-bottom: 8px;
   color: black;
 }
 
-#permohonan_baru-page input[type="text"],
-#permohonan_baru-page input[type="date"],
-#permohonan_baru-page input[type="file"],
-#permohonan_baru-page select,
-#permohonan_baru-page textarea {
+#pengajuan_baru-page input[type="text"],
+#pengajuan_baru-page input[type="date"],
+#pengajuan_baru-page input[type="file"],
+#pengajuan_baru-page select,
+#pengajuan_baru-page textarea {
   padding: 10px 12px;
   border: 1px solid #ced4da;
   background-color: #eef2ff;
@@ -70,25 +70,25 @@
   box-sizing: border-box;
 }
 
-#permohonan_baru-page input[type="text"],
-#permohonan_baru-page input[type="date"],
-#permohonan_baru-page select,
-#permohonan_baru-page textarea {
+#pengajuan_baru-page input[type="text"],
+#pengajuan_baru-page input[type="date"],
+#pengajuan_baru-page select,
+#pengajuan_baru-page textarea {
   width: 100%;
 }
 
-#permohonan_baru-page input[type="date"] {
+#pengajuan_baru-page input[type="date"] {
   color: #999;
   font-weight: 600;
 }
 
-#permohonan_baru-page input[type="file"] {
+#pengajuan_baru-page input[type="file"] {
   width: 0%;
 }
 
-#permohonan_baru-page input:focus,
-#permohonan_baru-page select:focus,
-#permohonan_baru-page textarea:focus {
+#pengajuan_baru-page input:focus,
+#pengajuan_baru-page select:focus,
+#pengajuan_baru-page textarea:focus {
   border-color: #007bff;
   outline: none;
   box-shadow: 0 0 4px #007bff66;
@@ -100,12 +100,12 @@
   appearance: none;
 }
 
-#permohonan_baru-page textarea {
+#pengajuan_baru-page textarea {
   resize: vertical;
   min-height: 100px;
 }
 
-#permohonan_baru-page button {
+#pengajuan_baru-page button {
   padding: 10px 16px;
   margin-bottom: 10px;
   background-color: #004080;
@@ -117,11 +117,11 @@
   transition: background-color 0.2s;
 }
 
-#permohonan_baru-page button:hover {
+#pengajuan_baru-page button:hover {
   background-color: #002a5e;
 }
 
-#permohonan_baru-page .download-container {
+#pengajuan_baru-page .download-container {
   position: fixed;
   top: 75px;
   right: 20px;
@@ -130,7 +130,7 @@
   z-index: 999;
 }
 
-#permohonan_baru-page .download-btn button {
+#pengajuan_baru-page .download-btn button {
   padding: 8px 12px;
   background-color: #004080;
   color: white;
@@ -143,7 +143,7 @@
   transition: background-color 0.2s;
 }
 
-#permohonan_baru-page .download-btn button:hover {
+#pengajuan_baru-page .download-btn button:hover {
   background-color: #002a5e;
 }
 
@@ -270,11 +270,11 @@
   box-shadow: 0 0 4px #007bff66 !important;
 }
 
-#permohonan_baru-page .pencipta-container {
+#pengajuan_baru-page .pencipta-container {
   margin-bottom: 20px;
 }
 
-#permohonan_baru-page .pencipta {
+#pengajuan_baru-page .pencipta {
   padding: 0px 12px;
   margin-bottom: 10px;
   background-color: #f8f9fa;
@@ -282,61 +282,61 @@
   border-radius: 8px;
 }
 
-#permohonan_baru-page .pencipta-label {
+#pengajuan_baru-page .pencipta-label {
   font-weight: bold;
   margin-bottom: 6px;
   margin-top: 5px;
 }
 
-#permohonan_baru-page .pencipta button {
+#pengajuan_baru-page .pencipta button {
   margin-right: 8px;
   margin-top: 8px;
   background-color: #6c757d;
 }
 
-#permohonan_baru-page .pencipta button:hover {
+#pengajuan_baru-page .pencipta button:hover {
   background-color: #5a6268;
 }
 
 /*=== Dark mode styles ===*/
-body.dark-mode #permohonan_baru-page {
+body.dark-mode #pengajuan_baru-page {
   background: #121212;
   color: #ffffff;
 }
 
-body.dark-mode #permohonan_baru-page h2 {
+body.dark-mode #pengajuan_baru-page h2 {
   color: #ffffff;
 }
 
 /* Input, select, textarea */
-body.dark-mode #permohonan_baru-page input[type="text"],
-body.dark-mode #permohonan_baru-page input[type="file"],
-body.dark-mode #permohonan_baru-page select,
-body.dark-mode #permohonan_baru-page textarea {
+body.dark-mode #pengajuan_baru-page input[type="text"],
+body.dark-mode #pengajuan_baru-page input[type="file"],
+body.dark-mode #pengajuan_baru-page select,
+body.dark-mode #pengajuan_baru-page textarea {
   background-color: #333333;
   color: #ffffff;
   border: 1px solid #444444;
 }
 
-body.dark-mode #permohonan_baru-page input[type="date"] {
+body.dark-mode #pengajuan_baru-page input[type="date"] {
   background-color: #333333;
   border: 1px solid #444444;
 }
 
-body.dark-mode #permohonan_baru-page input:focus,
-body.dark-mode #permohonan_baru-page select:focus,
-body.dark-mode #permohonan_baru-page textarea:focus {
+body.dark-mode #pengajuan_baru-page input:focus,
+body.dark-mode #pengajuan_baru-page select:focus,
+body.dark-mode #pengajuan_baru-page textarea:focus {
   outline: none;
   border-color: #ffffff;
   box-shadow: 0 0 4px #ffffffa2;
 }
 
 /* Autofill styles for dark mode */
-body.dark-mode #permohonan_baru-page input[type="text"]:-webkit-autofill,
-body.dark-mode #permohonan_baru-page input[type="date"]:-webkit-autofill,
-body.dark-mode #permohonan_baru-page input[type="file"]:-webkit-autofill,
-body.dark-mode #permohonan_baru-page select:-webkit-autofill,
-body.dark-mode #permohonan_baru-page textarea:-webkit-autofill {
+body.dark-mode #pengajuan_baru-page input[type="text"]:-webkit-autofill,
+body.dark-mode #pengajuan_baru-page input[type="date"]:-webkit-autofill,
+body.dark-mode #pengajuan_baru-page input[type="file"]:-webkit-autofill,
+body.dark-mode #pengajuan_baru-page select:-webkit-autofill,
+body.dark-mode #pengajuan_baru-page textarea:-webkit-autofill {
   background-color: #333333 !important;
   color: #ffffff !important;
   border: 1px solid #444444 !important;
@@ -347,7 +347,7 @@ body.dark-mode #permohonan_baru-page textarea:-webkit-autofill {
 
 /* Warna ikon kalender untuk input date */
 body.dark-mode
-  #permohonan_baru-page
+  #pengajuan_baru-page
   input[type="date"]::-webkit-calendar-picker-indicator {
   filter: invert(1); /* Membalik warna menjadi putih */
 }
@@ -401,56 +401,56 @@ body.dark-mode
   background-color: #1e1e1e;
 }
 
-body.dark-mode #permohonan_baru-page button {
+body.dark-mode #pengajuan_baru-page button {
   background-color: #333333;
   color: #ffffff;
 }
 
-body.dark-mode #permohonan_baru-page button:hover {
+body.dark-mode #pengajuan_baru-page button:hover {
   background-color: #444444;
 }
 
 /* Label */
-body.dark-mode #permohonan_baru-page label {
+body.dark-mode #pengajuan_baru-page label {
   color: #ffffff;
 }
 
 /* Buttons */
-body.dark-mode #permohonan_baru-page button {
+body.dark-mode #pengajuan_baru-page button {
   background-color: #333333;
   color: #ffffff;
 }
 
-body.dark-mode #permohonan_baru-page button:hover {
+body.dark-mode #pengajuan_baru-page button:hover {
   background-color: #444444;
 }
 
 /* Download buttons */
-body.dark-mode #permohonan_baru-page .custom-file-label {
+body.dark-mode #pengajuan_baru-page .custom-file-label {
   background-color: #333333;
   color: #ffffff;
 }
 
-body.dark-mode #permohonan_baru-page .custom-file-label:hover {
+body.dark-mode #pengajuan_baru-page .custom-file-label:hover {
   background-color: #444444;
 }
 
 /* Pencipta container */
-body.dark-mode #permohonan_baru-page .pencipta {
+body.dark-mode #pengajuan_baru-page .pencipta {
   background-color: #1e1e1e;
   border: 1px solid #444444;
 }
 
-body.dark-mode #permohonan_baru-page .pencipta-label {
+body.dark-mode #pengajuan_baru-page .pencipta-label {
   color: #ffffff;
 }
 
-body.dark-mode #permohonan_baru-page .pencipta button {
+body.dark-mode #pengajuan_baru-page .pencipta button {
   background-color: #444444;
   color: #ffffff;
 }
 
-body.dark-mode #permohonan_baru-page .pencipta button:hover {
+body.dark-mode #pengajuan_baru-page .pencipta button:hover {
   background-color: #555555;
 }
 /*=== End of Dark mode styles ===*/

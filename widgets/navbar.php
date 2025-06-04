@@ -24,7 +24,7 @@ if ($user_id) {
   <label for="switch-mode" class="switch-mode"></label>
 
   <a href="javascript:void(0);" class="profile">
-    <img src="<?= $profile_picture_path ?>" class="profile-img profilePic" data-user-id="<?= $user_id ?>"
+    <img src="<?= $profile_picture_path ?>" class="profileimg profilePic" data-user-id="<?= $user_id ?>"
       style="width: 35px; height: 35px; border-radius: 50%; object-fit: cover; cursor: pointer;">
   </a>
 </nav>

@@ -158,24 +158,31 @@
 }
 
 /* === Modal Tabel === */
-.modal-content .table-wrapper {
-  overflow-x: auto;
+#table_modal-page .cdtable-wrapper {
   max-width: 100%;
-  margin-top: 15px;
+  overflow-x: auto;
 }
 
-#modal-page table {
+#table_modal-page #cdtable {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 10px;
+  font-size: 14px;
+  table-layout: auto;
+  margin: 0 auto;
 }
 
-#modal-page th,
-#modal-page td {
-  border: 1px solid #ccc;
-  padding: 8px 12px;
+#table_modal-page #cdtable th,
+#table_modal-page #cdtable td {
+  padding: 10px;
   text-align: left;
-  font-size: 14px;
+  vertical-align: top;
+  white-space: nowrap;
+}
+
+#table_modal-page #cdtable th {
+  background-color: #003366;
+  color: #fff;
+  white-space: nowrap;
 }
 
 /* === Modal Form === */
@@ -291,21 +298,18 @@ body.dark-mode .modal-content .profile-value {
 }
 
 /* Modal Table */
-body.dark-mode #modal-page table {
-  border-color: #444444;
-  border: transparent;
+body.dark-mode #table_modal-page .cdtable-wrapper {
+  background: #1e1e1e;
 }
 
-body.dark-mode #modal-page th {
+body.dark-mode #table_modal-page #cdtable th {
   background-color: #333333;
   color: #ffffff;
-  border: transparent;
 }
 
-body.dark-mode #modal-page td {
+body.dark-mode #table_modal-page #cdtable td {
   background-color: #1e1e1e;
   color: #ffffff;
-  border: transparent;
 }
 
 /* Modal Form */

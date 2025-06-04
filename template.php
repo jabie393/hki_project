@@ -19,6 +19,11 @@ if (!$result) {
     <!-- Sweet Alert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    <!-- Select2 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
     <!-- Css -->
     <link rel="stylesheet" href="css/template.css">
     <link rel="stylesheet" href="css/alert.css">
@@ -29,20 +34,19 @@ if (!$result) {
         <h2>Upload Dokumen</h2>
         <form id="uploadForm" enctype="multipart/form-data">
             <div class="custom-select-wrapper">
-                <select name="doc_type" required>
+                <select id="template" name="doc_type" required
+                    oninvalid="this.setCustomValidity('Silakan pilih template dokumen.')"
+                    oninput="this.setCustomValidity('')">
+                    <option value="">-- Pilih Template Dokumen --</option>
                     <option value="surat_pernyataan">Surat Pernyataan</option>
                     <option value="surat_pengalihan_hak">Surat Pengalihan Hak</option>
                 </select>
-                <span class="custom-arrow">
-                    <svg width="12" height="12" viewBox="0 0 24 24">
-                        <path d="M7 10l5 5 5-5" stroke="#4f46e5" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                    </svg>
-                </span>
             </div>
 
             <div class="custom-file-upload">
-                <input type="file" name="file" id="fileInput" accept=".pdf,.doc,.docx" required>
+                <input type="file" name="file" id="fileInput" accept=".pdf,.doc,.docx" required
+                    oninvalid="this.setCustomValidity('Silakan pilih file dokumen.')"
+                    oninput="this.setCustomValidity('')">
                 <label for="fileInput" class="upload-box">
                     <span class="upload-icon">📁</span>
                     <span id="upload-text">Klik untuk memilih dokumen</span>

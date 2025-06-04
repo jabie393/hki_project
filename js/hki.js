@@ -105,13 +105,13 @@ document.querySelectorAll('.approve-btn').forEach(button => {
         const id = this.dataset.id;
         const row = this.closest('tr');
 
-        const nomor_permohonan = row.querySelector("input[name='nomor_permohonan']").value;
+        const nomor_pengajuan = row.querySelector("input[name='nomor_pengajuan']").value;
         const nomor_sertifikat = row.querySelector("input[name='nomor_sertifikat']").value;
         const certificateInput = row.querySelector(`#certificate_${id}`);
 
         const formData = new FormData();
         formData.append('id', id);
-        formData.append('nomor_permohonan', nomor_permohonan);
+        formData.append('nomor_pengajuan', nomor_pengajuan);
         formData.append('nomor_sertifikat', nomor_sertifikat);
 
         if (certificateInput && certificateInput.files.length > 0) {
@@ -243,10 +243,10 @@ document.querySelectorAll('.delete-btn').forEach(button => {
 });
 
 // Edit Nomor Pengajuan
-document.querySelectorAll('.edit-nomor-permohonan-btn').forEach(button => {
+document.querySelectorAll('.edit-nomor-pengajuan-btn').forEach(button => {
     button.addEventListener('click', function () {
         const id = this.dataset.id;
-        const input = document.querySelector(`#nomor_permohonan_${id}`);
+        const input = document.querySelector(`#nomor_pengajuan_${id}`);
         const value = input.value.trim();
 
         if (value === "") {
@@ -254,10 +254,10 @@ document.querySelectorAll('.edit-nomor-permohonan-btn').forEach(button => {
             return;
         }
 
-        fetch('services/edit_nomor_permohonan.php', {
+        fetch('services/edit_nomor_pengajuan.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: `id=${id}&nomor_permohonan=${encodeURIComponent(value)}`
+            body: `id=${id}&nomor_pengajuan=${encodeURIComponent(value)}`
         })
             .then(res => res.json())
             .then(data => {
@@ -311,6 +311,15 @@ document.querySelectorAll('.edit-nomor-sertifikat-btn').forEach(button => {
 });
 
 // Edit Sertifikat
+document.querySelectorAll('.input-file').forEach(function (input) {
+    input.addEventListener('change', function (e) {
+        const fileName = e.target.files.length > 0 ? e.target.files[0].name : "Tidak ada file yang dipilih";
+        const fileId = e.target.id.split('_').pop();
+        const fileNameElement = document.getElementById('file-name-' + fileId);
+        if (fileNameElement) fileNameElement.textContent = fileName;
+    });
+});
+
 document.querySelectorAll('.edit-certificate-btn').forEach(button => {
     button.addEventListener('click', function () {
         const id = this.dataset.id;

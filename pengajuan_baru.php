@@ -32,7 +32,7 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
     <link rel="stylesheet" href="css/alert.css">
 </head>
 
-<div id="permohonan_baru-page">
+<div id="pengajuan_baru-page">
     <div class="download-container">
         <a href="services/download_template.php?doc_type=surat_pernyataan" class="download-btn">
             <button>Surat Pernyataan</button>
@@ -47,8 +47,8 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
         <!--Jenis Pengajuan-->
         <div class="form-group">
             <label>Jenis Pengajuan:</label>
-            <select name="jenis_permohonan" id="jenis_permohonan" class="auto-search" required
-                oninvalid="this.setCustomValidity('Silakan pilih jenis permohonan terlebih dahulu.')"
+            <select name="jenis_pengajuan" id="jenis_pengajuan" class="auto-search" required
+                oninvalid="this.setCustomValidity('Silakan pilih jenis pengajuan terlebih dahulu.')"
                 oninput="this.setCustomValidity('')">
                 <option value="">-- Pilih Jenis Pengajuan --</option>
                 <option value="Usaha Mikro Kecil">Usaha Mikro Kecil</option>

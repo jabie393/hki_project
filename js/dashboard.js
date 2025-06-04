@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const modalContent = document.getElementById('userProfileContent');
 
     document.body.addEventListener('click', function (e) {
-        if (e.target.classList.contains('profile-img')) {
+        if (e.target.classList.contains('profileimg')) {
             const userId = e.target.getAttribute('data-user-id');
 
             fetch(`modal_user_profile.php?id=${userId}`)

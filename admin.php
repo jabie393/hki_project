@@ -23,7 +23,7 @@ $totalQuery = "SELECT COUNT(*) as total FROM registrations
                JOIN users ON registrations.user_id = users.id 
                WHERE registrations.status != 'Terdaftar' 
                AND (users.username LIKE '%$search%' 
-               OR registrations.jenis_permohonan LIKE '%$search%' 
+               OR registrations.jenis_pengajuan LIKE '%$search%' 
                OR registrations.jenis_hak_cipta LIKE '%$search%' 
                OR registrations.sub_jenis_hak_cipta LIKE '%$search%' 
                OR registrations.judul_hak_cipta LIKE '%$search%')";
@@ -36,7 +36,7 @@ $query = "SELECT registrations.*, users.username FROM registrations
           JOIN users ON registrations.user_id = users.id 
           WHERE registrations.status != 'Terdaftar' 
           AND (users.username LIKE '%$search%' 
-          OR registrations.jenis_permohonan LIKE '%$search%' 
+          OR registrations.jenis_pengajuan LIKE '%$search%' 
           OR registrations.jenis_hak_cipta LIKE '%$search%' 
           OR registrations.sub_jenis_hak_cipta LIKE '%$search%' 
           OR registrations.judul_hak_cipta LIKE '%$search%')
@@ -96,7 +96,7 @@ $result = $conn->query($query);
                         <tr id="row_<?= $row['id'] ?>">
                             <td><a href="javascript:void(0)" onclick="showProfile(<?= $row['user_id'] ?>)"
                                     class="profile-link"><?= htmlspecialchars($row['username']) ?></a></td>
-                            <td><?= htmlspecialchars($row['jenis_permohonan']) ?></td>
+                            <td><?= htmlspecialchars($row['jenis_pengajuan']) ?></td>
                             <td><?= htmlspecialchars($row['jenis_hak_cipta']) ?></td>
                             <td><?= htmlspecialchars($row['sub_jenis_hak_cipta']) ?></td>
                             <td><?= htmlspecialchars($row['tanggal_pengumuman']) ?></td>
@@ -122,25 +122,31 @@ $result = $conn->query($query);
                             <td><span
                                     class="badge badge-<?= strtolower($row['status']) ?>"><?= htmlspecialchars($row['status']) ?></span>
                             </td>
-                            <td><input type="text" spellcheck="false" name="nomor_permohonan" class="input-field"
+                            <td><input type="text" spellcheck="false" name="nomor_pengajuan" class="input-field"
                                     placeholder="Opsional"></td>
                             <td><input type="text" spellcheck="false" name="nomor_sertifikat" class="input-field"
                                     placeholder="Opsional"></td>
                             <td>
                                 <div class="input-wrapper">
-                                    <label for="certificate_<?= $row['id'] ?>" class="file-label">Sertifikat</label>
-                                    <div class="input-file-wrapper">
-                                        <input type="file" id="certificate_<?= $row['id'] ?>" name="certificate"
-                                            class="input-file" accept="image/*,.pdf,.doc,.docx,.zip,.rar,.7z,.tar,.gz">
+                                    <label for="certificate_<?= $row['id'] ?>" class="file-label">Sertifikat (Opsional)</label>
+                                    <div class="button-row">
+                                        <div class="custom-file-container">
+                                            <label for="certificate_<?= $row['id'] ?>" class="custom-file-label btn btn-info">Pilih
+                                                File</label>
+                                            <input type="file" id="certificate_<?= $row['id'] ?>" name="certificate"
+                                                class="input-file" accept="image/*,.pdf,.doc,.docx,.zip,.rar,.7z,.tar,.gz">
+                                        </div>
+                                        <button type="button" class="btn btn-safe approve-btn" data-id="<?= $row['id'] ?>"
+                                            data-form="form_<?= $row['id'] ?>" data-user="<?= $row['user_id'] ?>">
+                                            ✔ Setujui
+                                        </button>
+                                        <button class="btn btn-danger delete-btn" data-id="<?= $row['id'] ?>"
+                                            data-row="row_<?= $row['id'] ?>">
+                                            ✖ Tolak
+                                        </button>
                                     </div>
-                                    <button type="button" class="btn btn-safe approve-btn" data-id="<?= $row['id'] ?>"
-                                        data-form="form_<?= $row['id'] ?>" data-user="<?= $row['user_id'] ?>">
-                                        ✔ Setujui
-                                    </button>
-                                    <button class="btn btn-danger delete-btn" data-id="<?= $row['id'] ?>"
-                                        data-row="row_<?= $row['id'] ?>">
-                                        ✖ Tolak
-                                    </button>
+                                    <span class="file-name" id="file-name-<?= $row['id'] ?>">Tidak ada file yang
+                                        dipilih</span>
                                 </div>
                             </td>
                         </tr>

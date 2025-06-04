@@ -16,15 +16,9 @@ $result = $stmt->get_result();
 
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detail Pencipta</title>
-</head>
-<body>
-    <table border="1">
+<div id="table_modal-page">
+    <div class="cdtable-wrapper">
+        <table id="cdtable">
         <tr>
             <th>Nama</th>
             <th>Jenis Kelamin</th>
@@ -39,5 +33,5 @@ $result = $stmt->get_result();
             </tr>
         <?php } ?>
     </table>
-</body>
-</html>
+    </div>
+</div>

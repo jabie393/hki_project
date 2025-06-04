@@ -134,18 +134,19 @@ body {
 }
 
 #hki-table {
-  width: 100%;
+  width: auto;
   border-collapse: collapse;
   font-size: 14px;
-  min-width: 1000px;
-  overflow: hidden;
+  table-layout: auto;
+  margin: 0 auto;
 }
 
 #hki-table th,
 #hki-table td {
-  padding: 12px 15px;
+  padding: 10px;
   text-align: left;
-  border-bottom: 1px solid #ddd;
+  vertical-align: top;
+  white-space: nowrap;
 }
 
 #hki-table th {

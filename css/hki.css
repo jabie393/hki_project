@@ -1,4 +1,3 @@
-/* admin.css */
 #hki-page {
   padding: 20px 0px 20px 0px;
   font-family: "Inter", sans-serif;
@@ -23,18 +22,19 @@
 }
 
 #hki-page #hki-table {
-  width: 100%;
+  width: auto;
   border-collapse: collapse;
   font-size: 14px;
-  min-width: 1000px;
+  table-layout: auto;
+  margin: 0 auto;
 }
 
 #hki-page #hki-table th,
 #hki-page #hki-table td {
   padding: 10px;
-  border: 1px solid #ddd;
   text-align: left;
   vertical-align: top;
+  white-space: nowrap;
 }
 
 #hki-page #hki-table th {
@@ -96,8 +96,7 @@
   gap: 10px;
 }
 
-#hki-page .input-field,
-#hki-page .input-file {
+#hki-page .input-field {
   width: 90%;
   padding: 6px;
   font-size: 13px;
@@ -251,14 +250,54 @@
   display: flex;
   gap: 6px;
   flex-wrap: wrap;
+  align-items: center;
 }
 
 #hki-page .input-wrapper {
-  min-width: 250px;
-  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
   background-color: #f0f6ff;
+  padding: 8px;
   border-radius: 8px;
   box-sizing: border-box;
+  max-width: 100%;
+}
+
+#hki-page .button-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+#hki-page .custom-file-container {
+  margin-right: 10px;
+  width: 150px;
+  flex-shrink: 0;
+}
+
+#hki-page .custom-file-label {
+  display: inline-block;
+  width: 90%;
+  padding: 6px 12px;
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+#hki-page .input-file {
+  display: none;
+}
+
+#hki-page .file-name {
+  font-size: 13px;
+  color: #555;
+  font-style: italic;
+  word-break: break-word;
+  max-width: 100%;
 }
 
 #hki-page .input-file-wrapper {
@@ -351,20 +390,18 @@ body.dark-mode #hki-page h2 {
 
 /* Tabel */
 body.dark-mode #hki-page .table-wrapper {
-  background: #1e1e1e; /* Warna latar belakang tabel */
-  box-shadow: none; /* Hilangkan bayangan */
+  background: #1e1e1e;
+  box-shadow: none;
 }
 
 body.dark-mode #hki-page #hki-table th {
-  border-color: transparent;
-  background-color: #333333; /* Warna header tabel */
-  color: #ffffff; /* Warna teks header tabel */
+  background-color: #333333;
+  color: #ffffff;
 }
 
 body.dark-mode #hki-page #hki-table td {
-  border-color: transparent;
-  background-color: #1e1e1e; /* Warna latar belakang sel */
-  color: #ffffff; /* Warna teks sel */
+  background-color: #1e1e1e;
+  color: #ffffff;
 }
 
 body.dark-mode #hki-page .profile-link {
@@ -383,8 +420,7 @@ body.dark-mode #hki-page .btn:hover {
 }
 
 body.dark-mode #hki-page .input-field-search,
-body.dark-mode #hki-page .input-field,
-body.dark-mode #hki-page .input-file {
+body.dark-mode #hki-page .input-field {
   background-color: #333333;
   color: white;
 }
