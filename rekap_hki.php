@@ -18,38 +18,40 @@ $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
 
 // Query untuk menghitung total data
-$totalQuery = "SELECT COUNT(*) as total FROM registrations 
-               JOIN users ON registrations.user_id = users.id 
-               WHERE registrations.status = 'Terdaftar' 
-               AND (users.username LIKE '%$search%' 
-               OR registrations.nomor_pengajuan LIKE '%$search%' 
-               OR registrations.jenis_pengajuan LIKE '%$search%' 
-               OR registrations.jenis_hak_cipta LIKE '%$search%' 
-               OR registrations.sub_jenis_hak_cipta LIKE '%$search%' 
-               OR registrations.tanggal_pengumuman LIKE '%$search%' 
-               OR registrations.judul_hak_cipta LIKE '%$search%' 
-               OR registrations.negara_pengumuman LIKE '%$search%' 
-               OR registrations.kota_pengumuman LIKE '%$search%' 
-               OR registrations.nomor_sertifikat LIKE '%$search%')";
+$totalQuery = "SELECT COUNT(*) as total FROM registrations
+                JOIN users ON registrations.user_id = users.id
+                WHERE registrations.status = 'Terdaftar'
+                AND (users.username LIKE '%$search%'
+                OR registrations.nomor_pengajuan LIKE '%$search%'
+                OR registrations.jenis_pengajuan LIKE '%$search%'
+                OR registrations.jenis_hak_cipta LIKE '%$search%'
+                OR registrations.sub_jenis_hak_cipta LIKE '%$search%'
+                OR registrations.tanggal_pengumuman LIKE '%$search%'
+                OR registrations.created_at LIKE '%$search%'
+                OR registrations.judul_hak_cipta LIKE '%$search%'
+                OR registrations.negara_pengumuman LIKE '%$search%'
+                OR registrations.kota_pengumuman LIKE '%$search%'
+                OR registrations.nomor_sertifikat LIKE '%$search%')";
 $totalResult = $conn->query($totalQuery);
 $totalData = $totalResult->fetch_assoc()['total'];
 $totalPages = ceil($totalData / $limit);
 
 // Query untuk mengambil data dengan pagination
-$query = "SELECT registrations.*, users.username FROM registrations 
-          JOIN users ON registrations.user_id = users.id 
-          WHERE registrations.status = 'Terdaftar' 
-          AND (users.username LIKE '%$search%' 
-          OR registrations.nomor_pengajuan LIKE '%$search%' 
-          OR registrations.jenis_pengajuan LIKE '%$search%' 
-          OR registrations.jenis_hak_cipta LIKE '%$search%' 
-          OR registrations.sub_jenis_hak_cipta LIKE '%$search%' 
-          OR registrations.tanggal_pengumuman LIKE '%$search%' 
-          OR registrations.judul_hak_cipta LIKE '%$search%' 
-          OR registrations.negara_pengumuman LIKE '%$search%' 
-          OR registrations.kota_pengumuman LIKE '%$search%' 
-          OR registrations.nomor_sertifikat LIKE '%$search%')
-          LIMIT $limit OFFSET $offset";
+$query = "SELECT registrations.*, users.username FROM registrations
+            JOIN users ON registrations.user_id = users.id
+            WHERE registrations.status = 'Terdaftar'
+            AND (users.username LIKE '%$search%'
+            OR registrations.nomor_pengajuan LIKE '%$search%'
+            OR registrations.jenis_pengajuan LIKE '%$search%'
+            OR registrations.jenis_hak_cipta LIKE '%$search%'
+            OR registrations.sub_jenis_hak_cipta LIKE '%$search%'
+            OR registrations.tanggal_pengumuman LIKE '%$search%'
+            OR registrations.created_at LIKE '%$search%'
+            OR registrations.judul_hak_cipta LIKE '%$search%'
+            OR registrations.negara_pengumuman LIKE '%$search%'
+            OR registrations.kota_pengumuman LIKE '%$search%'
+            OR registrations.nomor_sertifikat LIKE '%$search%')
+            LIMIT $limit OFFSET $offset";
 $result = $conn->query($query);
 ?>
 

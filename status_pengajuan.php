@@ -11,41 +11,64 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 
 // Ambil kata kunci pencarian jika ada
-$search = isset($_GET['search']) ? $conn->real_escape_string($_GET['search']) : '';
+$search = isset($_GET['search']) ? $_GET['search'] : '';
 
 // Pagination setup
-$defaultLimit = 5; // Default jumlah data per halaman
-$limit = isset($_GET['limit']) ? (int) $_GET['limit'] : $defaultLimit; // Ambil limit dari URL, default 5
+$defaultLimit = 5;
+$limit = isset($_GET['limit']) ? (int) $_GET['limit'] : $defaultLimit;
 $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
 
-// Query untuk menghitung total data
-$totalQuery = "SELECT COUNT(*) as total FROM registrations 
-               WHERE user_id = ? 
-               AND (nomor_pengajuan LIKE ? 
-               OR jenis_pengajuan LIKE ? 
-               OR jenis_hak_cipta LIKE ? 
-               OR sub_jenis_hak_cipta LIKE ? 
-               OR judul_hak_cipta LIKE ?)";
-$stmtTotal = $conn->prepare($totalQuery);
-$searchTerm = "%$search%";
-$stmtTotal->bind_param("ssssss", $user_id, $searchTerm, $searchTerm, $searchTerm, $searchTerm, $searchTerm);
-$stmtTotal->execute();
-$totalResult = $stmtTotal->get_result();
+// Query untuk menghitung total data dengan prepared statement
+$totalQuery = "SELECT COUNT(*) as total FROM registrations
+                WHERE user_id = ?
+                AND (
+                    nomor_pengajuan LIKE ? OR
+                    jenis_pengajuan LIKE ? OR
+                    jenis_hak_cipta LIKE ? OR
+                    sub_jenis_hak_cipta LIKE ? OR
+                    tanggal_pengumuman LIKE ? OR
+                    created_at LIKE ? OR
+                    judul_hak_cipta LIKE ? OR
+                    negara_pengumuman LIKE ? OR
+                    kota_pengumuman LIKE ? OR
+                    nomor_sertifikat LIKE ?
+                )";
+$stmt = $conn->prepare($totalQuery);
+$likeSearch = "%$search%";
+$stmt->bind_param(
+    "sssssssssss",
+    $user_id, $likeSearch, $likeSearch, $likeSearch, $likeSearch, $likeSearch,
+    $likeSearch, $likeSearch, $likeSearch, $likeSearch, $likeSearch
+);
+$stmt->execute();
+$totalResult = $stmt->get_result();
 $totalData = $totalResult->fetch_assoc()['total'];
 $totalPages = ceil($totalData / $limit);
+$stmt->close();
 
-// Query untuk mengambil data dengan pagination
-$query = "SELECT * FROM registrations 
-          WHERE user_id = ? 
-          AND (nomor_pengajuan LIKE ? 
-          OR jenis_pengajuan LIKE ? 
-          OR jenis_hak_cipta LIKE ? 
-          OR sub_jenis_hak_cipta LIKE ? 
-          OR judul_hak_cipta LIKE ?)
-          LIMIT ? OFFSET ?";
+// Query untuk mengambil data dengan prepared statement dan pagination
+$query = "SELECT * FROM registrations
+            WHERE user_id = ?
+            AND (
+                nomor_pengajuan LIKE ? OR
+                jenis_pengajuan LIKE ? OR
+                jenis_hak_cipta LIKE ? OR
+                sub_jenis_hak_cipta LIKE ? OR
+                tanggal_pengumuman LIKE ? OR
+                created_at LIKE ? OR
+                judul_hak_cipta LIKE ? OR
+                negara_pengumuman LIKE ? OR
+                kota_pengumuman LIKE ? OR
+                nomor_sertifikat LIKE ?
+            )
+            LIMIT ? OFFSET ?";
 $stmt = $conn->prepare($query);
-$stmt->bind_param("ssssssii", $user_id, $searchTerm, $searchTerm, $searchTerm, $searchTerm, $searchTerm, $limit, $offset);
+$stmt->bind_param(
+    "sssssssssssii",
+    $user_id, $likeSearch, $likeSearch, $likeSearch, $likeSearch, $likeSearch,
+    $likeSearch, $likeSearch, $likeSearch, $likeSearch, $likeSearch, $limit, $offset
+);
 $stmt->execute();
 $result = $stmt->get_result();
 ?>
@@ -93,7 +116,7 @@ $result = $stmt->get_result();
             <?php while ($row = $result->fetch_assoc()) { ?>
                 <tr id="row-<?= $row['id'] ?>">
                     <td><?php echo htmlspecialchars($row['nomor_pengajuan'] ?? '-'); ?></td>
-                            <td><?php echo htmlspecialchars(date('Y-m-d', strtotime($row['created_at']))); ?></td>
+                    <td><?php echo htmlspecialchars(date('Y-m-d', strtotime($row['created_at']))); ?></td>
                     <td><?php echo htmlspecialchars($row['judul_hak_cipta']); ?></td>
                     <td>
                         <button type="button" class="btn btn-info"

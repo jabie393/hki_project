@@ -487,3 +487,13 @@ document.querySelectorAll('.cancel-btn').forEach(button => {
     });
 });
 //== Script Ajax (status_pengajuan) ==//
+
+//== Hide search param from URL after search ==//
+document.addEventListener('DOMContentLoaded', function() {
+    const url = new URL(window.location.href);
+    if (url.searchParams.has('search')) {
+        url.searchParams.delete('search');
+        window.history.replaceState({}, document.title, url.pathname + url.search);
+    }
+});
+//== End hide search param ==//

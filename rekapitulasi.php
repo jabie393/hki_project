@@ -13,31 +13,33 @@ $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
 
 // Query untuk menghitung total data
-$totalQuery = "SELECT COUNT(*) as total FROM registrations 
-               WHERE status = 'Terdaftar' 
-               AND (nomor_pengajuan LIKE '%$search%' 
-               OR judul_hak_cipta LIKE '%$search%'
-               OR jenis_hak_cipta LIKE '%$search%' 
-               OR tanggal_pengumuman LIKE '%$search%'
-               OR negara_pengumuman LIKE '%$search%'
-               OR kota_pengumuman LIKE '%$search%'
-               OR nomor_sertifikat LIKE '%$search%')";
+$totalQuery = "SELECT COUNT(*) as total FROM registrations
+                WHERE status = 'Terdaftar'
+                AND (nomor_pengajuan LIKE '%$search%'
+                OR judul_hak_cipta LIKE '%$search%'
+                OR jenis_hak_cipta LIKE '%$search%'
+                OR tanggal_pengumuman LIKE '%$search%'
+                OR created_at LIKE '%$search%'
+                OR negara_pengumuman LIKE '%$search%'
+                OR kota_pengumuman LIKE '%$search%'
+                OR nomor_sertifikat LIKE '%$search%')";
 $totalResult = $conn->query($totalQuery);
 $totalData = $totalResult->fetch_assoc()['total'];
 $totalPages = ceil($totalData / $limit);
 
 // Query untuk mengambil data dengan pagination
-$query = "SELECT id, nomor_pengajuan, jenis_hak_cipta, tanggal_pengumuman, judul_hak_cipta, deskripsi, negara_pengumuman, kota_pengumuman, nomor_sertifikat, status
-          FROM registrations 
-          WHERE status = 'Terdaftar' 
-          AND (nomor_pengajuan LIKE '%$search%' 
-          OR judul_hak_cipta LIKE '%$search%'
-          OR jenis_hak_cipta LIKE '%$search%' 
-          OR tanggal_pengumuman LIKE '%$search%'
-          OR negara_pengumuman LIKE '%$search%'
-          OR kota_pengumuman LIKE '%$search%'
-          OR nomor_sertifikat LIKE '%$search%')
-          LIMIT $limit OFFSET $offset";
+$query = "SELECT id, nomor_pengajuan, jenis_hak_cipta, tanggal_pengumuman, created_at, judul_hak_cipta, deskripsi, negara_pengumuman, kota_pengumuman, nomor_sertifikat, status
+            FROM registrations
+            WHERE status = 'Terdaftar'
+            AND (nomor_pengajuan LIKE '%$search%'
+            OR judul_hak_cipta LIKE '%$search%'
+            OR jenis_hak_cipta LIKE '%$search%'
+            OR tanggal_pengumuman LIKE '%$search%'
+            OR created_at LIKE '%$search%'
+            OR negara_pengumuman LIKE '%$search%'
+            OR kota_pengumuman LIKE '%$search%'
+            OR nomor_sertifikat LIKE '%$search%')
+            LIMIT $limit OFFSET $offset";
 
 $result = $conn->query($query);
 ?>
@@ -89,7 +91,7 @@ $result = $conn->query($query);
                     <tr>
                         <th>Nomor Pengajuan</th>
                         <th>Jenis Ciptaan</th>
-                        <th>Tanggal Pengumuman</th>
+                        <th>Tanggal Pengajuan</th>
                         <th>Judul</th>
                         <th>Detail Ciptaan</th>
                         <th>Pencipta</th>
@@ -103,7 +105,7 @@ $result = $conn->query($query);
                         <tr>
                             <td><?= htmlspecialchars($row['nomor_pengajuan'] ?? '-'); ?></td>
                             <td><?= htmlspecialchars($row['jenis_hak_cipta']); ?></td>
-                            <td><?= htmlspecialchars($row['tanggal_pengumuman']); ?></td>
+                            <td><?php echo htmlspecialchars(date('Y-m-d', strtotime($row['created_at']))); ?></td>
                             <td><?= htmlspecialchars($row['judul_hak_cipta']); ?></td>
                             <td>
                                 <button type="button" class="btn btn-info"

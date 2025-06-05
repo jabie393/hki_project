@@ -477,6 +477,12 @@ body.dark-mode #hki-page .search-group .input-field {
   color: #ffffff; /* Warna teks input */
 }
 
+body.dark-mode #hki-page .input-field:focus {
+  outline: none;
+  border-color: #ffffff;
+  box-shadow: 0 0 4px #ffffffa2;
+}
+
 body.dark-mode #hki-page .search-group .btn {
   background-color: #444444; /* Warna tombol search */
   color: #ffffff; /* Warna teks tombol */
