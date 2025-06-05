@@ -74,7 +74,7 @@ $result = $conn->query($query);
         <table id="hki-table">
             <thead>
                 <tr>
-                    <th>Nama Pengaju</th>
+                    <th>Username</th>
                     <th>Jenis Pengajuan</th>
                     <th>Jenis Ciptaan</th>
                     <th>Sub Jenis Ciptaan</th>

@@ -72,10 +72,10 @@ $postRegisteredCount = $postRegisteredResult->fetch_assoc()['total'];
                     </thead>
                     <tbody>
                         <?php
-                        $approvedQuery = "SELECT id, judul_hak_cipta, tanggal_pengumuman 
+                        $approvedQuery = "SELECT id, judul_hak_cipta, created_at 
                                 FROM registrations 
                                 WHERE user_id = ? AND status = 'Terdaftar'
-                                ORDER BY tanggal_pengumuman DESC";
+                                ORDER BY created_at DESC";
                         $stmtTerdaftar = $conn->prepare($approvedQuery);
                         $stmtTerdaftar->bind_param("s", $user_id);
                         $stmtTerdaftar->execute();
@@ -85,7 +85,7 @@ $postRegisteredCount = $postRegisteredResult->fetch_assoc()['total'];
                             while ($row = $approvedResult->fetch_assoc()) { ?>
                                 <tr>
                                     <td><?php echo htmlspecialchars($row['judul_hak_cipta']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['tanggal_pengumuman']); ?></td>
+                                    <td><?php echo htmlspecialchars(date('Y-m-d', strtotime($row['created_at']))); ?></td>
                                     <td>
                                         <button type="button" onclick="openModal('<?= $row['id'] ?>')" class="btn btn-info">
                                             Detail Pencipta
@@ -118,10 +118,10 @@ $postRegisteredCount = $postRegisteredResult->fetch_assoc()['total'];
                     </thead>
                     <tbody>
                         <?php
-                        $pendingQuery = "SELECT id, judul_hak_cipta, tanggal_pengumuman 
+                        $pendingQuery = "SELECT id, judul_hak_cipta, created_at 
                                FROM registrations 
                                WHERE user_id = ? AND (status = 'Pending' OR status = 'Rejected')
-                               ORDER BY tanggal_pengumuman DESC";
+                               ORDER BY created_at DESC";
                         $stmtPending = $conn->prepare($pendingQuery);
                         $stmtPending->bind_param("s", $user_id);
                         $stmtPending->execute();
@@ -131,7 +131,7 @@ $postRegisteredCount = $postRegisteredResult->fetch_assoc()['total'];
                             while ($row = $pendingResult->fetch_assoc()) { ?>
                                 <tr>
                                     <td><?php echo htmlspecialchars($row['judul_hak_cipta']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['tanggal_pengumuman']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['created_at']); ?></td>
                                     <td>
                                         <button type="button" onclick="openModal('<?= $row['id'] ?>')" class="btn btn-info">
                                             Detail Pencipta

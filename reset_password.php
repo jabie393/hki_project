@@ -29,6 +29,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     <link rel="stylesheet" href="css/reset_password.css">
     <link rel="stylesheet" href="css/modal.css">
     <link rel="stylesheet" href="css/alert.css">
+    <link rel="stylesheet" href="css/select2.css">
 </head>
 
 <div id="reset_password-page">

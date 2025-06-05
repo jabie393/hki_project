@@ -26,120 +26,10 @@
   background-color: #eef2ff;
 }
 
-#template-page select,
 #template-page input[type="file"] {
   padding: 10px;
   border-radius: 8px;
   border: 1px solid #ccc;
-}
-
-#template-page .custom-select-wrapper {
-  position: relative;
-  display: inline-block;
-  width: 100%;
-}
-
-#template-page .custom-select-wrapper select {
-  width: 100%;
-  padding: 12px 40px 12px 12px;
-  border: 1px solid #ced4da;
-  border-radius: 8px;
-  background-color: #eef2ff;
-  font-weight: 600;
-  color: #333;
-  font-family: "Inter", sans-serif;
-  cursor: pointer;
-}
-
-#template-page .custom-select-wrapper select:focus {
-  border-color: #007bff;
-  outline: none;
-  box-shadow: 0 0 4px #007bff66;
-}
-
-/* Select2 Styling */
-.select2-results__option img {
-  vertical-align: middle;
-  margin-right: 10px !important;
-}
-
-.select2-selection__rendered img {
-  vertical-align: middle;
-  margin-right: 5px !important;
-}
-
-.select2-search__field {
-  padding: 6px;
-  border-radius: 6px;
-}
-
-.select2-search__field:focus {
-  border-color: #007bff;
-  outline: none;
-  box-shadow: 0 0 4px #007bff66;
-}
-
-.select2-results__option {
-  font-family: "Inter", sans-serif;
-}
-
-.select2-results__option[aria-selected] {
-  background-color: #eef2ff;
-}
-
-.select2-container--default .select2-selection--single {
-  height: 45px !important;
-  display: flex;
-  align-items: center;
-  border-radius: 10px;
-  border: 1px solid #ced4da !important;
-  background-color: #eef2ff !important;
-  padding-left: 12px;
-  padding-right: 30px;
-}
-
-.select2-selection__rendered {
-  line-height: 45px !important;
-  color: #6c757d !important;
-}
-
-.select2-container--default
-  .select2-selection--single
-  .select2-selection__arrow {
-  height: 100% !important;
-  top: 0 !important;
-  right: 0 !important;
-}
-
-.select2-container--default
-  .select2-selection--single
-  .select2-selection__clear {
-  position: absolute;
-  right: 25px;
-  top: 20px;
-  transform: translateY(-50%);
-  color: #dc3545;
-  font-size: 1.2em;
-  cursor: pointer;
-  z-index: 2;
-}
-
-/* Select2 Search Field */
-.select2-search__field {
-  padding: 6px;
-  border-radius: 6px;
-}
-
-.select2-search__field:focus {
-  border-color: #007bff !important;
-  outline: none;
-  box-shadow: 0 0 4px #007bff66 !important;
-}
-
-.select2-container--default
-  .select2-results__option--highlighted[aria-selected] {
-  background-color: #004080;
-  color: white;
 }
 
 #template-page .custom-file-upload {
@@ -292,70 +182,8 @@ body.dark-mode #template-page h2 {
   color: #ffffff;
 }
 
-/* select2 dark mode */
-body.dark-mode .select2-search--dropdown {
-  background-color: #333333;
-}
-
-body.dark-mode .select2-container--open .select2-dropdown {
-  border: none !important;
-}
-
-body.dark-mode
-  .select2-container--default
-  .select2-search--dropdown
-  .select2-search__field {
-  background-color: #333333;
-  color: white;
-}
-
-body.dark-mode
-  .select2-container--default
-  .select2-search--dropdown
-  .select2-search__field:focus {
-  border-color: #ffffff !important;
-  box-shadow: 0 0 4px #ffffffa2 !important;
-}
-
-body.dark-mode .select2-search__field:focus {
-  border-color: #ffffff;
-  box-shadow: 0 0 4px #ffffff66;
-}
-
-body.dark-mode .select2-results__option[aria-selected] {
-  background-color: #333333;
-}
-
-body.dark-mode .select2-container--default .select2-selection--single {
-  border: 1px solid #444444 !important;
-  background-color: #333333 !important;
-}
-
-body.dark-mode .select2-results__option {
-  background-color: #333333;
-}
-
-body.dark-mode
-  .select2-container--default
-  .select2-results__option--highlighted[aria-selected] {
-  background-color: #1e1e1e;
-}
-
 body.dark-mode #template-page form {
   background-color: #121212;
-}
-
-body.dark-mode #template-page select,
-body.dark-mode #template-page input[type="file"] {
-  background-color: #333333;
-  color: #ffffff;
-  border: 1px solid #444444;
-}
-
-body.dark-mode #template-page select:focus {
-  outline: none;
-  border-color: #ffffff;
-  box-shadow: 0 0 4px #ffffffa2;
 }
 
 body.dark-mode #template-page .upload-box {

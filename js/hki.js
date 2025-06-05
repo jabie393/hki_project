@@ -420,6 +420,11 @@ document.querySelectorAll('input[type="file"]').forEach(input => {
                     text: `Hanya Sertifikat dengan ekstensi berikut yang diizinkan: ${allowedExtensions.join(', ')}.`,
                 });
                 this.value = ''; // Reset input file
+
+                // Reset file-name display
+                const fileId = this.id.split('_').pop();
+                const fileNameElement = document.getElementById('file-name-' + fileId);
+                if (fileNameElement) fileNameElement.textContent = "Tidak ada file yang dipilih";
             }
         }
     });

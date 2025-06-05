@@ -30,6 +30,7 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
     <link rel="stylesheet" href="css/pengajuan_baru.css">
     <link rel="stylesheet" href="css/modal.css">
     <link rel="stylesheet" href="css/alert.css">
+    <link rel="stylesheet" href="css/select2.css">
 </head>
 
 <div id="pengajuan_baru-page">

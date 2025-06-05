@@ -44,7 +44,9 @@ $role = $_SESSION['role'] ?? 'user';
       <script>
         // Menentukan halaman default berdasarkan role
         <?php if ($role === 'admin'): ?>
-          loadContent('admin.php');
+          if (typeof loadContent === "function") {
+            loadContent('admin.php');
+          }
         <?php else: ?>
           if (typeof loadContent === "function") {
             loadContent('user.php');

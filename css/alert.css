@@ -32,6 +32,7 @@
   font-weight: 600;
   padding: 0.5rem 1.25rem;
   --swal2-action-button-outline: none !important;
+  --swal2-action-button-focus-box-shadow: 0 0 0 3px none !important;
 }
 
 .swal2-confirm:hover {
@@ -46,6 +47,7 @@
   font-weight: 600;
   padding: 0.5rem 1.25rem;
   --swal2-action-button-outline: none !important;
+  --swal2-action-button-focus-box-shadow: 0 0 0 3px none !important;
 }
 
 /* Ikon status */
