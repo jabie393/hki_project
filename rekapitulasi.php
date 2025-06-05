@@ -91,10 +91,9 @@ $result = $conn->query($query);
                         <th>Jenis Ciptaan</th>
                         <th>Tanggal Pengumuman</th>
                         <th>Judul</th>
-                        <th>Deskripsi</th>
+                        <th>Detail Ciptaan</th>
                         <th>Pencipta</th>
                         <th>Pemegang Hak Cipta</th>
-                        <th>Tempat</th>
                         <th>Nomor Sertifikat</th>
                         <th>Status</th>
                     </tr>
@@ -107,18 +106,14 @@ $result = $conn->query($query);
                             <td><?= htmlspecialchars($row['tanggal_pengumuman']); ?></td>
                             <td><?= htmlspecialchars($row['judul_hak_cipta']); ?></td>
                             <td>
-                                <button onclick="openDescriptionModal('<?= htmlspecialchars($row['deskripsi']); ?>')"
-                                    class="btn btn-info">Lihat</button>
+                                <button type="button" class="btn btn-info"
+                                    onclick="openDetailCiptaanModal(<?= $row['id'] ?>)">Lihat</button>
                             </td>
                             <td>
                                 <button class="btn btn-info" onclick="showCreator(<?= $row['id']; ?>)">Detail
                                     Pencipta</button>
                             </td>
                             <td>Universitas Raden Rahmat Malang</td>
-                            <td>
-                                <div><strong>Negara:</strong> <?= htmlspecialchars($row['negara_pengumuman']); ?></div>
-                                <div><strong>Kota:</strong> <?= htmlspecialchars($row['kota_pengumuman']); ?></div>
-                            </td>
                             <td><?= htmlspecialchars($row['nomor_sertifikat'] ?? '-'); ?></td>
                             <td>
                                 <span class="badge badge-<?= strtolower($row['status']) ?>">
@@ -176,15 +171,15 @@ $result = $conn->query($query);
         </div>
     </div>
 
-    <!-- Modal untuk Deskripsi -->
+    <!-- Modal untuk Detail Ciptaan -->
     <div id="modal-page">
-        <div id="descriptionModal" class="modal" style="display: none;">
+        <div id="detailCiptaanModal" class="modal" style="display: none;">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h2>Deskripsi Ciptaan</h2>
-                    <button class="close" onclick="closeDescriptionModal()">&times;</button>
+                    <h2>Detail Ciptaan</h2>
+                    <button class="close" onclick="closeDetailCiptaanModal()">&times;</button>
                 </div>
-                <div id="descriptionDetails"></div>
+                <div id="detailCiptaanDetails"></div>
             </div>
         </div>
     </div>

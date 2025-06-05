@@ -81,13 +81,9 @@ $result = $stmt->get_result();
         <table id="hki-table">
             <tr>
                 <th>Nomor Pengajuan</th>
-                <th>Jenis Pengajuan</th>
-                <th>Jenis Ciptaan</th>
-                <th>Sub Jenis Ciptaan</th>
-                <th>Tanggal Pengumuman</th>
+                <th>Tanggal Pengajuan</th>
                 <th>Judul</th>
-                <th>Deskripsi</th>
-                <th>Tempat Pengumuman</th>
+                <th>Detail Ciptaan</th>
                 <th>Pencipta</th>
                 <th>Status</th>
                 <th>Sertifikat</th>
@@ -97,20 +93,11 @@ $result = $stmt->get_result();
             <?php while ($row = $result->fetch_assoc()) { ?>
                 <tr id="row-<?= $row['id'] ?>">
                     <td><?php echo htmlspecialchars($row['nomor_pengajuan'] ?? '-'); ?></td>
-                    <td><?php echo htmlspecialchars($row['jenis_pengajuan']); ?></td>
-                    <td><?php echo htmlspecialchars($row['jenis_hak_cipta']); ?></td>
-                    <td><?php echo htmlspecialchars($row['sub_jenis_hak_cipta']); ?></td>
-                    <td><?php echo htmlspecialchars($row['tanggal_pengumuman']); ?></td>
+                            <td><?php echo htmlspecialchars(date('Y-m-d', strtotime($row['created_at']))); ?></td>
                     <td><?php echo htmlspecialchars($row['judul_hak_cipta']); ?></td>
                     <td>
-                        <button onclick="openDescriptionModal('<?php echo htmlspecialchars($row['deskripsi']); ?>')"
-                            class="btn btn-info">
-                            Lihat
-                        </button>
-                    </td>
-                    <td>
-                        <div><strong>Negara:</strong> <?php echo htmlspecialchars($row['negara_pengumuman']); ?></div>
-                        <div><strong>Kota:</strong> <?php echo htmlspecialchars($row['kota_pengumuman']); ?></div>
+                        <button type="button" class="btn btn-info"
+                            onclick="openDetailCiptaanModal(<?= $row['id'] ?>)">Lihat</button>
                     </td>
                     <td>
                         <button type="button" onclick="openModal('<?= $row['id'] ?>')" class="btn btn-info">Detail
@@ -130,7 +117,8 @@ $result = $stmt->get_result();
                     <td><?php echo htmlspecialchars($row['nomor_sertifikat'] ?? '-'); ?></td>
                     <td>
                         <?php if ($row['status'] == 'Pending') { ?>
-                            <button class="btn btn-danger cancel-btn" data-id="<?= $row['id'] ?>" data-row="row-<?= $row['id'] ?>">Batalkan</button>
+                            <button class="btn btn-danger cancel-btn" data-id="<?= $row['id'] ?>"
+                                data-row="row-<?= $row['id'] ?>">Batalkan</button>
                         <?php } else { ?>
                             <span style="color: gray;">Tidak bisa dibatalkan</span>
                         <?php } ?>
@@ -184,15 +172,15 @@ $result = $stmt->get_result();
         <?php endif; ?>
     </div>
 
-    <!-- Modal untuk Deskripsi -->
+    <!-- Modal untuk Detail Ciptaan -->
     <div id="modal-page">
-        <div id="descriptionModal" class="modal" style="display: none;">
+        <div id="detailCiptaanModal" class="modal" style="display: none;">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h2>Deskripsi Ciptaan</h2>
-                    <button class="close" onclick="closeDescriptionModal()">&times;</button>
+                    <h2>Detail Ciptaan</h2>
+                    <button class="close" onclick="closeDetailCiptaanModal()">&times;</button>
                 </div>
-                <div id="descriptionDetails"></div>
+                <div id="detailCiptaanDetails"></div>
             </div>
         </div>
     </div>

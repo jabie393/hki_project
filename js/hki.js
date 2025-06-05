@@ -58,14 +58,19 @@ function closeProfileModal() {
     document.getElementById('profileModal').style.display = 'none';
 }
 
-// script detail deskripsi
-function openDescriptionModal(description) {
-    document.getElementById('descriptionDetails').innerText = description;
-    document.getElementById('descriptionModal').style.display = 'flex';
+// script detail hak cipta
+function openDetailCiptaanModal(id) {
+    fetch('widgets/detail_ciptaan.php?id=' + id)
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('detailCiptaanDetails').innerHTML = data;
+            document.getElementById('detailCiptaanModal').style.display = 'flex';
+        })
+        .catch(error => console.error('Error:', error));
 }
 
-function closeDescriptionModal() {
-    document.getElementById('descriptionModal').style.display = 'none';
+function closeDetailCiptaanModal() {
+    document.getElementById('detailCiptaanModal').style.display = 'none';
 }
 
 // script detail pencipta

@@ -75,18 +75,12 @@ $result = $conn->query($query);
             <thead>
                 <tr>
                     <th>Username</th>
-                    <th>Jenis Pengajuan</th>
-                    <th>Jenis Ciptaan</th>
-                    <th>Sub Jenis Ciptaan</th>
-                    <th>Tanggal Pengumuman</th>
+                    <th>Tanggal Pengajuan</th>
                     <th>Judul</th>
-                    <th>Deskripsi</th>
-                    <th>Tempat Pengumuman</th>
+                    <th>Detail Ciptaan</th>
                     <th>Pencipta</th>
                     <th>File</th>
-                    <th>Status</th>
-                    <th>No. Pengajuan</th>
-                    <th>No. Sertifikat</th>
+                    <th>Nomor</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -96,17 +90,11 @@ $result = $conn->query($query);
                         <tr id="row_<?= $row['id'] ?>">
                             <td><a href="javascript:void(0)" onclick="showProfile(<?= $row['user_id'] ?>)"
                                     class="profile-link"><?= htmlspecialchars($row['username']) ?></a></td>
-                            <td><?= htmlspecialchars($row['jenis_pengajuan']) ?></td>
-                            <td><?= htmlspecialchars($row['jenis_hak_cipta']) ?></td>
-                            <td><?= htmlspecialchars($row['sub_jenis_hak_cipta']) ?></td>
-                            <td><?= htmlspecialchars($row['tanggal_pengumuman']) ?></td>
+                            <td><?php echo htmlspecialchars(date('Y-m-d', strtotime($row['created_at']))); ?></td>
                             <td><?= htmlspecialchars($row['judul_hak_cipta']) ?></td>
-                            <td><button type="button"
-                                    onclick="openDescriptionModal('<?= htmlspecialchars($row['deskripsi']) ?>')"
-                                    class="btn btn-info">Lihat</button></td>
                             <td>
-                                <div><strong>Negara:</strong> <?= htmlspecialchars($row['negara_pengumuman']) ?></div>
-                                <div><strong>Kota:</strong> <?= htmlspecialchars($row['kota_pengumuman']) ?></div>
+                                <button type="button" class="btn btn-info"
+                                    onclick="openDetailCiptaanModal(<?= $row['id'] ?>)">Lihat</button>
                             </td>
                             <td><button type="button" onclick="openModal('<?= $row['id'] ?>')" class="btn btn-info">Detail
                                     Pencipta</button></td>
@@ -119,19 +107,24 @@ $result = $conn->query($query);
                                 }
                                 ?>
                             </td>
-                            <td><span
-                                    class="badge badge-<?= strtolower($row['status']) ?>"><?= htmlspecialchars($row['status']) ?></span>
+                            <td class="nomor-cell">
+                                <div class="nomor-fields">
+                                    <label class="file-label">Nomor Pengajuan</label>
+                                    <input type="text" spellcheck="false" name="nomor_pengajuan" class="input-field"
+                                        placeholder="Opsional">
+                                    <label class="file-label">Nomor Sertifikat</label>
+                                    <input type="text" spellcheck="false" name="nomor_sertifikat" class="input-field"
+                                        placeholder="Opsional">
+                                </div>
                             </td>
-                            <td><input type="text" spellcheck="false" name="nomor_pengajuan" class="input-field"
-                                    placeholder="Opsional"></td>
-                            <td><input type="text" spellcheck="false" name="nomor_sertifikat" class="input-field"
-                                    placeholder="Opsional"></td>
                             <td>
                                 <div class="input-wrapper">
-                                    <label for="certificate_<?= $row['id'] ?>" class="file-label">Sertifikat (Opsional)</label>
+                                    <label for="certificate_<?= $row['id'] ?>" class="file-label">Sertifikat
+                                        (Opsional)</label>
                                     <div class="button-row">
                                         <div class="custom-file-container">
-                                            <label for="certificate_<?= $row['id'] ?>" class="custom-file-label btn btn-info">Pilih
+                                            <label for="certificate_<?= $row['id'] ?>"
+                                                class="custom-file-label btn btn-info">Pilih
                                                 File</label>
                                             <input type="file" id="certificate_<?= $row['id'] ?>" name="certificate"
                                                 class="input-file" accept="image/*,.pdf,.doc,.docx,.zip,.rar,.7z,.tar,.gz">
@@ -216,15 +209,15 @@ $result = $conn->query($query);
     </div>
 </div>
 
-<!-- Modal untuk Deskripsi -->
+<!-- Modal untuk Detail Ciptaan -->
 <div id="modal-page">
-    <div id="descriptionModal" class="modal" style="display: none;">
+    <div id="detailCiptaanModal" class="modal" style="display: none;">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>Deskripsi Ciptaan</h2>
-                <button class="close" onclick="closeDescriptionModal()">&times;</button>
+                <h2>Detail Ciptaan</h2>
+                <button class="close" onclick="closeDetailCiptaanModal()">&times;</button>
             </div>
-            <div id="descriptionDetails"></div>
+            <div id="detailCiptaanDetails"></div>
         </div>
     </div>
 </div>

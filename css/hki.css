@@ -288,6 +288,26 @@
   font-size: 13px;
 }
 
+/* Style khusus kolom nomor agar input tidak menumpuk */
+#hki-page #hki-table td.nomor-cell {
+  min-width: 180px;
+  max-width: 200px;
+  vertical-align: middle;
+  padding: 10px 8px;
+}
+
+#hki-page .nomor-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+#hki-page .nomor-fields .input-field {
+  width: 100%;
+  min-width: 120px;
+  box-sizing: border-box;
+}
+
 #hki-page .input-file {
   display: none;
 }

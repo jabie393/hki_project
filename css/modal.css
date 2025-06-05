@@ -10,7 +10,7 @@
   background-color: rgba(0, 0, 0, 0.6);
   justify-content: center;
   align-items: center;
-  font-family: "Inter", sans-serif; /* Disamakan */
+  font-family: "Inter", sans-serif;
 }
 
 /* Modal aktif */
@@ -139,16 +139,66 @@
   word-break: break-word;
 }
 
-/* === Styling modal deskripsi === */
-#descriptionDetails {
+/* === Styling modal detail ciptaan === */
+#detail_ciptaan-page {
+  font-family: "Inter", sans-serif;
+  color: black;
+  margin: 0;
+}
+
+#detail_ciptaan-page .detail-container {
+  background-color: #fff;
+  max-width: 600px;
+}
+
+#detail_ciptaan-page .detail-container .detail-label {
+  font-weight: bold;
+  color: #2c3e50;
+  word-break: break-word;
+}
+
+#detail_ciptaan-page .detail-container .detail-row {
+  display: grid;
+  grid-template-columns: minmax(180px, 160px) 1fr;
+  gap: 12px;
+  font-size: 14px;
+  margin: 6px 0;
+  width: 100%;
+  line-height: 1.6;
+}
+
+#detail_ciptaan-page .detail-container .detail-value {
+  word-break: break-word;
+}
+
+#detail_ciptaan-page .detail-container br {
+  margin-bottom: 10px;
+}
+
+#detail_ciptaan-page .detail-container .deskripsi-label {
+  font-weight: bold;
+  display: block;
+  margin-top: 15px;
+  margin-bottom: 8px;
+  color: #444;
+}
+
+#detail_ciptaan-page .detail-container .deskripsi-box {
+  background-color: #f5f5f5;
+  padding: 15px;
+  border-left: 4px solid #004080;
+  border-radius: 6px;
+  line-height: 1.6;
+  white-space: pre-wrap;
   text-align: justify;
+  font-size: 13px;
 }
 
 /* === Scrollable === */
 #profileDetails,
 #creatorDetails,
 #userDetailContent,
-#descriptionDetails,
+#detailCiptaanDetails,
 #modalFormPencipta,
 #userProfileContent {
   overflow-y: auto;
@@ -362,27 +412,68 @@ body.dark-mode #modal-page .btn:hover {
   background-color: #444444;
 }
 
+/* === Dark Mode untuk detail_ciptaan-page === */
+body.dark-mode #detail_ciptaan-page .detail-container {
+  background-color: #1E1E1E;
+  color: #fff;
+}
+
+body.dark-mode #detail_ciptaan-page .detail-container .detail-label {
+  color: #cccccc;
+}
+
+body.dark-mode #detail_ciptaan-page .detail-container .detail-value {
+  color: #fff;
+}
+
+body.dark-mode #detail_ciptaan-page .detail-container .deskripsi-label {
+  color: #bfc9d1;
+}
+
+body.dark-mode #detail_ciptaan-page .detail-container .deskripsi-box {
+  background-color: #23272f;
+  border-left: 4px solid #00c6ff;
+  color: #e0e6ed;
+}
+
 /* === Responsif === */
 @media (max-width: 768px) {
+  #detail_ciptaan-page .detail-container {
+    max-width: 95vw;
+    padding: 15px;
+  }
+  #detail_ciptaan-page .detail-container .detail-row {
+    font-size: 13px;
+  }
+  #detail_ciptaan-page .detail-container .deskripsi-box {
+    font-size: 12px;
+  }
   .modal-content {
     width: 85%;
     padding: 25px;
   }
-
   .modal-content h2 {
     font-size: 20px;
   }
-
   .modal-content .profile-row {
     font-size: 14px;
   }
 }
 
 @media (max-width: 576px) {
+  #detail_ciptaan-page .detail-container {
+    padding: 10px;
+  }
+  #detail_ciptaan-page .detail-container .detail-row {
+    font-size: 12px;
+    grid-template-columns: minmax(150px, 110px) 1fr;
+  }
+  #detail_ciptaan-page .detail-container .deskripsi-box {
+    font-size: 11px;
+  }
   .modal-content h2 {
     font-size: 18px;
   }
-
   .modal-content .profile-row {
     font-size: 13px;
     grid-template-columns: minmax(80px, 120px) 1fr;
@@ -390,15 +481,23 @@ body.dark-mode #modal-page .btn:hover {
 }
 
 @media (max-width: 400px) {
+  #detail_ciptaan-page .detail-container .detail-row {
+    font-size: 11px;
+    grid-template-columns: minmax(125px, 90px) 1fr;
+  }
+  #detail_ciptaan-page .detail-container .detail-label {
+    min-width: 90px;
+  }
+  #detail_ciptaan-page .detail-container .deskripsi-box {
+    font-size: 10px;
+  }
   .modal-content h2 {
     font-size: 16px;
   }
-
   .modal-content .profile-row {
     font-size: 12px;
     grid-template-columns: minmax(70px, 110px) 1fr;
   }
-
   .modal .profile-label {
     min-width: 120px;
   }

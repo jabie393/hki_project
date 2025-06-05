@@ -131,7 +131,7 @@ $postRegisteredCount = $postRegisteredResult->fetch_assoc()['total'];
                             while ($row = $pendingResult->fetch_assoc()) { ?>
                                 <tr>
                                     <td><?php echo htmlspecialchars($row['judul_hak_cipta']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['created_at']); ?></td>
+                                    <td><?php echo htmlspecialchars(date('Y-m-d', strtotime($row['created_at']))); ?></td>
                                     <td>
                                         <button type="button" onclick="openModal('<?= $row['id'] ?>')" class="btn btn-info">
                                             Detail Pencipta
