@@ -42,15 +42,11 @@ $role = $_SESSION['role'] ?? 'user';
     <main id="content-main">
       <script src="js/main.js"></script>
       <script>
-        // Menentukan halaman default berdasarkan role
+        // Set halaman aktif ke dashboard sesuai role
         <?php if ($role === 'admin'): ?>
-          if (typeof loadContent === "function") {
-            loadContent('admin.php');
-          }
+          localStorage.setItem('activePage', 'admin.php');
         <?php else: ?>
-          if (typeof loadContent === "function") {
-            loadContent('user.php');
-          }
+          localStorage.setItem('activePage', 'user.php');
         <?php endif; ?>
       </script>
     </main>

@@ -1,3 +1,4 @@
+// Modal Profile (Navbar)
 document.addEventListener('DOMContentLoaded', function () {
     const modal = document.getElementById('modal-profile');
     const modalContent = document.getElementById('userProfileContent');

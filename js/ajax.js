@@ -142,6 +142,6 @@ function highlightActiveMenu(currentPage) {
 
 // Inisialisasi saat halaman pertama kali diload
 document.addEventListener("DOMContentLoaded", function () {
-    const lastPage = localStorage.getItem("activePage") || 'admin.php'; // default kalau tidak ada
+    const lastPage = localStorage.getItem("activePage") || 'dashboard.php'; // default kalau tidak ada
     loadContent(lastPage);
 });
