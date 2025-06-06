@@ -90,7 +90,7 @@ $result = $conn->query($query);
                     <th>Detail Ciptaan</th>
                     <th>Pencipta</th>
                     <th>File</th>
-                    <th>Nomor</th>
+                    <th>Nomor Hak Cipta</th>
                     <th>Aksi</th>
                 </tr>
             </thead>

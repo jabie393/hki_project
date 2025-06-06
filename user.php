@@ -10,8 +10,8 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 
 // Query untuk menghitung hak cipta terdaftar (status 'Terdaftar')
-$registeredQuery = "SELECT COUNT(*) as total FROM registrations 
-                   WHERE user_id = ? AND status = 'Terdaftar'";
+$registeredQuery = "SELECT COUNT(*) as total FROM registrations
+                    WHERE user_id = ? AND status = 'Terdaftar'";
 $stmtRegistered = $conn->prepare($registeredQuery);
 $stmtRegistered->bind_param("s", $user_id);
 $stmtRegistered->execute();
@@ -19,8 +19,8 @@ $registeredResult = $stmtRegistered->get_result();
 $registeredCount = $registeredResult->fetch_assoc()['total'];
 
 // Query untuk menghitung pasca hak cipta terdaftar (status 'Pending')
-$postRegisteredQuery = "SELECT COUNT(*) as total FROM registrations 
-                       WHERE user_id = ? AND status = 'Pending'";
+$postRegisteredQuery = "SELECT COUNT(*) as total FROM registrations
+                        WHERE user_id = ? AND status = 'Pending'";
 $stmtPostRegistered = $conn->prepare($postRegisteredQuery);
 $stmtPostRegistered->bind_param("s", $user_id);
 $stmtPostRegistered->execute();
