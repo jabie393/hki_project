@@ -51,7 +51,7 @@ function loadContent(url, callback) {
 // Fungsi untuk memuat halaman dengan parameter pagination dan pencarian
 function loadPage(page, limit, search) {
     // Ambil halaman aktif dari localStorage
-    const activePage = localStorage.getItem("activePage") || "admin.php";
+    const activePage = localStorage.getItem("activePage") || "tinjau_pengajuan.php";
 
     // Bangun URL berdasarkan halaman aktif
     const url = `${activePage.split('?')[0]}?page=${page}&limit=${limit}&search=${encodeURIComponent(search)}`;
@@ -67,12 +67,16 @@ function afterContentLoaded(url) {
     highlightActiveMenu(cleanUrl);
 
     // Inisialisasi halaman spesifik
+    if (cleanUrl.endsWith("admin.php")) {
+        if (typeof initAdminPage === "function") initAdminPage();
+    }
+
     if (cleanUrl.endsWith("user.php")) {
         if (typeof pagination === "function") pagination();
     }
 
     if (cleanUrl.endsWith("pengajuan_baru.php")) {
-        if (typeof initUserPage === "function") initUserPage();
+        if (typeof initPengajuanBaru === "function") initPengajuanBaru();
         if (typeof setupFileValidation === "function") setupFileValidation();
         if (typeof initFormSubmission === "function") initFormSubmission();
         if (typeof initModalPencipta === "function") initModalPencipta();
@@ -103,7 +107,7 @@ function afterContentLoaded(url) {
             const search = formData.get("search");
 
             // Ambil halaman aktif dari localStorage
-            const activePage = localStorage.getItem("activePage") || "admin.php";
+            const activePage = localStorage.getItem("activePage") || "tinjau_pengajuan.php";
 
             // Bangun URL pencarian berdasarkan halaman aktif
             const searchUrl = `${activePage.split('?')[0]}?search=${encodeURIComponent(search)}`;

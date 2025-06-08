@@ -175,7 +175,7 @@ document.querySelectorAll('.approve-btn').forEach(button => {
                                         showConfirmButton: false,
                                         timer: 2000
                                     }).then(() => {
-                                        loadContent('admin.php');
+                                        loadContent('tinjau_pengajuan.php');
                                     });
                                 } else {
                                     Swal.fire({

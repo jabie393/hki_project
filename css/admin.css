@@ -1,0 +1,192 @@
+#admin-page {
+  font-family: "Inter", sans-serif;
+  background: linear-gradient(180deg, #eaf0f6 0%, #ffffff 100%);
+  color: #2c3e50;
+}
+
+#admin-page .layout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+#admin-page .right-column {
+  flex: 1 1 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+#admin-page .left-column {
+  flex: 2 1 500px;
+  min-height: 100%;
+}
+
+#admin-page .box {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+#admin-page .boxl {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+#admin-page .barbox {
+  padding: 40px 20px 0;
+}
+
+#admin-page .stat-card-right {
+  text-align: center;
+  background: linear-gradient(to right, #004080 0%, #1976d2 100%);
+  color: #ffc107;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+#admin-page .stat-card-left {
+  text-align: center;
+  background: linear-gradient(to right, #004080 0%, #1976d2 100%);
+  color: #ffc107;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+#user-page h3 {
+  color: #004080;
+  font-weight: bold;
+}
+
+#admin-page .stat-card p {
+  margin: 0;
+  font-size: 18px;
+  color: #333;
+}
+
+#admin-page canvas {
+  width: 100% !important;
+  height: auto !important;
+}
+
+/* === Dark mode styles === */
+body.dark-mode #admin-page {
+  background: #121212;
+  color: #ffffff;
+}
+
+body.dark-mode #admin-page .box,
+body.dark-mode #admin-page .boxl {
+  background: #1e1e1e;
+  color: #ffffff;
+  box-shadow: none;
+}
+
+body.dark-mode #admin-page .stat-card-left,
+body.dark-mode #admin-page .stat-card-right {
+  background: linear-gradient(to right, #222 0%, #333 100%);
+  color: #ffc107;
+  box-shadow: none;
+}
+
+body.dark-mode #admin-page h3 {
+  color: #ffffff;
+}
+
+body.dark-mode #admin-page .stat-card p {
+  color: #cccccc;
+}
+
+body.dark-mode #admin-page canvas {
+  background: #1e1e1e;
+}
+
+/* Input dan select di dalam admin-page */
+body.dark-mode #admin-page input[type="search"],
+body.dark-mode #admin-page select {
+  background-color: #333333;
+  color: #ffffff;
+  border: 1px solid #444444;
+}
+
+body.dark-mode #admin-page input:focus,
+body.dark-mode #admin-page select:focus {
+  outline: none;
+  border-color: #ffffff;
+  box-shadow: 0 0 4px #ffffffa2;
+}
+
+/* === End of Dark mode styles === */
+
+@media (max-width: 1180px) {
+  #admin-page .layout {
+    flex-direction: column;
+  }
+
+  #admin-page .right-column,
+  #admin-page .left-column {
+    flex: 1 1 100%;
+  }
+
+  #admin-page .right-column {
+    order: -1;
+  }
+}
+
+/* Medium screens (max-width: 768px) */
+@media (max-width: 768px) {
+  #admin-page .layout {
+    flex-direction: column;
+  }
+
+  #admin-page .left-column,
+  #admin-page .right-column {
+    flex: 1 1 100%;
+    order: unset;
+  }
+
+  #admin-page .box,
+  #admin-page .stat-card-left,
+  #admin-page .stat-card-right {
+    padding: 15px;
+    font-size: 13px;
+  }
+
+  #admin-page .barbox {
+    padding: 20px 10px 0;
+  }
+
+  #admin-page h3 {
+    font-size: 16px;
+  }
+
+  #admin-page canvas {
+    max-width: 100%;
+  }
+}
+
+/* Small screens (max-width: 480px) */
+@media (max-width: 480px) {
+  #admin-page .box,
+  #admin-page .stat-card-left,
+  #admin-page .stat-card-right {
+    padding: 10px;
+    font-size: 11px;
+  }
+
+  #admin-page h3 {
+    font-size: 14px;
+  }
+
+  #admin-page .barbox {
+    padding: 10px 5px 0;
+  }
+
+  #admin-page canvas {
+    max-width: 100%;
+  }
+}

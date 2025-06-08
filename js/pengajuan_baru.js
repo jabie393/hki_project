@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-function initUserPage() {
+function initPengajuanBaru() {
     loadCountriesForMainForm();
 
     // Fungsi untuk toggle antara dropdown dan input text
@@ -415,7 +415,7 @@ function initFormSubmission() {
                             const nationalitySelect = $('#nationality');
                             nationalitySelect.val('Indonesia').trigger('change');
 
-                            initUserPage(); // Memastikan toggleCityInput dipanggil ulang
+                            initPengajuanBaru(); // Memastikan toggleCityInput dipanggil ulang
 
                             // Kosongkan semua input Select2 lainnya (jika ada)
                             $('.select2-hidden-accessible').val(null).trigger('change');

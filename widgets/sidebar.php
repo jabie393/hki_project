@@ -38,6 +38,11 @@ $page = substr($_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"], "/") + 
                 </a>
             </li>
             <li class="sidebar-text">
+                <a class="menu-link" onclick="loadContent('tinjau_pengajuan.php')">
+                    <i class='bx bx-task'></i><span class="text">Tinjau Pengajuan</span>
+                </a>
+            </li>
+            <li class="sidebar-text">
                 <a class="menu-link" onclick="loadContent('rekap_hki.php')">
                     <i class='bx bxs-folder'></i><span class="text">Rekap HKI</span>
                 </a>
