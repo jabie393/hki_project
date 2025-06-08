@@ -57,7 +57,7 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-#user-page h3 {
+#admin-page h3 {
   color: #004080;
   font-weight: bold;
 }
@@ -153,7 +153,6 @@ body.dark-mode #admin-page select:focus {
   #admin-page .stat-card-left,
   #admin-page .stat-card-right {
     padding: 15px;
-    font-size: 13px;
   }
 
   #admin-page .barbox {
@@ -162,6 +161,10 @@ body.dark-mode #admin-page select:focus {
 
   #admin-page h3 {
     font-size: 16px;
+  }
+
+  #admin-page p {
+    font-size: 13px;
   }
 
   #admin-page canvas {
@@ -175,11 +178,14 @@ body.dark-mode #admin-page select:focus {
   #admin-page .stat-card-left,
   #admin-page .stat-card-right {
     padding: 10px;
-    font-size: 11px;
   }
 
   #admin-page h3 {
     font-size: 14px;
+  }
+
+  #admin-page p {
+    font-size: 11px;
   }
 
   #admin-page .barbox {

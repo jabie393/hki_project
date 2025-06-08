@@ -111,9 +111,88 @@ body.dark-mode #update_account-page button:hover {
 }
 /*=== End of Dark mode styles ===*/
 
-@media (max-width: 600px) {
-  #update_account-page .container {
-    margin: 20px;
+/* Media Query untuk layar besar (desktop) */
+@media (min-width: 769px) {
+  #update_account-page {
+    margin: 40px auto;
     padding: 20px;
+  }
+
+  #update_account-page h2 {
+    font-size: 24px;
+  }
+
+  #update_account-page .form-group {
+    margin-bottom: 20px;
+  }
+
+  #update_account-page input[type="text"],
+  #update_account-page input[type="email"],
+  #update_account-page input[type="password"] {
+    font-size: 16px;
+    padding: 12px 14px;
+  }
+
+  #update_account-page button {
+    font-size: 16px;
+    padding: 12px 16px;
+  }
+}
+
+/* Media Query untuk layar sedang (tablet) */
+@media (min-width: 577px) and (max-width: 768px) {
+  #update_account-page {
+    margin: 30px auto;
+    padding: 15px;
+  }
+
+  #update_account-page h2 {
+    font-size: 20px;
+  }
+
+  #update_account-page .form-group {
+    margin-bottom: 18px;
+  }
+
+  #update_account-page input[type="text"],
+  #update_account-page input[type="email"],
+  #update_account-page input[type="password"] {
+    font-size: 14px;
+    padding: 10px 12px;
+  }
+
+  #update_account-page button {
+    font-size: 15px;
+    padding: 10px 14px;
+  }
+}
+
+/* Media Query untuk layar kecil (ponsel) */
+@media (max-width: 576px) {
+  #update_account-page {
+    margin: 20px auto;
+    padding: 10px;
+  }
+
+  #update_account-page h2 {
+    font-size: 18px;
+    padding-top: 5px;
+    padding-bottom: 10px;
+  }
+
+  #update_account-page .form-group {
+    margin-bottom: 15px;
+  }
+
+  #update_account-page input[type="text"],
+  #update_account-page input[type="email"],
+  #update_account-page input[type="password"] {
+    font-size: 13px;
+    padding: 8px 10px;
+  }
+
+  #update_account-page button {
+    font-size: 14px;
+    padding: 8px 12px;
   }
 }

@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let limit = 5; // Default untuk laptop
 
     if (screenWidth <= 768) { // Jika layar kecil (HP)
-        limit = 8;
+        limit = 10;
     }
 
     // Tambahkan parameter limit ke URL jika belum ada atau berbeda

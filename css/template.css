@@ -237,7 +237,128 @@ body.dark-mode #template-page li {
 }
 /*=== End of Dark mode styles ===*/
 
-@media (max-width: 480px) {
+/* Media Query untuk layar besar (desktop) */
+@media (min-width: 769px) {
+  #template-page {
+    padding: 20px;
+  }
+
+  #template-page h2 {
+    font-size: 24px;
+  }
+
+  #template-page form {
+    gap: 15px;
+  }
+
+  #template-page input[type="file"] {
+    font-size: 15px;
+    padding: 12px;
+  }
+
+  #template-page .upload-box {
+    padding: 30px 25px;
+  }
+
+  #template-page button {
+    font-size: 16px;
+    padding: 12px 16px;
+  }
+
+  #template-page .doc-actions a {
+    font-size: 14px;
+    padding: 10px 14px;
+  }
+
+  #template-page ul {
+    gap: 20px;
+  }
+
+  #template-page li {
+    padding: 15px;
+  }
+}
+
+/* Media Query untuk layar sedang (tablet) */
+@media (min-width: 577px) and (max-width: 768px) {
+  #template-page {
+    padding: 15px;
+  }
+
+  #template-page h2 {
+    font-size: 20px;
+  }
+
+  #template-page form {
+    gap: 12px;
+  }
+
+  #template-page input[type="file"] {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  #template-page .upload-box {
+    padding: 25px 20px;
+  }
+
+  #template-page button {
+    font-size: 15px;
+    padding: 10px 14px;
+  }
+
+  #template-page .doc-actions a {
+    flex: 1 1 100%;
+    text-align: center;
+  }
+
+  #template-page ul {
+    gap: 18px;
+  }
+
+  #template-page li {
+    padding: 12px;
+  }
+}
+
+/* Media Query untuk layar kecil (ponsel) */
+@media (max-width: 576px) {
+  #template-page {
+    padding: 10px;
+  }
+
+  #template-page h2 {
+    font-size: 18px;
+    padding-top: 5px;
+    padding-bottom: 10px;
+  }
+
+  #template-page form {
+    gap: 10px;
+  }
+
+  #template-page input[type="file"] {
+    font-size: 13px;
+    padding: 8px;
+  }
+
+  #template-page .upload-box {
+    padding: 20px 15px;
+  }
+
+  #template-page button {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+
+  #template-page ul {
+    gap: 15px;
+  }
+
+  #template-page li {
+    padding: 10px;
+  }
+
   #template-page .doc-actions a {
     flex: 1 1 100%;
     text-align: center;

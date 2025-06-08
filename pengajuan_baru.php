@@ -43,7 +43,7 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
         </a>
     </div>
 
-    <h2>Form Pendaftaran HKI</h2>
+    <h2>Form Pengajuan Hak Cipta</h2>
     <form id="form-hki" enctype="multipart/form-data">
         <!--Jenis Pengajuan-->
         <div class="form-group">

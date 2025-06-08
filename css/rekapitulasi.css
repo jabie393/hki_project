@@ -244,35 +244,74 @@ body {
   pointer-events: none;
 }
 
-@media screen and (max-width: 768px) {
+/* Media Query untuk layar besar (desktop) */
+@media (min-width: 769px) {
+  #hki-page {
+    margin-top: 70px;
+    margin-bottom: 60px;
+    padding: 20px;
+  }
+
+  .search-header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+  }
+
+  .search-header h2 {
+    font-size: 20px;
+  }
+
+  .search-group {
+    width: auto;
+    max-width: none;
+  }
+
+  .search-group .input-field {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .search-group .btn {
+    font-size: 14px;
+    padding: 10px 16px;
+  }
+
+  #hki-table th,
+  #hki-table td {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .badge {
+    font-size: 11px;
+  }
+
+  .btn {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+}
+
+/* Media Query untuk layar sedang (tablet) */
+@media (min-width: 577px) and (max-width: 768px) {
   #hki-page {
     margin-top: 60px;
     margin-bottom: 50px;
-  }
-
-  .input-field {
-    width: 100%;
-    margin-bottom: 10px;
+    padding: 15px;
   }
 
   .search-header {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    gap: 10px;
-    top: 20px;
+    gap: 12px;
+    padding: 8px;
   }
 
   .search-header h2 {
-    text-align: center;
-    margin: 0;
-  }
-
-  .search-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
+    font-size: 18px;
   }
 
   .search-group {
@@ -281,9 +320,85 @@ body {
     margin: 0 auto;
   }
 
+  .search-group .input-field {
+    font-size: 13px;
+    padding: 8px;
+  }
+
+  .search-group .btn {
+    font-size: 13px;
+    padding: 8px 12px;
+  }
+
+  #hki-table th,
+  #hki-table td {
+    font-size: 12px;
+    padding: 8px;
+  }
+
+  .badge {
+    font-size: 10px;
+  }
+
+  .btn {
+    font-size: 13px;
+    padding: 6px 10px;
+  }
+}
+
+/* Media Query untuk layar kecil (ponsel) */
+@media (max-width: 576px) {
+  body {
+    padding: 10px;
+  }
+
+  #hki-page {
+    margin-top: 50px;
+    margin-bottom: 40px;
+    padding: 10px;
+  }
+
+  .search-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+    padding: 5px;
+  }
+
+  .search-header h2 {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+
+  .search-group {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+
+  .search-group .input-field {
+    font-size: 12px;
+    padding: 6px;
+  }
+
+  .search-group .btn {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+
   #hki-table th,
   #hki-table td {
     font-size: 10px;
-    padding: 8px;
+    padding: 6px;
+  }
+
+  .badge {
+    font-size: 9px;
+  }
+
+  .btn {
+    font-size: 12px;
+    padding: 4px 8px;
   }
 }

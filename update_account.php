@@ -47,12 +47,12 @@ $query->close();
                 required>
         </div>
         <div class="form-group">
-            <label for="new_password">Password Baru (Opsional):</label>
-            <input type="password" spellcheck="false" name="new_password" autocomplete="new-password">
+            <label for="new_password">Password Baru:</label>
+            <input type="password" spellcheck="false" name="new_password" placeholder="Opsional" autocomplete="new-password">
         </div>
         <div class="form-group">
-            <label for="old_password">Masukkan Password Lama Untuk Menyimpan Perubahan:</label>
-            <input type="password" name="old_password" required autocomplete="off">
+            <label for="old_password">Password Lama:</label>
+            <input type="password" name="old_password" placeholder="Wajib untuk menyimpan perubahan" required autocomplete="off">
         </div>
         <button type="submit">Simpan Perubahan</button>
     </form>

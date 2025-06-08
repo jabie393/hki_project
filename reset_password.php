@@ -70,8 +70,8 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
             </div>
 
             <div class="form-group">
-                <label for="new_password" class="custom-label">Password Baru (Opsional):</label>
-                <input type="password" name="new_password" class="custom-input" autocomplete="new-password">
+                <label for="new_password" class="custom-label">Password Baru:</label>
+                <input type="password" name="new_password" class="custom-input" placeholder="Opsional" autocomplete="new-password">
             </div>
 
             <button type="submit" class="button">Simpan Perubahan</button>

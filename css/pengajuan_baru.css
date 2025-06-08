@@ -300,3 +300,119 @@ body.dark-mode #pengajuan_baru-page .pencipta button:hover {
   background-color: #555555;
 }
 /*=== End of Dark mode styles ===*/
+
+/* Media Query untuk layar besar (desktop) */
+@media (min-width: 769px) {
+  #pengajuan_baru-page {
+    padding: 20px;
+  }
+
+  #pengajuan_baru-page h2 {
+    font-size: 24px;
+  }
+
+  #pengajuan_baru-page .form-group {
+    margin-bottom: 20px;
+  }
+
+  #pengajuan_baru-page input[type="text"],
+  #pengajuan_baru-page input[type="date"],
+  #pengajuan_baru-page textarea {
+    font-size: 16px;
+    padding: 12px 14px;
+  }
+
+  #pengajuan_baru-page button {
+    font-size: 16px;
+    padding: 12px 16px;
+  }
+
+  #pengajuan_baru-page .download-container {
+    top: 75px;
+    right: 20px;
+    gap: 10px;
+  }
+
+  #pengajuan_baru-page .download-btn button {
+    font-size: 14px;
+    padding: 10px 14px;
+  }
+
+  #pengajuan_baru-page .pencipta {
+    padding: 12px 14px;
+  }
+}
+
+/* Media Query untuk layar sedang (tablet) */
+@media (min-width: 577px) and (max-width: 768px) {
+  #pengajuan_baru-page {
+    padding: 15px;
+  }
+
+  #pengajuan_baru-page h2 {
+    font-size: 20px;
+  }
+
+  #pengajuan_baru-page .form-group {
+    margin-bottom: 18px;
+  }
+
+  #pengajuan_baru-page input[type="text"],
+  #pengajuan_baru-page input[type="date"],
+  #pengajuan_baru-page textarea {
+    font-size: 14px;
+    padding: 10px 12px;
+  }
+
+  #pengajuan_baru-page button {
+    font-size: 15px;
+    padding: 10px 14px;
+  }
+
+  #pengajuan_baru-page .download-btn button {
+    font-size: 13px;
+    padding: 8px 12px;
+  }
+
+  #pengajuan_baru-page .pencipta {
+    padding: 10px 12px;
+  }
+}
+
+/* Media Query untuk layar kecil (ponsel) */
+@media (max-width: 576px) {
+  #pengajuan_baru-page {
+    padding: 10px;
+  }
+
+  #pengajuan_baru-page h2 {
+    font-size: 18px;
+    padding-top: 5px;
+    padding-bottom: 10px;
+  }
+
+  #pengajuan_baru-page .form-group {
+    margin-bottom: 15px;
+  }
+
+  #pengajuan_baru-page input[type="text"],
+  #pengajuan_baru-page input[type="date"],
+  #pengajuan_baru-page textarea {
+    font-size: 13px;
+    padding: 8px 10px;
+  }
+
+  #pengajuan_baru-page button {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+
+  #pengajuan_baru-page .download-btn button {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+
+  #pengajuan_baru-page .pencipta {
+    padding: 8px 10px;
+  }
+}

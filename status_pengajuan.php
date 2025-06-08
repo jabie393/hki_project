@@ -14,7 +14,7 @@ $user_id = $_SESSION['user_id'];
 $search = isset($_GET['search']) ? $_GET['search'] : '';
 
 // Pagination setup
-$defaultLimit = 5;
+$defaultLimit = 10;
 $limit = isset($_GET['limit']) ? (int) $_GET['limit'] : $defaultLimit;
 $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
@@ -89,7 +89,7 @@ $result = $stmt->get_result();
 
 <div id="hki-page">
 
-    <h2>Status Pengajuan</h2>
+    <h2>Status Pengajuan Hak Cipta</h2>
 
     <!-- Form Pencarian -->
     <form method="GET" id="search-form" class="search-form">

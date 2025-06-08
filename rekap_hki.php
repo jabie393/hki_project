@@ -12,7 +12,7 @@ if ($_SESSION['role'] != 'admin') {
 $search = isset($_GET['search']) ? $conn->real_escape_string($_GET['search']) : '';
 
 // Pagination setup
-$defaultLimit = 5; // Default jumlah data per halaman
+$defaultLimit = 8; // Default jumlah data per halaman
 $limit = isset($_GET['limit']) ? (int) $_GET['limit'] : $defaultLimit; // Ambil limit dari URL, default 10
 $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 $offset = ($page - 1) * $limit;

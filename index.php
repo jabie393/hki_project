@@ -44,8 +44,8 @@ $images = $result->fetch_all(MYSQLI_ASSOC);
   <h1>Hak Kekayaan Intelektual</h1>
   <div class="menu">
     <button onclick="location.href='rekapitulasi'">REKAPITULASI</button>
-    <button onclick="location.href='<?php echo $dashboardPage; ?>'">PENGAJUAN HKI</button>
-    <button onclick="location.href='guide'">PETUNJUK PENGAJUAN HKI</button>
+    <button onclick="location.href='<?php echo $dashboardPage; ?>'">PENGAJUAN HAK CIPTA</button>
+    <button onclick="location.href='guide'">PETUNJUK PENGAJUAN</button>
   </div>
 
   <div class="footer"></div>

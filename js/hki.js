@@ -175,7 +175,10 @@ document.querySelectorAll('.approve-btn').forEach(button => {
                                         showConfirmButton: false,
                                         timer: 2000
                                     }).then(() => {
-                                        loadContent('tinjau_pengajuan.php');
+                                        // Hapus baris dari tabel
+                                        if (row) {
+                                            row.remove();
+                                        }
                                     });
                                 } else {
                                     Swal.fire({

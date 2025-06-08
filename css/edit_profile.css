@@ -265,3 +265,122 @@ body.dark-mode #edit_profile-page img[src*="default-avatar.png"] {
     font-size: 16px;
   }
 }
+
+/* Media Query untuk layar besar (desktop) */
+@media (min-width: 769px) {
+  #edit_profile-page {
+    padding: 20px;
+  }
+
+  #edit_profile-page h2 {
+    font-size: 24px;
+  }
+
+  #edit_profile-page form {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  #edit_profile-page input[type="text"],
+  #edit_profile-page input[type="number"],
+  #edit_profile-page input[type="tel"],
+  #edit_profile-page input[type="date"],
+  #edit_profile-page input[type="file"] {
+    font-size: 16px;
+    padding: 12px 14px;
+  }
+
+  #edit_profile-page .btn {
+    font-size: 16px;
+    padding: 12px 16px;
+  }
+
+  #edit_profile-page .upload-box {
+    padding: 30px 25px;
+  }
+
+  #edit_profile-page #previewCroppedCircle {
+    width: 150px;
+    height: 150px;
+  }
+}
+
+/* Media Query untuk layar sedang (tablet) */
+@media (min-width: 577px) and (max-width: 768px) {
+  #edit_profile-page {
+    padding: 15px;
+  }
+
+  #edit_profile-page h2 {
+    font-size: 20px;
+  }
+
+  #edit_profile-page form {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  #edit_profile-page input[type="text"],
+  #edit_profile-page input[type="number"],
+  #edit_profile-page input[type="tel"],
+  #edit_profile-page input[type="date"],
+  #edit_profile-page input[type="file"] {
+    font-size: 14px;
+    padding: 10px 12px;
+  }
+
+  #edit_profile-page .btn {
+    font-size: 15px;
+    padding: 10px 14px;
+  }
+
+  #edit_profile-page .upload-box {
+    padding: 25px 20px;
+  }
+
+  #edit_profile-page #previewCroppedCircle {
+    width: 140px;
+    height: 140px;
+  }
+}
+
+/* Media Query untuk layar kecil (ponsel) */
+@media (max-width: 576px) {
+  #edit_profile-page {
+    padding: 10px;
+  }
+
+  #edit_profile-page h2 {
+    font-size: 18px;
+    padding-top: 5px;
+    padding-bottom: 10px;
+  }
+
+  #edit_profile-page form {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  #edit_profile-page input[type="text"],
+  #edit_profile-page input[type="number"],
+  #edit_profile-page input[type="tel"],
+  #edit_profile-page input[type="date"],
+  #edit_profile-page input[type="file"] {
+    font-size: 13px;
+    padding: 8px 10px;
+  }
+
+  #edit_profile-page .btn {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+
+  #edit_profile-page .upload-box {
+    padding: 20px 15px;
+  }
+
+  #edit_profile-page #previewCroppedCircle {
+    width: 120px;
+    height: 120px;
+  }
+}
