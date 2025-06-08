@@ -455,15 +455,23 @@ function initModalPencipta() {
         fetch("https://ibnux.github.io/data-indonesia/provinsi.json")
             .then(res => res.json())
             .then(data => {
+                // Destroy Select2 sebelum mengubah isi
+                if ($(provinsiSelect).hasClass("select2-hidden-accessible")) {
+                    $(provinsiSelect).select2("destroy");
+                }
+                // Hapus semua option kecuali placeholder
+                $(provinsiSelect).find('option:not(:first)').remove();
                 data.forEach(prov => {
                     const option = new Option(prov.nama, prov.nama);
                     option.dataset.id = prov.id;
                     $(provinsiSelect).append(option);
                 });
+                // Inisialisasi ulang Select2 dengan placeholder
+                initializeSelect2(provinsiSelect, "Pilih Provinsi");
             });
 
         // Event ketika provinsi dipilih
-        $(provinsiSelect).on('change', function () {
+        $(provinsiSelect).off('change').on('change', function () {
             if (!this.value) {
                 $(kabupatenSelect).empty().append('<option value="">-- Pilih Kabupaten/Kota --</option>').prop('disabled', true);
                 return;
@@ -482,16 +490,21 @@ function initModalPencipta() {
             fetch(`https://ibnux.github.io/data-indonesia/kabupaten/${provId}.json`)
                 .then(res => res.json())
                 .then(data => {
+                    if ($(kabupatenSelect).hasClass("select2-hidden-accessible")) {
+                        $(kabupatenSelect).select2("destroy");
+                    }
+                    $(kabupatenSelect).find('option:not(:first)').remove();
                     data.forEach(kab => {
                         const option = new Option(kab.nama, kab.nama);
                         option.dataset.id = kab.id;
                         $(kabupatenSelect).append(option);
                     });
+                    initializeSelect2(kabupatenSelect, "Pilih Kabupaten/Kota");
                 });
         });
 
         // Event ketika kabupaten dipilih
-        $(kabupatenSelect).on('change', function () {
+        $(kabupatenSelect).off('change').on('change', function () {
             if (!this.value) {
                 $(kecamatanSelect).empty().append('<option value="">-- Pilih Kecamatan --</option>').prop('disabled', true);
                 return;
@@ -508,16 +521,21 @@ function initModalPencipta() {
             fetch(`https://ibnux.github.io/data-indonesia/kecamatan/${kabId}.json`)
                 .then(res => res.json())
                 .then(data => {
+                    if ($(kecamatanSelect).hasClass("select2-hidden-accessible")) {
+                        $(kecamatanSelect).select2("destroy");
+                    }
+                    $(kecamatanSelect).find('option:not(:first)').remove();
                     data.forEach(kec => {
                         const option = new Option(kec.nama, kec.nama);
                         option.dataset.id = kec.id;
                         $(kecamatanSelect).append(option);
                     });
+                    initializeSelect2(kecamatanSelect, "Pilih Kecamatan");
                 });
         });
 
         // Event ketika kecamatan dipilih
-        $(kecamatanSelect).on('change', function () {
+        $(kecamatanSelect).off('change').on('change', function () {
             if (!this.value) {
                 $(kelurahanSelect).empty().append('<option value="">-- Pilih Kelurahan --</option>').prop('disabled', true);
                 return;
@@ -533,15 +551,20 @@ function initModalPencipta() {
             fetch(`https://ibnux.github.io/data-indonesia/kelurahan/${kecId}.json`)
                 .then(res => res.json())
                 .then(data => {
+                    if ($(kelurahanSelect).hasClass("select2-hidden-accessible")) {
+                        $(kelurahanSelect).select2("destroy");
+                    }
+                    $(kelurahanSelect).find('option:not(:first)').remove();
                     data.forEach(kel => {
                         const option = new Option(kel.nama, kel.nama);
                         $(kelurahanSelect).append(option);
                     });
+                    initializeSelect2(kelurahanSelect, "Pilih Kelurahan");
                 });
         });
 
         // Event ketika kelurahan dipilih
-        $(kelurahanSelect).on('change', function () {
+        $(kelurahanSelect).off('change').on('change', function () {
             const kelurahan = $(this).val().trim();
             kodeposInput.value = 'Mencari...';
 
@@ -576,13 +599,21 @@ function initModalPencipta() {
         const stateSelect = document.querySelector(".state");
         const citySelect = document.querySelector(".city");
 
-        // Inisialisasi Select2
-        initializeSelect2(stateSelect, "Pilih State");
-        initializeSelect2(citySelect, "Pilih City");
+        // Destroy Select2 sebelum mengubah isi
+        if ($(stateSelect).hasClass("select2-hidden-accessible")) {
+            $(stateSelect).select2("destroy");
+        }
+        if ($(citySelect).hasClass("select2-hidden-accessible")) {
+            $(citySelect).select2("destroy");
+        }
 
         // Reset dropdown
         $(stateSelect).empty().append('<option value="">Pilih State</option>').prop('disabled', false);
         $(citySelect).empty().append('<option value="">Pilih City</option>').prop('disabled', true);
+
+        // Inisialisasi ulang Select2 dengan placeholder
+        initializeSelect2(stateSelect, "Pilih State");
+        initializeSelect2(citySelect, "Pilih City");
 
         // Load states
         fetch(`${configCSC.cUrl}/${selectedCountry}/states`, {
@@ -590,20 +621,31 @@ function initModalPencipta() {
         })
             .then(res => res.json())
             .then(data => {
+                // Destroy Select2 sebelum mengubah isi
+                if ($(stateSelect).hasClass("select2-hidden-accessible")) {
+                    $(stateSelect).select2("destroy");
+                }
+                $(stateSelect).find('option:not(:first)').remove();
                 data.forEach(state => {
                     const option = new Option(state.name, state.name);
                     option.dataset.iso2 = state.iso2;
                     $(stateSelect).append(option);
                 });
+                initializeSelect2(stateSelect, "Pilih State");
             });
 
         // Event ketika state dipilih
-        $(stateSelect).on('change', function () {
+        $(stateSelect).off('change').on('change', function () {
             const selectedStateIso2 = $(this).find(':selected').data('iso2');
             const stateCode = selectedStateIso2;
 
+            // Destroy Select2 sebelum mengubah isi
+            if ($(citySelect).hasClass("select2-hidden-accessible")) {
+                $(citySelect).select2("destroy");
+            }
             // Reset city dropdown
             $(citySelect).empty().append('<option value="">Pilih City</option>').prop('disabled', false);
+            initializeSelect2(citySelect, "Pilih City");
 
             if (!stateCode) return;
 
@@ -612,10 +654,16 @@ function initModalPencipta() {
             })
                 .then(res => res.json())
                 .then(data => {
+                    // Destroy Select2 sebelum mengubah isi
+                    if ($(citySelect).hasClass("select2-hidden-accessible")) {
+                        $(citySelect).select2("destroy");
+                    }
+                    $(citySelect).find('option:not(:first)').remove();
                     data.forEach(city => {
                         const option = new Option(city.name, city.name);
                         $(citySelect).append(option);
                     });
+                    initializeSelect2(citySelect, "Pilih City");
                 });
         });
     }

@@ -87,7 +87,8 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
         <!--Tanggal Pertama Kali Diumumkan-->
         <div class="form-group">
             <label>Tanggal Pertama Kali Diumumkan:</label>
-            <input type="date" onclick="this.showPicker()" id="tanggal_pengumuman" class="custom-date" name="tanggal_pengumuman" required
+            <input type="date" onclick="this.showPicker()" id="tanggal_pengumuman" class="custom-date"
+                name="tanggal_pengumuman" required
                 oninvalid="this.setCustomValidity('Silakan isi tanggal pengumuman terlebih dahulu.')"
                 oninput="this.setCustomValidity('')" />
         </div>
