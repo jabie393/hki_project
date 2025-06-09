@@ -21,9 +21,9 @@ $totalRegisteredResult = $conn->query($totalRegisteredQuery);
 $totalRegistered = $totalRegisteredResult->fetch_assoc()['total'];
 
 // Ambil data untuk grafik bar (jumlah hak cipta terdaftar per tahun)
-$chartTahunQuery = "SELECT YEAR(created_at) as tahun, COUNT(*) as jumlah 
-                    FROM registrations 
-                    WHERE status = 'Terdaftar' 
+$chartTahunQuery = "SELECT YEAR(created_at) as tahun, COUNT(*) as jumlah
+                    FROM registrations
+                    WHERE status = 'Terdaftar'
                     GROUP BY YEAR(created_at)";
 $chartTahunResult = $conn->query($chartTahunQuery);
 $chartTahunLabels = [];
@@ -42,6 +42,14 @@ while ($row = $chartJenisResult->fetch_assoc()) {
     $chartJenisLabels[] = $row['jenis_hak_cipta'];
     $chartJenisData[] = $row['jumlah'];
 }
+
+// Siapkan data untuk chart
+$chartData = [
+    'tahunLabels' => $chartTahunLabels,
+    'tahunData' => $chartTahunData,
+    'jenisLabels' => $chartJenisLabels,
+    'jenisData' => $chartJenisData
+];
 ?>
 
 <head>
@@ -87,55 +95,10 @@ while ($row = $chartJenisResult->fetch_assoc()) {
             </div>
         </div>
     </div>
-
-    <script>
-        function initAdminPage() {
-            // Data untuk grafik bar (Jumlah Hak Cipta per Tahun)
-            const chartTahunLabels = <?php echo json_encode($chartTahunLabels); ?>;
-            const chartTahunData = <?php echo json_encode($chartTahunData); ?>;
-
-            new Chart(document.getElementById('chartTahun'), {
-                type: 'bar',
-                data: {
-                    labels: chartTahunLabels,
-                    datasets: [{
-                        label: 'Jumlah',
-                        data: chartTahunData,
-                        backgroundColor: '#004080b7',
-                        borderRadius: 6
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: { display: false }
-                    },
-                    scales: {
-                        y: { beginAtZero: true }
-                    }
-                }
-            });
-
-            // Data untuk grafik pie (Distribusi Jenis Hak Cipta)
-            const chartJenisLabels = <?php echo json_encode($chartJenisLabels); ?>;
-            const chartJenisData = <?php echo json_encode($chartJenisData); ?>;
-
-            new Chart(document.getElementById('chartJenis'), {
-                type: 'pie',
-                data: {
-                    labels: chartJenisLabels,
-                    datasets: [{
-                        data: chartJenisData,
-                        backgroundColor: [
-                            '#0074D9', '#FF4136', '#2ECC40', '#FF851B',
-                            '#B10DC9', '#FFDC00', '#39CCCC', '#AAAAAA'
-                        ]
-                    }]
-                },
-                options: {
-                    responsive: true
-                }
-            });
-        }
-    </script>
 </div>
+
+<script src="js/admin.js"></script>
+<script>
+    // Kirim data PHP ke JavaScript
+    const chartData = <?php echo json_encode($chartData); ?>;
+</script>

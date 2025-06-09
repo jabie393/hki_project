@@ -63,6 +63,7 @@
 }
 
 #admin-page .stat-card p {
+  font-weight: bold;
   margin: 0;
   font-size: 18px;
   color: #333;

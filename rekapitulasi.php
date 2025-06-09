@@ -3,6 +3,42 @@
 <?php
 include 'config/config.php';
 
+// Ambil total hak cipta terdaftar
+$totalRegisteredQuery = "SELECT COUNT(*) as total FROM registrations WHERE status = 'Terdaftar'";
+$totalRegisteredResult = $conn->query($totalRegisteredQuery);
+$totalRegistered = $totalRegisteredResult->fetch_assoc()['total'];
+
+// Ambil data untuk grafik bar (jumlah hak cipta terdaftar per tahun)
+$chartTahunQuery = "SELECT YEAR(created_at) as tahun, COUNT(*) as jumlah
+                    FROM registrations
+                    WHERE status = 'Terdaftar'
+                    GROUP BY YEAR(created_at)";
+$chartTahunResult = $conn->query($chartTahunQuery);
+$chartTahunLabels = [];
+$chartTahunData = [];
+while ($row = $chartTahunResult->fetch_assoc()) {
+    $chartTahunLabels[] = $row['tahun'];
+    $chartTahunData[] = $row['jumlah'];
+}
+
+// Ambil data untuk grafik pie (distribusi jenis hak cipta)
+$chartJenisQuery = "SELECT jenis_hak_cipta, COUNT(*) as jumlah FROM registrations GROUP BY jenis_hak_cipta";
+$chartJenisResult = $conn->query($chartJenisQuery);
+$chartJenisLabels = [];
+$chartJenisData = [];
+while ($row = $chartJenisResult->fetch_assoc()) {
+    $chartJenisLabels[] = $row['jenis_hak_cipta'];
+    $chartJenisData[] = $row['jumlah'];
+}
+
+// Siapkan data untuk chart
+$chartData = [
+    'tahunLabels' => $chartTahunLabels,
+    'tahunData' => $chartTahunData,
+    'jenisLabels' => $chartJenisLabels,
+    'jenisData' => $chartJenisData
+];
+
 // Ambil kata kunci pencarian jika ada
 $search = isset($_GET['search']) ? $conn->real_escape_string($_GET['search']) : '';
 
@@ -55,6 +91,9 @@ $result = $conn->query($query);
 
     <!-- Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <!-- Css -->
     <link rel="stylesheet" href="css/rekapitulasi.css">
@@ -171,6 +210,28 @@ $result = $conn->query($query);
                     class="page-link next">&raquo;</a>
             <?php endif; ?>
         </div>
+
+        <div class="layout">
+            <!-- Kiri -->
+            <div class="left">
+                <div class="box stat-card-left">
+                    <h1 id="registeredCount"><?php echo $totalRegistered; ?></h1>
+                    <p>Total Hak Cipta Terdaftar</p>
+                </div>
+                <div class="box">
+                    <h3>Hak Cipta Terdaftar per Tahun</h3>
+                    <canvas id="chartTahun"></canvas>
+                </div>
+            </div>
+            <!-- Kanan -->
+            <div class="right">
+                <!-- Pie Chart -->
+                <div class="box">
+                    <h3>Distribusi Jenis Hak Cipta</h3>
+                    <canvas id="chartJenis"></canvas>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Modal untuk Detail Ciptaan -->
@@ -203,6 +264,11 @@ $result = $conn->query($query);
     <script src="js/index.js"></script>
     <script src="js/rekapitulasi.js"></script>
     <script src="js/hki.js"></script>
+    <script src="js/admin.js"></script>
+    <script>
+        // Kirim data PHP ke JavaScript
+        const chartData = <?php echo json_encode($chartData); ?>;
+    </script>
 </body>
 
 </html>
