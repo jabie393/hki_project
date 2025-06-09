@@ -15,6 +15,10 @@
   padding: 20px;
 }
 
+#user-page .card p {
+  font-weight: bold;
+}
+
 #user-page .section {
   background: #fff;
   border-radius: 10px;

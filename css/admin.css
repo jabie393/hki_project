@@ -62,11 +62,8 @@
   font-weight: bold;
 }
 
-#admin-page .stat-card p {
+#admin-page p {
   font-weight: bold;
-  margin: 0;
-  font-size: 18px;
-  color: #333;
 }
 
 #admin-page canvas {
