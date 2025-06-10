@@ -10,8 +10,8 @@
   padding: 20px 10px;
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
   z-index: 1000;
-  overflow-y: auto;
-  transition: all 0.3s ease;
+  transition: width 0.3s ease;
+  overflow-y: visible;
 }
 
 #sidebar.hidden {
@@ -26,7 +26,11 @@
   color: #fff;
   text-decoration: none;
   margin-bottom: 30px;
-  padding-left: 15px;
+  padding-left: 10px;
+}
+
+#sidebar .brand span {
+  font-size: 1.2rem;
 }
 
 #sidebar .side-menu {
@@ -102,7 +106,57 @@ nav .bx-menu {
   display: block; /* Menampilkan overlay */
 }
 
-/* ==== TOGGLE ANIMASI ==== */
+/* ==== ARROW TOGGLE ==== */
+#arrowToggle {
+  position: absolute;
+  top: 22.5px;
+  right: -15px;
+  transform: translateY(0);
+  background-color: #FFC107;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 8px;
+  cursor: pointer;
+  z-index: 1000;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.2s;
+}
+
+#arrowToggle:hover {
+  background-color:rgb(228, 171, 0);
+}
+
+.collapsed-sidebar {
+  width: 50px !important;
+}
+
+.collapsed-sidebar .side-menu .text,
+.collapsed-sidebar .brand .text {
+  opacity: 0;
+  transform: translateX(-10px);
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.side-menu .text,
+.brand .text {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+#sidebar .fas {
+  color: #FFC107;
+  font-size: 1rem;
+}
+
+.collapsed-sidebar .side-menu li a i {
+  transition: font-size 0.3s ease, margin-right 0.3s ease;
+}
+
+/* ==== BURGER TOGGLE ==== */
 #sidebar-toggle {
   position: fixed;
   top: 15px;
@@ -218,6 +272,11 @@ nav .profile img {
   color: #2c3e50;
 }
 
+#content.expanded-content {
+  margin-left: 50px;
+  transition: margin-left 0.3s ease;
+}
+
 /* ========== NAVBAR ========== */
 
 #navbar {
@@ -232,6 +291,11 @@ nav .profile img {
   align-items: center;
   padding: 0 20px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+nav.expanded-navbar {
+  left: 50px;
+  transition: left 0.3s ease;
 }
 
 /* Main content */
@@ -249,6 +313,15 @@ body.dark-mode #content-main {
 @media (max-width: 768px) {
   #sidebar {
     left: -260px;
+    transition: all 0.3s ease!important;
+    -webkit-transition: all 0.3s ease!important;
+    -moz-transition: all 0.3s ease!important;
+    -ms-transition: all 0.3s ease!important;
+    -o-transition: all 0.3s ease!important;
+}
+
+  #arrowToggle {
+    display: none;
   }
 
   #sidebar.show {
@@ -305,6 +378,15 @@ body.dark-mode #sidebar {
   background: #1e1e1e;
   background-color: #1e1e1e;
   color: #ffffff;
+}
+
+body.dark-mode #arrowToggle {
+  background-color: #FFC107;
+  color: black;
+}
+
+body.dark-mode #arrowToggle:hover {
+  background-color:rgb(228, 171, 0);
 }
 
 body.dark-mode #sidebar-toggle {

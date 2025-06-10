@@ -511,36 +511,6 @@ body.dark-mode #hki-page .pagination .page-link.active {
 }
 /*=== End of Dark mode styles ===*/
 
-/* Media Query untuk layar besar (desktop) */
-@media (min-width: 769px) {
-  #hki-page {
-    padding: 20px;
-  }
-
-  #hki-page h2 {
-    font-size: 24px;
-  }
-
-  #hki-page .table-wrapper {
-    padding: 10px;
-  }
-
-  #hki-page #hki-table th,
-  #hki-page #hki-table td {
-    font-size: 14px;
-    padding: 10px;
-  }
-
-  #hki-page .badge {
-    font-size: 11px;
-  }
-
-  #hki-page .btn {
-    font-size: 14px;
-    padding: 8px 12px;
-  }
-}
-
 /* Media Query untuk layar sedang (tablet) */
 @media (min-width: 577px) and (max-width: 768px) {
   #hki-page {

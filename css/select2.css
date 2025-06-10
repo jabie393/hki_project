@@ -164,43 +164,6 @@ body.dark-mode
 }
 /*=== End of Dark mode styles ===*/
 
-/* Media Query untuk layar besar (desktop) */
-@media (min-width: 769px) {
-  select {
-    font-size: 15px;
-    padding: 10px 12px;
-  }
-
-  .select2-container--default .select2-selection--single {
-    height: 45px !important;
-    border-radius: 10px;
-    padding-left: 12px;
-    padding-right: 30px;
-  }
-
-  .select2-selection__rendered {
-    line-height: 45px !important;
-    font-size: 15px !important;
-  }
-
-  .select2-container--default
-    .select2-selection--single
-    .select2-selection__arrow {
-    right: 10px !important;
-  }
-
-  .select2-container--default
-    .select2-selection--single
-    .select2-selection__clear {
-    font-size: 1.2em;
-  }
-
-  .select2-search__field {
-    font-size: 15px;
-    padding: 6px 10px;
-  }
-}
-
 /* Media Query untuk layar sedang (tablet) */
 @media (min-width: 577px) and (max-width: 768px) {
   select {

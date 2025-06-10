@@ -111,34 +111,6 @@ body.dark-mode #update_account-page button:hover {
 }
 /*=== End of Dark mode styles ===*/
 
-/* Media Query untuk layar besar (desktop) */
-@media (min-width: 769px) {
-  #update_account-page {
-    margin: 40px auto;
-    padding: 20px;
-  }
-
-  #update_account-page h2 {
-    font-size: 24px;
-  }
-
-  #update_account-page .form-group {
-    margin-bottom: 20px;
-  }
-
-  #update_account-page input[type="text"],
-  #update_account-page input[type="email"],
-  #update_account-page input[type="password"] {
-    font-size: 16px;
-    padding: 12px 14px;
-  }
-
-  #update_account-page button {
-    font-size: 16px;
-    padding: 12px 16px;
-  }
-}
-
 /* Media Query untuk layar sedang (tablet) */
 @media (min-width: 577px) and (max-width: 768px) {
   #update_account-page {

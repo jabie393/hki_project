@@ -67,36 +67,52 @@ $(document).ready(function () {
             method: 'POST',
             data: formData,
             dataType: 'json',
-            success: function (response) {
-                // Menampilkan SweetAlert sesuai dengan hasil dari server
-                if (response.success) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Sukses!',
-                        text: response.message,
-                        showConfirmButton: false, // Tidak ada tombol confirm
-                        timer: 2000 // Menunggu 2 detik
-                    }).then(() => {
-                        // Reset form jika sukses
-                        $('#userSelect').val('').trigger('change');
-                        $('#new_username').val('');
-                        $('#new_email').val('');
-                        $('input[name="new_password"]').val('');
+// ...existing code...
 
-                        // Memuat ulang halaman reset_password.php secara dinamis
-                        loadContent('reset_password.php');
-                    });
-                } else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Gagal!',
-                        text: response.message,
-                        customClass: {
-                            confirmButton: 'swal2-error'
-                        },
-                    });
+success: function (response) {
+    // Menampilkan SweetAlert sesuai dengan hasil dari server
+    if (response.success) {
+        Swal.fire({
+            icon: 'success',
+            title: 'Sukses!',
+            text: response.message,
+            showConfirmButton: false, // Tidak ada tombol confirm
+            timer: 2000 // Menunggu 2 detik
+        }).then(() => {
+            // Ambil username baru dari form sebelum mengosongkan input
+            const newUsername = $('#new_username').val(); 
+            const selectedUserId = $('#userSelect').val(); // Ambil ID user yang dipilih
+
+            // Reset form jika sukses
+            $('#userSelect').val('').trigger('change');
+            $('#new_username').val('');
+            $('#new_email').val('');
+            $('input[name="new_password"]').val('');
+
+            // Memuat ulang halaman reset_password.php secara dinamis
+            loadContent('reset_password.php');
+
+            // Update nama di sidebar jika admin mengganti username miliknya sendiri
+            const loggedInUserId = $('#loggedInUserId').val(); // Ambil ID user yang sedang login
+            if (selectedUserId === loggedInUserId) {
+                const sidebarName = document.getElementById('sidebar-username');
+                if (sidebarName) {
+                    sidebarName.innerHTML = `Halo, ${newUsername}! <i class="fas fa-check-circle verified-icon" title="Admin"></i>`;
                 }
+            }
+        });
+    } else {
+        Swal.fire({
+            icon: 'error',
+            title: 'Gagal!',
+            text: response.message,
+            customClass: {
+                confirmButton: 'swal2-error'
             },
+        });
+    }
+},
+// ...existing code...
             error: function () {
                 Swal.fire({
                     icon: 'error',

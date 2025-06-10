@@ -14,11 +14,12 @@ $page = substr($_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"], "/") + 
     <i class='bx bx-menu'></i>
 </div>
 <div id="sidebar-overlay" onclick="closeSidebar()"></div>
-<section id="sidebar">
+<section id="sidebar" class="sidebar">
+    <button id="arrowToggle">&#8592;</button>
     <a href="" class="brand">
-        <i class='bx bxs-smile'></i>
+    <img src="assets/icon/unira.png" alt="Unira Icon" style="width: 30px; height: 30px;">
         <?php if ($role === 'admin'): ?>
-            <span class="text">AdminHub</span>
+            <span id="sidebar-username" class="text">Halo, <?= htmlspecialchars($username) ?>! <i class="fas fa-check-circle verified-icon" title="Admin"></i></span>
         <?php else: ?>
             <span id="sidebar-username" class="text">Halo, <?= htmlspecialchars($username) ?>!</span>
         <?php endif; ?>

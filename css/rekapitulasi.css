@@ -299,56 +299,6 @@ h3 {
   box-sizing: border-box;
 }
 
-/* Media Query untuk layar besar (desktop) */
-@media (min-width: 769px) {
-  #hki-page {
-    margin-top: 70px;
-    margin-bottom: 60px;
-    padding: 20px;
-  }
-
-  .search-header {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-  }
-
-  .search-header h2 {
-    font-size: 20px;
-  }
-
-  .search-group {
-    width: auto;
-    max-width: none;
-  }
-
-  .search-group .input-field {
-    font-size: 14px;
-    padding: 10px;
-  }
-
-  .search-group .btn {
-    font-size: 14px;
-    padding: 10px 16px;
-  }
-
-  #hki-table th,
-  #hki-table td {
-    font-size: 14px;
-    padding: 10px;
-  }
-
-  .badge {
-    font-size: 11px;
-  }
-
-  .btn {
-    font-size: 14px;
-    padding: 8px 12px;
-  }
-}
-
 /* Responsif layout */
 @media (max-width: 768px) {
   .search-header {
@@ -357,6 +307,7 @@ h3 {
 
   .layout {
     flex-direction: column;
+    padding-bottom: 20px;
   }
 
   .left,

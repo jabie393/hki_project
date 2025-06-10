@@ -26,13 +26,14 @@ $role = $_SESSION['role'] ?? 'user';
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
   <!-- Boxicons -->
-  <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
   <!-- Css -->
   <link rel="stylesheet" href="css/side&navbar.css" />
   <link rel="stylesheet" href="css/modal.css">
 </head>
 
+<input type="hidden" id="loggedInUserId" value="<?= $_SESSION['user_id'] ?>">
 <body>
   <?php include "widgets/sidebar.php"; ?>
 

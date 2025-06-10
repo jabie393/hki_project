@@ -1,5 +1,5 @@
 <?php
-include 'config/config.php'; // pastikan path-nya benar
+include 'config/config.php';
 include_once 'helpers/profile_helper.php';
 session_start();
 

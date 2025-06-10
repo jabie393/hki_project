@@ -108,7 +108,7 @@
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  font-weight: 600;
+  font-weight: bold;
   transition: background 0.3s;
 }
 
@@ -251,54 +251,6 @@ body.dark-mode #announcement-page li:hover {
   background-color: #333333;
 }
 /*=== Dark mode styles ===*/
-
-/* Media Query untuk layar besar (desktop) */
-@media (min-width: 769px) {
-  #announcement-page {
-    padding: 20px;
-  }
-
-  #announcement-page h2,
-  #announcement-page h3 {
-    font-size: 24px;
-  }
-
-  #announcement-page form {
-    gap: 15px;
-  }
-
-  #announcement-page input[type="file"] {
-    font-size: 15px;
-    padding: 12px;
-  }
-
-  #announcement-page .upload-box {
-    padding: 30px 25px;
-  }
-
-  #announcement-page button {
-    font-size: 16px;
-    padding: 12px 16px;
-  }
-
-  #announcement-page .delete-btn {
-    font-size: 14px;
-    padding: 10px 14px;
-  }
-
-  #announcement-page ul {
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 20px;
-  }
-
-  #announcement-page li {
-    padding: 15px;
-  }
-
-  #announcement-page img {
-    border-radius: 10px;
-  }
-}
 
 /* Media Query untuk layar sedang (tablet) */
 @media (min-width: 577px) and (max-width: 768px) {
