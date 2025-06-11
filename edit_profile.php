@@ -125,7 +125,7 @@ $profile_picture = getProfilePicture($user_id);
         </div>
 
         <div>
-            <label>Preview Foto yang Dipilih:</label><br>
+            <label>Preview Foto yang Dipilih:</label>
             <img id="previewCroppedCircle" src="#" style="display: none;" />
         </div>
 
@@ -133,7 +133,7 @@ $profile_picture = getProfilePicture($user_id);
         <button class="btn" type="submit">Simpan Profil</button>
 
         <div>
-            <label>Foto Saat Ini:</label><br>
+            <label>Foto Saat Ini:</label>
             <img id="profilePagePic" class="profilePic" src="<?= $profile_picture ?>" width="100" height="100"
                 alt="Foto Profil" onerror="this.src='assets/image/default-avatar.png'">
         </div>
