@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (e.target.classList.contains('profileimg')) {
             const userId = e.target.getAttribute('data-user-id');
 
-            fetch(`modal_user_profile.php?id=${userId}`)
+            fetch(`widgets/profile_details_navbar.php?id=${userId}`)
                 .then(res => res.text())
                 .then(html => {
                     modalContent.innerHTML = html;

@@ -113,8 +113,7 @@
 }
 
 .modal-content .fa-check-circle {
-  color: #007bff;
-  margin-left: 8px;
+  color: #FFC107;
 }
 
 /* Info Baris */
@@ -452,6 +451,7 @@ body.dark-mode #detail_ciptaan-page .detail-container .deskripsi-box {
     width: 85%;
     padding: 25px;
   }
+  .modal-content .text-center,
   .modal-content h2 {
     font-size: 20px;
   }
@@ -471,6 +471,7 @@ body.dark-mode #detail_ciptaan-page .detail-container .deskripsi-box {
   #detail_ciptaan-page .detail-container .deskripsi-box {
     font-size: 11px;
   }
+  .modal-content .text-center,
   .modal-content h2 {
     font-size: 18px;
   }
@@ -491,6 +492,7 @@ body.dark-mode #detail_ciptaan-page .detail-container .deskripsi-box {
   #detail_ciptaan-page .detail-container .deskripsi-box {
     font-size: 10px;
   }
+  .modal-content .text-center,
   .modal-content h2 {
     font-size: 16px;
   }

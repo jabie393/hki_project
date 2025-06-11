@@ -45,7 +45,7 @@ function pagination() {
 //== Modal ==//
 // script detail profil user
 function showProfile(userId) {
-    fetch('profile_details.php?id=' + userId)
+    fetch('widgets/profile_details.php?id=' + userId)
         .then(response => response.text())
         .then(data => {
             document.getElementById('profileDetails').innerHTML = data;

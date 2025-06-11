@@ -5,6 +5,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const content = document.getElementById("content");
     const navbar = document.querySelector('nav');
     const texts = document.querySelectorAll('.side-menu .text, .brand .text');
+    const menuItems = document.querySelectorAll('.sidebar-text');
+
+        // Hapus title saat halaman pertama kali dimuat jika sidebar tidak collapsed
+        if (!sidebar.classList.contains('collapsed-sidebar')) {
+            menuItems.forEach(item => {
+                item.removeAttribute('title');
+            });
+        }
 
     toggleBtn.addEventListener("click", function () {
         const isCollapsed = sidebar.classList.contains('collapsed-sidebar');
@@ -22,6 +30,10 @@ document.addEventListener("DOMContentLoaded", function () {
                         text.style.transform = 'translateX(0)';
                     }, 50); // Mulai transisi teks setelah sidebar selesai
                 });
+                // Hapus atribut title ketika sidebar diperluas
+                menuItems.forEach(item => {
+                    item.removeAttribute('title');
+                });
             }, 300); // Tunggu hingga sidebar selesai membuka
         } else {
             // Sidebar sedang dikecilkan
@@ -37,6 +49,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 sidebar.classList.add('collapsed-sidebar'); // Mulai menutup sidebar
                 content.classList.add('expanded-content'); // Konten meluas bersamaan dengan sidebar
+
+                // Tambahkan atribut title ketika sidebar dikecilkan
+                menuItems.forEach(item => {
+                    const textElement = item.querySelector('.text');
+                    if (textElement) {
+                        item.setAttribute('title', textElement.textContent.trim());
+                    }
+                });
             }, 300); // Tunggu hingga teks selesai menghilang
         }
 

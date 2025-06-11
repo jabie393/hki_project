@@ -1,13 +1,13 @@
 <!-- Flow FE -->
 <!-- ADMIN -->
 <?php
-include 'config/config.php';
-include_once 'helpers/profile_helper.php';
+include '../config/config.php';
+require_once __DIR__ . '/../helpers/profile_helper.php';
 
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
-    header("Location: login");
+    header("Location: ../login");
     exit();
 }
 
@@ -43,13 +43,6 @@ if (isset($_GET['id'])) {
 
         <!-- Custom CSS -->
         <link rel="stylesheet" href="css/modal.css">
-        <style>
-            .verified-icon {
-                color: #007bff;
-                /* Warna biru seperti centang verified */
-                margin-left: 8px;
-            }
-        </style>
     </head>
     <div id="modal-page">
         <div class="modal-container">
@@ -60,7 +53,7 @@ if (isset($_GET['id'])) {
             <h2 class="text-center">
                 <?= $nama_lengkap ?>
                 <?php if ($isAdmin): ?>
-                    <i class="fas fa-check-circle verified-icon" title="Admin"></i>
+                    <i class="fas fa-check-circle" title="Admin"></i>
                 <?php endif; ?>
             </h2>
 

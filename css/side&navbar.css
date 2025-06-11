@@ -147,7 +147,7 @@ nav .bx-menu {
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-#sidebar .fas {
+#sidebar .fa-check-circle {
   color: #FFC107;
   font-size: 1rem;
 }

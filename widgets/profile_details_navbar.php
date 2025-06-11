@@ -1,6 +1,6 @@
 <?php
-include 'config/config.php';
-include_once 'helpers/profile_helper.php';
+include '../config/config.php';
+include_once '../helpers/profile_helper.php';
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
@@ -68,7 +68,7 @@ $profile_picture = getProfilePicture($user_id);
             <span class="profile-value">
                 <?= htmlspecialchars($nama_lengkap) ?>
                 <?php if (isset($role) && $role === 'admin'): ?>
-                    <i class="fas fa-check-circle check-icon"></i>
+                    <i class="fas fa-check-circle" title="Admin"></i>
                 <?php endif; ?>
             </span>
         </p>
