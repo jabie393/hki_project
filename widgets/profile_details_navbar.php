@@ -1,10 +1,11 @@
 <?php
 include '../config/config.php';
 include_once '../helpers/profile_helper.php';
+
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
-    echo "<p>Silakan login terlebih dahulu.</p>";
+    header("Location: ../login");
     exit();
 }
 

@@ -391,15 +391,15 @@ function initFormSubmission() {
                     setTimeout(() => {
                         Swal.close(); // Tutup SweetAlert progres setelah delay
 
-                        Swal.fire({
-                            icon: xhr.responseText.includes("berhasil") ? "success" : "error",
-                            title: xhr.responseText.includes("berhasil") ? "Berhasil!" : "Gagal!",
-                            text: xhr.responseText,
-                            showConfirmButton: false, // Tidak ada tombol confirm
-                            timer: 2000 // Menunggu 2 detik
-                        });
-
                         if (xhr.responseText.includes("berhasil")) {
+                            Swal.fire({
+                                icon: "success",
+                                title: "Berhasil!",
+                                text: xhr.responseText,
+                                showConfirmButton: false,
+                                timer: 2000 // Menunggu 2 detik
+                            });
+
                             // Reset semua input dalam form
                             form.reset();
 
@@ -422,6 +422,14 @@ function initFormSubmission() {
 
                             // Reset tampilan nama file
                             document.getElementById('file-name').textContent = "Belum ada dokumen";
+                        } else {
+                            Swal.fire({
+                                icon: "error",
+                                title: "Gagal!",
+                                text: xhr.responseText,
+                                showConfirmButton: true,
+                                confirmButtonText: 'Oke, paham!'
+                            });
                         }
                     }, delay);
                 };
@@ -430,7 +438,8 @@ function initFormSubmission() {
                     Swal.fire({
                         icon: "error",
                         title: "Oops...",
-                        text: "Terjadi kesalahan saat mengirim data."
+                        text: "Terjadi kesalahan saat mengirim data.",
+                        showCancelButton: true
                     });
                 };
 

@@ -49,14 +49,14 @@ $images = $result->fetch_all(MYSQLI_ASSOC);
                 <label for="username">Username</label>
                 <input type="text" id="username" name="username" placeholder="Masukkan Username Anda" required
                     autocomplete="off"
-                    value="<?= isset($_SESSION['error_username']) || isset($_SESSION['error_email']) ? '' : (isset($_SESSION['input_username']) ? $_SESSION['input_username'] : ''); ?>" />
+                    value="<?= isset($_SESSION['input_username']) ? $_SESSION['input_username'] : ''; ?>" />
             </div>
 
             <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" placeholder="Masukkan Email Anda" required
                     autocomplete="off"
-                    value="<?= isset($_SESSION['error_username']) || isset($_SESSION['error_email']) ? '' : (isset($_SESSION['input_email']) ? $_SESSION['input_email'] : ''); ?>" />
+                    value="<?= isset($_SESSION['input_email']) ? $_SESSION['input_email'] : ''; ?>" />
             </div>
 
             <div class="form-group">
@@ -80,14 +80,30 @@ $images = $result->fetch_all(MYSQLI_ASSOC);
             Swal.fire({
                 icon: 'error',
                 title: 'Gagal Mendaftar',
-                html: `<?= isset($_SESSION['error_username']) ? $_SESSION['error_username'] . '<br>' : '' ?>
-                       <?= isset($_SESSION['error_email']) ? $_SESSION['error_email'] . '<br>' : '' ?>`,
+                html:  `<?= isset($_SESSION['error_username']) ? $_SESSION['error_username'] . '<br>' : '' ?>
+                        <?= isset($_SESSION['error_email']) ? $_SESSION['error_email'] . '<br>' : '' ?>`,
                 confirmButtonText: 'OK'
             });
         </script>
         <?php
         unset($_SESSION['error_username']);
         unset($_SESSION['error_email']);
+        unset($_SESSION['input_username']);
+        unset($_SESSION['input_email']);
+        ?>
+    <?php endif; ?>
+
+    <?php if (isset($_SESSION['error_password'])): ?>
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal Mendaftar',
+                text: '<?= $_SESSION['error_password'] ?>',
+                confirmButtonText: 'OK'
+            });
+        </script>
+        <?php
+        unset($_SESSION['error_password']);
         unset($_SESSION['input_username']);
         unset($_SESSION['input_email']);
         ?>

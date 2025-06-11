@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $profile = $result->fetch_assoc();
 
     if (!$profile || in_array(null, $profile, true) || in_array("", $profile, true)) {
-        echo "Profil Anda belum lengkap. Silakan lengkapi profil sebelum mendaftar HKI.";
+        echo "Profil Anda belum lengkap. Silakan lengkapi profil sebelum mengajukan Hak Cipta.";
         exit();
     }
 
@@ -47,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $reg_id = $conn->insert_id;
 
         // Simpan data pencipta
-        $stmt_pencipta = $conn->prepare("INSERT INTO creators 
+        $stmt_pencipta = $conn->prepare("INSERT INTO creators
             (registration_id, nik, nama, no_telepon, jenis_kelamin, alamat, negara, provinsi, kota, kecamatan, kelurahan, kode_pos) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
