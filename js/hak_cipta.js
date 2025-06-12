@@ -184,7 +184,9 @@ document.querySelectorAll('.approve-btn').forEach(button => {
                                     Swal.fire({
                                         icon: 'error',
                                         title: 'Gagal',
-                                        text: 'Terjadi kesalahan: ' + xhr.responseText
+                                        text: 'Terjadi kesalahan: ' + xhr.responseText,
+                                        showConfirmButton: true,
+                                        confirmButtonText: 'Oke!'
                                     });
                                 }
                             }, delay);
@@ -237,7 +239,9 @@ document.querySelectorAll('.delete-btn').forEach(button => {
                             Swal.fire({
                                 icon: 'error',
                                 title: 'Gagal',
-                                text: response
+                                text: response,
+                                showConfirmButton: true,
+                                confirmButtonText: 'Oke, paham!'
                             });
                         }
                     })
@@ -426,6 +430,8 @@ document.querySelectorAll('input[type="file"]').forEach(input => {
                     icon: 'warning',
                     title: 'File Sertifikat Tidak Valid',
                     text: `Hanya Sertifikat dengan ekstensi berikut yang diizinkan: ${allowedExtensions.join(', ')}.`,
+                    showConfirmButton: true,
+                    confirmButtonText: 'Oke, paham!'
                 });
                 this.value = ''; // Reset input file
 
@@ -460,31 +466,33 @@ document.querySelectorAll('.cancel-btn').forEach(button => {
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                     body: `id=${encodeURIComponent(id)}`
                 })
-                .then(res => res.json())
-                .then(response => {
-                    if (response.success) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Dibatalkan!',
-                            text: response.message,
-                            showConfirmButton: false,
-                            timer: 2000
-                        });
-                        if (rowElement) {
-                            rowElement.remove();
+                    .then(res => res.json())
+                    .then(response => {
+                        if (response.success) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Dibatalkan!',
+                                text: response.message,
+                                showConfirmButton: false,
+                                timer: 2000
+                            });
+                            if (rowElement) {
+                                rowElement.remove();
+                            }
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Gagal',
+                                text: response.message,
+                                showConfirmButton: true,
+                                confirmButtonText: 'Oke!'
+                            });
                         }
-                    } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Gagal',
-                            text: response.message
-                        });
-                    }
-                })
-                .catch(error => {
-                    console.error(error);
-                    Swal.fire('Oops...', 'Gagal membatalkan pendaftaran.', 'error');
-                });
+                    })
+                    .catch(error => {
+                        console.error(error);
+                        Swal.fire('Oops...', 'Gagal membatalkan pendaftaran.', 'error');
+                    });
             }
         });
     });
@@ -492,7 +500,7 @@ document.querySelectorAll('.cancel-btn').forEach(button => {
 //== Script Ajax (status_pengajuan) ==//
 
 //== Hide search param from URL after search ==//
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const url = new URL(window.location.href);
     if (url.searchParams.has('search')) {
         url.searchParams.delete('search');

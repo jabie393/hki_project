@@ -26,6 +26,8 @@ function validateFileInput(fileInput, allowedExtensions, fileNameDisplay) {
                 icon: 'warning',
                 title: 'Dokumen Tidak Valid',
                 text: `Hanya dokumen dengan ekstensi berikut yang diizinkan: ${allowedExtensions.join(', ')}.`,
+                showConfirmButton: true,
+                confirmButtonText: 'Oke, paham!'
             });
             fileInput.value = ''; // Reset input file
             fileNameDisplay.textContent = 'Belum ada dokumen yang dipilih';
@@ -162,6 +164,8 @@ function initTemplatePage() {
                         icon: 'error',
                         title: 'Gagal!',
                         text: 'Terjadi kesalahan saat mengunggah.',
+                        showConfirmButton: true,
+                        confirmButtonText: 'Oke!'
                     });
                 };
 

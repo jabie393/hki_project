@@ -50,6 +50,18 @@ if ($username_check->num_rows > 0) {
 }
 $username_check->close();
 
+// Validasi username tidak mengandung spasi
+if (strpos($new_username, ' ') !== false) {
+    echo json_encode(['success' => false, 'message' => 'Username tidak boleh mengandung spasi!']);
+    exit();
+}
+
+// Validasi password baru (jika ada)
+if ($new_password && (strlen($_POST['new_password']) < 8 || preg_match('/\s/', $_POST['new_password']))) {
+    echo json_encode(['success' => false, 'message' => 'Password baru harus minimal 8 karakter dan tidak boleh mengandung spasi!']);
+    exit();
+}
+
 // Update username dan email
 $query = $conn->prepare("UPDATE users SET username = ?, email = ? WHERE id = ?");
 $query->bind_param("ssi", $new_username, $new_email, $user_id);

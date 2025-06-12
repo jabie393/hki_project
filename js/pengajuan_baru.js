@@ -280,7 +280,9 @@ function initPengajuanBaru() {
                 Swal.fire({
                     icon: 'error',
                     title: 'Gagal Memuat Data Negara',
-                    text: 'Tidak dapat memuat daftar negara. Silakan coba lagi nanti.'
+                    text: 'Tidak dapat memuat daftar negara. Silakan coba lagi nanti.',
+                    showConfirmButton: true,
+                    confirmButtonText: 'Oke!'
                 });
             });
     }
@@ -320,7 +322,9 @@ function initFormSubmission() {
             Swal.fire({
                 icon: "warning",
                 title: "Perhatian",
-                text: "Minimal 1 pencipta harus ditambahkan sebelum mengirim form."
+                text: "Minimal 1 pencipta harus ditambahkan sebelum mengirim form.",
+                showConfirmButton: true,
+                confirmButtonText: 'Oke, paham!'
             });
             return;
         }
@@ -439,7 +443,8 @@ function initFormSubmission() {
                         icon: "error",
                         title: "Oops...",
                         text: "Terjadi kesalahan saat mengirim data.",
-                        showCancelButton: true
+                        showConfirmButton: true,
+                        confirmButtonText: 'Oke!'
                     });
                 };
 
@@ -477,6 +482,8 @@ function setupFileValidation() {
                         icon: 'warning',
                         title: 'Dokumen Tidak Valid',
                         text: `Hanya Dokumen dengan ekstensi berikut yang diizinkan: ${allowedExtensions.join(', ')}.`,
+                        showConfirmButton: true,
+                        confirmButtonText: 'Oke, paham!'
                     }).then(() => {
                         // Reset input file dan tampilan nama file
                         fileInput.value = ''; // Reset input file
@@ -491,6 +498,8 @@ function setupFileValidation() {
                         icon: 'warning',
                         title: 'Ukuran Dokumen Terlalu Besar',
                         text: 'Ukuran dokumen melebihi batas maksimal 30MB. Silakan kompres atau pilih dokumen lain.',
+                        showConfirmButton: true,
+                        confirmButtonText: 'Oke, paham!'
                     }).then(() => {
                         // Reset input file dan tampilan nama file
                         fileInput.value = ''; // Reset input file

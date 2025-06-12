@@ -61,63 +61,90 @@ $(document).ready(function () {
         e.preventDefault(); // Mencegah form submit biasa
         const formData = $(this).serialize(); // Ambil data form
 
+        // Validasi username tidak mengandung spasi
+        const newUsername = $('#new_username').val();
+        if (newUsername.includes(' ')) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal!',
+                text: 'Username tidak boleh mengandung spasi.',
+                showConfirmButton: true,
+                confirmButtonText: 'Oke, paham!'
+            });
+            return;
+        }
+
+        // Validasi password baru (jika ada)
+        const newPassword = $('input[name="new_password"]').val();
+        if (newPassword && (newPassword.length < 8 || /\s/.test(newPassword))) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal!',
+                text: 'Password baru harus minimal 8 karakter dan tidak boleh mengandung spasi.',
+                showConfirmButton: true,
+                confirmButtonText: 'Oke, paham!'
+            });
+            return;
+        }
+
         // Mengirim data ke server menggunakan AJAX
         $.ajax({
             url: 'services/reset_password_process.php',
             method: 'POST',
             data: formData,
             dataType: 'json',
-// ...existing code...
+            success: function (response) {
+                // Menampilkan SweetAlert sesuai dengan hasil dari server
+                if (response.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Sukses!',
+                        text: response.message,
+                        showConfirmButton: false, // Tidak ada tombol confirm
+                        timer: 2000 // Menunggu 2 detik
+                    }).then(() => {
+                        // Ambil username baru dari form sebelum mengosongkan input
+                        const newUsername = $('#new_username').val();
+                        const selectedUserId = $('#userSelect').val(); // Ambil ID user yang dipilih
 
-success: function (response) {
-    // Menampilkan SweetAlert sesuai dengan hasil dari server
-    if (response.success) {
-        Swal.fire({
-            icon: 'success',
-            title: 'Sukses!',
-            text: response.message,
-            showConfirmButton: false, // Tidak ada tombol confirm
-            timer: 2000 // Menunggu 2 detik
-        }).then(() => {
-            // Ambil username baru dari form sebelum mengosongkan input
-            const newUsername = $('#new_username').val(); 
-            const selectedUserId = $('#userSelect').val(); // Ambil ID user yang dipilih
+                        // Reset form jika sukses
+                        $('#userSelect').val('').trigger('change');
+                        $('#new_username').val('');
+                        $('#new_email').val('');
+                        $('input[name="new_password"]').val('');
 
-            // Reset form jika sukses
-            $('#userSelect').val('').trigger('change');
-            $('#new_username').val('');
-            $('#new_email').val('');
-            $('input[name="new_password"]').val('');
+                        // Memuat ulang halaman reset_password.php secara dinamis
+                        loadContent('reset_password.php');
 
-            // Memuat ulang halaman reset_password.php secara dinamis
-            loadContent('reset_password.php');
-
-            // Update nama di sidebar jika admin mengganti username miliknya sendiri
-            const loggedInUserId = $('#loggedInUserId').val(); // Ambil ID user yang sedang login
-            if (selectedUserId === loggedInUserId) {
-                const sidebarName = document.getElementById('sidebar-username');
-                if (sidebarName) {
-                    sidebarName.innerHTML = `Halo, ${newUsername}! <i class="fas fa-check-circle verified-icon" title="Admin"></i>`;
+                        // Update nama di sidebar jika admin mengganti username miliknya sendiri
+                        const loggedInUserId = $('#loggedInUserId').val(); // Ambil ID user yang sedang login
+                        if (selectedUserId === loggedInUserId) {
+                            const sidebarName = document.getElementById('sidebar-username');
+                            if (sidebarName) {
+                                sidebarName.innerHTML = `Halo, ${newUsername}! <i class="fas fa-check-circle verified-icon" title="Admin"></i>`;
+                            }
+                        }
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal!',
+                        text: response.message,
+                        showConfirmButton: true,
+                        confirmButtonText: 'Oke!',
+                        customClass: {
+                            confirmButton: 'swal2-error'
+                        },
+                    });
                 }
-            }
-        });
-    } else {
-        Swal.fire({
-            icon: 'error',
-            title: 'Gagal!',
-            text: response.message,
-            customClass: {
-                confirmButton: 'swal2-error'
             },
-        });
-    }
-},
-// ...existing code...
             error: function () {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
                     text: 'Terjadi kesalahan saat menyimpan data.',
+                    showConfirmButton: true,
+                    confirmButtonText: 'Oke!',
                     customClass: {
                         confirmButton: 'swal2-error'
                     },

@@ -112,7 +112,9 @@ function initEditProfilePage() {
                             Swal.fire({
                                 icon: 'error',
                                 title: 'Gagal',
-                                text: response.message
+                                text: response.message,
+                                showConfirmButton: true,
+                                confirmButtonText: 'Oke!'
                             });
                         }
                     }, delay);
@@ -122,7 +124,9 @@ function initEditProfilePage() {
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops!',
-                        text: 'Terjadi kesalahan saat mengupdate profil.'
+                        text: 'Terjadi kesalahan saat mengupdate profil.',
+                        showConfirmButton: true,
+                        confirmButtonText: 'Oke!'
                     });
                 };
 
@@ -213,7 +217,9 @@ function initEditProfilePage() {
                 Swal.fire({
                     icon: 'error',
                     title: 'Gagal Memuat Data Negara',
-                    text: 'Tidak dapat memuat daftar negara. Silakan coba lagi nanti.'
+                    text: 'Tidak dapat memuat daftar negara. Silakan coba lagi nanti.',
+                    showConfirmButton: true,
+                    confirmButtonText: 'Oke, paham!'
                 });
             });
     }
@@ -241,9 +247,11 @@ function setupProfilePictureInput() {
                 // Validasi ukuran file
                 if (file.size > maxSize) {
                     Swal.fire({
-                        icon: 'error',
+                        icon: 'warning',
                         title: 'Ukuran Foto Terlalu Besar',
                         text: 'Ukuran foto melebihi batas maksimal 5MB. Silakan kompres atau pilih foto lain.',
+                        showConfirmButton: true,
+                        confirmButtonText: 'Oke, paham!'
                     });
                     input.value = ''; // Reset input file
                     return;

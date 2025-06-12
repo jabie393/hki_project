@@ -80,7 +80,7 @@ $images = $result->fetch_all(MYSQLI_ASSOC);
             Swal.fire({
                 icon: 'error',
                 title: 'Gagal Mendaftar',
-                html:  `<?= isset($_SESSION['error_username']) ? $_SESSION['error_username'] . '<br>' : '' ?>
+                html: `<?= isset($_SESSION['error_username']) ? $_SESSION['error_username'] . '<br>' : '' ?>
                         <?= isset($_SESSION['error_email']) ? $_SESSION['error_email'] . '<br>' : '' ?>`,
                 confirmButtonText: 'OK'
             });
@@ -99,7 +99,8 @@ $images = $result->fetch_all(MYSQLI_ASSOC);
                 icon: 'error',
                 title: 'Gagal Mendaftar',
                 text: '<?= $_SESSION['error_password'] ?>',
-                confirmButtonText: 'OK'
+                showConfirmButton: true,
+                confirmButtonText: 'Oke, paham!'
             });
         </script>
         <?php
@@ -115,8 +116,8 @@ $images = $result->fetch_all(MYSQLI_ASSOC);
                 icon: 'success',
                 title: 'Pendaftaran Berhasil!',
                 text: 'Silakan login untuk melanjutkan.',
-                showConfirmButton: false, // Tidak ada tombol confirm
-                timer: 3000 // Menunggu
+                showConfirmButton: false,
+                timer: 3000
             }).then(() => {
                 window.location.href = 'login';
             });

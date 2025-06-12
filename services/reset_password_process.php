@@ -38,6 +38,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     $username_check->close();
 
+    // Validasi username tidak mengandung spasi
+    if (strpos($new_username, ' ') !== false) {
+        echo json_encode(['success' => false, 'message' => 'Username tidak boleh mengandung spasi!']);
+        exit();
+    }
+
     // Update username, email, dan role
     $query = $conn->prepare("UPDATE users SET username = ?, email = ?, role = ? WHERE id = ?");
     $query->bind_param("sssi", $new_username, $new_email, $new_role, $user_id);
@@ -45,6 +51,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Update password jika diisi
     if ($new_password) {
+        // Validasi password baru (jika ada)
+        if (strlen($_POST['new_password']) < 8 || preg_match('/\s/', $_POST['new_password'])) {
+            echo json_encode(['success' => false, 'message' => 'Password baru harus minimal 8 karakter dan tidak boleh mengandung spasi!']);
+            exit();
+        }
+
         $query = $conn->prepare("UPDATE users SET password = ? WHERE id = ?");
         $query->bind_param("si", $new_password, $user_id);
         $query->execute();

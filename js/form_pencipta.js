@@ -90,7 +90,8 @@ function initModalPencipta() {
                     icon: 'warning',
                     title: 'Form Belum Lengkap',
                     html: `Harap lengkapi semua field wajib:<br><br>- ${emptyFields.join('<br>- ')}`,
-                    confirmButtonText: 'Mengerti',
+                    showConfirmButton: true,
+                    confirmButtonText: 'Oke, paham!',
                     customClass: {
                         container: 'swal2-top'
                     }

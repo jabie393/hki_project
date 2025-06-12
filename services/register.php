@@ -25,6 +25,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
+    // Validasi password tidak boleh mengandung spasi
+    if (strpos($password, ' ') !== false) {
+        $_SESSION['error_password'] = "Password tidak boleh mengandung spasi.";
+        header("Location: ../register");
+        exit();
+    }
+
     // Hash password setelah validasi
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 

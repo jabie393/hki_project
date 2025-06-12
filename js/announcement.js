@@ -76,6 +76,8 @@ function setupUploadForm() {
                             icon: 'error',
                             title: 'Gagal!',
                             text: 'Terjadi kesalahan saat mengunggah.',
+                            showConfirmButton: true,
+                            confirmButtonText: 'Oke!'
                         });
                     };
 
@@ -126,6 +128,8 @@ function setupDeleteButtons() {
                                 icon: 'error',
                                 title: 'Gagal!',
                                 text: 'Terjadi kesalahan saat menghapus.',
+                                showConfirmButton: true,
+                                confirmButtonText: 'Oke!'
                             });
                         });
                 }
