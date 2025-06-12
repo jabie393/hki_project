@@ -109,7 +109,7 @@ $result = $conn->query($query);
 
     <div class="header"></div>
 
-    <div id="hki-page">
+    <div id="hak_cipta-page">
         <div class="search-header">
             <h2>Rekapitulasi Hak Cipta</h2>
 
@@ -125,7 +125,7 @@ $result = $conn->query($query);
 
         <!-- Tabel -->
         <div class="table-wrapper">
-            <table id="hki-table">
+            <table id="hak_cipta-table">
                 <thead>
                     <tr>
                         <th>Nomor Pengajuan</th>
@@ -263,7 +263,7 @@ $result = $conn->query($query);
     <div class="footer"></div>
     <script src="js/index.js"></script>
     <script src="js/rekapitulasi.js"></script>
-    <script src="js/hki.js"></script>
+    <script src="js/hak_cipta.js"></script>
     <script src="js/admin.js"></script>
     <script>
         // Kirim data PHP ke JavaScript

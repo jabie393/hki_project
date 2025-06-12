@@ -23,7 +23,7 @@ body {
 }
 
 /* Style konten halaman */
-#hki-page {
+#hak_cipta-page {
   flex: 1;
   margin-top: 70px;
   margin-bottom: 60px;
@@ -132,7 +132,7 @@ body {
   -o-border-radius: 5px;
 }
 
-#hki-table {
+#hak_cipta-table {
   width: auto;
   border-collapse: collapse;
   font-size: 14px;
@@ -140,8 +140,8 @@ body {
   margin: 0 auto;
 }
 
-#hki-table th,
-#hki-table td {
+#hak_cipta-table th,
+#hak_cipta-table td {
   width: 100%;
   padding: 10px;
   text-align: left;
@@ -149,17 +149,17 @@ body {
   white-space: nowrap;
 }
 
-#hki-table th {
+#hak_cipta-table th {
   background-color: #003366;
   color: white;
   white-space: nowrap;
 }
 
-#hki-table td {
+#hak_cipta-table td {
   font-size: 12px;
 }
 
-#hki-table tr:hover {
+#hak_cipta-table tr:hover {
   background-color: #f1f5f9;
 }
 
@@ -335,7 +335,7 @@ h3 {
 
 /* Media Query untuk layar sedang (tablet) */
 @media (min-width: 577px) and (max-width: 768px) {
-  #hki-page {
+  #hak_cipta-page {
     margin-top: 60px;
     margin-bottom: 50px;
     padding: 15px;
@@ -369,8 +369,8 @@ h3 {
     padding: 8px 12px;
   }
 
-  #hki-table th,
-  #hki-table td {
+  #hak_cipta-table th,
+  #hak_cipta-table td {
     font-size: 12px;
     padding: 8px;
   }
@@ -387,7 +387,7 @@ h3 {
 
 /* Media Query untuk layar kecil (ponsel) */
 @media (max-width: 576px) {
-  #hki-page {
+  #hak_cipta-page {
     margin-top: 50px;
     margin-bottom: 40px;
     padding: 10px;
@@ -422,8 +422,8 @@ h3 {
     padding: 6px 10px;
   }
 
-  #hki-table th,
-  #hki-table td {
+  #hak_cipta-table th,
+  #hak_cipta-table td {
     font-size: 10px;
     padding: 6px;
   }

@@ -56,22 +56,22 @@
   padding: 10px;
 }
 
-#user-page .hki-table {
+#user-page .hak_cipta-table {
   width: 100%;
   border-collapse: collapse;
   font-size: 14px;
   table-layout: fixed;
 }
 
-#user-page .hki-table th,
-#user-page .hki-table td {
+#user-page .hak_cipta-table th,
+#user-page .hak_cipta-table td {
   padding: 10px;
   text-align: left;
   vertical-align: top;
   box-sizing: border-box;
 }
 
-#user-page .hki-table th {
+#user-page .hak_cipta-table th {
   background-color: #003366;
   color: #fff;
   white-space: nowrap;
@@ -230,13 +230,13 @@ body.dark-mode #user-page select:focus {
   box-shadow: 0 0 4px #ffffffa2;
 }
 
-body.dark-mode #user-page .hki-table th {
+body.dark-mode #user-page .hak_cipta-table th {
   border-color: #333333;
   background-color: #333333;
   color: #ffffff;
 }
 
-body.dark-mode #user-page .hki-table td {
+body.dark-mode #user-page .hak_cipta-table td {
   background-color: #1e1e1e;
   color: #ffffff;
 }
@@ -320,11 +320,11 @@ body.dark-mode
   #user-page .table-wrapper {
     border-radius: 6px;
   }
-  #user-page .hki-table {
+  #user-page .hak_cipta-table {
     font-size: 12px;
   }
-  #user-page .hki-table th,
-  #user-page .hki-table td {
+  #user-page .hak_cipta-table th,
+  #user-page .hak_cipta-table td {
     padding: 6px;
     font-size: 12px;
   }
@@ -342,7 +342,7 @@ body.dark-mode
     font-size: 14px;
     padding: 6px 8px;
   }
-  #user-page .hki-table {
+  #user-page .hak_cipta-table {
     font-size: 11px;
   }
   #user-page .card p {

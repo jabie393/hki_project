@@ -62,13 +62,13 @@ $result = $conn->query($query);
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- Css -->
-    <link rel="stylesheet" href="css/hki.css">
+    <link rel="stylesheet" href="css/hak_cipta.css">
     <link rel="stylesheet" href="css/modal.css">
     <link rel="stylesheet" href="css/alert.css">
 </head>
 
 <!-- tinjau_pengajuan.php (HTML Table Layout) -->
-<div id="hki-page">
+<div id="hak_cipta-page">
     <h2>Daftar Pengajuan Hak Cipta</h2>
 
     <!-- Form Pencarian -->
@@ -81,7 +81,7 @@ $result = $conn->query($query);
     </form>
 
     <div class="table-wrapper">
-        <table id="hki-table">
+        <table id="hak_cipta-table">
             <thead>
                 <tr>
                     <th>Username</th>
@@ -245,4 +245,4 @@ $result = $conn->query($query);
     </div>
 </div>
 
-<script src="js/hki.js"></script>
+<script src="js/hak_cipta.js"></script>

@@ -62,12 +62,12 @@ $result = $conn->query($query);
     <!-- Sweet Alert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <link rel="stylesheet" href="css/hki.css">
+    <link rel="stylesheet" href="css/hak_cipta.css">
     <link rel="stylesheet" href="css/modal.css">
     <link rel="stylesheet" href="css/alert.css">
 </head>
 
-<div id="hki-page">
+<div id="hak_cipta-page">
     <h2>Rekapitulasi Hak Cipta Terdaftar</h2>
 
     <!-- Form Pencarian -->
@@ -80,7 +80,7 @@ $result = $conn->query($query);
     </form>
 
     <div class="table-wrapper">
-        <table id="hki-table">
+        <table id="hak_cipta-table">
             <thead>
                 <tr>
                     <th>Username Pemilik</th>
@@ -261,4 +261,4 @@ $result = $conn->query($query);
     </div>
 </div>
 
-<script src="js/hki.js"></script>
+<script src="js/hak_cipta.js"></script>

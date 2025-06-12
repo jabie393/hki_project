@@ -47,9 +47,9 @@ if (isset($_GET['id'])) {
 
         $conn->query("DELETE FROM registrations WHERE id = '$id'");
 
-        echo json_encode(['success' => true, 'message' => 'Pendaftaran berhasil dihapus!']);
+        echo json_encode(['success' => true, 'message' => 'Pengajuan berhasil dihapus!']);
     } else {
-        echo json_encode(['success' => false, 'message' => 'Pendaftaran tidak ditemukan!']);
+        echo json_encode(['success' => false, 'message' => 'Pengajuan tidak ditemukan!']);
     }
 } else {
     echo json_encode(['success' => false, 'message' => 'Permintaan tidak valid!']);

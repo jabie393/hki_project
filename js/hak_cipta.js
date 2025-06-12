@@ -103,7 +103,7 @@ function closeModal() {
 }
 //== Modal ==//
 
-//== Ajax (Dashboard & Rekap_hki(Admin)) ==//
+//== Ajax (Dashboard & Rekapitulasi_admin) ==//
 // services/approve.php
 document.querySelectorAll('.approve-btn').forEach(button => {
     button.addEventListener('click', function () {
@@ -202,7 +202,7 @@ document.querySelectorAll('.approve-btn').forEach(button => {
     });
 });
 
-// services/delete_hki.php
+// services/delete_pengajuan.php
 document.querySelectorAll('.delete-btn').forEach(button => {
     button.addEventListener('click', function () {
         const id = this.dataset.id;
@@ -218,7 +218,7 @@ document.querySelectorAll('.delete-btn').forEach(button => {
             cancelButtonText: 'Batal'
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`services/delete_hki.php?id=${id}`)
+                fetch(`services/delete_pengajuan.php?id=${id}`)
                     .then(res => res.text())
                     .then(response => {
                         if (response.includes("berhasil")) {
@@ -437,7 +437,7 @@ document.querySelectorAll('input[type="file"]').forEach(input => {
         }
     });
 });
-//== Ajax (Dashboard & Rekap_hki(Admin)) ==//
+//== Ajax (Dashboard & Rekapitulasi_admin) ==//
 
 //== Script Ajax (status_pengajuan) ==//
 document.querySelectorAll('.cancel-btn').forEach(button => {
@@ -455,7 +455,7 @@ document.querySelectorAll('.cancel-btn').forEach(button => {
             cancelButtonText: 'Batal'
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch('services/cancel_hki.php', {
+                fetch('services/cancel_pengajuan.php', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                     body: `id=${encodeURIComponent(id)}`

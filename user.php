@@ -62,7 +62,7 @@ $postRegisteredCount = $postRegisteredResult->fetch_assoc()['total'];
         <div class="section">
             <h3>Hak Cipta Yang Disetujui</h3>
             <div class="table-wrapper">
-                <table id="approvedTable" class="hki-table">
+                <table id="approvedTable" class="hak_cipta-table">
                     <thead>
                         <tr>
                             <th>Judul</th>
@@ -72,8 +72,8 @@ $postRegisteredCount = $postRegisteredResult->fetch_assoc()['total'];
                     </thead>
                     <tbody>
                         <?php
-                        $approvedQuery = "SELECT id, judul_hak_cipta, created_at 
-                                FROM registrations 
+                        $approvedQuery = "SELECT id, judul_hak_cipta, created_at
+                                FROM registrations
                                 WHERE user_id = ? AND status = 'Terdaftar'
                                 ORDER BY created_at DESC";
                         $stmtTerdaftar = $conn->prepare($approvedQuery);
@@ -108,7 +108,7 @@ $postRegisteredCount = $postRegisteredResult->fetch_assoc()['total'];
         <div class="section">
             <h3>Hak Cipta Yang Belum Disetujui</h3>
             <div class="table-wrapper">
-                <table id="pendingTable" class="hki-table">
+                <table id="pendingTable" class="hak_cipta-table">
                     <thead>
                         <tr>
                             <th>Judul</th>
@@ -118,10 +118,10 @@ $postRegisteredCount = $postRegisteredResult->fetch_assoc()['total'];
                     </thead>
                     <tbody>
                         <?php
-                        $pendingQuery = "SELECT id, judul_hak_cipta, created_at 
-                               FROM registrations 
-                               WHERE user_id = ? AND (status = 'Pending' OR status = 'Rejected')
-                               ORDER BY created_at DESC";
+                        $pendingQuery = "SELECT id, judul_hak_cipta, created_at
+                            FROM registrations
+                            WHERE user_id = ? AND (status = 'Pending' OR status = 'Rejected')
+                            ORDER BY created_at DESC";
                         $stmtPending = $conn->prepare($pendingQuery);
                         $stmtPending->bind_param("s", $user_id);
                         $stmtPending->execute();
@@ -166,4 +166,4 @@ $postRegisteredCount = $postRegisteredResult->fetch_assoc()['total'];
     </div>
 </div>
 
-<script src="js/hki.js"></script>
+<script src="js/hak_cipta.js"></script>

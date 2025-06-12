@@ -82,12 +82,12 @@ $result = $stmt->get_result();
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- Css -->
-    <link rel="stylesheet" href="css/hki.css">
+    <link rel="stylesheet" href="css/hak_cipta.css">
     <link rel="stylesheet" href="css/modal.css">
     <link rel="stylesheet" href="css/alert.css">
 </head>
 
-<div id="hki-page">
+<div id="hak_cipta-page">
 
     <h2>Status Pengajuan Hak Cipta</h2>
 
@@ -101,7 +101,7 @@ $result = $stmt->get_result();
     </form>
 
     <div class="table-wrapper">
-        <table id="hki-table">
+        <table id="hak_cipta-table">
             <tr>
                 <th>Nomor Pengajuan</th>
                 <th>Tanggal Pengajuan</th>
@@ -221,5 +221,5 @@ $result = $stmt->get_result();
         </div>
     </div>
 
-    <script src="js/hki.js"></script>
+    <script src="js/hak_cipta.js"></script>
 </div>

@@ -48,12 +48,12 @@ if (!empty($_POST['cropped_image'])) {
 
 // Insert atau Update
 if ($existing_data) {
-    $query = $conn->prepare("UPDATE user_profile SET 
+    $query = $conn->prepare("UPDATE user_profile SET
         nama_lengkap = ?, no_ktp = ?, telephone = ?, birth_date = ?, gender = ?, nationality = ?, type_of_applicant = ?, profile_picture = ?
         WHERE user_id = ?");
     $query->bind_param("ssssssssi", $nama_lengkap, $no_ktp, $telephone, $birth_date, $gender, $nationality, $type_of_applicant, $profile_picture, $user_id);
 } else {
-    $query = $conn->prepare("INSERT INTO user_profile (user_id, nama_lengkap, no_ktp, telephone, birth_date, gender, nationality, type_of_applicant, profile_picture) 
+    $query = $conn->prepare("INSERT INTO user_profile (user_id, nama_lengkap, no_ktp, telephone, birth_date, gender, nationality, type_of_applicant, profile_picture)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
     $query->bind_param("issssssss", $user_id, $nama_lengkap, $no_ktp, $telephone, $birth_date, $gender, $nationality, $type_of_applicant, $profile_picture);
 }

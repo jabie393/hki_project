@@ -383,7 +383,7 @@ function initFormSubmission() {
                 });
 
                 // Kirim data form
-                xhr.open("POST", "services/submit_hki.php", true);
+                xhr.open("POST", "services/submit_pengajuan.php", true);
                 xhr.onload = function () {
                     const elapsedTime = Date.now() - startTime; // Hitung waktu yang telah berlalu
                     const delay = Math.max(1500 - elapsedTime, 0); // Hitung delay agar minimal 1.5 detik

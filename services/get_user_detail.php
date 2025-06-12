@@ -5,9 +5,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['user_id'])) {
     $user_id = $_POST['user_id'];
 
     $query = $conn->prepare("
-        SELECT u.id, u.username, u.email, u.role, 
-               p.nama_lengkap, p.no_ktp, p.telephone, p.birth_date, 
-               p.gender, p.nationality, p.type_of_applicant
+        SELECT  u.id, u.username, u.email, u.role,
+                p.nama_lengkap, p.no_ktp, p.telephone, p.birth_date,
+                p.gender, p.nationality, p.type_of_applicant
         FROM users u
         LEFT JOIN user_profile p ON u.id = p.user_id
         WHERE u.id = ?

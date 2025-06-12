@@ -5,7 +5,7 @@ date_default_timezone_set('Asia/Jakarta'); // Zona waktu
 $host = "localhost"; // Server
 $user = "root"; // Username database
 $pass = ""; // Password
-$dbname = "hki_db";
+$dbname = "hak_cipta"; // Nama database
 
 $conn = new mysqli($host, $user, $pass, $dbname);
 

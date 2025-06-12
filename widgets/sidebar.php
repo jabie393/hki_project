@@ -43,9 +43,9 @@ $page = substr($_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"], "/") + 
                     <i class='bx bx-task'></i><span class="text">Tinjau Pengajuan</span>
                 </a>
             </li>
-            <li class="sidebar-text" title="Rekap Hak Cipta">
-                <a class="menu-link" onclick="loadContent('rekap_hki.php')">
-                    <i class='bx bxs-folder'></i><span class="text">Rekap Hak Cipta</span>
+            <li class="sidebar-text" title="Rekapitulasi">
+                <a class="menu-link" onclick="loadContent('manage_rekapitulasi.php')">
+                    <i class='bx bxs-folder'></i><span class="text">Rekapitulasi</span>
                 </a>
             </li>
             <li class="sidebar-text" title="Pengumuman">

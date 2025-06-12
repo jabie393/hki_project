@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
 
         $conn->query("DELETE FROM registrations WHERE id = '$id'");
 
-        echo json_encode(['success' => true, 'message' => 'Pendaftaran berhasil dibatalkan!']);
+        echo json_encode(['success' => true, 'message' => 'Pengajuan berhasil dibatalkan!']);
     } else {
         http_response_code(400);
         echo json_encode(['success' => false, 'message' => 'Tidak bisa dibatalkan.']);

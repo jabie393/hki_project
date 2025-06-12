@@ -1,11 +1,11 @@
-#hki-page {
+#hak_cipta-page {
   padding: 20px 0px 20px 0px;
   font-family: "Inter", sans-serif;
   background: linear-gradient(180deg, #eaf0f6 0%, #ffffff 100%);
   color: #2c3e50;
 }
 
-#hki-page h2 {
+#hak_cipta-page h2 {
   text-align: center;
   color: #004080;
   font-weight: bold;
@@ -13,7 +13,7 @@
   padding-top: 10px;
 }
 
-#hki-page .table-wrapper {
+#hak_cipta-page .table-wrapper {
   overflow-x: auto;
   background: #fff;
   border-radius: 10px;
@@ -21,7 +21,7 @@
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-#hki-page #hki-table {
+#hak_cipta-page #hak_cipta-table {
   width: auto;
   border-collapse: collapse;
   font-size: 14px;
@@ -29,21 +29,21 @@
   margin: 0 auto;
 }
 
-#hki-page #hki-table th,
-#hki-page #hki-table td {
+#hak_cipta-page #hak_cipta-table th,
+#hak_cipta-page #hak_cipta-table td {
   padding: 10px;
   text-align: left;
   vertical-align: top;
   white-space: nowrap;
 }
 
-#hki-page #hki-table th {
+#hak_cipta-page #hak_cipta-table th {
   background-color: #003366;
   color: #fff;
   white-space: nowrap;
 }
 
-#hki-page .profile-link {
+#hak_cipta-page .profile-link {
   text-align: center;
   color: #004080;
   text-decoration: none;
@@ -55,7 +55,7 @@
 }
 
 /* Style untuk search group */
-#hki-page .search-group {
+#hak_cipta-page .search-group {
   display: flex;
   align-items: center;
   border: 1px solid #ccc;
@@ -64,7 +64,7 @@
   background-color: white;
 }
 
-#hki-page .search-group .input-field {
+#hak_cipta-page .search-group .input-field {
   flex: 1;
   border: none;
   padding: 8px;
@@ -73,7 +73,7 @@
   outline: none;
 }
 
-#hki-page .search-group .btn {
+#hak_cipta-page .search-group .btn {
   border: none;
   border-left: 1px solid #ccc;
   background-color: #004080;
@@ -83,11 +83,11 @@
   font-size: 13px;
 }
 
-#hki-page .search-group .btn:hover {
+#hak_cipta-page .search-group .btn:hover {
   background-color: #002a5e;
 }
 
-#hki-page .search-form {
+#hak_cipta-page .search-form {
   position: sticky;
   top: 55px;
   padding: 10px;
@@ -96,7 +96,7 @@
   gap: 10px;
 }
 
-#hki-page .input-field {
+#hak_cipta-page .input-field {
   width: 90%;
   padding: 6px;
   font-size: 13px;
@@ -105,14 +105,14 @@
   border-radius: 5px;
 }
 
-#hki-page .input-field:focus,
-#hki-page .input-file:focus {
+#hak_cipta-page .input-field:focus,
+#hak_cipta-page .input-file:focus {
   border-color: #007bff;
   outline: none;
   box-shadow: 0 0 4px #007bff66;
 }
 
-#hki-page .input-field-search {
+#hak_cipta-page .input-field-search {
   border: 1px solid #ccc;
   border-radius: 5px;
   flex: 1;
@@ -123,15 +123,15 @@
   outline: none;
 }
 
-#hki-page .input-field:-webkit-autofill,
-#hki-page .input-field-search:-webkit-autofill {
+#hak_cipta-page .input-field:-webkit-autofill,
+#hak_cipta-page .input-field-search:-webkit-autofill {
   background-color: white;
   color: black;
   -webkit-text-fill-color: black;
   transition: background-color 5000s ease-in-out 0s;
 }
 
-#hki-page .btn {
+#hak_cipta-page .btn {
   padding: 6px 12px;
   font-size: 13px;
   border: none;
@@ -147,55 +147,55 @@
   -ms-tap-highlight-color: none; /* Internet Explorer/Edge */
 }
 
-#hki-page .btn-info {
+#hak_cipta-page .btn-info {
   background-color: #004080;
   color: #fff;
   transition: background-color 0.2s;
 }
 
-#hki-page .btn-info:hover {
+#hak_cipta-page .btn-info:hover {
   background-color: #002a5e;
 }
 
-#hki-page .btn-safe {
+#hak_cipta-page .btn-safe {
   background-color: #28a745;
   color: #fff;
 }
 
-#hki-page .btn-safe:hover {
+#hak_cipta-page .btn-safe:hover {
   background-color: #2ec251;
 }
 
-#hki-page .btn-danger {
+#hak_cipta-page .btn-danger {
   background-color: #dc3545;
   color: #fff;
 }
 
-#hki-page .btn-danger:hover {
+#hak_cipta-page .btn-danger:hover {
   background-color: #e63946;
 }
 
-#hki-page .btn-download {
+#hak_cipta-page .btn-download {
   background-color: #6c757d;
   color: #fff;
   display: block;
   margin-bottom: 3px;
 }
 
-#hki-page .btn-download:hover {
+#hak_cipta-page .btn-download:hover {
   background-color: #7a8288;
 }
 
-#hki-page .btn-primary {
+#hak_cipta-page .btn-primary {
   background-color: #007bff;
   color: #fff;
 }
 
-#hki-page .btn-primary:hover {
+#hak_cipta-page .btn-primary:hover {
   background-color: #0056b3;
 }
 
-#hki-page .badge {
+#hak_cipta-page .badge {
   padding: 4px 8px;
   border-radius: 12px;
   color: #fff;
@@ -203,26 +203,26 @@
   font-size: 12px;
 }
 
-#hki-page .badge-pending {
+#hak_cipta-page .badge-pending {
   background-color: #ffc107;
 }
 
-#hki-page .badge-terdaftar {
+#hak_cipta-page .badge-terdaftar {
   background-color: #28a745;
 }
 
-#hki-page .badge-ditolak {
+#hak_cipta-page .badge-ditolak {
   background-color: #dc3545;
 }
 
-#hki-page .btn-group {
+#hak_cipta-page .btn-group {
   display: flex;
   flex-direction: column;
   gap: 4px;
   max-width: 150px;
 }
 
-#hki-page .aksi-horizontal {
+#hak_cipta-page .aksi-horizontal {
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -233,27 +233,27 @@
   border-radius: 8px;
 }
 
-#hki-page .aksi-file {
+#hak_cipta-page .aksi-file {
   display: flex;
   align-items: center;
   gap: 5px;
 }
 
-#hki-page .file-label {
+#hak_cipta-page .file-label {
   font-size: 13px;
   font-weight: 500;
   color: #333;
   white-space: nowrap;
 }
 
-#hki-page .aksi-buttons {
+#hak_cipta-page .aksi-buttons {
   display: flex;
   gap: 6px;
   flex-wrap: wrap;
   align-items: center;
 }
 
-#hki-page .input-wrapper {
+#hak_cipta-page .input-wrapper {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -265,20 +265,20 @@
   max-width: 100%;
 }
 
-#hki-page .button-row {
+#hak_cipta-page .button-row {
   display: flex;
   gap: 10px;
   align-items: center;
   flex-wrap: nowrap;
 }
 
-#hki-page .custom-file-container {
+#hak_cipta-page .custom-file-container {
   margin-right: 10px;
   width: 150px;
   flex-shrink: 0;
 }
 
-#hki-page .custom-file-label {
+#hak_cipta-page .custom-file-label {
   display: inline-block;
   width: 90%;
   padding: 6px 12px;
@@ -289,30 +289,30 @@
 }
 
 /* Style khusus kolom nomor agar input tidak menumpuk */
-#hki-page #hki-table td.nomor-cell {
+#hak_cipta-page #hak_cipta-table td.nomor-cell {
   min-width: 180px;
   max-width: 200px;
   vertical-align: middle;
   padding: 10px 8px;
 }
 
-#hki-page .nomor-fields {
+#hak_cipta-page .nomor-fields {
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
 
-#hki-page .nomor-fields .input-field {
+#hak_cipta-page .nomor-fields .input-field {
   width: 100%;
   min-width: 120px;
   box-sizing: border-box;
 }
 
-#hki-page .input-file {
+#hak_cipta-page .input-file {
   display: none;
 }
 
-#hki-page .file-name {
+#hak_cipta-page .file-name {
   font-size: 13px;
   color: #555;
   font-style: italic;
@@ -320,26 +320,26 @@
   max-width: 100%;
 }
 
-#hki-page .input-file-wrapper {
+#hak_cipta-page .input-file-wrapper {
   width: 100%;
   max-width: 100%;
   margin-bottom: 8px;
 }
 
-#hki-page .btn-group.horizontal {
+#hak_cipta-page .btn-group.horizontal {
   display: flex;
   gap: 6px;
   flex-wrap: wrap;
   justify-content: space-between;
 }
 
-#hki-page .btn-group.horizontal .btn {
+#hak_cipta-page .btn-group.horizontal .btn {
   flex: 1 1 48%;
   min-width: 100px;
 }
 
 /* Pagination Style */
-#hki-page .pagination {
+#hak_cipta-page .pagination {
   display: flex;
   justify-content: center;
   margin-top: 20px;
@@ -347,7 +347,7 @@
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-#hki-page .page-link {
+#hak_cipta-page .page-link {
   padding: 10px 16px;
   text-decoration: none;
   color: #003365;
@@ -358,14 +358,14 @@
   border: 1px solid #ddd;
 }
 
-#hki-page .page-link:hover {
+#hak_cipta-page .page-link:hover {
   background-color: #003365;
   color: white;
   border-color: #003365;
   box-shadow: 0 4px 12px rgba(0, 51, 101, 0.2);
 }
 
-#hki-page .page-link.active {
+#hak_cipta-page .page-link.active {
   background-color: #003365;
   color: white;
   border-color: #003365;
@@ -373,8 +373,8 @@
   box-shadow: 0 4px 12px rgba(0, 51, 101, 0.3);
 }
 
-#hki-page .page-link.prev,
-#hki-page .page-link.next {
+#hak_cipta-page .page-link.prev,
+#hak_cipta-page .page-link.next {
   padding: 10px 16px;
   font-weight: bold;
   background-color: #f0f0f0;
@@ -382,14 +382,14 @@
   border-color: #ddd;
 }
 
-#hki-page .page-link.prev:hover,
-#hki-page .page-link.next:hover {
+#hak_cipta-page .page-link.prev:hover,
+#hak_cipta-page .page-link.next:hover {
   background-color: #003365;
   color: white;
   border-color: #003365;
 }
 
-#hki-page .ellipsis {
+#hak_cipta-page .ellipsis {
   padding: 10px 16px;
   color: #888;
   background-color: transparent;
@@ -399,54 +399,54 @@
 }
 
 /*=== Dark mode styles ===*/
-body.dark-mode #hki-page {
+body.dark-mode #hak_cipta-page {
   background: #121212; /* Warna latar belakang gelap */
   color: #ffffff; /* Warna teks */
 }
 
-body.dark-mode #hki-page h2 {
+body.dark-mode #hak_cipta-page h2 {
   color: #ffffff; /* Warna teks judul */
 }
 
 /* Tabel */
-body.dark-mode #hki-page .table-wrapper {
+body.dark-mode #hak_cipta-page .table-wrapper {
   background: #1e1e1e;
   box-shadow: none;
 }
 
-body.dark-mode #hki-page #hki-table th {
+body.dark-mode #hak_cipta-page #hak_cipta-table th {
   background-color: #333333;
   color: #ffffff;
 }
 
-body.dark-mode #hki-page #hki-table td {
+body.dark-mode #hak_cipta-page #hak_cipta-table td {
   background-color: #1e1e1e;
   color: #ffffff;
 }
 
-body.dark-mode #hki-page .profile-link {
+body.dark-mode #hak_cipta-page .profile-link {
   color: #00c6ff;
 }
 
 /* Tombol */
-body.dark-mode #hki-page .btn {
+body.dark-mode #hak_cipta-page .btn {
   background-color: #333333;
   color: #ffffff;
   border-color: transparent;
 }
 
-body.dark-mode #hki-page .btn:hover {
+body.dark-mode #hak_cipta-page .btn:hover {
   background-color: #444444;
 }
 
-body.dark-mode #hki-page .input-field-search,
-body.dark-mode #hki-page .input-field {
+body.dark-mode #hak_cipta-page .input-field-search,
+body.dark-mode #hak_cipta-page .input-field {
   background-color: #333333;
   color: white;
 }
 
-body.dark-mode #hki-page .input-field:-webkit-autofill,
-body.dark-mode #hki-page .input-field-search:-webkit-autofill {
+body.dark-mode #hak_cipta-page .input-field:-webkit-autofill,
+body.dark-mode #hak_cipta-page .input-field-search:-webkit-autofill {
   background-color: #333333 !important;
   color: #ffffff !important;
   box-shadow: 0 0 0px 1000px #333333 inset !important;
@@ -454,11 +454,11 @@ body.dark-mode #hki-page .input-field-search:-webkit-autofill {
   transition: background-color 5000s ease-in-out 0s;
 }
 
-body.dark-mode #hki-page .file-label {
+body.dark-mode #hak_cipta-page .file-label {
   color: white;
 }
 
-body.dark-mode #hki-page .input-wrapper {
+body.dark-mode #hak_cipta-page .input-wrapper {
   min-width: 250px;
   padding: 8px;
   background-color: #121212;
@@ -467,44 +467,44 @@ body.dark-mode #hki-page .input-wrapper {
 }
 
 /* Search Group */
-body.dark-mode #hki-page .search-group {
+body.dark-mode #hak_cipta-page .search-group {
   background-color: #1e1e1e; /* Warna latar belakang search group */
   border: 1px solid #ccc;
 }
 
-body.dark-mode #hki-page .search-group .input-field {
+body.dark-mode #hak_cipta-page .search-group .input-field {
   background-color: #333333; /* Warna latar belakang input */
   color: #ffffff; /* Warna teks input */
 }
 
-body.dark-mode #hki-page .input-field:focus {
+body.dark-mode #hak_cipta-page .input-field:focus {
   outline: none;
   border-color: #ffffff;
   box-shadow: 0 0 4px #ffffffa2;
 }
 
-body.dark-mode #hki-page .search-group .btn {
+body.dark-mode #hak_cipta-page .search-group .btn {
   background-color: #444444; /* Warna tombol search */
   color: #ffffff; /* Warna teks tombol */
 }
 
-body.dark-mode #hki-page .search-group .btn:hover {
+body.dark-mode #hak_cipta-page .search-group .btn:hover {
   background-color: #555555; /* Warna tombol search saat hover */
 }
 
 /* Pagination */
-body.dark-mode #hki-page .pagination .page-link {
+body.dark-mode #hak_cipta-page .pagination .page-link {
   background-color: #333333; /* Warna latar belakang pagination */
   color: #ffffff; /* Warna teks pagination */
   border-color: #444444; /* Warna border pagination */
 }
 
-body.dark-mode #hki-page .pagination .page-link:hover {
+body.dark-mode #hak_cipta-page .pagination .page-link:hover {
   background-color: #444444;
   box-shadow: 0 4px 12px rgba(255, 255, 255, 0.11);
 }
 
-body.dark-mode #hki-page .pagination .page-link.active {
+body.dark-mode #hak_cipta-page .pagination .page-link.active {
   background-color: #555555; /* Warna latar belakang pagination aktif */
   color: #ffffff; /* Warna teks pagination aktif */
   box-shadow: 0 4px 12px rgba(255, 255, 255, 0.11);
@@ -513,40 +513,40 @@ body.dark-mode #hki-page .pagination .page-link.active {
 
 /* Media Query untuk layar sedang (tablet) */
 @media (min-width: 577px) and (max-width: 768px) {
-  #hki-page {
+  #hak_cipta-page {
     padding: 15px;
   }
 
-  #hki-page h2 {
+  #hak_cipta-page h2 {
     font-size: 20px;
   }
 
-  #hki-page .table-wrapper {
+  #hak_cipta-page .table-wrapper {
     padding: 8px;
   }
 
-  #hki-page #hki-table th,
-  #hki-page #hki-table td {
+  #hak_cipta-page #hak_cipta-table th,
+  #hak_cipta-page #hak_cipta-table td {
     font-size: 13px;
     padding: 8px;
   }
 
-  #hki-page .badge {
+  #hak_cipta-page .badge {
     font-size: 10px;
   }
 
-  #hki-page .btn {
+  #hak_cipta-page .btn {
     font-size: 13px;
     padding: 6px 10px;
   }
 
-  #hki-page .btn-group {
+  #hak_cipta-page .btn-group {
     flex-direction: row;
     flex-wrap: wrap;
     gap: 8px;
   }
 
-  #hki-page .aksi-horizontal {
+  #hak_cipta-page .aksi-horizontal {
     flex-wrap: wrap;
     gap: 10px;
   }
@@ -554,41 +554,41 @@ body.dark-mode #hki-page .pagination .page-link.active {
 
 /* Media Query untuk layar kecil (ponsel) */
 @media (max-width: 576px) {
-  #hki-page {
+  #hak_cipta-page {
     padding: 10px;
   }
 
-  #hki-page h2 {
+  #hak_cipta-page h2 {
     font-size: 18px;
     padding-top: 5px;
     padding-bottom: 10px;
   }
 
-  #hki-page .table-wrapper {
+  #hak_cipta-page .table-wrapper {
     padding: 5px;
   }
 
-  #hki-page #hki-table th,
-  #hki-page #hki-table td {
+  #hak_cipta-page #hak_cipta-table th,
+  #hak_cipta-page #hak_cipta-table td {
     font-size: 12px;
     padding: 5px;
   }
 
-  #hki-page .badge {
+  #hak_cipta-page .badge {
     font-size: 9px;
   }
 
-  #hki-page .btn {
+  #hak_cipta-page .btn {
     font-size: 12px;
     padding: 4px 8px;
   }
 
-  #hki-page .btn-group {
+  #hak_cipta-page .btn-group {
     flex-direction: column;
     gap: 6px;
   }
 
-  #hki-page .aksi-horizontal {
+  #hak_cipta-page .aksi-horizontal {
     flex-direction: column;
     gap: 8px;
   }
