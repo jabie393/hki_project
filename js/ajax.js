@@ -49,12 +49,12 @@ function loadContent(url, callback) {
 }
 
 // Fungsi untuk memuat halaman dengan parameter pagination dan pencarian
-function loadPage(page, limit, search) {
+function loadPage(page, limit, search, order) {
     // Ambil halaman aktif dari localStorage
     const activePage = localStorage.getItem("activePage") || "tinjau_pengajuan.php";
 
     // Bangun URL berdasarkan halaman aktif
-    const url = `${activePage.split('?')[0]}?page=${page}&limit=${limit}&search=${encodeURIComponent(search)}`;
+    const url = `${activePage.split('?')[0]}?page=${page}&limit=${limit}&search=${encodeURIComponent(search)}&order=${order}`;
 
     // Muat konten menggunakan loadContent
     loadContent(url);

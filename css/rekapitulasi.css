@@ -145,7 +145,6 @@ body {
   width: 100%;
   padding: 10px;
   text-align: left;
-  vertical-align: top;
   white-space: nowrap;
 }
 
@@ -161,6 +160,42 @@ body {
 
 #hak_cipta-table tr:hover {
   background-color: #f1f5f9;
+}
+
+/* Style Sortable */
+.sortable-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.sort-buttons {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.sort-buttons a {
+  font-size: 10px;
+  text-decoration: none;
+  color: #204d79;
+  padding: 1px;
+  transition: color 0.2s;
+}
+
+.sort-buttons a:hover {
+  color: white;
+}
+
+.sort-buttons .active-order {
+  font-weight: bold;
+  color: #99adc2;
+}
+a.sort-link {
+  color: white;
+  text-decoration: none;
 }
 
 /* Badge style */

@@ -22,7 +22,7 @@
 }
 
 #hak_cipta-page #hak_cipta-table {
-  width: auto;
+  width: 100%;
   border-collapse: collapse;
   font-size: 14px;
   table-layout: auto;
@@ -33,7 +33,6 @@
 #hak_cipta-page #hak_cipta-table td {
   padding: 10px;
   text-align: left;
-  vertical-align: top;
   white-space: nowrap;
 }
 
@@ -41,6 +40,43 @@
   background-color: #003366;
   color: #fff;
   white-space: nowrap;
+}
+
+/* Style Sortable */
+#hak_cipta-page #hak_cipta-table a.sort-link {
+  color: white;
+  text-decoration: none;
+}
+
+#hak_cipta-page #hak_cipta-table .sortable-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+#hak_cipta-page #hak_cipta-table .sort-buttons {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+#hak_cipta-page #hak_cipta-table .sort-buttons a {
+  font-size: 10px;
+  text-decoration: none;
+  color: #204d79;
+  padding: 1px;
+  transition: color 0.2s;
+}
+
+#hak_cipta-page #hak_cipta-table .sort-buttons a:hover {
+  color: white;
+}
+
+#hak_cipta-page #hak_cipta-table .sort-buttons .active-order {
+  font-weight: bold;
+  color: #99adc2;
 }
 
 #hak_cipta-page .profile-link {
@@ -437,6 +473,18 @@ body.dark-mode #hak_cipta-page .btn {
 
 body.dark-mode #hak_cipta-page .btn:hover {
   background-color: #444444;
+}
+
+body.dark-mode #hak_cipta-page #hak_cipta-table .sort-buttons a {
+  color: #4d4d4d;
+}
+
+body.dark-mode #hak_cipta-page #hak_cipta-table .sort-buttons a:hover {
+  color: white;
+}
+
+body.dark-mode #hak_cipta-page #hak_cipta-table .sort-buttons .active-order {
+  color: #adadad;
 }
 
 body.dark-mode #hak_cipta-page .input-field-search,

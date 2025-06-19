@@ -48,6 +48,9 @@ $limit = isset($_GET['limit']) ? (int) $_GET['limit'] : $defaultLimit; // Ambil 
 $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
 
+// Ambil parameter order dari URL, default DESC
+$order = isset($_GET['order']) ? ($_GET['order'] === 'DESC' ? 'DESC' : 'ASC') : 'DESC';
+
 // Query untuk menghitung total data
 $totalQuery = "SELECT COUNT(*) as total FROM registrations
                 WHERE status = 'Terdaftar'
@@ -63,7 +66,7 @@ $totalResult = $conn->query($totalQuery);
 $totalData = $totalResult->fetch_assoc()['total'];
 $totalPages = ceil($totalData / $limit);
 
-// Query untuk mengambil data dengan pagination
+// Query untuk mengambil data dengan pagination dan urutan
 $query = "SELECT id, nomor_pengajuan, jenis_hak_cipta, tanggal_pengumuman, created_at, judul_hak_cipta, deskripsi, negara_pengumuman, kota_pengumuman, nomor_sertifikat, status
             FROM registrations
             WHERE status = 'Terdaftar'
@@ -75,6 +78,7 @@ $query = "SELECT id, nomor_pengajuan, jenis_hak_cipta, tanggal_pengumuman, creat
             OR negara_pengumuman LIKE '%$search%'
             OR kota_pengumuman LIKE '%$search%'
             OR nomor_sertifikat LIKE '%$search%')
+            ORDER BY created_at $order
             LIMIT $limit OFFSET $offset";
 
 $result = $conn->query($query);
@@ -130,7 +134,23 @@ $result = $conn->query($query);
                     <tr>
                         <th>Nomor Pengajuan</th>
                         <th>Jenis Ciptaan</th>
-                        <th>Tanggal Pengajuan</th>
+                        <th>
+                            <div class="sortable-header">
+                                <a href="?<?php echo http_build_query(array_merge($_GET, ['order' => $order === 'ASC' ? 'DESC' : 'ASC'])); ?>"
+                                    class="sort-link <?= $order === 'ASC' ? 'active-order' : ''; ?>"
+                                    title="<?= $order === 'ASC' ? 'Urutkan Dari Yang Terbaru' : 'Urutkan Dari Yang Terlama'; ?>">
+                                    Tanggal Pengajuan
+                                </a>
+                                <div class="sort-buttons">
+                                    <a href="?<?php echo http_build_query(array_merge($_GET, ['order' => 'ASC'])); ?>"
+                                        class="<?= $order === 'ASC' ? 'active-order' : ''; ?>"
+                                        title="Urutkan Dari Yang Terlama">&#9650;</a>
+                                    <a href="?<?php echo http_build_query(array_merge($_GET, ['order' => 'DESC'])); ?>"
+                                        class="<?= $order === 'DESC' ? 'active-order' : ''; ?>"
+                                        title="Urutkan Dari Yang Terbaru">&#9660;</a>
+                                </div>
+                            </div>
+                        </th>
                         <th>Judul</th>
                         <th>Detail Ciptaan</th>
                         <th>Pencipta</th>
@@ -170,12 +190,12 @@ $result = $conn->query($query);
         <!-- Pagination -->
         <div class="pagination">
             <?php if ($page > 1): ?>
-                <a href="?search=<?= htmlspecialchars($search); ?>&page=<?= $page - 1; ?>&limit=<?= $limit; ?>"
+                <a href="?search=<?= htmlspecialchars($search); ?>&page=<?= $page - 1; ?>&limit=<?= $limit; ?>&order=<?= $order; ?>"
                     class="page-link prev">&laquo;</a>
             <?php endif; ?>
 
             <!-- Always show first page -->
-            <a href="?search=<?= htmlspecialchars($search); ?>&page=1&limit=<?= $limit; ?>"
+            <a href="?search=<?= htmlspecialchars($search); ?>&page=1&limit=<?= $limit; ?>&order=<?= $order; ?>"
                 class="page-link <?= $page == 1 ? 'active' : ''; ?>">1</a>
 
             <!-- Middle pages -->
@@ -188,7 +208,7 @@ $result = $conn->query($query);
             }
 
             for ($i = $start; $i <= $end; $i++): ?>
-                <a href="?search=<?= htmlspecialchars($search); ?>&page=<?= $i; ?>&limit=<?= $limit; ?>"
+                <a href="?search=<?= htmlspecialchars($search); ?>&page=<?= $i; ?>&limit=<?= $limit; ?>&order=<?= $order; ?>"
                     class="page-link <?= $i == $page ? 'active' : ''; ?>">
                     <?= $i; ?>
                 </a>
@@ -199,14 +219,14 @@ $result = $conn->query($query);
                 <?php if ($end < $totalPages - 1): ?>
                     <span class="ellipsis">...</span>
                 <?php endif; ?>
-                <a href="?search=<?= htmlspecialchars($search); ?>&page=<?= $totalPages; ?>&limit=<?= $limit; ?>"
+                <a href="?search=<?= htmlspecialchars($search); ?>&page=<?= $totalPages; ?>&limit=<?= $limit; ?>&order=<?= $order; ?>"
                     class="page-link <?= $page == $totalPages ? 'active' : ''; ?>">
                     <?= $totalPages; ?>
                 </a>
             <?php endif; ?>
 
             <?php if ($page < $totalPages): ?>
-                <a href="?search=<?= htmlspecialchars($search); ?>&page=<?= $page + 1; ?>&limit=<?= $limit; ?>"
+                <a href="?search=<?= htmlspecialchars($search); ?>&page=<?= $page + 1; ?>&limit=<?= $limit; ?>&order=<?= $order; ?>"
                     class="page-link next">&raquo;</a>
             <?php endif; ?>
         </div>

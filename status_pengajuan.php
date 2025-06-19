@@ -19,6 +19,9 @@ $limit = isset($_GET['limit']) ? (int) $_GET['limit'] : $defaultLimit;
 $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
 
+// Ambil parameter order dari URL, default DESC
+$order = isset($_GET['order']) ? ($_GET['order'] === 'DESC' ? 'DESC' : 'ASC') : 'DESC';
+
 // Query untuk menghitung total data dengan prepared statement
 $totalQuery = "SELECT COUNT(*) as total FROM registrations
                 WHERE user_id = ?
@@ -38,8 +41,17 @@ $stmt = $conn->prepare($totalQuery);
 $likeSearch = "%$search%";
 $stmt->bind_param(
     "sssssssssss",
-    $user_id, $likeSearch, $likeSearch, $likeSearch, $likeSearch, $likeSearch,
-    $likeSearch, $likeSearch, $likeSearch, $likeSearch, $likeSearch
+    $user_id,
+    $likeSearch,
+    $likeSearch,
+    $likeSearch,
+    $likeSearch,
+    $likeSearch,
+    $likeSearch,
+    $likeSearch,
+    $likeSearch,
+    $likeSearch,
+    $likeSearch
 );
 $stmt->execute();
 $totalResult = $stmt->get_result();
@@ -47,7 +59,7 @@ $totalData = $totalResult->fetch_assoc()['total'];
 $totalPages = ceil($totalData / $limit);
 $stmt->close();
 
-// Query untuk mengambil data dengan prepared statement dan pagination
+// Query untuk mengambil data dengan prepared statement, urutan dan pagination
 $query = "SELECT * FROM registrations
             WHERE user_id = ?
             AND (
@@ -62,12 +74,24 @@ $query = "SELECT * FROM registrations
                 kota_pengumuman LIKE ? OR
                 nomor_sertifikat LIKE ?
             )
+            ORDER BY created_at $order
             LIMIT ? OFFSET ?";
 $stmt = $conn->prepare($query);
 $stmt->bind_param(
     "sssssssssssii",
-    $user_id, $likeSearch, $likeSearch, $likeSearch, $likeSearch, $likeSearch,
-    $likeSearch, $likeSearch, $likeSearch, $likeSearch, $likeSearch, $limit, $offset
+    $user_id,
+    $likeSearch,
+    $likeSearch,
+    $likeSearch,
+    $likeSearch,
+    $likeSearch,
+    $likeSearch,
+    $likeSearch,
+    $likeSearch,
+    $likeSearch,
+    $likeSearch,
+    $limit,
+    $offset
 );
 $stmt->execute();
 $result = $stmt->get_result();
@@ -104,7 +128,26 @@ $result = $stmt->get_result();
         <table id="hak_cipta-table">
             <tr>
                 <th>Nomor Pengajuan</th>
-                <th>Tanggal Pengajuan</th>
+                <th>
+                    <div class="sortable-header">
+                        <a href="javascript:void(0);"
+                            onclick="loadContent('status_pengajuan.php?page=<?= $page; ?>&order=<?= $order === 'ASC' ? 'DESC' : 'ASC'; ?>')"
+                            class="sort-link <?= $order === 'ASC' ? 'active-order' : ''; ?>"
+                            title="<?= $order === 'ASC' ? 'Urutkan Dari Yang Terbaru' : 'Urutkan Dari Yang Terlama'; ?>">
+                            Tanggal Pengajuan
+                        </a>
+                        <div class="sort-buttons">
+                            <a href="javascript:void(0);"
+                                onclick="loadContent('status_pengajuan.php?page=<?= $page; ?>&order=ASC')"
+                                class="<?= $order === 'ASC' ? 'active-order' : ''; ?>"
+                                title="Urutkan Dari Yang Terlama">&#9650;</a>
+                            <a href="javascript:void(0);"
+                                onclick="loadContent('status_pengajuan.php?page=<?= $page; ?>&order=DESC')"
+                                class="<?= $order === 'DESC' ? 'active-order' : ''; ?>"
+                                title="Urutkan Dari Yang Terbaru">&#9660;</a>
+                        </div>
+                    </div>
+                </th>
                 <th>Judul</th>
                 <th>Detail Ciptaan</th>
                 <th>Pencipta</th>
@@ -155,12 +198,12 @@ $result = $stmt->get_result();
     <div class="pagination">
         <?php if ($page > 1): ?>
             <a href="javascript:void(0);" class="page-link prev"
-                onclick="loadPage(<?= $page - 1; ?>, <?= $limit; ?>, '<?= htmlspecialchars($search); ?>')">&laquo;</a>
+                onclick="loadPage(<?= $page - 1; ?>, <?= $limit; ?>, '<?= htmlspecialchars($search); ?>', '<?= $order; ?>')">&laquo;</a>
         <?php endif; ?>
 
         <!-- Always show first page -->
         <a href="javascript:void(0);" class="page-link <?= $page == 1 ? 'active' : ''; ?>"
-            onclick="loadPage(1, <?= $limit; ?>, '<?= htmlspecialchars($search); ?>')">1</a>
+            onclick="loadPage(1, <?= $limit; ?>, '<?= htmlspecialchars($search); ?>', '<?= $order; ?>')">1</a>
 
         <!-- Middle pages -->
         <?php
@@ -173,7 +216,7 @@ $result = $stmt->get_result();
 
         for ($i = $start; $i <= $end; $i++): ?>
             <a href="javascript:void(0);" class="page-link <?= $i == $page ? 'active' : ''; ?>"
-                onclick="loadPage(<?= $i; ?>, <?= $limit; ?>, '<?= htmlspecialchars($search); ?>')">
+                onclick="loadPage(<?= $i; ?>, <?= $limit; ?>, '<?= htmlspecialchars($search); ?>', '<?= $order; ?>')">
                 <?= $i; ?>
             </a>
         <?php endfor; ?>
@@ -184,14 +227,14 @@ $result = $stmt->get_result();
                 <span class="ellipsis">...</span>
             <?php endif; ?>
             <a href="javascript:void(0);" class="page-link <?= $page == $totalPages ? 'active' : ''; ?>"
-                onclick="loadPage(<?= $totalPages; ?>, <?= $limit; ?>, '<?= htmlspecialchars($search); ?>')">
+                onclick="loadPage(<?= $totalPages; ?>, <?= $limit; ?>, '<?= htmlspecialchars($search); ?>', '<?= $order; ?>')">
                 <?= $totalPages; ?>
             </a>
         <?php endif; ?>
 
         <?php if ($page < $totalPages): ?>
             <a href="javascript:void(0);" class="page-link next"
-                onclick="loadPage(<?= $page + 1; ?>, <?= $limit; ?>, '<?= htmlspecialchars($search); ?>')">&raquo;</a>
+                onclick="loadPage(<?= $page + 1; ?>, <?= $limit; ?>, '<?= htmlspecialchars($search); ?>', '<?= $order; ?>')">&raquo;</a>
         <?php endif; ?>
     </div>
 

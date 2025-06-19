@@ -18,6 +18,9 @@ $limit = isset($_GET['limit']) ? (int) $_GET['limit'] : $defaultLimit; // Ambil 
 $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
 
+// Ambil parameter order dari URL, default DESC
+$order = isset($_GET['order']) ? ($_GET['order'] === 'DESC' ? 'DESC' : 'ASC') : 'DESC';
+
 // Query untuk menghitung total data
 $totalQuery = "SELECT COUNT(*) as total FROM registrations
                 JOIN users ON registrations.user_id = users.id
@@ -35,7 +38,7 @@ $totalResult = $conn->query($totalQuery);
 $totalData = $totalResult->fetch_assoc()['total'];
 $totalPages = ceil($totalData / $limit);
 
-// Query untuk mengambil data dengan pagination
+// Query untuk mengambil data dengan pagination dan urutan
 $query = "SELECT registrations.*, users.username FROM registrations
             JOIN users ON registrations.user_id = users.id
             WHERE registrations.status != 'Terdaftar'
@@ -50,6 +53,7 @@ $query = "SELECT registrations.*, users.username FROM registrations
             OR registrations.negara_pengumuman LIKE '%$search%'
             OR registrations.kota_pengumuman LIKE '%$search%'
             OR registrations.nomor_sertifikat LIKE '%$search%')
+            ORDER BY created_at $order
             LIMIT $limit OFFSET $offset";
 $result = $conn->query($query);
 ?>
@@ -85,7 +89,26 @@ $result = $conn->query($query);
             <thead>
                 <tr>
                     <th>Username</th>
-                    <th>Tanggal Pengajuan</th>
+                    <th>
+                        <div class="sortable-header">
+                            <a href="javascript:void(0);"
+                                onclick="loadContent('tinjau_pengajuan.php?page=<?= $page; ?>&order=<?= $order === 'ASC' ? 'DESC' : 'ASC'; ?>')"
+                                class="sort-link <?= $order === 'ASC' ? 'active-order' : ''; ?>"
+                                title="<?= $order === 'ASC' ? 'Urutkan Dari Yang Terbaru' : 'Urutkan Dari Yang Terlama'; ?>">
+                                Tanggal Pengajuan
+                            </a>
+                            <div class="sort-buttons">
+                                <a href="javascript:void(0);"
+                                    onclick="loadContent('tinjau_pengajuan.php?page=<?= $page; ?>&order=ASC')"
+                                    class="<?= $order === 'ASC' ? 'active-order' : ''; ?>"
+                                    title="Urutkan Dari Yang Terlama">&#9650;</a>
+                                <a href="javascript:void(0);"
+                                    onclick="loadContent('tinjau_pengajuan.php?page=<?= $page; ?>&order=DESC')"
+                                    class="<?= $order === 'DESC' ? 'active-order' : ''; ?>"
+                                    title="Urutkan Dari Yang Terbaru">&#9660;</a>
+                            </div>
+                        </div>
+                    </th>
                     <th>Judul</th>
                     <th>Detail Ciptaan</th>
                     <th>Pencipta</th>
@@ -163,12 +186,12 @@ $result = $conn->query($query);
     <div class="pagination">
         <?php if ($page > 1): ?>
             <a href="javascript:void(0);" class="page-link prev"
-                onclick="loadPage(<?= $page - 1; ?>, <?= $limit; ?>, '<?= htmlspecialchars($search); ?>')">&laquo;</a>
+                onclick="loadPage(<?= $page - 1; ?>, <?= $limit; ?>, '<?= htmlspecialchars($search); ?>', '<?= $order; ?>')">&laquo;</a>
         <?php endif; ?>
 
         <!-- Always show first page -->
         <a href="javascript:void(0);" class="page-link <?= $page == 1 ? 'active' : ''; ?>"
-            onclick="loadPage(1, <?= $limit; ?>, '<?= htmlspecialchars($search); ?>')">1</a>
+            onclick="loadPage(1, <?= $limit; ?>, '<?= htmlspecialchars($search); ?>', '<?= $order; ?>')">1</a>
 
         <!-- Middle pages -->
         <?php
@@ -181,7 +204,7 @@ $result = $conn->query($query);
 
         for ($i = $start; $i <= $end; $i++): ?>
             <a href="javascript:void(0);" class="page-link <?= $i == $page ? 'active' : ''; ?>"
-                onclick="loadPage(<?= $i; ?>, <?= $limit; ?>, '<?= htmlspecialchars($search); ?>')">
+                onclick="loadPage(<?= $i; ?>, <?= $limit; ?>, '<?= htmlspecialchars($search); ?>', '<?= $order; ?>')">
                 <?= $i; ?>
             </a>
         <?php endfor; ?>
@@ -192,14 +215,14 @@ $result = $conn->query($query);
                 <span class="ellipsis">...</span>
             <?php endif; ?>
             <a href="javascript:void(0);" class="page-link <?= $page == $totalPages ? 'active' : ''; ?>"
-                onclick="loadPage(<?= $totalPages; ?>, <?= $limit; ?>, '<?= htmlspecialchars($search); ?>')">
+                onclick="loadPage(<?= $totalPages; ?>, <?= $limit; ?>, '<?= htmlspecialchars($search); ?>', '<?= $order; ?>')">
                 <?= $totalPages; ?>
             </a>
         <?php endif; ?>
 
         <?php if ($page < $totalPages): ?>
             <a href="javascript:void(0);" class="page-link next"
-                onclick="loadPage(<?= $page + 1; ?>, <?= $limit; ?>, '<?= htmlspecialchars($search); ?>')">&raquo;</a>
+                onclick="loadPage(<?= $page + 1; ?>, <?= $limit; ?>, '<?= htmlspecialchars($search); ?>', '<?= $order; ?>')">&raquo;</a>
         <?php endif; ?>
     </div>
 </div>
