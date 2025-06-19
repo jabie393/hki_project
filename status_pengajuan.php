@@ -139,6 +139,7 @@ $result = $stmt->get_result();
                         <div class="sort-buttons">
                             <a href="javascript:void(0);"
                                 onclick="loadContent('status_pengajuan.php?page=<?= $page; ?>&order=ASC')"
+                                id="sort-asc"
                                 class="<?= $order === 'ASC' ? 'active-order' : ''; ?>"
                                 title="Urutkan Dari Yang Terlama">&#9650;</a>
                             <a href="javascript:void(0);"

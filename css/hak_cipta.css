@@ -59,14 +59,12 @@
 #hak_cipta-page #hak_cipta-table .sort-buttons {
   display: flex;
   flex-direction: column;
-  line-height: 1;
 }
 
 #hak_cipta-page #hak_cipta-table .sort-buttons a {
   font-size: 10px;
   text-decoration: none;
   color: #204d79;
-  padding: 1px;
   transition: color 0.2s;
 }
 
@@ -77,6 +75,10 @@
 #hak_cipta-page #hak_cipta-table .sort-buttons .active-order {
   font-weight: bold;
   color: #99adc2;
+}
+
+#sort-asc {
+  height: 9px;
 }
 
 #hak_cipta-page .profile-link {

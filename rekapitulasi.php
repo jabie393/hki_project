@@ -143,6 +143,7 @@ $result = $conn->query($query);
                                 </a>
                                 <div class="sort-buttons">
                                     <a href="?<?php echo http_build_query(array_merge($_GET, ['order' => 'ASC'])); ?>"
+                                        id="sort-asc"
                                         class="<?= $order === 'ASC' ? 'active-order' : ''; ?>"
                                         title="Urutkan Dari Yang Terlama">&#9650;</a>
                                     <a href="?<?php echo http_build_query(array_merge($_GET, ['order' => 'DESC'])); ?>"

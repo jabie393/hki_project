@@ -163,6 +163,11 @@ body {
 }
 
 /* Style Sortable */
+a.sort-link {
+  color: white;
+  text-decoration: none;
+}
+
 .sortable-header {
   display: flex;
   align-items: center;
@@ -174,14 +179,12 @@ body {
 .sort-buttons {
   display: flex;
   flex-direction: column;
-  line-height: 1;
 }
 
 .sort-buttons a {
   font-size: 10px;
   text-decoration: none;
   color: #204d79;
-  padding: 1px;
   transition: color 0.2s;
 }
 
@@ -193,9 +196,9 @@ body {
   font-weight: bold;
   color: #99adc2;
 }
-a.sort-link {
-  color: white;
-  text-decoration: none;
+
+#sort-asc {
+  height: 9px;
 }
 
 /* Badge style */
