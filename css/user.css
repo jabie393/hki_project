@@ -77,11 +77,6 @@
   white-space: nowrap;
 }
 
-table.dataTable {
-  width: 100% !important;
-  margin-bottom: 20px !important;
-}
-
 #user-page .card-container {
   display: flex;
   flex-wrap: nowrap;
@@ -113,6 +108,19 @@ table.dataTable {
 
 #user-page .btn-info:hover {
   background-color: #002a5e;
+}
+
+/*=== STYLING DATA TABLES ===*/
+table.dataTable {
+  width: 100% !important;
+  margin-bottom: 20px !important;
+}
+
+table.dataTable thead>tr>th.sorting {
+  outline: none;
+  -webkit-tap-highlight-color: transparent; /* Menghilangkan highlight pada elemen saat di-tap di Chrome */
+  -moz-tap-highlight-color: none; /* Firefox */
+  -ms-tap-highlight-color: none; /* Internet Explorer/Edge */
 }
 
 /* DataTables controls responsive & sticky */
