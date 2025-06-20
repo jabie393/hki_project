@@ -35,10 +35,10 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
 
 <div id="pengajuan_baru-page">
     <div class="download-container">
-        <a href="services/download_template.php?doc_type=surat_pernyataan" class="download-btn">
+        <a href="services/download_template.php?doc_type=surat_pernyataan" class="btn download-btn">
             <button>Surat Pernyataan</button>
         </a>
-        <a href="services/download_template.php?doc_type=surat_pengalihan_hak" class="download-btn">
+        <a href="services/download_template.php?doc_type=surat_pengalihan_hak" class="btn download-btn">
             <button>Surat Pengalihan Hak</button>
         </a>
     </div>
@@ -144,12 +144,13 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
         <!--List Pencipta-->
         <label>Pencipta:</label>
         <div id="pencipta-list" class="pencipta-container"></div>
-        <button type="button" id="addPencipta">Tambah Pencipta</button>
+        <button type="button" id="addPencipta" class="btn">Tambah Pencipta</button>
         <!-- input tersembunyi -->
         <div id="pencipta-hidden-inputs"></div>
-        <button type="submit">Kirim</button>
+        <button type="submit" class="btn">Kirim</button>
     </form>
 </div>
+
 <!-- Modal Tambah Pencipta -->
 <div id="modal-page">
     <div id="modalPencipta" class="modal" style="display: none;">

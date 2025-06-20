@@ -5,6 +5,13 @@
   color: #2c3e50;
 }
 
+#hak_cipta-page a {
+  outline: none;
+  -webkit-tap-highlight-color: transparent; /* Menghilangkan highlight pada elemen saat di-tap di Chrome */
+  -moz-tap-highlight-color: none; /* Firefox */
+  -ms-tap-highlight-color: none; /* Internet Explorer/Edge */
+}
+
 #hak_cipta-page h2 {
   text-align: center;
   color: #004080;

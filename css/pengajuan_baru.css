@@ -36,6 +36,10 @@
   margin-top: 5px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   transition: background-color 0.2s;
+  outline: none;
+  -webkit-tap-highlight-color: transparent; /* Menghilangkan highlight pada elemen saat di-tap di Chrome */
+  -moz-tap-highlight-color: none; /* Firefox */
+  -ms-tap-highlight-color: none; /* Internet Explorer/Edge */
 }
 
 #pengajuan_baru-page .custom-file-label:hover {
@@ -100,6 +104,13 @@
 #pengajuan_baru-page textarea {
   resize: vertical;
   min-height: 100px;
+}
+
+#pengajuan_baru-page .btn {
+  outline: none;
+  -webkit-tap-highlight-color: transparent; /* Menghilangkan highlight pada elemen saat di-tap di Chrome */
+  -moz-tap-highlight-color: none; /* Firefox */
+  -ms-tap-highlight-color: none; /* Internet Explorer/Edge */
 }
 
 #pengajuan_baru-page button {
@@ -189,11 +200,31 @@
 #pengajuan_baru-page .pencipta button {
   margin-right: 8px;
   margin-top: 8px;
-  background-color: #6c757d;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-#pengajuan_baru-page .pencipta button:hover {
-  background-color: #5a6268;
+#pengajuan_baru-page .editPencipta {
+  background-color: #ffc107;
+  color: white;
+}
+
+#pengajuan_baru-page .editPencipta:hover {
+  background-color: #e0a800;
+}
+
+#pengajuan_baru-page .hapusPencipta {
+  background-color: #ef4444;
+  color: white;
+}
+
+#pengajuan_baru-page .hapusPencipta:hover {
+  background-color: #b91c1c;
 }
 
 /*=== Dark mode styles ===*/

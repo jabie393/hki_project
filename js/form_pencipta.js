@@ -136,8 +136,8 @@ function initModalPencipta() {
             penciptaDiv.innerHTML = `
                 <h4 class="pencipta-label">Pencipta</h4>
                 <strong>${nama}</strong><br>
-                <button type="button" class="editPencipta">Edit</button>
-                <button type="button" class="hapusPencipta">Hapus</button>
+                <button type="button" class="btn editPencipta">Edit</button>
+                <button type="button" class="btn hapusPencipta">Hapus</button>
             `;
 
             penciptaDiv.dataset.form = JSON.stringify(data);

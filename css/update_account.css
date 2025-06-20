@@ -53,6 +53,10 @@
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.2s;
+  outline: none;
+  -webkit-tap-highlight-color: transparent; /* Menghilangkan highlight pada elemen saat di-tap di Chrome */
+  -moz-tap-highlight-color: none; /* Firefox */
+  -ms-tap-highlight-color: none; /* Internet Explorer/Edge */
 }
 
 #update_account-page button:hover {

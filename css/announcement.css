@@ -110,6 +110,10 @@
   cursor: pointer;
   font-weight: bold;
   transition: background 0.3s;
+  outline: none;
+  -webkit-tap-highlight-color: transparent; /* Menghilangkan highlight pada elemen saat di-tap di Chrome */
+  -moz-tap-highlight-color: none; /* Firefox */
+  -ms-tap-highlight-color: none; /* Internet Explorer/Edge */
 }
 
 #announcement-page button:hover {
@@ -128,6 +132,10 @@
   margin-left: 10px;
   transition: background 0.3s ease;
   text-decoration: none;
+  outline: none;
+  -webkit-tap-highlight-color: transparent; /* Menghilangkan highlight pada elemen saat di-tap di Chrome */
+  -moz-tap-highlight-color: none; /* Firefox */
+  -ms-tap-highlight-color: none; /* Internet Explorer/Edge */
 }
 
 #announcement-page .delete-btn:hover {

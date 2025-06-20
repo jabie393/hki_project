@@ -8,6 +8,13 @@ body {
   font-family: "Inter", sans-serif;
 }
 
+#hak_cipta-page a {
+  outline: none;
+  -webkit-tap-highlight-color: transparent; /* Menghilangkan highlight pada elemen saat di-tap di Chrome */
+  -moz-tap-highlight-color: none; /* Firefox */
+  -ms-tap-highlight-color: none; /* Internet Explorer/Edge */
+}
+
 /* Background */
 .background-image {
   position: fixed;
@@ -62,6 +69,10 @@ body {
   display: inline-block;
   text-decoration: none;
   text-align: center;
+  outline: none;
+  -webkit-tap-highlight-color: transparent; /* Menghilangkan highlight pada elemen saat di-tap di Chrome */
+  -moz-tap-highlight-color: none; /* Firefox */
+  -ms-tap-highlight-color: none; /* Internet Explorer/Edge */
 }
 
 .btn-info {

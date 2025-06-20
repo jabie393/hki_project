@@ -65,6 +65,10 @@
   border: none;
   color: #888;
   transition: color 0.3s ease;
+  outline: none;
+  -webkit-tap-highlight-color: transparent; /* Menghilangkan highlight pada elemen saat di-tap di Chrome */
+  -moz-tap-highlight-color: none; /* Firefox */
+  -ms-tap-highlight-color: none; /* Internet Explorer/Edge */
 }
 
 .modal-content .close:hover {
@@ -294,6 +298,9 @@
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.2s;
+  -webkit-tap-highlight-color: transparent; /* Menghilangkan highlight pada elemen saat di-tap di Chrome */
+  -moz-tap-highlight-color: none; /* Firefox */
+  -ms-tap-highlight-color: none; /* Internet Explorer/Edge */
 }
 
 #modal-page .btn:hover {

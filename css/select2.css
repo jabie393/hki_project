@@ -1,12 +1,19 @@
 /*=== Select normal ===*/
 select {
-    width: 100%;
-    border-radius: 8px;
-    padding: 10px 12px;
-    border: 1px solid #ced4da;
-    background-color: #eef2ff;
+  width: 100%;
+  border-radius: 8px;
+  padding: 10px 12px;
+  border: 1px solid #ced4da;
+  background-color: #eef2ff;
 }
 /*=== Select2 Styling ===*/
+.select2-container {
+  outline: none;
+  -webkit-tap-highlight-color: transparent; /* Menghilangkan highlight pada elemen saat di-tap di Chrome */
+  -moz-tap-highlight-color: none; /* Firefox */
+  -ms-tap-highlight-color: none; /* Internet Explorer/Edge */
+}
+
 .select2-results__option img {
   vertical-align: middle;
   margin-right: 10px !important;
@@ -109,9 +116,9 @@ select {
 /* === Dark Mode === */
 /* Dark mode styles for Select normal */
 body.dark-mode select {
-    background-color: #333333;
-    color: #ffffff;
-    border: 1px solid #444444;
+  background-color: #333333;
+  color: #ffffff;
+  border: 1px solid #444444;
 }
 
 /* Dark mode styles for Select2 */
