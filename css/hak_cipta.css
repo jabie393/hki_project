@@ -212,12 +212,12 @@
 }
 
 #hak_cipta-page .btn-danger {
-  background-color: #dc3545;
+  background-color: #ef4444;
   color: #fff;
 }
 
 #hak_cipta-page .btn-danger:hover {
-  background-color: #e63946;
+  background-color: #b91c1c;
 }
 
 #hak_cipta-page .btn-download {
@@ -546,6 +546,14 @@ body.dark-mode #hak_cipta-page .search-group .btn {
 
 body.dark-mode #hak_cipta-page .search-group .btn:hover {
   background-color: #555555; /* Warna tombol search saat hover */
+}
+
+body.dark-mode #hak_cipta-page .btn-danger {
+  background-color: #b91c1c;
+}
+
+body.dark-mode #hak_cipta-page .btn-danger:hover {
+  background-color: #7f1d1d;
 }
 
 /* Pagination */

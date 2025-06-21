@@ -212,6 +212,8 @@ function initModalPencipta() {
 
     }
 
+    let suppressNationalityChange = false;
+
     function openModalForEdit(div) {
         editingPencipta = div;
         const values = JSON.parse(div.dataset.form);
@@ -229,7 +231,8 @@ function initModalPencipta() {
             const nationalitySelect = document.getElementById("nationalityform");
 
             // Set selected value
-            $(nationalitySelect).val(selectedCountryName).trigger("change");
+            suppressNationalityChange = true;
+            $(nationalitySelect).val(selectedCountryName).trigger("change.select2");
 
             // Ambil kode ISO2 dari option terpilih
             const selectedOption = Array.from(nationalitySelect.options).find(opt => opt.value === selectedCountryName);
@@ -305,6 +308,11 @@ function initModalPencipta() {
 
     // Handler negara
     $(document).on("change", "#nationalityform", async function () {
+        if (suppressNationalityChange) {
+            suppressNationalityChange = false;
+            return; // lewati auto-trigger dari edit
+        }
+
         const selectedCountryCode = this.options[this.selectedIndex].dataset.iso2;
         const isIndonesia = selectedCountryCode === "ID";
         const indoForm = document.getElementById("indonesia-form");
@@ -327,8 +335,17 @@ function initModalPencipta() {
 
             if (!hasStates) {
                 // Negara tanpa state (seperti Antartica)
-                $(stateSelect).empty().append('<option value="">-- Tidak tersedia --</option>').prop('disabled', true);
-                $(citySelect).empty().append('<option value="">-- Tidak tersedia --</option>').prop('disabled', true);
+                if ($(stateSelect).hasClass("select2-hidden-accessible")) {
+                    $(stateSelect).select2("destroy");
+                }
+                $(stateSelect).empty().append('<option value="">-- Not Available --</option>').prop('disabled', true);
+                initializeSelect2(stateSelect, "-- Not Available --");
+
+                if ($(citySelect).hasClass("select2-hidden-accessible")) {
+                    $(citySelect).select2("destroy");
+                }
+                $(citySelect).empty().append('<option value="">-- Not Available --</option>').prop('disabled', true);
+                initializeSelect2(citySelect, "-- Not Available --");
 
                 // Nonaktifkan required field untuk semua field alamat
                 document.querySelector('.manual-kecamatan').classList.remove('required-field');
@@ -368,13 +385,18 @@ function initModalPencipta() {
             const hasCities = await stateHasCities(selectedCountryCode, stateCode);
 
             if (!hasCities) {
-                $(citySelect).empty().append('<option value="">-- Tidak tersedia --</option>').prop('disabled', true);
+                // Jika tidak ada kota: isi "-" dan nonaktifkan dropdown
+                $(citySelect)
+                    .empty()
+                    .append('<option value="-">-- Not Available --</option>')
+                    .prop('disabled', true);
+                $(citySelect).val("-").trigger("change");
 
-                // Nonaktifkan required field untuk city, district, dan village
+                // Nonaktifkan required
                 document.querySelector('.manual-kecamatan').classList.remove('required-field');
                 document.querySelector('.manual-kelurahan').classList.remove('required-field');
 
-                // Isi otomatis dengan "-"
+                // Isi otomatis
                 document.querySelector('.manual-kecamatan').value = "-";
                 document.querySelector('.manual-kelurahan').value = "-";
                 return;
@@ -386,7 +408,7 @@ function initModalPencipta() {
             });
             const cities = await response.json();
 
-            $(citySelect).empty().append('<option value="">-- Pilih City --</option>').prop('disabled', false);
+            $(citySelect).empty().append('<option value="">-- Select City --</option>').prop('disabled', false);
 
             cities.forEach(c => {
                 const option = new Option(c.name, c.name);
@@ -424,12 +446,13 @@ function initModalPencipta() {
                 headers: { "X-CSCAPI-KEY": configCSC.ckey }
             });
             const cities = await response.json();
-            return cities && cities.length > 0;
+            return Array.isArray(cities) && cities.length > 0;
         } catch (error) {
             console.error("Error checking cities:", error);
             return false;
         }
     }
+
 
     // Fungsi untuk memuat data wilayah Indonesia dengan Select2
     function loadIndonesianRegions() {
@@ -580,7 +603,7 @@ function initModalPencipta() {
                     if (data.data && data.data.length > 0) {
                         kodeposInput.value = data.data[0].code;
                     } else {
-                        kodeposInput.value = "Tidak ditemukan";
+                        kodeposInput.value = "Tidak Ditemukan";
                     }
                 })
                 .catch(() => {
@@ -609,12 +632,12 @@ function initModalPencipta() {
         }
 
         // Reset dropdown
-        $(stateSelect).empty().append('<option value="">Pilih State</option>').prop('disabled', false);
-        $(citySelect).empty().append('<option value="">Pilih City</option>').prop('disabled', true);
+        $(stateSelect).empty().append('<option value="">-- Select State --</option>').prop('disabled', false);
+        $(citySelect).empty().append('<option value="">-- Not Available --</option>').prop('disabled', true);
 
         // Inisialisasi ulang Select2 dengan placeholder
-        initializeSelect2(stateSelect, "Pilih State");
-        initializeSelect2(citySelect, "Pilih City");
+        initializeSelect2(stateSelect, "-- Select State --");
+        initializeSelect2(citySelect, "-- Select City --");
 
         // Load states
         fetch(`${configCSC.cUrl}/${selectedCountry}/states`, {
@@ -632,41 +655,8 @@ function initModalPencipta() {
                     option.dataset.iso2 = state.iso2;
                     $(stateSelect).append(option);
                 });
-                initializeSelect2(stateSelect, "Pilih State");
+                initializeSelect2(stateSelect, "-- Select State --");
             });
-
-        // Event ketika state dipilih
-        $(stateSelect).off('change').on('change', function () {
-            const selectedStateIso2 = $(this).find(':selected').data('iso2');
-            const stateCode = selectedStateIso2;
-
-            // Destroy Select2 sebelum mengubah isi
-            if ($(citySelect).hasClass("select2-hidden-accessible")) {
-                $(citySelect).select2("destroy");
-            }
-            // Reset city dropdown
-            $(citySelect).empty().append('<option value="">Pilih City</option>').prop('disabled', false);
-            initializeSelect2(citySelect, "Pilih City");
-
-            if (!stateCode) return;
-
-            fetch(`${configCSC.cUrl}/${selectedCountry}/states/${stateCode}/cities`, {
-                headers: { "X-CSCAPI-KEY": configCSC.ckey }
-            })
-                .then(res => res.json())
-                .then(data => {
-                    // Destroy Select2 sebelum mengubah isi
-                    if ($(citySelect).hasClass("select2-hidden-accessible")) {
-                        $(citySelect).select2("destroy");
-                    }
-                    $(citySelect).find('option:not(:first)').remove();
-                    data.forEach(city => {
-                        const option = new Option(city.name, city.name);
-                        $(citySelect).append(option);
-                    });
-                    initializeSelect2(citySelect, "Pilih City");
-                });
-        });
     }
 
     // Fungsi untuk memuat data wilayah Indonesia dengan nilai yang sudah ada (untuk edit)
@@ -719,7 +709,30 @@ function initModalPencipta() {
         });
     }
 
-    // Fungsi untuk memuat data state dan city dengan nilai yang sudah ada (untuk edit)
+    function waitForOption(selectElement, valueToWait, timeout = 5000) {
+        return new Promise((resolve, reject) => {
+            const optionExists = () => [...selectElement.options].some(opt => opt.value === valueToWait);
+            if (optionExists()) {
+                resolve();
+                return;
+            }
+
+            const observer = new MutationObserver(() => {
+                if (optionExists()) {
+                    observer.disconnect();
+                    resolve();
+                }
+            });
+
+            observer.observe(selectElement, { childList: true });
+
+            setTimeout(() => {
+                observer.disconnect();
+                reject(new Error("Option not found in time: " + valueToWait));
+            }, timeout);
+        });
+    }
+
     async function loadCSCStatesWithValues(selectedCountryCode, values) {
         return new Promise(async (resolve) => {
             const stateSelect = document.querySelector(".state");
@@ -732,28 +745,23 @@ function initModalPencipta() {
             const hasStates = await countryHasStates(selectedCountryCode);
 
             if (!hasStates) {
-                // Negara tanpa state (seperti Antartica)
-                $(stateSelect).empty().append('<option value="">-- Tidak tersedia --</option>').prop('disabled', true);
-                $(citySelect).empty().append('<option value="">-- Tidak tersedia --</option>').prop('disabled', true);
+                $(stateSelect).empty().append('<option value="">-- Not Available --</option>').prop('disabled', true);
+                $(citySelect).empty().append('<option value="">-- Not Available --</option>').prop('disabled', true);
 
-                // Nonaktifkan required field
                 document.querySelector('.manual-kecamatan').classList.remove('required-field');
                 document.querySelector('.manual-kelurahan').classList.remove('required-field');
 
-                // Isi otomatis dengan "-"
                 document.querySelector('.manual-kecamatan').value = "-";
                 document.querySelector('.manual-kelurahan').value = "-";
                 resolve();
                 return;
             }
 
-            // Inisialisasi Select2
-            initializeSelect2(stateSelect, "Pilih State");
-            initializeSelect2(citySelect, "Pilih City");
+            initializeSelect2(stateSelect, "-- Select State --");
+            initializeSelect2(citySelect, "-- Select City --");
 
-            // Reset dropdown
             $(stateSelect).empty().append('<option value="">Loading state...</option>').prop('disabled', false);
-            $(citySelect).empty().append('<option value="">Pilih City</option>').prop('disabled', true);
+            $(citySelect).empty().append('<option value="">-- Not Available --</option>').prop('disabled', true);
 
             try {
                 const response = await fetch(`${configCSC.cUrl}/${selectedCountryCode}/states`, {
@@ -761,34 +769,34 @@ function initModalPencipta() {
                 });
                 const states = await response.json();
 
-                $(stateSelect).empty().append('<option value="">-- Pilih State --</option>');
-
+                $(stateSelect).empty().append('<option value="">-- Select State --</option>');
                 states.forEach(s => {
                     const option = new Option(s.name, s.name);
                     option.dataset.iso2 = s.iso2;
                     $(stateSelect).append(option);
                 });
 
-                // Set state jika ada nilai sebelumnya
                 if (stateName) {
+                    await waitForOption(stateSelect, stateName);
                     $(stateSelect).val(stateName).trigger('change');
 
-                    // Load cities untuk state yang dipilih
                     const selectedStateOption = $(stateSelect).find(`option[value="${stateName}"]`);
                     const selectedStateIso2 = selectedStateOption.data('iso2');
 
                     if (selectedStateIso2) {
-                        // Cek apakah state memiliki city
                         const hasCities = await stateHasCities(selectedCountryCode, selectedStateIso2);
 
                         if (!hasCities) {
-                            $(citySelect).empty().append('<option value="">-- Tidak tersedia --</option>').prop('disabled', true);
+                            // Jika tidak ada kota: isi "-" dan nonaktifkan dropdown
+                            $(citySelect)
+                                .empty()
+                                .append('<option value="-">-- Not Available --</option>')
+                                .prop('disabled', true);
+                            $(citySelect).val("-").trigger("change");
 
-                            // Nonaktifkan required field
                             document.querySelector('.manual-kecamatan').classList.remove('required-field');
                             document.querySelector('.manual-kelurahan').classList.remove('required-field');
 
-                            // Isi otomatis dengan "-"
                             document.querySelector('.manual-kecamatan').value = "-";
                             document.querySelector('.manual-kelurahan').value = "-";
                             document.querySelector('.manual-kodepos').value = "-";
@@ -801,7 +809,7 @@ function initModalPencipta() {
                         });
                         const cities = await cityResponse.json();
 
-                        $(citySelect).empty().append('<option value="">-- Pilih City --</option>');
+                        $(citySelect).empty().append('<option value="">-- Select City --</option>');
                         cities.forEach(c => {
                             const option = new Option(c.name, c.name);
                             $(citySelect).append(option);
@@ -809,12 +817,11 @@ function initModalPencipta() {
 
                         $(citySelect).prop('disabled', false);
 
-                        // Set city jika ada nilai sebelumnya
                         if (cityName) {
-                            $(citySelect).val(cityName);
+                            await waitForOption(citySelect, cityName);
+                            $(citySelect).val(cityName).trigger('change');
                         }
 
-                        // Aktifkan required field
                         document.querySelector('.manual-kecamatan').classList.add('required-field');
                         document.querySelector('.manual-kelurahan').classList.add('required-field');
                     }
@@ -831,12 +838,13 @@ function initModalPencipta() {
 
                 resolve();
             } catch (error) {
-                console.error("Error loading states:", error);
+                console.error("Error loading states or cities:", error);
                 $(stateSelect).empty().append('<option value="">Error loading states</option>');
                 resolve();
             }
         });
     }
+
 
     const configCSC = {
         cUrl: 'https://api.countrystatecity.in/v1/countries',
@@ -884,11 +892,6 @@ function initModalPencipta() {
                 $('#nationalityform').on('select2:open', function () {
                     document.querySelector('.select2-search__field').focus();
                 });
-
-                // Tambahkan trigger change jika ada selectedCountry
-                if (selectedCountry) {
-                    $select.trigger("change");
-                }
             })
             .catch(error => {
                 console.error("Error loading countries:", error);
@@ -1049,8 +1052,8 @@ function initModalPencipta() {
         // Reset dropdown non-Indonesia
         const stateSelect = document.querySelector(".state");
         const citySelect = document.querySelector(".city");
-        if (stateSelect) stateSelect.innerHTML = '<option value="">Pilih State</option>';
-        if (citySelect) citySelect.innerHTML = '<option value="">Pilih City</option>';
+        if (stateSelect) stateSelect.innerHTML = '<option value="">-- Select State --</option>';
+        if (citySelect) citySelect.innerHTML = '<option value="">-- Select City --</option>';
         if (stateSelect) stateSelect.disabled = true;
         if (citySelect) citySelect.disabled = true;
 
@@ -1071,13 +1074,6 @@ function initModalPencipta() {
             editingPencipta = null; // Reset editingPencipta saat modal ditutup
         }
     });
-
-    // Cegah duplikasi event listener
-    if (!window.formSubmitInitialized) {
-        window.formSubmitInitialized = true;
-        initFormSubmission();
-        initModalPencipta();
-    }
 
     // Fungsi inisialisasi Select2 untuk elemen tertentu
     function initializeSelect2(selectElement, placeholder) {

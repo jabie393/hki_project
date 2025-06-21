@@ -322,14 +322,14 @@ body.dark-mode #pengajuan_baru-page .pencipta-label {
   color: #ffffff;
 }
 
-body.dark-mode #pengajuan_baru-page .pencipta button {
-  background-color: #444444;
-  color: #ffffff;
+body.dark-mode #pengajuan_baru-page .hapusPencipta {
+  background-color: #b91c1c;
 }
 
-body.dark-mode #pengajuan_baru-page .pencipta button:hover {
-  background-color: #555555;
+body.dark-mode #pengajuan_baru-page .hapusPencipta:hover {
+  background-color: #7f1d1d;
 }
+
 /*=== End of Dark mode styles ===*/
 
 /* Media Query untuk layar sedang (tablet) */
