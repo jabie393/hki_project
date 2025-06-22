@@ -4,6 +4,7 @@ function pagination() {
         dom: '<"dtable-header"lf>rtip',
         scrollX: true,
         autoWidth: false,
+        order: [[1, 'desc']], // Urutkan berdasarkan tanggal pengajuan (kolom kedua)
         language: {
             search: "",
             lengthMenu: "_MENU_",
@@ -24,6 +25,7 @@ function pagination() {
         dom: '<"dtable-header"lf>rtip',
         scrollX: true,
         autoWidth: false,
+        order: [[1, 'desc']], // Urutkan berdasarkan tanggal pengajuan (kolom kedua)
         language: {
             search: "",
             lengthMenu: "_MENU_",

@@ -10,6 +10,7 @@ $menus = [
     'index'        => ['label' => 'BERANDA', 'href' => 'index'],
     'rekapitulasi' => ['label' => 'REKAPITULASI', 'href' => 'rekapitulasi'],
     $dashboardPage => ['label' => 'PENGAJUAN', 'href' => $dashboardPage],
+    'register'     => ['label' => 'PENGAJUAN', 'href' => 'register'], // Tambahan untuk register
 ];
 
 // Jika sedang di about, menampilkan semua menu (tanpa TENTANG)
@@ -19,17 +20,21 @@ if ($currentPage === 'about') {
         echo "<a href=\"{$menus[$key]['href']}\">{$menus[$key]['label']}</a>";
     }
 } else {
+    // Untuk halaman register, gunakan urutan dan label seperti pengajuan
+    $isRegister = ($currentPage === 'register');
+    $activePage = $isRegister ? 'register' : $currentPage;
+
     // Menghilangkan menu sesuai halaman aktif
-    $filtered = array_filter($menus, function($k) use ($currentPage) {
-        return $k !== $currentPage;
+    $filtered = array_filter($menus, function($k) use ($activePage) {
+        return $k !== $activePage;
     }, ARRAY_FILTER_USE_KEY);
 
     // Urutan link berdasarkan halaman aktif
-    if ($currentPage === 'index') {
+    if ($activePage === 'index') {
         $order = ['rekapitulasi', $dashboardPage];
-    } elseif ($currentPage === 'rekapitulasi') {
+    } elseif ($activePage === 'rekapitulasi') {
         $order = [$dashboardPage, 'index'];
-    } elseif ($currentPage === $dashboardPage) {
+    } elseif ($activePage === $dashboardPage || $activePage === 'register') {
         $order = ['rekapitulasi', 'index'];
     } else {
         $order = array_keys($filtered);
@@ -37,9 +42,14 @@ if ($currentPage === 'about') {
 
     // Menampilkan link sesuai urutan
     foreach ($order as $key) {
-        echo "<a href=\"{$menus[$key]['href']}\">{$menus[$key]['label']}</a>";
+        // Untuk halaman register, label dan href sama seperti pengajuan
+        if ($isRegister && $key === $dashboardPage) {
+            echo "<a href=\"register\">PENGAJUAN</a>";
+        } else {
+            echo "<a href=\"{$menus[$key]['href']}\">{$menus[$key]['label']}</a>";
+        }
     }
-    // TENTANG selalu di kanan
+    // TENTANG selalu di kanan, kecuali di about
     echo "<a href=\"about\">TENTANG</a>";
 }
 ?>
