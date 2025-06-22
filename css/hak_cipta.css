@@ -204,15 +204,17 @@
 #hak_cipta-page .btn-safe {
   background-color: #28a745;
   color: #fff;
+  transition: background-color 0.2s;
 }
 
 #hak_cipta-page .btn-safe:hover {
-  background-color: #2ec251;
+  background-color: #18752e;
 }
 
 #hak_cipta-page .btn-danger {
   background-color: #ef4444;
   color: #fff;
+  transition: background-color 0.2s;
 }
 
 #hak_cipta-page .btn-danger:hover {
@@ -223,19 +225,11 @@
   background-color: #6c757d;
   color: #fff;
   margin-bottom: 3px;
+  transition: background-color 0.2s;
 }
 
 #hak_cipta-page .btn-download:hover {
-  background-color: #7a8288;
-}
-
-#hak_cipta-page .btn-primary {
-  background-color: #007bff;
-  color: #fff;
-}
-
-#hak_cipta-page .btn-primary:hover {
-  background-color: #0056b3;
+  background-color: #494f55;
 }
 
 #hak_cipta-page .badge {
@@ -316,8 +310,8 @@
 }
 
 #hak_cipta-page .custom-file-container {
-  margin-right: 10px;
-  width: 150px;
+  margin-right: 18px;
+  width: 60px;
   flex-shrink: 0;
 }
 

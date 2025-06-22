@@ -100,8 +100,7 @@ $result = $conn->query($query);
                             <div class="sort-buttons">
                                 <a href="javascript:void(0);"
                                     onclick="loadContent('manage_rekapitulasi.php?page=<?= $page; ?>&order=ASC')"
-                                    id="sort-asc"
-                                    class="<?= $order === 'ASC' ? 'active-order' : ''; ?>"
+                                    id="sort-asc" class="<?= $order === 'ASC' ? 'active-order' : ''; ?>"
                                     title="Urutkan Dari Yang Terlama">&#9650;</a>
                                 <a href="javascript:void(0);"
                                     onclick="loadContent('manage_rekapitulasi.php?page=<?= $page; ?>&order=DESC')"
@@ -133,8 +132,8 @@ $result = $conn->query($query);
                         <td class="aksi-buttons">
                             <input type="text" spellcheck="false" id="nomor_pengajuan_<?= $row['id'] ?>"
                                 value="<?= htmlspecialchars($row['nomor_pengajuan'] ?? '') ?>" class="input-field">
-                            <button class="btn btn-safe edit-nomor-pengajuan-btn" data-id="<?= $row['id'] ?>">Edit &
-                                Simpan</button>
+                            <button class="btn btn-safe edit-nomor-pengajuan-btn" data-id="<?= $row['id'] ?>">
+                                Edit & Simpan</button>
                         </td>
                         <td><?php echo htmlspecialchars(date('Y-m-d', strtotime($row['created_at']))); ?></td>
                         <td><?= htmlspecialchars($row['judul_hak_cipta']); ?></td>
@@ -172,13 +171,13 @@ $result = $conn->query($query);
                                 <div class="button-row">
                                     <div class="custom-file-container">
                                         <label for="edit_certificate_<?= $row['id'] ?>"
-                                            class="custom-file-label btn btn-info">Pilih
-                                            File</label>
+                                            class="custom-file-label btn btn-info">
+                                            Pilih File</label>
                                         <input type="file" id="edit_certificate_<?= $row['id'] ?>" class="input-file"
                                             accept="image/*,.pdf,.doc,.docx,.zip,.rar,.7z,.tar,.gz" required>
                                     </div>
                                     <button type="button" class="btn btn-safe edit-certificate-btn"
-                                        data-id="<?= $row['id'] ?>">Edit</button>
+                                        data-id="<?= $row['id'] ?>">Edit & Simpan</button>
                                 </div>
                                 <span class="file-name" id="file-name-<?= $row['id'] ?>">Tidak ada file yang dipilih</span>
                             </div>
@@ -186,8 +185,8 @@ $result = $conn->query($query);
                         <td class="aksi-buttons">
                             <input type="text" spellcheck="false" id="nomor_sertifikat_<?= $row['id'] ?>"
                                 value="<?= htmlspecialchars($row['nomor_sertifikat'] ?? '') ?>" class="input-field">
-                            <button class="btn btn-safe edit-nomor-sertifikat-btn" data-id="<?= $row['id'] ?>">Edit &
-                                Simpan</button>
+                            <button class="btn btn-safe edit-nomor-sertifikat-btn" data-id="<?= $row['id'] ?>">
+                                Edit & Simpan</button>
                         </td>
                         <td>
                             <button class="btn btn-danger delete-btn" data-id="<?= $row['id']; ?>"
