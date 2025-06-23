@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['new_certificate']) &
     $query = $conn->query("SELECT user_id, certificate_path FROM registrations WHERE id = '$id'");
     $data = $query->fetch_assoc();
     if (!$data) {
-        echo json_encode(['status' => 'error', 'message' => 'Pendaftaran tidak ditemukan!']);
+        echo json_encode(['status' => 'error', 'message' => 'Pengajuan hak cipta tidak ditemukan!']);
         exit();
     }
 

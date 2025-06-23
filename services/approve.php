@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
     $query = $conn->query("SELECT user_id FROM registrations WHERE id = '$id'");
     $data = $query->fetch_assoc();
     if (!$data) {
-        echo json_encode(['success' => false, 'message' => 'Pendaftaran tidak ditemukan!']);
+        echo json_encode(['success' => false, 'message' => 'Pengajuan hak cipta tidak ditemukan!']);
         exit();
     }
     $user_id = $data['user_id'];
@@ -58,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
     $update_query .= " WHERE id='$id'";
 
     if ($conn->query($update_query)) {
-        echo json_encode(['success' => true, 'message' => 'Pengajuan telah disetujui.']);
+        echo json_encode(['success' => true, 'message' => 'Pengajuan hak cipta telah disetujui.']);
     } else {
         echo json_encode(['success' => false, 'message' => 'Gagal memperbarui data.']);
     }

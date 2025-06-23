@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'], $_POST['nomor_pe
 
     // Pastikan Nomor Pengajuan tidak kosong
     if (empty($nomor_pengajuan)) {
-        echo json_encode(['status' => 'error', 'message' => 'Nomor Pengajuan tidak boleh kosong!']);
+        echo json_encode(['status' => 'error', 'message' => 'Nomor hak cipta tidak boleh kosong!']);
         exit();
     }
 
@@ -24,9 +24,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'], $_POST['nomor_pe
     $stmt->bind_param("si", $nomor_pengajuan, $id);
 
     if ($stmt->execute()) {
-        echo json_encode(['status' => 'success', 'message' => 'Nomor Pengajuan berhasil diperbarui!']);
+        echo json_encode(['status' => 'success', 'message' => 'Nomor hak cipta berhasil diperbarui!']);
     } else {
-        echo json_encode(['status' => 'error', 'message' => 'Gagal memperbarui Nomor Pengajuan!']);
+        echo json_encode(['status' => 'error', 'message' => 'Gagal memperbarui nomor hak cipta!']);
     }
 
     $stmt->close();

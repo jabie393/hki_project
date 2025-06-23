@@ -92,12 +92,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt_doc->bind_param("iss", $reg_id, $file_name, $target_file);
             $stmt_doc->execute();
 
-            echo "Pendaftaran berhasil dikirim!";
+            echo "Pengajuan hak cipta berhasil dikirim!";
         } else {
             echo "Gagal mengunggah dokumen.";
         }
     } else {
-        echo "Terjadi kesalahan saat menyimpan data pendaftaran.";
+        echo "Terjadi kesalahan saat menyimpan data hak cipta.";
     }
 
     $sql->close();
