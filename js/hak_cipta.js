@@ -229,7 +229,7 @@ document.querySelectorAll('.delete-btn').forEach(button => {
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Dihapus',
-                                text: 'Hak Cipta berhasil dihapus.',
+                                text: 'Hak cipta berhasil dihapus!',
                                 timer: 2000,
                                 showConfirmButton: false
                             });

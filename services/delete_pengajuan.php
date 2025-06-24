@@ -47,7 +47,7 @@ if (isset($_GET['id'])) {
 
         $conn->query("DELETE FROM registrations WHERE id = '$id'");
 
-        echo json_encode(['success' => true, 'message' => 'Pengajuan hak cipta berhasil dihapus!']);
+        echo json_encode(['success' => true, 'message' => 'Hak cipta berhasil dihapus!']);
     } else {
         echo json_encode(['success' => false, 'message' => 'Pengajuan hak cipta tidak ditemukan!']);
     }
