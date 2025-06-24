@@ -66,6 +66,31 @@ function afterContentLoaded(url) {
 
     highlightActiveMenu(cleanUrl);
 
+    // Tampilkan menu revisi hanya jika revisi.php aktif
+    const revisiMenu = document.getElementById('menu-revisi');
+    if (revisiMenu) {
+        if (cleanUrl.endsWith('revisi.php')) {
+            revisiMenu.style.display = '';
+
+            // Tambahkan event untuk menutup sidebar jika diklik di layar kecil
+            const revisiLink = revisiMenu.querySelector('a');
+            if (revisiLink) {
+                revisiLink.onclick = function(e) {
+                    // Jika di layar kecil, tutup sidebar
+                    if (window.innerWidth < 768) {
+                        document.getElementById('sidebar').classList.remove('show');
+                        document.getElementById('sidebar-toggle').classList.remove('hidden');
+                        document.getElementById('sidebar-overlay').classList.remove('show');
+                    }
+                    // Tetap return false agar tidak reload
+                    return false;
+                };
+            }
+        } else {
+            revisiMenu.style.display = 'none';
+        }
+    }
+
     // Inisialisasi halaman spesifik
     if (cleanUrl.endsWith("admin.php")) {
         if (typeof initAdminPage === "function") initAdminPage();
@@ -79,6 +104,13 @@ function afterContentLoaded(url) {
         if (typeof initPengajuanBaru === "function") initPengajuanBaru();
         if (typeof setupFileValidation === "function") setupFileValidation();
         if (typeof initFormSubmission === "function") initFormSubmission();
+        if (typeof initModalPencipta === "function") initModalPencipta();
+    }
+
+    if (cleanUrl.endsWith("revisi.php")) {
+        if (typeof initPengajuanBaru === "function") initPengajuanBaru();
+        if (typeof setupFileValidation === "function") setupFileValidation();
+        if (typeof initReviseFormSubmission === "function") initReviseFormSubmission();
         if (typeof initModalPencipta === "function") initModalPencipta();
     }
 

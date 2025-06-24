@@ -17,9 +17,10 @@ $page = substr($_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"], "/") + 
 <section id="sidebar" class="sidebar">
     <button id="arrowToggle">&#8592;</button>
     <a href="" class="brand">
-    <img src="assets/icon/unira.png" alt="Unira Icon" style="width: 30px; height: 30px;">
+        <img src="assets/icon/unira.png" alt="Unira Icon" style="width: 30px; height: 30px;">
         <?php if ($role === 'admin'): ?>
-            <span id="sidebar-username" class="text">Halo, <?= htmlspecialchars($username) ?>! <i class="fas fa-check-circle" title="Admin"></i></span>
+            <span id="sidebar-username" class="text">Halo, <?= htmlspecialchars($username) ?>! <i
+                    class="fas fa-check-circle" title="Admin"></i></span>
         <?php else: ?>
             <span id="sidebar-username" class="text">Halo, <?= htmlspecialchars($username) ?>!</span>
         <?php endif; ?>
@@ -77,6 +78,11 @@ $page = substr($_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"], "/") + 
             <li class="sidebar-text" title="Status Pengajuan">
                 <a class="menu-link" onclick="loadContent('status_pengajuan.php')">
                     <i class='bx bxs-folder'></i><span class="text">Status Pengajuan</span>
+                </a>
+            </li>
+            <li class="sidebar-text" title="Revisi Hak Cipta" id="menu-revisi" style="display:none;">
+                <a class="menu-link disabled" onclick="return false;" tabindex="-1">
+                    <i class='bx bx-pencil'></i><span class="text">Revisi Hak Cipta</span>
                 </a>
             </li>
             <li class="sidebar-text" title="Update Data Akun">

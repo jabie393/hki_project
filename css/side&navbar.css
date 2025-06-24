@@ -209,6 +209,11 @@ nav .bx-menu {
   color: white;
 }
 
+#sidebar .disabled {
+  cursor: default;
+  background: #c0c0c0;
+}
+
 /* Switch mode */
 .switch-mode {
   width: 50px;
@@ -401,6 +406,16 @@ body.dark-mode #sidebar .menu-link {
 body.dark-mode #sidebar .menu-link.active {
   background-color: #333333; /* Warna menu aktif */
   color: #ffffff; /* Warna teks menu aktif */
+}
+
+body.dark-mode #sidebar .disabled {
+  background: #444;
+  color: #bbb;
+}
+
+body.dark-mode #sidebar .side-menu li a:hover,
+body.dark-mode #sidebar .side-menu li.active a {
+  background: rgba(255, 255, 255, 0.2);
 }
 
 body.dark-mode #sidebar .menu-link.active i {

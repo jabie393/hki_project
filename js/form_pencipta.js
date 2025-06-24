@@ -283,6 +283,25 @@ function initModalPencipta() {
                 }
             }
 
+            // Inisialisasi Select2 untuk jenis kelamin
+            const jenisKelaminSelect = $('#jenis_kelamin');
+            if (jenisKelaminSelect.length) {
+                if (jenisKelaminSelect.hasClass('select2-hidden-accessible')) {
+                    jenisKelaminSelect.select2('destroy');
+                }
+                jenisKelaminSelect.select2({
+                    placeholder: "-- Pilih Jenis Kelamin --",
+                    allowClear: true,
+                    width: '100%',
+                    minimumResultsForSearch: Infinity,
+                    dropdownParent: $('#modalPencipta')
+                });
+                // Set value dari data
+                if (values["jenis_kelamin[]"]) {
+                    jenisKelaminSelect.val(values["jenis_kelamin[]"]).trigger('change');
+                }
+            }
+
         });
 
     }
@@ -1101,4 +1120,7 @@ function initModalPencipta() {
         });
     }
     setupFieldChangeHandlers();
+
+    // Ekspor fungsi ke konteks global
+    window.openModalForEdit = openModalForEdit;
 }

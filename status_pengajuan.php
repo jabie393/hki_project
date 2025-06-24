@@ -138,8 +138,7 @@ $result = $stmt->get_result();
                         </a>
                         <div class="sort-buttons">
                             <a href="javascript:void(0);"
-                                onclick="loadContent('status_pengajuan.php?page=<?= $page; ?>&order=ASC')"
-                                id="sort-asc"
+                                onclick="loadContent('status_pengajuan.php?page=<?= $page; ?>&order=ASC')" id="sort-asc"
                                 class="<?= $order === 'ASC' ? 'active-order' : ''; ?>"
                                 title="Urutkan Dari Yang Terlama">&#9650;</a>
                             <a href="javascript:void(0);"
@@ -171,7 +170,7 @@ $result = $stmt->get_result();
                             Pencipta</button>
                     </td>
                     </td>
-                    <td><span
+                    <td class="status-td"><span
                             class="badge badge-<?= strtolower($row['status']) ?>"><?= htmlspecialchars($row['status']) ?></span>
                     </td>
                     <td>
@@ -182,8 +181,10 @@ $result = $stmt->get_result();
                         <?php } ?>
                     </td>
                     <td><?php echo htmlspecialchars($row['nomor_sertifikat'] ?? '-'); ?></td>
-                    <td>
-                        <?php if ($row['status'] == 'Pending') { ?>
+                    <td class="action-td">
+                        <?php if ($row['status'] == 'Pending' || $row['status'] == 'Ditinjau') { ?>
+                            <button class="btn btn-edit revise-btn" data-id="<?= $row['id'] ?>"
+                                data-row="row-<?= $row['id'] ?>">Revisi</button>
                             <button class="btn btn-danger cancel-btn" data-id="<?= $row['id'] ?>"
                                 data-row="row-<?= $row['id'] ?>">Batalkan</button>
                         <?php } else { ?>
@@ -265,5 +266,6 @@ $result = $stmt->get_result();
         </div>
     </div>
 
+    <script src="js/action.js"></script>
     <script src="js/hak_cipta.js"></script>
 </div>

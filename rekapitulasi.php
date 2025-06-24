@@ -177,7 +177,7 @@ $result = $conn->query($query);
                             </td>
                             <td>Universitas Raden Rahmat Malang</td>
                             <td><?= htmlspecialchars($row['nomor_sertifikat'] ?? '-'); ?></td>
-                            <td>
+                            <td class="status-td">
                                 <span class="badge badge-<?= strtolower($row['status']) ?>">
                                     <?= htmlspecialchars($row['status']); ?>
                                 </span>

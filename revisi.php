@@ -34,13 +34,10 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
 </head>
 
 <div id="pengajuan_baru-page">
-    <div class="download-container">
-        <a href="services/download_template.php?doc_type=surat_pernyataan" class="btn download-btn">
-            <button>Surat Pernyataan</button>
-        </a>
-        <a href="services/download_template.php?doc_type=surat_pengalihan_hak" class="btn download-btn">
-            <button>Surat Pengalihan Hak</button>
-        </a>
+    <div class="back-container">
+        <div class="btn cancel-btn">
+            <button class="btn cancel-btn">Batalkan revisi</button>
+        </div>
     </div>
 
     <h2>Form Pengajuan Hak Cipta</h2>
@@ -136,8 +133,7 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
             <label>Lampiran Dokumen:</label>
             <label for="fileInput" class="custom-file-label">📁 Pilih Dokumen</label>
             <input type="file" name="dokumen" id="fileInput" class="custom-file-input"
-                accept=".pdf,.doc,.docx,.zip,.rar,.7z,.tar,.gz" required
-                oninvalid="this.setCustomValidity('Belum ada dokumen.')" oninput="this.setCustomValidity('')" />
+                accept=".pdf,.doc,.docx,.zip,.rar,.7z,.tar,.gz"/>
             <span id="file-name" class="file-name">Belum ada dokumen</span><br>
             <small><em><span style="color: red; font-size: 0.8em;">* </span>Ukuran maksimal dokumen 30MB</em></small>
         </div>
@@ -147,7 +143,8 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
         <button type="button" id="addPencipta" class="btn">Tambah Pencipta</button>
         <!-- input tersembunyi -->
         <div id="pencipta-hidden-inputs"></div>
-        <button type="submit" class="btn">Kirim</button>
+        <input type="hidden" name="revisi_id" id="revisi_id" value="<?= htmlspecialchars($_GET['revisi_id'] ?? '') ?>">
+        <button type="submit" class="btn">Simpan revisi</button>
     </form>
 </div>
 
@@ -169,4 +166,4 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
 
 <script src="js/form_pengajuan.js"></script>
 <script src="js/form_pencipta.js"></script>
-<script src="js/submit_pengajuan.js"></script>
+<script src="js/submit_revisi.js"></script>

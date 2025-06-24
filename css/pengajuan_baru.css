@@ -137,6 +137,15 @@
   z-index: 999;
 }
 
+#pengajuan_baru-page .back-container {
+  position: fixed;
+  top: 75px;
+  right: 20px;
+  display: flex;
+  gap: 10px;
+  z-index: 999;
+}
+
 #pengajuan_baru-page .download-btn button {
   padding: 8px 12px;
   background-color: #004080;
@@ -152,6 +161,23 @@
 
 #pengajuan_baru-page .download-btn button:hover {
   background-color: #002a5e;
+}
+
+#pengajuan_baru-page .cancel-btn button {
+  padding: 8px 12px;
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  white-space: nowrap;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.2s;
+}
+
+#pengajuan_baru-page .cancel-btn button:hover {
+  background-color: #b91c1c;
 }
 
 /* Style form error */
@@ -301,7 +327,14 @@ body.dark-mode #pengajuan_baru-page button:hover {
   background-color: #444444;
 }
 
-/* Download buttons */
+body.dark-mode #pengajuan_baru-page .cancel-btn button {
+  background-color: #b91c1c;
+}
+
+body.dark-mode #pengajuan_baru-page .cancel-btn button:hover {
+  background-color: #7f1d1d;
+}
+
 body.dark-mode #pengajuan_baru-page .custom-file-label {
   background-color: #333333;
   color: #ffffff;
@@ -357,7 +390,8 @@ body.dark-mode #pengajuan_baru-page .hapusPencipta:hover {
     padding: 10px 14px;
   }
 
-  #pengajuan_baru-page .download-btn button {
+  #pengajuan_baru-page .download-btn button,
+  #pengajuan_baru-page .cancel-btn button {
     font-size: 13px;
     padding: 8px 12px;
   }
@@ -395,7 +429,8 @@ body.dark-mode #pengajuan_baru-page .hapusPencipta:hover {
     padding: 8px 12px;
   }
 
-  #pengajuan_baru-page .download-btn button {
+  #pengajuan_baru-page .download-btn button,
+  #pengajuan_baru-page .cancel-btn button {
     font-size: 12px;
     padding: 6px 10px;
   }
