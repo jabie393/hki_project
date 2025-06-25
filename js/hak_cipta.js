@@ -206,6 +206,84 @@ document.querySelectorAll('.approve-btn').forEach(button => {
     });
 });
 
+//== services/review.php (Tombol Tinjau) ==//
+document.querySelectorAll('.review-btn').forEach(button => {
+    button.addEventListener('click', function () {
+        const id = this.dataset.id;
+        const row = this.closest('tr');
+
+        const nomor_pengajuan = row.querySelector("input[name='nomor_pengajuan']").value;
+        const nomor_sertifikat = row.querySelector("input[name='nomor_sertifikat']").value;
+        const certificateInput = row.querySelector(`#certificate_${id}`);
+
+        const formData = new FormData();
+        formData.append('id', id);
+        formData.append('nomor_pengajuan', nomor_pengajuan);
+        formData.append('nomor_sertifikat', nomor_sertifikat);
+
+        if (certificateInput && certificateInput.files.length > 0) {
+            formData.append('certificate', certificateInput.files[0]);
+        }
+
+        Swal.fire({
+            title: 'Tandai sebagai Ditinjau?',
+            text: "Status pengajuan akan menjadi 'Ditinjau'.",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, tinjau!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: "Memproses...",
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                    didOpen: () => {
+                        const xhr = new XMLHttpRequest();
+                        xhr.open("POST", "services/review.php", true);
+                        xhr.onload = function () {
+                            Swal.close();
+                            try {
+                                const response = JSON.parse(xhr.responseText);
+                                if (response.success) {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Berhasil',
+                                        text: response.message,
+                                        showConfirmButton: false,
+                                        timer: 2000
+                                    }).then(() => {
+                                        // Update badge status di tabel
+                                        const statusTd = row.querySelector('.status-td .badge');
+                                        if (statusTd) {
+                                            statusTd.textContent = "Ditinjau";
+                                            statusTd.className = "badge badge-ditinjau";
+                                        }
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Gagal',
+                                        text: response.message,
+                                        showConfirmButton: true,
+                                        confirmButtonText: 'Oke!'
+                                    });
+                                }
+                            } catch (e) {
+                                Swal.fire('Error', 'Terjadi kesalahan: ' + xhr.responseText, 'error');
+                            }
+                        };
+                        xhr.onerror = function () {
+                            Swal.fire('Error', 'Gagal menghubungi server.', 'error');
+                        };
+                        xhr.send(formData);
+                    }
+                });
+            }
+        });
+    });
+});
+
 // services/delete_pengajuan.php
 document.querySelectorAll('.delete-btn').forEach(button => {
     button.addEventListener('click', function () {
@@ -325,12 +403,23 @@ document.querySelectorAll('.edit-nomor-sertifikat-btn').forEach(button => {
 });
 
 // Edit Sertifikat
+function truncateFileName(name, maxLength = 20) {
+    if (name.length <= maxLength) return name;
+    const ext = name.split('.').pop();
+    const base = name.substring(0, name.length - ext.length - 1);
+    const front = base.substring(0, Math.ceil((maxLength - ext.length - 5) / 2));
+    const back = base.substring(base.length - Math.floor((maxLength - ext.length - 5) / 2));
+    return `${front}....${back}.${ext}`;
+}
+
 document.querySelectorAll('.input-file').forEach(function (input) {
     input.addEventListener('change', function (e) {
         const fileName = e.target.files.length > 0 ? e.target.files[0].name : "Tidak ada file yang dipilih";
         const fileId = e.target.id.split('_').pop();
         const fileNameElement = document.getElementById('file-name-' + fileId);
-        if (fileNameElement) fileNameElement.textContent = fileName;
+        if (fileNameElement) {
+            fileNameElement.textContent = truncateFileName(fileName, 24); // 24 karakter maksimal
+        }
     });
 });
 

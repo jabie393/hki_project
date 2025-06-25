@@ -154,10 +154,8 @@ $result = $conn->query($query);
                             }
                             ?>
                         </td>
-                        <td>
-                            <span class="badge badge-<?= strtolower($row['status']) ?>">
-                                <?= htmlspecialchars($row['status']) ?>
-                            </span>
+                        <td class="status-td"><span
+                                class="badge badge-<?= strtolower($row['status']) ?>"><?= htmlspecialchars($row['status']) ?></span>
                         </td>
                         <td id="certificate-container-<?= $row['id'] ?>">
                             <?php if (!empty($row['certificate_path'])) { ?>

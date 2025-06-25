@@ -100,8 +100,7 @@ $result = $conn->query($query);
                             <div class="sort-buttons">
                                 <a href="javascript:void(0);"
                                     onclick="loadContent('tinjau_pengajuan.php?page=<?= $page; ?>&order=ASC')"
-                                    id="sort-asc"
-                                    class="<?= $order === 'ASC' ? 'active-order' : ''; ?>"
+                                    id="sort-asc" class="<?= $order === 'ASC' ? 'active-order' : ''; ?>"
                                     title="Urutkan Dari Yang Terlama">&#9650;</a>
                                 <a href="javascript:void(0);"
                                     onclick="loadContent('tinjau_pengajuan.php?page=<?= $page; ?>&order=DESC')"
@@ -114,6 +113,7 @@ $result = $conn->query($query);
                     <th>Detail Ciptaan</th>
                     <th>Pencipta</th>
                     <th>File</th>
+                    <th>Status</th>
                     <th>Nomor Hak Cipta</th>
                     <th>Aksi</th>
                 </tr>
@@ -141,13 +141,20 @@ $result = $conn->query($query);
                                 }
                                 ?>
                             </td>
+                            <td class="status-td"><span
+                                    class="badge badge-<?= strtolower($row['status']) ?>"><?= htmlspecialchars($row['status']) ?></span>
+                            </td>
                             <td class="nomor-cell">
                                 <div class="nomor-fields">
                                     <label class="file-label">Nomor Pengajuan</label>
-                                    <input type="text" spellcheck="false" name="nomor_pengajuan" class="input-field"
+                                    <input type="text" spellcheck="false" name="nomor_pengajuan"
+                                        id="nomor_pengajuan_<?= $row['id'] ?>"
+                                        value="<?= htmlspecialchars($row['nomor_pengajuan'] ?? '') ?>" class="input-field"
                                         placeholder="Opsional">
                                     <label class="file-label">Nomor Sertifikat</label>
-                                    <input type="text" spellcheck="false" name="nomor_sertifikat" class="input-field"
+                                    <input type="text" spellcheck="false" name="nomor_sertifikat"
+                                        id="nomor_sertifikat_<?= $row['id'] ?>"
+                                        value="<?= htmlspecialchars($row['nomor_sertifikat'] ?? '') ?>" class="input-field"
                                         placeholder="Opsional">
                                 </div>
                             </td>
@@ -163,14 +170,25 @@ $result = $conn->query($query);
                                             <input type="file" id="certificate_<?= $row['id'] ?>" name="certificate"
                                                 class="input-file" accept="image/*,.pdf,.doc,.docx,.zip,.rar,.7z,.tar,.gz">
                                         </div>
-                                        <button type="button" class="btn btn-safe approve-btn" data-id="<?= $row['id'] ?>"
-                                            data-form="form_<?= $row['id'] ?>" data-user="<?= $row['user_id'] ?>">
-                                            ✔ Setujui
-                                        </button>
-                                        <button class="btn btn-danger delete-btn" data-id="<?= $row['id'] ?>"
-                                            data-row="row_<?= $row['id'] ?>">
-                                            ✖ Tolak
-                                        </button>
+                                        <div class="action-dropdown">
+                                            <button type="button" onclick="toggleDropdown(this)" class="btn action-button">
+                                                Aksi
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <button class="delete-btn" data-id="<?= $row['id'] ?>"
+                                                    data-row="row_<?= $row['id'] ?>">
+                                                    ✖ Tolak
+                                                </button>
+                                                <button class="review-btn" data-id="<?= $row['id'] ?>"
+                                                    data-row="row_<?= $row['id'] ?>">
+                                                    ✎ Tinjau
+                                                </button>
+                                                <button type="button" class="approve-btn" data-id="<?= $row['id'] ?>"
+                                                    data-form="form_<?= $row['id'] ?>" data-user="<?= $row['user_id'] ?>">
+                                                    ✔ Setujui
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                     <span class="file-name" id="file-name-<?= $row['id'] ?>">Tidak ada file yang
                                         dipilih</span>
@@ -270,3 +288,24 @@ $result = $conn->query($query);
 </div>
 
 <script src="js/hak_cipta.js"></script>
+<!-- Tambahkan sebelum </body> -->
+<script>
+    function toggleDropdown(btn) {
+        const dropdown = btn.nextElementSibling;
+        dropdown.classList.toggle("show");
+        document.querySelectorAll('.dropdown-menu').forEach(menu => {
+            if (menu !== dropdown) menu.classList.remove("show");
+        });
+    }
+    window.addEventListener("click", function (e) {
+        if (!e.target.closest(".action-dropdown")) {
+            document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                menu.classList.remove("show");
+            });
+        }
+    });
+    function handleAction(action, id) {
+        alert(`Aksi "${action}" pada ID: ${id}`);
+        // Implementasi AJAX atau redirect sesuai kebutuhan Anda
+    }
+</script>

@@ -18,13 +18,16 @@ $result = $query->get_result();
 $existing_data = $result->fetch_assoc();
 
 // Ambil data dari form
-$nama_lengkap = $_POST['nama_lengkap'] ?? null;
-$no_ktp = $_POST['no_ktp'] ?? null;
-$telephone = $_POST['telephone'] ?? null;
-$birth_date = $_POST['birth_date'] ?? null;
-$gender = $_POST['gender'] ?? null;
-$nationality = $_POST['nationality'] ?? null;
-$type_of_applicant = $_POST['type_of_applicant'] ?? null;
+function nullIfEmpty($val) {
+    return (isset($val) && trim($val) !== '') ? $val : null;
+}
+$nama_lengkap      = nullIfEmpty($_POST['nama_lengkap'] ?? null);
+$no_ktp            = nullIfEmpty($_POST['no_ktp'] ?? null);
+$telephone         = nullIfEmpty($_POST['telephone'] ?? null);
+$birth_date        = nullIfEmpty($_POST['birth_date'] ?? null);
+$gender            = nullIfEmpty($_POST['gender'] ?? null);
+$nationality       = nullIfEmpty($_POST['nationality'] ?? null);
+$type_of_applicant = nullIfEmpty($_POST['type_of_applicant'] ?? null);
 
 // Direktori upload
 $upload_dir = "../uploads/users/$user_id/profile/";

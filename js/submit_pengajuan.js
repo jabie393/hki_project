@@ -104,28 +104,10 @@ function initFormSubmission() {
                                 timer: 2000 // Menunggu 2 detik
                             });
 
-                            // Reset semua input dalam form
-                            form.reset();
-
-                            // Kosongkan daftar pencipta
-                            document.getElementById("pencipta-list").innerHTML = "";
-
-                            // Reset elemen Select2
-                            $('#jenis_pengajuan').val(null).trigger('change');
-                            $('#jenis_hak_cipta').val(null).trigger('change');
-                            $('#sub_jenis_hak_cipta').val(null).prop('disabled', true).trigger('change');
-
-                            // Reset negara ke Indonesia
-                            const nationalitySelect = $('#nationality');
-                            nationalitySelect.val('Indonesia').trigger('change');
-
-                            initPengajuanBaru(); // Memastikan toggleCityInput dipanggil ulang
-
-                            // Kosongkan semua input Select2 lainnya (jika ada)
-                            $('.select2-hidden-accessible').val(null).trigger('change');
-
-                            // Reset tampilan nama file
-                            document.getElementById('file-name').textContent = "Belum ada dokumen";
+                            // load pengajuan_baru.php
+                            if (typeof loadContent === "function") {
+                                loadContent('pengajuan_baru.php');
+                            }
                         } else {
                             Swal.fire({
                                 icon: "error",
