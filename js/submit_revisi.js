@@ -190,6 +190,14 @@ function initReviseFormSubmission() {
         // Nonaktifkan tombol submit
         submitButton.disabled = true;
     });
+
+    //=== Perilaku tombol kembali ===//
+    history.pushState({ page: "revisi" }, "", window.location.href);
+
+    window.addEventListener("popstate", function (event) {
+        // Panggil fungsi loadContent, bukan redirect
+        loadContent('status_pengajuan.php');
+    });
 }
 
 // ================== LOAD NEGARA ==================

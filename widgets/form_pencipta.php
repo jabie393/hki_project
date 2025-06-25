@@ -45,9 +45,9 @@
         </div>
 
         <div class="form-group">
-            <label>Kabupaten/Kota:</label>
+            <label>Kota/Kabupaten:</label>
             <select name="kota[]" class="kabupaten required-field auto-search">
-                <option value="">-- Pilih Kabupaten/Kota --</option>
+                <option value="">-- Pilih Kota/Kabupaten --</option>
             </select>
         </div>
 
@@ -90,11 +90,11 @@
 
         <div class="form-group">
             <label>Village:</label>
-            <input type="text" name="kelurahan[]" class="manual-kelurahan required-field" placeholder="Manual Input"/>
+            <input type="text" name="kelurahan[]" class="manual-kelurahan required-field" placeholder="Manual Input" />
         </div>
 
         <div class="form-group">
             <label>Postal Code:</label>
-            <input type="text" name="kode_pos[]" class="manual-kodepos required-field" placeholder="Manual Input"/>
+            <input type="text" name="kode_pos[]" class="manual-kodepos required-field" placeholder="Manual Input" />
         </div>
     </div>

@@ -485,13 +485,13 @@ function initModalPencipta() {
 
         // Inisialisasi Select2 untuk semua dropdown
         initializeSelect2(provinsiSelect, "-- Pilih Provinsi --");
-        initializeSelect2(kabupatenSelect, "-- Pilih Kabupaten/Kota --");
+        initializeSelect2(kabupatenSelect, "-- Pilih Kota/Kabupaten --");
         initializeSelect2(kecamatanSelect, "-- Pilih Kecamatan --");
         initializeSelect2(kelurahanSelect, "-- Pilih Kelurahan --");
 
         // Reset semua dropdown
         $(provinsiSelect).empty().append('<option value="">-- Pilih Provinsi --</option>');
-        $(kabupatenSelect).empty().append('<option value="">-- Pilih Kabupaten/Kota --</option>').prop('disabled', true);
+        $(kabupatenSelect).empty().append('<option value="">-- Pilih Kota/Kabupaten --</option>').prop('disabled', true);
         $(kecamatanSelect).empty().append('<option value="">-- Pilih Kecamatan --</option>').prop('disabled', true);
         $(kelurahanSelect).empty().append('<option value="">-- Pilih Kelurahan --</option>').prop('disabled', true);
         kodeposInput.value = '';
@@ -518,14 +518,14 @@ function initModalPencipta() {
         // Event ketika provinsi dipilih
         $(provinsiSelect).off('change').on('change', function () {
             if (!this.value) {
-                $(kabupatenSelect).empty().append('<option value="">-- Pilih Kabupaten/Kota --</option>').prop('disabled', true);
+                $(kabupatenSelect).empty().append('<option value="">-- Pilih Kota/Kabupaten --</option>').prop('disabled', true);
                 return;
             }
 
             const provId = $(this).find(':selected').data('id');
 
             // Reset dropdown dependen
-            $(kabupatenSelect).empty().append('<option value="">-- Pilih Kabupaten/Kota --</option>').prop('disabled', false);
+            $(kabupatenSelect).empty().append('<option value="">-- Pilih Kota/Kabupaten --</option>').prop('disabled', false);
             $(kecamatanSelect).empty().append('<option value="">-- Pilih Kecamatan --</option>').prop('disabled', true);
             $(kelurahanSelect).empty().append('<option value="">-- Pilih Kelurahan --</option>').prop('disabled', true);
             kodeposInput.value = '';
@@ -544,7 +544,7 @@ function initModalPencipta() {
                         option.dataset.id = kab.id;
                         $(kabupatenSelect).append(option);
                     });
-                    initializeSelect2(kabupatenSelect, "-- Pilih Kabupaten/Kota --");
+                    initializeSelect2(kabupatenSelect, "-- Pilih Kota/Kabupaten --");
                 });
         });
 
@@ -1066,13 +1066,13 @@ function initModalPencipta() {
 
         // Re-inisialisasi Select2 untuk dropdown Indonesia
         initializeSelect2(provinsiSelect, "-- Pilih Provinsi --");
-        initializeSelect2(kabupatenSelect, "-- Pilih Kabupaten/Kota --");
+        initializeSelect2(kabupatenSelect, "-- Pilih Kota/Kabupaten --");
         initializeSelect2(kecamatanSelect, "-- Pilih Kecamatan --");
         initializeSelect2(kelurahanSelect, "-- Pilih Kelurahan --");
 
         // Kosongkan dan disable dropdown dependen
         $(provinsiSelect).empty().append('<option value="">-- Pilih Provinsi --</option>');
-        $(kabupatenSelect).empty().append('<option value="">-- Pilih Kabupaten/Kota --</option>').prop('disabled', true);
+        $(kabupatenSelect).empty().append('<option value="">-- Pilih Kota/Kabupaten --</option>').prop('disabled', true);
         $(kecamatanSelect).empty().append('<option value="">-- Pilih Kecamatan --</option>').prop('disabled', true);
         $(kelurahanSelect).empty().append('<option value="">-- Pilih Kelurahan --</option>').prop('disabled', true);
         if (kodeposInput) kodeposInput.value = "";
