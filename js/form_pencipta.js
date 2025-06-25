@@ -1,9 +1,11 @@
 // ================== MODAL PENCIPTA ==================
+if (typeof editingPencipta === "undefined") {
+    var editingPencipta = null;
+}
 function initModalPencipta() {
     const modal = document.getElementById("modalPencipta");
     const modalForm = document.getElementById("modalFormPencipta");
     const penciptaList = document.getElementById("pencipta-list");
-    let editingPencipta = null;
 
     const stateSelect = document.querySelector(".state");
     const citySelect = document.querySelector(".city");
