@@ -610,7 +610,7 @@ function initModalPencipta() {
 
         // Event ketika kelurahan dipilih
         $(kelurahanSelect).off('change').on('change', function () {
-            const kelurahan = $(this).val().trim();
+            const kelurahan = ($(this).val() || '').trim();
             kodeposInput.value = 'Mencari...';
 
             if (!kelurahan) {
@@ -683,12 +683,13 @@ function initModalPencipta() {
     // Fungsi untuk memuat data wilayah Indonesia dengan nilai yang sudah ada (untuk edit)
     function loadIndonesianRegionsWithValues(values) {
         return new Promise((resolve) => {
-            loadIndonesianRegions(); // Load struktur dropdown dulu
+            loadIndonesianRegions(); // Load struktur dropdown
 
             const provinsiSelect = document.querySelector(".provinsi");
             const kabupatenSelect = document.querySelector(".kabupaten");
             const kecamatanSelect = document.querySelector(".kecamatan");
             const kelurahanSelect = document.querySelector(".kelurahan");
+            const kodeposInput = document.querySelector(".kodepos");
 
             const prov = values["provinsi[]"];
             const kab = values["kota[]"];
@@ -696,37 +697,43 @@ function initModalPencipta() {
             const kel = values["kelurahan[]"];
             const kodepos = values["kode_pos[]"];
 
-            setTimeout(() => {
-                if (prov) {
-                    $(provinsiSelect).val(prov).trigger('change');
-
-                    setTimeout(() => {
-                        if (kab) {
-                            $(kabupatenSelect).val(kab).trigger('change');
-
-                            setTimeout(() => {
-                                if (kec) {
-                                    $(kecamatanSelect).val(kec).trigger('change');
-
-                                    setTimeout(() => {
-                                        if (kel) {
-                                            $(kelurahanSelect).val(kel).trigger('change');
-                                        }
-                                        document.querySelector(".kodepos").value = kodepos || '';
-                                        resolve();
-                                    }, 300);
-                                } else {
-                                    resolve();
-                                }
-                            }, 300);
-                        } else {
+            // Helper untuk menunggu option tersedia
+            function waitForOption(select, value, timeout = 5000) {
+                return new Promise((resolve) => {
+                    const start = Date.now();
+                    function check() {
+                        if ([...select.options].some(opt => opt.value === value)) {
                             resolve();
+                        } else if (Date.now() - start > timeout) {
+                            resolve();
+                        } else {
+                            setTimeout(check, 100);
                         }
-                    }, 300);
-                } else {
-                    resolve();
+                    }
+                    check();
+                });
+            }
+
+            (async () => {
+                if (prov) {
+                    await waitForOption(provinsiSelect, prov);
+                    $(provinsiSelect).val(prov).trigger('change');
+                    if (kab) {
+                        await waitForOption(kabupatenSelect, kab);
+                        $(kabupatenSelect).val(kab).trigger('change');
+                        if (kec) {
+                            await waitForOption(kecamatanSelect, kec);
+                            $(kecamatanSelect).val(kec).trigger('change');
+                            if (kel) {
+                                await waitForOption(kelurahanSelect, kel);
+                                $(kelurahanSelect).val(kel).trigger('change');
+                            }
+                        }
+                    }
                 }
-            }, 300);
+                if (kodeposInput) kodeposInput.value = kodepos || '';
+                resolve();
+            })();
         });
     }
 

@@ -2,9 +2,6 @@ document.querySelectorAll('.revise-btn').forEach(button => {
     button.addEventListener('click', function () {
         const id = this.dataset.id;
         loadContent(`revisi.php?revisi_id=${id}`, function () {
-            if (typeof initModalPencipta === "function") {
-                initModalPencipta();
-            }
             // Setelah konten dan JS termuat, ambil data revisi
             fetch(`services/get_pengajuan.php?id=${id}`)
                 .then(res => res.json())
