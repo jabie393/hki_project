@@ -2,13 +2,18 @@ document.querySelectorAll('.revise-btn').forEach(button => {
     button.addEventListener('click', function () {
         const id = this.dataset.id;
         loadContent(`revisi.php?revisi_id=${id}`, function () {
-            // Setelah konten dan JS termuat, ambil data revisi
             fetch(`services/get_pengajuan.php?id=${id}`)
                 .then(res => res.json())
                 .then(data => {
                     if (data.success) {
-                        // Isi form dengan data yang didapat
-                        autofillPengajuanForm(data.data);
+                        // Tunggu negara selesai di-load, baru autofill
+                        if (typeof loadCountriesForReviseMainForm === "function") {
+                            loadCountriesForReviseMainForm(function() {
+                                autofillPengajuanForm(data.data);
+                            });
+                        } else {
+                            autofillPengajuanForm(data.data);
+                        }
                     }
                 });
         });

@@ -19,6 +19,7 @@ $(document).ready(function () {
 
 // ================== FORM HKI REVISE SUBMISSION ==================
 function initReviseFormSubmission() {
+    loadCountriesForReviseMainForm();
     const form = document.querySelector("#form-hki");
     if (!form) return;
 
@@ -189,4 +190,99 @@ function initReviseFormSubmission() {
         // Nonaktifkan tombol submit
         submitButton.disabled = true;
     });
+}
+
+// ================== LOAD NEGARA ==================
+function loadCountriesForReviseMainForm(onReady) {
+    // Konfigurasi API
+    const configCSC = {
+        cUrl: 'https://api.countrystatecity.in/v1/countries',
+        ckey: 'NHhvOEcyWk50N2Vna3VFTE00bFp3MjFKR0ZEOUhkZlg4RTk1MlJlaA=='
+    };
+
+    fetch(configCSC.cUrl, {
+        headers: {
+            "X-CSCAPI-KEY": configCSC.ckey
+        }
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            data.sort((a, b) => a.name.localeCompare(b.name));
+
+            const mainFormSelect = document.querySelector("#nationality");
+            if (!mainFormSelect) return;
+
+            mainFormSelect.innerHTML = '<option value="">-- Pilih Negara --</option>';
+
+            // Cari dan tandai Indonesia sebagai default
+            let defaultCountrySet = false;
+            data.forEach(country => {
+                const option = document.createElement("option");
+                option.value = country.name;
+                option.textContent = country.name;
+                option.setAttribute("data-flag", `https://flagcdn.com/w20/${country.iso2.toLowerCase()}.png`);
+                mainFormSelect.appendChild(option);
+            });
+
+            // Setelah semua negara diisi
+            const selectedCountry = mainFormSelect.value || '';
+            toggleCityInput(selectedCountry);
+
+            // Inisialisasi Select2
+            const $select = $(mainFormSelect);
+            if ($select.hasClass("select2-hidden-accessible")) {
+                $select.select2('destroy');
+            }
+
+            $select.select2({
+                templateResult: formatCountryOption,
+                templateSelection: formatCountryOption,
+                placeholder: "-- Pilih Negara --",
+                allowClear: true,
+                width: '100%'
+            });
+
+            $('#nationality').on('select2:open', function () {
+                document.querySelector('.select2-search__field').focus();
+            });
+
+            // Tambahkan event listener untuk perubahan negara
+            $('#nationality').on('change', function () {
+                toggleCityInput(this.value);
+            });
+
+            // Jika Indonesia adalah default, aktifkan dropdown kota
+            if (defaultCountrySet) {
+                toggleCityInput('Indonesia');
+            }
+
+            // Panggil callback jika ada
+            if (typeof onReady === "function") onReady();
+        })
+        .catch(error => {
+            console.error("Gagal memuat data negara:", error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal Memuat Data Negara',
+                text: 'Tidak dapat memuat daftar negara. Silakan coba lagi nanti.',
+                showConfirmButton: true,
+                confirmButtonText: 'Oke!'
+            });
+        });
+}
+
+// Fungsi untuk menampilkan bendera di dropdown
+function formatCountryOption(option) {
+    if (!option.id) {
+        return option.text;
+    }
+    const flagUrl = $(option.element).data("flag");
+    return $(
+        `<span><img src="${flagUrl}" alt="" style="width: 20px; height: 15px; margin-right: 10px;">${option.text}</span>`
+    );
 }
