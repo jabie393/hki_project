@@ -207,6 +207,7 @@
   color: #1f3bb3;
   padding: 6px 12px;
   font-weight: 600;
+  transition: background-color 0.2s;
 }
 
 #hak_cipta-page .action-button:hover {
@@ -252,11 +253,16 @@
   transition: background-color 0.2s;
 }
 
-#hak_cipta-page .review-btn:hover {
+#hak_cipta-page .review-btn:hover,
+#hak_cipta-page .manage_review-btn:hover {
   background-color: #d1ecf1;
   color: #0c5460;
   border: 1px solid #bee5eb;
   transition: background-color 0.2s;
+}
+
+#hak_cipta-page .manage_review-btn:hover {
+  border-radius: 0 0 10px 10px;
 }
 
 #hak_cipta-page .approve-btn:hover {
@@ -604,7 +610,8 @@ body.dark-mode #hak_cipta-page .delete-btn:hover {
   border: 1px solid #dc3545;
 }
 
-body.dark-mode #hak_cipta-page .review-btn:hover {
+body.dark-mode #hak_cipta-page .review-btn:hover,
+body.dark-mode #hak_cipta-page .manage_review-btn:hover {
   background-color: #003845;
   color: #d1ecf1;
   border: 1px solid #138496;

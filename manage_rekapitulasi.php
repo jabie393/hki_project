@@ -187,10 +187,19 @@ $result = $conn->query($query);
                                 Edit & Simpan</button>
                         </td>
                         <td>
-                            <button class="btn btn-danger delete-btn" data-id="<?= $row['id']; ?>"
-                                data-row="row-<?= $row['id']; ?>">
-                                Hapus
-                            </button>
+                            <div class="action-dropdown">
+                                <button type="button" onclick="toggleDropdown(this)" class="btn action-button">
+                                    Aksi
+                                </button>
+                                <div class="dropdown-menu">
+                                    <button class="delete-btn" data-id="<?= $row['id'] ?>" data-row="row_<?= $row['id'] ?>">
+                                        ✖ Hapus
+                                    </button>
+                                    <button class="manage_review-btn" data-id="<?= $row['id'] ?>" data-row="row_<?= $row['id'] ?>">
+                                        ✎ Tinjau
+                                    </button>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                 <?php } ?>

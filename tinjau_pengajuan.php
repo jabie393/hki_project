@@ -289,23 +289,3 @@ $result = $conn->query($query);
 
 <script src="js/hak_cipta.js"></script>
 <!-- Tambahkan sebelum </body> -->
-<script>
-    function toggleDropdown(btn) {
-        const dropdown = btn.nextElementSibling;
-        dropdown.classList.toggle("show");
-        document.querySelectorAll('.dropdown-menu').forEach(menu => {
-            if (menu !== dropdown) menu.classList.remove("show");
-        });
-    }
-    window.addEventListener("click", function (e) {
-        if (!e.target.closest(".action-dropdown")) {
-            document.querySelectorAll('.dropdown-menu').forEach(menu => {
-                menu.classList.remove("show");
-            });
-        }
-    });
-    function handleAction(action, id) {
-        alert(`Aksi "${action}" pada ID: ${id}`);
-        // Implementasi AJAX atau redirect sesuai kebutuhan Anda
-    }
-</script>

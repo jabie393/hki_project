@@ -44,6 +44,26 @@ function pagination() {
     });
 };
 
+//== Action dropdown ==//
+function toggleDropdown(btn) {
+    const dropdown = btn.nextElementSibling;
+    dropdown.classList.toggle("show");
+    document.querySelectorAll('.dropdown-menu').forEach(menu => {
+        if (menu !== dropdown) menu.classList.remove("show");
+    });
+}
+window.addEventListener("click", function (e) {
+    if (!e.target.closest(".action-dropdown")) {
+        document.querySelectorAll('.dropdown-menu').forEach(menu => {
+            menu.classList.remove("show");
+        });
+    }
+});
+function handleAction(action, id) {
+    alert(`Aksi "${action}" pada ID: ${id}`);
+    // Implementasi AJAX atau redirect sesuai kebutuhan Anda
+}
+
 //== Modal ==//
 // script detail profil user
 function showProfile(userId) {
@@ -163,26 +183,37 @@ document.querySelectorAll('.approve-btn').forEach(button => {
 
                         xhr.open("POST", "services/approve.php", true);
                         xhr.onload = function () {
-                            const elapsedTime = Date.now() - startTime; // Hitung waktu yang telah berlalu
-                            const delay = Math.max(1500 - elapsedTime, 0); // Hitung delay agar minimal 1,5 detik
+                            const elapsedTime = Date.now() - startTime;
+                            const delay = Math.max(1500 - elapsedTime, 0);
 
                             setTimeout(() => {
                                 Swal.close();
 
-                                if (xhr.responseText.includes("Pengajuan telah disetujui")) {
-                                    Swal.fire({
-                                        icon: 'success',
-                                        title: 'Berhasil',
-                                        text: 'Pengajuan disetujui!',
-                                        showConfirmButton: false,
-                                        timer: 2000
-                                    }).then(() => {
-                                        // Hapus baris dari tabel
-                                        if (row) {
-                                            row.remove();
-                                        }
-                                    });
-                                } else {
+                                try {
+                                    const response = JSON.parse(xhr.responseText);
+                                    if (response.success) {
+                                        Swal.fire({
+                                            icon: 'success',
+                                            title: 'Berhasil',
+                                            text: response.message,
+                                            showConfirmButton: false,
+                                            timer: 2000
+                                        }).then(() => {
+                                            // Hapus baris dari tabel
+                                            if (row) {
+                                                row.remove();
+                                            }
+                                        });
+                                    } else {
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Gagal',
+                                            text: response.message,
+                                            showConfirmButton: true,
+                                            confirmButtonText: 'Oke!'
+                                        });
+                                    }
+                                } catch (e) {
                                     Swal.fire({
                                         icon: 'error',
                                         title: 'Gagal',
@@ -258,6 +289,78 @@ document.querySelectorAll('.review-btn').forEach(button => {
                                         if (statusTd) {
                                             statusTd.textContent = "Ditinjau";
                                             statusTd.className = "badge badge-ditinjau";
+                                        }
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Gagal',
+                                        text: response.message,
+                                        showConfirmButton: true,
+                                        confirmButtonText: 'Oke!'
+                                    });
+                                }
+                            } catch (e) {
+                                Swal.fire('Error', 'Terjadi kesalahan: ' + xhr.responseText, 'error');
+                            }
+                        };
+                        xhr.onerror = function () {
+                            Swal.fire('Error', 'Gagal menghubungi server.', 'error');
+                        };
+                        xhr.send(formData);
+                    }
+                });
+            }
+        });
+    });
+});
+
+//== services/manage_review.php (Tombol Tinjau di manage_rekapitulasi.php) ==//
+document.querySelectorAll('.manage_review-btn').forEach(button => {
+    button.addEventListener('click', function () {
+        const id = this.dataset.id;
+        const row = document.getElementById('row-' + id);
+
+        Swal.fire({
+            title: 'Tandai sebagai Ditinjau?',
+            text: "Status pengajuan akan menjadi 'Ditinjau'.",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, tinjau!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: "Memproses...",
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                    didOpen: () => {
+                        const xhr = new XMLHttpRequest();
+                        const formData = new FormData();
+                        formData.append('id', id);
+
+                        xhr.open("POST", "services/manage_review.php", true);
+                        xhr.onload = function () {
+                            Swal.close();
+                            try {
+                                const response = JSON.parse(xhr.responseText);
+                                if (response.success) {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Berhasil',
+                                        text: response.message,
+                                        showConfirmButton: false,
+                                        timer: 2000
+                                    }).then(() => {
+                                        // Update badge status di tabel
+                                        const statusTd = row.querySelector('.status-td .badge');
+                                        if (statusTd) {
+                                            statusTd.textContent = "Ditinjau";
+                                            statusTd.className = "badge badge-ditinjau";
+                                        }
+                                        // Hapus baris dari tabel
+                                        if (row) {
+                                            row.remove();
                                         }
                                     });
                                 } else {
