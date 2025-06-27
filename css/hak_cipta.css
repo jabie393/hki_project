@@ -245,7 +245,8 @@
   color: #333;
 }
 
-#hak_cipta-page .delete-btn:hover {
+#hak_cipta-page .delete-btn:hover,
+#hak_cipta-page .cancel-btn:hover {
   border-radius: 10px 10px 0 0;
   background-color: #f8d7da;
   color: #721c24;
@@ -254,18 +255,20 @@
 }
 
 #hak_cipta-page .review-btn:hover,
-#hak_cipta-page .manage_review-btn:hover {
+#hak_cipta-page .manage_review-btn:hover,
+#hak_cipta-page .revise-btn:hover {
   background-color: #d1ecf1;
   color: #0c5460;
   border: 1px solid #bee5eb;
   transition: background-color 0.2s;
 }
 
-#hak_cipta-page .manage_review-btn:hover {
+#hak_cipta-page .revise-btn:hover {
   border-radius: 0 0 10px 10px;
 }
 
-#hak_cipta-page .approve-btn:hover {
+#hak_cipta-page .approve-btn:hover,
+#hak_cipta-page .update-btn:hover {
   border-radius: 0 0 10px 10px;
   background-color: #d4edda;
   color: #155724;
@@ -454,6 +457,7 @@
 }
 
 #hak_cipta-page .file-name {
+  padding: 0 5px;
   font-size: 13px;
   color: #555;
   font-style: italic;
@@ -604,20 +608,23 @@ body.dark-mode #hak_cipta-page .dropdown-menu button:hover {
   color: #fff;
 }
 
-body.dark-mode #hak_cipta-page .delete-btn:hover {
+body.dark-mode #hak_cipta-page .delete-btn:hover,
+body.dark-mode #hak_cipta-page .cancel-btn:hover {
   background-color: #5c1e22;
   color: #f8d7da;
   border: 1px solid #dc3545;
 }
 
 body.dark-mode #hak_cipta-page .review-btn:hover,
-body.dark-mode #hak_cipta-page .manage_review-btn:hover {
+body.dark-mode #hak_cipta-page .manage_review-btn:hover,
+body.dark-mode #hak_cipta-page .revise-btn:hover {
   background-color: #003845;
   color: #d1ecf1;
   border: 1px solid #138496;
 }
 
-body.dark-mode #hak_cipta-page .approve-btn:hover {
+body.dark-mode #hak_cipta-page .approve-btn:hover,
+body.dark-mode #hak_cipta-page .update-btn:hover {
   background-color: #0b3d1c;
   color: #d4edda;
   border: 1px solid #28a745;

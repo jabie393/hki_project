@@ -387,7 +387,127 @@ document.querySelectorAll('.manage_review-btn').forEach(button => {
     });
 });
 
-// services/delete_pengajuan.php
+//=== services/update.php ===//
+document.querySelectorAll('.update-btn').forEach(button => {
+    button.addEventListener('click', function () {
+        const id = this.dataset.id;
+        const row = document.getElementById('row-' + id);
+
+        const nomor_pengajuan = row.querySelector("input[name='nomor_pengajuan']").value;
+        const nomor_sertifikat = row.querySelector("input[name='nomor_sertifikat']").value;
+        const certificateInput = row.querySelector(`#certificate_${id}`);
+
+        const formData = new FormData();
+        formData.append('id', id);
+        formData.append('nomor_pengajuan', nomor_pengajuan);
+        formData.append('nomor_sertifikat', nomor_sertifikat);
+
+        if (certificateInput && certificateInput.files.length > 0) {
+            formData.append('certificate', certificateInput.files[0]);
+        }
+
+        Swal.fire({
+            title: 'Perbarui data hak cipta?',
+            text: "Data hak cipta akan diperbarui sesuai input",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, perbarui!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: "Memproses...",
+                    html: `
+                        <div id="progress-container">
+                            <div id="progress-bar-container">
+                                <div id="progress-bar"></div>
+                            </div>
+                            <p id="progress-text">0%</p>
+                        </div>
+                    `,
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                    didOpen: () => {
+                        const xhr = new XMLHttpRequest();
+                        const startTime = Date.now();
+
+                        xhr.upload.addEventListener("progress", function (e) {
+                            if (e.lengthComputable) {
+                                const percentComplete = Math.round((e.loaded / e.total) * 100);
+                                const progressBar = document.getElementById("progress-bar");
+                                const progressText = document.getElementById("progress-text");
+
+                                progressBar.style.width = `${percentComplete}%`;
+                                progressText.textContent = `${percentComplete}%`;
+                            }
+                        });
+
+                        xhr.open("POST", "services/update.php", true);
+                        xhr.onload = function () {
+                            const elapsedTime = Date.now() - startTime;
+                            const delay = Math.max(1200 - elapsedTime, 0);
+
+                            setTimeout(() => {
+                                Swal.close();
+
+                                try {
+                                    const response = JSON.parse(xhr.responseText);
+                                    if (response.success) {
+                                        Swal.fire({
+                                            icon: 'success',
+                                            title: 'Berhasil',
+                                            text: response.message,
+                                            showConfirmButton: false,
+                                            timer: 2000
+                                        });
+
+                                        // Update sertifikat jika ada file baru
+                                        if (response.new_certificate_path) {
+                                            const container = document.querySelector(`#certificate-container-${id}`);
+                                            if (container) {
+                                                container.innerHTML = `
+                                                    <a href="${response.new_certificate_path}" class="btn btn-download" download>Download</a>
+                                                `;
+                                            }
+                                            // Reset file name display & input
+                                            const fileNameElement = document.getElementById('file-name-' + id);
+                                            if (fileNameElement) fileNameElement.textContent = "Tidak ada file yang dipilih";
+                                            if (certificateInput) certificateInput.value = '';
+                                        }
+                                    } else {
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Gagal',
+                                            text: response.message,
+                                            showConfirmButton: true,
+                                            confirmButtonText: 'Oke!'
+                                        });
+                                    }
+                                } catch (e) {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Gagal',
+                                        text: 'Terjadi kesalahan: ' + xhr.responseText,
+                                        showConfirmButton: true,
+                                        confirmButtonText: 'Oke!'
+                                    });
+                                }
+                            }, delay);
+                        };
+
+                        xhr.onerror = function () {
+                            Swal.fire('Error', 'Gagal menghubungi server.', 'error');
+                        };
+
+                        xhr.send(formData);
+                    }
+                });
+            }
+        });
+    });
+});
+
+//=== services/delete_pengajuan.php ===//
 document.querySelectorAll('.delete-btn').forEach(button => {
     button.addEventListener('click', function () {
         const id = this.dataset.id;
@@ -432,179 +552,6 @@ document.querySelectorAll('.delete-btn').forEach(button => {
                         console.error(error);
                         Swal.fire('Error', 'Gagal menghapus data.', 'error');
                     });
-            }
-        });
-    });
-});
-
-// Edit Nomor Pengajuan
-document.querySelectorAll('.edit-nomor-pengajuan-btn').forEach(button => {
-    button.addEventListener('click', function () {
-        const id = this.dataset.id;
-        const input = document.querySelector(`#nomor_pengajuan_${id}`);
-        const value = input.value.trim();
-
-        if (value === "") {
-            Swal.fire('Peringatan', 'Nomor Pengajuan tidak boleh kosong!', 'warning');
-            return;
-        }
-
-        fetch('services/edit_nomor_pengajuan.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: `id=${id}&nomor_pengajuan=${encodeURIComponent(value)}`
-        })
-            .then(res => res.json())
-            .then(data => {
-                Swal.fire({
-                    icon: data.status,
-                    title: data.status === 'success' ? 'Berhasil' : 'Gagal',
-                    text: data.message,
-                    showConfirmButton: false, // Tidak ada tombol confirm
-                    timer: 2000 // Menunggu 2 detik
-                });
-            })
-            .catch(err => {
-                console.error(err);
-                Swal.fire('Error', 'Terjadi kesalahan saat menghubungi server.', 'error');
-            });
-    });
-});
-
-// Edit Nomor Sertifikat
-document.querySelectorAll('.edit-nomor-sertifikat-btn').forEach(button => {
-    button.addEventListener('click', function () {
-        const id = this.dataset.id;
-        const input = document.querySelector(`#nomor_sertifikat_${id}`);
-        const value = input.value.trim();
-
-        if (value === "") {
-            Swal.fire('Peringatan', 'Nomor Sertifikat tidak boleh kosong!', 'warning');
-            return;
-        }
-
-        fetch('services/edit_nomor_sertifikat.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: `id=${id}&nomor_sertifikat=${encodeURIComponent(value)}`
-        })
-            .then(res => res.json())
-            .then(data => {
-                Swal.fire({
-                    icon: data.status,
-                    title: data.status === 'success' ? 'Berhasil' : 'Gagal',
-                    text: data.message,
-                    showConfirmButton: false, // Tidak ada tombol confirm
-                    timer: 2000 // Menunggu 2 detik
-                });
-            })
-            .catch(err => {
-                console.error(err);
-                Swal.fire('Error', 'Terjadi kesalahan saat menghubungi server.', 'error');
-            });
-    });
-});
-
-// Edit Sertifikat
-function truncateFileName(name, maxLength = 20) {
-    if (name.length <= maxLength) return name;
-    const ext = name.split('.').pop();
-    const base = name.substring(0, name.length - ext.length - 1);
-    const front = base.substring(0, Math.ceil((maxLength - ext.length - 5) / 2));
-    const back = base.substring(base.length - Math.floor((maxLength - ext.length - 5) / 2));
-    return `${front}....${back}.${ext}`;
-}
-
-document.querySelectorAll('.input-file').forEach(function (input) {
-    input.addEventListener('change', function (e) {
-        const fileName = e.target.files.length > 0 ? e.target.files[0].name : "Tidak ada file yang dipilih";
-        const fileId = e.target.id.split('_').pop();
-        const fileNameElement = document.getElementById('file-name-' + fileId);
-        if (fileNameElement) {
-            fileNameElement.textContent = truncateFileName(fileName, 24); // 24 karakter maksimal
-        }
-    });
-});
-
-document.querySelectorAll('.edit-certificate-btn').forEach(button => {
-    button.addEventListener('click', function () {
-        const id = this.dataset.id;
-        const input = document.querySelector(`#edit_certificate_${id}`);
-
-        if (!input || input.files.length === 0) {
-            Swal.fire('Peringatan', 'Silahkan pilih file sertifikat baru.', 'warning');
-            return;
-        }
-
-        const formData = new FormData();
-        formData.append('id', id);
-        formData.append('new_certificate', input.files[0]);
-
-        Swal.fire({
-            title: "Mengunggah Sertifikat...",
-            html: `
-                <div id="progress-container">
-                    <div id="progress-bar-container">
-                        <div id="progress-bar"></div>
-                    </div>
-                    <p id="progress-text">0%</p>
-                </div>
-            `,
-            allowOutsideClick: false,
-            showConfirmButton: false,
-            didOpen: () => {
-                const xhr = new XMLHttpRequest();
-                const startTime = Date.now(); // Catat waktu mulai
-
-                xhr.upload.addEventListener("progress", function (e) {
-                    if (e.lengthComputable) {
-                        const percentComplete = Math.round((e.loaded / e.total) * 100);
-                        const progressBar = document.getElementById("progress-bar");
-                        const progressText = document.getElementById("progress-text");
-
-                        progressBar.style.width = `${percentComplete}%`;
-                        progressText.textContent = `${percentComplete}%`;
-                    }
-                });
-
-                xhr.open("POST", "services/edit_certificate.php", true);
-                xhr.onload = function () {
-                    const elapsedTime = Date.now() - startTime; // Hitung waktu yang telah berlalu
-                    const delay = Math.max(1500 - elapsedTime, 0); // Hitung delay agar minimal 1,5 detik
-
-                    setTimeout(() => {
-                        Swal.close();
-
-                        const response = JSON.parse(xhr.responseText);
-                        Swal.fire({
-                            icon: response.status,
-                            title: response.status === 'success' ? 'Berhasil' : 'Gagal',
-                            text: response.message,
-                            showConfirmButton: false,
-                            timer: 2000
-                        });
-
-                        if (response.status === 'success' && response.new_path) {
-                            const container = document.querySelector(`#certificate-container-${id}`);
-                            if (container) {
-                                container.innerHTML = `
-                                    <a href="${response.new_path}" class="btn btn-download" download>Download</a>
-                                `;
-                            }
-                            // Reset file name display & input
-                            const fileNameElement = document.getElementById('file-name-' + id);
-                            if (fileNameElement) fileNameElement.textContent = "Tidak ada file yang dipilih";
-                            const fileInput = document.getElementById('edit_certificate_' + id);
-                            if (fileInput) fileInput.value = '';
-                        }
-                    }, delay);
-                };
-
-                xhr.onerror = function () {
-                    Swal.fire('Error', 'Terjadi kesalahan saat mengunggah sertifikat.', 'error');
-                };
-
-                xhr.send(formData);
             }
         });
     });

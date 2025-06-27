@@ -177,15 +177,16 @@ $result = $conn->query($query);
                                             <div class="dropdown-menu">
                                                 <button class="delete-btn" data-id="<?= $row['id'] ?>"
                                                     data-row="row_<?= $row['id'] ?>">
-                                                    ✖ Tolak
+                                                    <i class="bx bxs-trash"></i> Tolak
                                                 </button>
                                                 <button class="review-btn" data-id="<?= $row['id'] ?>"
                                                     data-row="row_<?= $row['id'] ?>">
-                                                    ✎ Tinjau
+                                                    <i class="bx bx-search-alt-2"></i> Tinjau
                                                 </button>
                                                 <button type="button" class="approve-btn" data-id="<?= $row['id'] ?>"
                                                     data-form="form_<?= $row['id'] ?>" data-user="<?= $row['user_id'] ?>">
-                                                    ✔ Setujui
+                                                    <i class="bx bx-check"></i>
+                                                    Setujui
                                                 </button>
                                             </div>
                                         </div>

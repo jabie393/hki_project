@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
     $query = $conn->query("SELECT user_id, certificate_path FROM registrations WHERE id = '$id'");
     $data = $query->fetch_assoc();
     if (!$data) {
-        echo json_encode(['success' => false, 'message' => 'Pengajuan hak cipta tidak ditemukan!']);
+        echo json_encode(['success' => false, 'message' => 'Hak cipta tidak ditemukan!']);
         exit();
     }
     $user_id = $data['user_id'];
@@ -52,29 +52,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
         $certificate_path = $db_file_path;
     }
 
-    // Update status dan data
-    $update_query = "UPDATE registrations SET status='Terdaftar'";
+    // Update data tanpa mengubah status
+    $update_query = "UPDATE registrations SET ";
+    $fields = [];
     if ($certificate_path) {
-        $update_query .= ", certificate_path='$certificate_path'";
+        $fields[] = "certificate_path='$certificate_path'";
     }
     // Nomor pengajuan
     if ($nomor_pengajuan === "" || $nomor_pengajuan === null) {
-        $update_query .= ", nomor_pengajuan=NULL";
+        $fields[] = "nomor_pengajuan=NULL";
     } else {
-        $update_query .= ", nomor_pengajuan='" . $conn->real_escape_string($nomor_pengajuan) . "'";
+        $fields[] = "nomor_pengajuan='" . $conn->real_escape_string($nomor_pengajuan) . "'";
     }
     // Nomor sertifikat
     if ($nomor_sertifikat === "" || $nomor_sertifikat === null) {
-        $update_query .= ", nomor_sertifikat=NULL";
+        $fields[] = "nomor_sertifikat=NULL";
     } else {
-        $update_query .= ", nomor_sertifikat='" . $conn->real_escape_string($nomor_sertifikat) . "'";
+        $fields[] = "nomor_sertifikat='" . $conn->real_escape_string($nomor_sertifikat) . "'";
     }
-    $update_query .= " WHERE id='$id'";
+    if (empty($fields)) {
+        echo json_encode(['success' => false, 'message' => 'Tidak ada data hak cipta yang diubah.']);
+        exit();
+    }
+    $update_query .= implode(", ", $fields) . " WHERE id='$id'";
 
     if ($conn->query($update_query)) {
-        echo json_encode(['success' => true, 'message' => 'Pengajuan hak cipta telah disetujui.']);
+        $response = ['success' => true, 'message' => 'Hak cipta berhasil diperbarui.'];
+        if ($certificate_path) {
+            $response['new_certificate_path'] = $certificate_path;
+        }
+        echo json_encode($response);
     } else {
-        echo json_encode(['success' => false, 'message' => 'Gagal memperbarui data.']);
+        echo json_encode(['success' => false, 'message' => 'Gagal memperbarui data hak cipta.']);
     }
 } else {
     echo json_encode(['success' => false, 'message' => 'Permintaan tidak valid']);

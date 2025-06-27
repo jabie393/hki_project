@@ -88,7 +88,6 @@ $result = $conn->query($query);
             <thead>
                 <tr>
                     <th>Username Pemilik</th>
-                    <th>Nomor Pengajuan</th>
                     <th>
                         <div class="sortable-header">
                             <a href="javascript:void(0);"
@@ -115,93 +114,103 @@ $result = $conn->query($query);
                     <th>File</th>
                     <th>Status</th>
                     <th>Sertifikat</th>
-                    <th>Edit Sertifikat</th>
-                    <th>Nomor Sertifikat</th>
+                    <th>Nomor Hak Cipta</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>
                 <?php while ($row = $result->fetch_assoc()) { ?>
-                    <tr id="row-<?= $row['id'] ?>">
-                        <td>
-                            <a href="javascript:void(0)" onclick="showProfile(<?php echo $row['user_id']; ?>)"
-                                class="profile-link">
-                                <?php echo htmlspecialchars($row['username']); ?>
-                            </a>
-                        </td>
-                        <td class="aksi-buttons">
-                            <input type="text" spellcheck="false" id="nomor_pengajuan_<?= $row['id'] ?>"
-                                value="<?= htmlspecialchars($row['nomor_pengajuan'] ?? '') ?>" class="input-field">
-                            <button class="btn btn-safe edit-nomor-pengajuan-btn" data-id="<?= $row['id'] ?>">
-                                Edit & Simpan</button>
-                        </td>
-                        <td><?php echo htmlspecialchars(date('Y-m-d', strtotime($row['created_at']))); ?></td>
-                        <td><?= htmlspecialchars($row['judul_hak_cipta']); ?></td>
-                        <td>
-                            <button type="button" class="btn btn-info"
-                                onclick="openDetailCiptaanModal(<?= $row['id'] ?>)">Lihat</button>
-                        </td>
-                        <td>
-                            <button onclick="openModal('<?php echo $row['id']; ?>')" class="btn btn-info">Detail
-                                Pencipta</button>
-                        </td>
-                        <td>
-                            <?php
-                            $reg_id = $row['id'];
-                            $files = $conn->query("SELECT file_name, file_path FROM documents WHERE registration_id = '$reg_id'");
-                            while ($file = $files->fetch_assoc()) {
-                                echo '<a href="' . htmlspecialchars($file['file_path']) . '" download="' . htmlspecialchars($file['file_name']) . '" class="btn btn-download">Download</a><br>';
-                            }
-                            ?>
-                        </td>
-                        <td class="status-td"><span
-                                class="badge badge-<?= strtolower($row['status']) ?>"><?= htmlspecialchars($row['status']) ?></span>
-                        </td>
-                        <td id="certificate-container-<?= $row['id'] ?>">
-                            <?php if (!empty($row['certificate_path'])) { ?>
-                                <a href="<?= $row['certificate_path'] ?>" class="btn btn-download" download>Download</a>
-                            <?php } else { ?>
-                                <span>Belum ada sertifikat</span>
-                            <?php } ?>
-                        </td>
-                        <td>
-                            <div class="input-wrapper">
-                                <div class="button-row">
-                                    <div class="custom-file-container">
-                                        <label for="edit_certificate_<?= $row['id'] ?>"
-                                            class="custom-file-label btn btn-info">
-                                            Pilih File</label>
-                                        <input type="file" id="edit_certificate_<?= $row['id'] ?>" class="input-file"
-                                            accept="image/*,.pdf,.doc,.docx,.zip,.rar,.7z,.tar,.gz" required>
+                    <form id="form_<?= $row['id'] ?>" enctype="multipart/form-data">
+                        <tr id="row-<?= $row['id'] ?>">
+                            <td>
+                                <a href="javascript:void(0)" onclick="showProfile(<?php echo $row['user_id']; ?>)"
+                                    class="profile-link">
+                                    <?php echo htmlspecialchars($row['username']); ?>
+                                </a>
+                            </td>
+                            <td><?php echo htmlspecialchars(date('Y-m-d', strtotime($row['created_at']))); ?></td>
+                            <td><?= htmlspecialchars($row['judul_hak_cipta']); ?></td>
+                            <td>
+                                <button type="button" class="btn btn-info"
+                                    onclick="openDetailCiptaanModal(<?= $row['id'] ?>)">Lihat</button>
+                            </td>
+                            <td>
+                                <button onclick="openModal('<?php echo $row['id']; ?>')" class="btn btn-info">Detail
+                                    Pencipta</button>
+                            </td>
+                            <td>
+                                <?php
+                                $reg_id = $row['id'];
+                                $files = $conn->query("SELECT file_name, file_path FROM documents WHERE registration_id = '$reg_id'");
+                                while ($file = $files->fetch_assoc()) {
+                                    echo '<a href="' . htmlspecialchars($file['file_path']) . '" download="' . htmlspecialchars($file['file_name']) . '" class="btn btn-download">Download</a><br>';
+                                }
+                                ?>
+                            </td>
+                            <td class="status-td"><span
+                                    class="badge badge-<?= strtolower($row['status']) ?>"><?= htmlspecialchars($row['status']) ?></span>
+                            </td>
+                            <td id="certificate-container-<?= $row['id'] ?>">
+                                <?php if (!empty($row['certificate_path'])) { ?>
+                                    <a href="<?= $row['certificate_path'] ?>" class="btn btn-download" download>Download</a>
+                                <?php } else { ?>
+                                    <span>Belum ada sertifikat</span>
+                                <?php } ?>
+                            </td>
+                            <td class="nomor-cell">
+                                <div class="nomor-fields">
+                                    <label class="file-label">Nomor Pengajuan</label>
+                                    <input type="text" spellcheck="false" name="nomor_pengajuan"
+                                        id="nomor_pengajuan_<?= $row['id'] ?>"
+                                        value="<?= htmlspecialchars($row['nomor_pengajuan'] ?? '') ?>" class="input-field"
+                                        placeholder="Opsional">
+                                    <label class="file-label">Nomor Sertifikat</label>
+                                    <input type="text" spellcheck="false" name="nomor_sertifikat"
+                                        id="nomor_sertifikat_<?= $row['id'] ?>"
+                                        value="<?= htmlspecialchars($row['nomor_sertifikat'] ?? '') ?>" class="input-field"
+                                        placeholder="Opsional">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="input-wrapper">
+                                    <label for="certificate_<?= $row['id'] ?>" class="file-label">Perbarui Sertifikat
+                                        (Opsional)</label>
+                                    <div class="button-row">
+                                        <div class="custom-file-container">
+                                            <label for="certificate_<?= $row['id'] ?>"
+                                                class="custom-file-label btn btn-info">Pilih
+                                                File</label>
+                                            <input type="file" id="certificate_<?= $row['id'] ?>" name="certificate"
+                                                class="input-file" accept="image/*,.pdf,.doc,.docx,.zip,.rar,.7z,.tar,.gz">
+                                        </div>
+                                        <div class="action-dropdown">
+                                            <button type="button" onclick="toggleDropdown(this)" class="btn action-button">
+                                                Aksi
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <button class="delete-btn" data-id="<?= $row['id'] ?>"
+                                                    data-row="row_<?= $row['id'] ?>">
+                                                    <i class="bx bxs-trash"></i> Hapus
+                                                </button>
+                                                <button class="manage_review-btn" data-id="<?= $row['id'] ?>"
+                                                    data-row="row_<?= $row['id'] ?>">
+                                                    <i class="bx bx-search-alt-2"></i>
+                                                    Tinjau
+                                                </button>
+                                                <button type="button" class="update-btn" data-id="<?= $row['id'] ?>"
+                                                    data-form="form_<?= $row['id'] ?>" data-user="<?= $row['user_id'] ?>">
+                                                    <i class="bx bx-refresh"></i>
+                                                    Perbarui
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <button type="button" class="btn btn-safe edit-certificate-btn"
-                                        data-id="<?= $row['id'] ?>">Edit & Simpan</button>
+                                    <span class="file-name" id="file-name-<?= $row['id'] ?>">Tidak ada file yang
+                                        dipilih</span>
                                 </div>
-                                <span class="file-name" id="file-name-<?= $row['id'] ?>">Tidak ada file yang dipilih</span>
-                            </div>
-                        </td>
-                        <td class="aksi-buttons">
-                            <input type="text" spellcheck="false" id="nomor_sertifikat_<?= $row['id'] ?>"
-                                value="<?= htmlspecialchars($row['nomor_sertifikat'] ?? '') ?>" class="input-field">
-                            <button class="btn btn-safe edit-nomor-sertifikat-btn" data-id="<?= $row['id'] ?>">
-                                Edit & Simpan</button>
-                        </td>
-                        <td>
-                            <div class="action-dropdown">
-                                <button type="button" onclick="toggleDropdown(this)" class="btn action-button">
-                                    Aksi
-                                </button>
-                                <div class="dropdown-menu">
-                                    <button class="delete-btn" data-id="<?= $row['id'] ?>" data-row="row_<?= $row['id'] ?>">
-                                        ✖ Hapus
-                                    </button>
-                                    <button class="manage_review-btn" data-id="<?= $row['id'] ?>" data-row="row_<?= $row['id'] ?>">
-                                        ✎ Tinjau
-                                    </button>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
+                    </form>
                 <?php } ?>
             </tbody>
         </table>

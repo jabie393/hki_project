@@ -169,7 +169,6 @@ $result = $stmt->get_result();
                         <button type="button" onclick="openModal('<?= $row['id'] ?>')" class="btn btn-info">Detail
                             Pencipta</button>
                     </td>
-                    </td>
                     <td class="status-td"><span
                             class="badge badge-<?= strtolower($row['status']) ?>"><?= htmlspecialchars($row['status']) ?></span>
                     </td>
@@ -183,10 +182,17 @@ $result = $stmt->get_result();
                     <td><?php echo htmlspecialchars($row['nomor_sertifikat'] ?? '-'); ?></td>
                     <td class="action-td">
                         <?php if ($row['status'] == 'Pending' || $row['status'] == 'Ditinjau') { ?>
-                            <button class="btn btn-edit revise-btn" data-id="<?= $row['id'] ?>"
-                                data-row="row-<?= $row['id'] ?>">Revisi</button>
-                            <button class="btn btn-danger cancel-btn" data-id="<?= $row['id'] ?>"
-                                data-row="row-<?= $row['id'] ?>">Batalkan</button>
+                            <div class="action-dropdown">
+                                <button type="button" onclick="toggleDropdown(this)" class="btn action-button">
+                                    Aksi
+                                </button>
+                                <div class="dropdown-menu">
+                                    <button class="cancel-btn" data-id="<?= $row['id'] ?>" data-row="row-<?= $row['id'] ?>"><i
+                                            class="bx bxs-trash"></i> Batalkan</button>
+                                    <button class="revise-btn" data-id="<?= $row['id'] ?>" data-row="row-<?= $row['id'] ?>"><i
+                                            class="bx bxs-edit"></i> Revisi</button>
+                                </div>
+                            </div>
                         <?php } else { ?>
                             <span style="color: gray;">Tidak bisa dibatalkan</span>
                         <?php } ?>
