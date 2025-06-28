@@ -61,7 +61,6 @@ window.addEventListener("click", function (e) {
 });
 function handleAction(action, id) {
     alert(`Aksi "${action}" pada ID: ${id}`);
-    // Implementasi AJAX atau redirect sesuai kebutuhan Anda
 }
 
 //== Modal ==//
@@ -125,8 +124,8 @@ function closeModal() {
 }
 //== Modal ==//
 
-//== Ajax (Dashboard & Rekapitulasi_admin) ==//
-// services/approve.php
+//== Ajax Button ==//
+//== services/approve.php (admin) ==//
 document.querySelectorAll('.approve-btn').forEach(button => {
     button.addEventListener('click', function () {
         const id = this.dataset.id;
@@ -237,7 +236,7 @@ document.querySelectorAll('.approve-btn').forEach(button => {
     });
 });
 
-//== services/review.php (Tombol Tinjau) ==//
+//== services/review.php (Tombol Tinjau) (admin) ==//
 document.querySelectorAll('.review-btn').forEach(button => {
     button.addEventListener('click', function () {
         const id = this.dataset.id;
@@ -315,7 +314,7 @@ document.querySelectorAll('.review-btn').forEach(button => {
     });
 });
 
-//== services/manage_review.php (Tombol Tinjau di manage_rekapitulasi.php) ==//
+//== services/manage_review.php (Tombol Tinjau di manage_rekapitulasi.php) (admin) ==//
 document.querySelectorAll('.manage_review-btn').forEach(button => {
     button.addEventListener('click', function () {
         const id = this.dataset.id;
@@ -387,7 +386,7 @@ document.querySelectorAll('.manage_review-btn').forEach(button => {
     });
 });
 
-//=== services/update.php ===//
+//=== services/update.php (admin)===//
 document.querySelectorAll('.update-btn').forEach(button => {
     button.addEventListener('click', function () {
         const id = this.dataset.id;
@@ -507,7 +506,30 @@ document.querySelectorAll('.update-btn').forEach(button => {
     });
 });
 
-//=== services/delete_pengajuan.php ===//
+//=== services/get_pengajuan.php (user) ===//
+document.querySelectorAll('.revise-btn').forEach(button => {
+    button.addEventListener('click', function () {
+        const id = this.dataset.id;
+        loadContent(`revisi.php?revisi_id=${id}`, function () {
+            fetch(`services/get_pengajuan.php?id=${id}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        // Tunggu negara selesai di-load, baru autofill
+                        if (typeof loadCountriesForReviseMainForm === "function") {
+                            loadCountriesForReviseMainForm(function() {
+                                autofillPengajuanForm(data.data);
+                            });
+                        } else {
+                            autofillPengajuanForm(data.data);
+                        }
+                    }
+                });
+        });
+    });
+});
+
+//=== services/delete_pengajuan.php (admin & user) ===//
 document.querySelectorAll('.delete-btn').forEach(button => {
     button.addEventListener('click', function () {
         const id = this.dataset.id;

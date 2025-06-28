@@ -1,25 +1,3 @@
-document.querySelectorAll('.revise-btn').forEach(button => {
-    button.addEventListener('click', function () {
-        const id = this.dataset.id;
-        loadContent(`revisi.php?revisi_id=${id}`, function () {
-            fetch(`services/get_pengajuan.php?id=${id}`)
-                .then(res => res.json())
-                .then(data => {
-                    if (data.success) {
-                        // Tunggu negara selesai di-load, baru autofill
-                        if (typeof loadCountriesForReviseMainForm === "function") {
-                            loadCountriesForReviseMainForm(function() {
-                                autofillPengajuanForm(data.data);
-                            });
-                        } else {
-                            autofillPengajuanForm(data.data);
-                        }
-                    }
-                });
-        });
-    });
-});
-
 // Fungsi autofill
 function autofillPengajuanForm(data) {
     // Jenis Pengajuan
@@ -29,7 +7,7 @@ function autofillPengajuanForm(data) {
     $('#jenis_hak_cipta').val(data.jenis_hak_cipta).trigger('change');
 
     // Tunggu sub_jenis_hak_cipta aktif, lalu set nilainya
-    setTimeout(function() {
+    setTimeout(function () {
         $('#sub_jenis_hak_cipta').val(data.sub_jenis_hak_cipta).trigger('change');
     }, 300);
 

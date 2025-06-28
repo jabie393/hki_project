@@ -272,6 +272,5 @@ $result = $stmt->get_result();
         </div>
     </div>
 
-    <script src="js/action.js"></script>
     <script src="js/hak_cipta.js"></script>
 </div>

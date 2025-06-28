@@ -164,6 +164,7 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
     </div>
 </div>
 
+<script src="js/auto_fiil.js"></script>
 <script src="js/form_pengajuan.js"></script>
 <script src="js/form_pencipta.js"></script>
 <script src="js/submit_revisi.js"></script>
