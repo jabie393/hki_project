@@ -186,7 +186,7 @@ $result = $stmt->get_result();
                                 <button type="button" onclick="toggleDropdown(this)" class="btn action-button">
                                     Aksi
                                 </button>
-                                <div class="dropdown-menu">
+                                <div class="dropdown-menu sp">
                                     <button class="cancel-btn" data-id="<?= $row['id'] ?>" data-row="row-<?= $row['id'] ?>"><i
                                             class="bx bxs-trash"></i> Batalkan</button>
                                     <button class="revise-btn" data-id="<?= $row['id'] ?>" data-row="row-<?= $row['id'] ?>"><i

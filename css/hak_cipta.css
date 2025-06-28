@@ -594,7 +594,7 @@ body.dark-mode #hak_cipta-page .btn:hover {
 /* Dark mode for dropdown-menu */
 body.dark-mode #hak_cipta-page .dropdown-menu {
   background-color: #23272f;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.7);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.7);
   border: 1px solid #444;
 }
 
@@ -774,7 +774,7 @@ body.dark-mode #hak_cipta-page .pagination .page-link.active {
   #hak_cipta-page .dropdown-menu {
     font-size: 13px;
     top: -43px;
-    right: 55px
+    right: 55px;
   }
 
   #hak_cipta-page .btn-group {
@@ -795,6 +795,9 @@ body.dark-mode #hak_cipta-page .pagination .page-link.active {
 
 /* Media Query untuk layar kecil (ponsel) */
 @media (max-width: 576px) {
+  #hak_cipta-page .sp {
+    margin: 5px 0;
+  }
   #hak_cipta-page {
     padding: 10px;
   }
