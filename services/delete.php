@@ -4,10 +4,23 @@ session_start();
 
 header('Content-Type: application/json');
 
-// Cek apakah pengguna adalah admin
-if (!isset($_SESSION['role']) || $_SESSION['role'] != 'admin') {
-    echo json_encode(['success' => false, 'message' => 'Akses ditolak!']);
+// Cek apakah pengguna sudah login
+if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
+    echo json_encode(['success' => false, 'message' => 'Unauthorized']);
     exit();
+}
+
+// Jika pengguna bukan admin, pastikan mereka hanya menghapus pengajuan mereka sendiri
+$user_id = $_SESSION['user_id'];
+$role = $_SESSION['role'];
+
+$user_query = $conn->query("SELECT user_id FROM registrations WHERE id = '$id'");
+if ($user_query->num_rows > 0) {
+    $user_data = $user_query->fetch_assoc();
+    if ($user_data['user_id'] != $user_id && $role != 'admin') {
+        echo json_encode(['success' => false, 'message' => 'Akses ditolak!']);
+        exit();
+    }
 }
 
 // Fungsi rekursif untuk menghapus folder beserta isinya

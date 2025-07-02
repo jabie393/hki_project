@@ -314,14 +314,14 @@ document.querySelectorAll('.review-btn').forEach(button => {
     });
 });
 
-//== services/manage_review.php (Tombol Tinjau di manage_rekapitulasi.php) (admin) ==//
+//== services/manage_review.php (Tombol Tinjau di manage_rekapitulasi & pengajuan_ditolak ) (admin) ==//
 document.querySelectorAll('.manage_review-btn').forEach(button => {
     button.addEventListener('click', function () {
         const id = this.dataset.id;
         const row = document.getElementById('row-' + id);
 
         Swal.fire({
-            title: 'Tandai sebagai Ditinjau?',
+            title: 'Tinjau ulang?',
             text: "Status pengajuan akan menjadi 'Ditinjau'.",
             icon: 'question',
             showCancelButton: true,
@@ -506,30 +506,57 @@ document.querySelectorAll('.update-btn').forEach(button => {
     });
 });
 
-//=== services/get_pengajuan.php (user) ===//
-document.querySelectorAll('.revise-btn').forEach(button => {
+//=== services/reject.php (admin) ===//
+document.querySelectorAll('.reject-btn').forEach(button => {
     button.addEventListener('click', function () {
         const id = this.dataset.id;
-        loadContent(`revisi.php?revisi_id=${id}`, function () {
-            fetch(`services/get_pengajuan.php?id=${id}`)
-                .then(res => res.json())
-                .then(data => {
-                    if (data.success) {
-                        // Tunggu negara selesai di-load, baru autofill
-                        if (typeof loadCountriesForReviseMainForm === "function") {
-                            loadCountriesForReviseMainForm(function() {
-                                autofillPengajuanForm(data.data);
+        const rowId = this.dataset.row;
+        const rowElement = document.getElementById(rowId);
+
+        Swal.fire({
+            title: 'Yakin ingin menolak?',
+            text: "Status pengajuan akan menjadi 'Ditolak' selama 7 hari!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, tolak!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(`services/reject.php?id=${id}`)
+                    .then(res => res.json())
+                    .then(response => {
+                        if (response.success) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Ditolak',
+                                text: response.message,
+                                timer: 2000,
+                                showConfirmButton: false
                             });
+                            // Hapus baris dari tabel
+                            if (rowElement) {
+                                rowElement.remove();
+                            }
                         } else {
-                            autofillPengajuanForm(data.data);
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Gagal',
+                                text: response.message,
+                                showConfirmButton: true,
+                                confirmButtonText: 'Oke, paham!'
+                            });
                         }
-                    }
-                });
+                    })
+                    .catch(error => {
+                        console.error(error);
+                        Swal.fire('Error', 'Gagal menolak pengajuan.', 'error');
+                    });
+            }
         });
     });
-});
+})
 
-//=== services/delete_pengajuan.php (admin & user) ===//
+//=== services/delete.php (admin) ===//
 document.querySelectorAll('.delete-btn').forEach(button => {
     button.addEventListener('click', function () {
         const id = this.dataset.id;
@@ -545,7 +572,7 @@ document.querySelectorAll('.delete-btn').forEach(button => {
             cancelButtonText: 'Batal'
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`services/delete_pengajuan.php?id=${id}`)
+                fetch(`services/delete.php?id=${id}`)
                     .then(res => res.text())
                     .then(response => {
                         if (response.includes("berhasil")) {
@@ -579,36 +606,30 @@ document.querySelectorAll('.delete-btn').forEach(button => {
     });
 });
 
-// Validasi file saat diinput
-document.querySelectorAll('input[type="file"]').forEach(input => {
-    input.addEventListener('change', function () {
-        const allowedExtensions = ['pdf', 'doc', 'docx', 'zip', 'rar', '7z', 'tar', 'gz', 'jpg', 'jpeg', 'png'];
-        const file = this.files[0];
-
-        if (file) {
-            const fileExtension = file.name.split('.').pop().toLowerCase();
-
-            if (!allowedExtensions.includes(fileExtension)) {
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'File Sertifikat Tidak Valid',
-                    text: `Hanya Sertifikat dengan ekstensi berikut yang diizinkan: ${allowedExtensions.join(', ')}.`,
-                    showConfirmButton: true,
-                    confirmButtonText: 'Oke, paham!'
+//=== services/get_pengajuan.php (user) ===//
+document.querySelectorAll('.revise-btn').forEach(button => {
+    button.addEventListener('click', function () {
+        const id = this.dataset.id;
+        loadContent(`revisi.php?revisi_id=${id}`, function () {
+            fetch(`services/get_pengajuan.php?id=${id}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        // Tunggu negara selesai di-load, baru autofill
+                        if (typeof loadCountriesForReviseMainForm === "function") {
+                            loadCountriesForReviseMainForm(function () {
+                                autofillPengajuanForm(data.data);
+                            });
+                        } else {
+                            autofillPengajuanForm(data.data);
+                        }
+                    }
                 });
-                this.value = ''; // Reset input file
-
-                // Reset file-name display
-                const fileId = this.id.split('_').pop();
-                const fileNameElement = document.getElementById('file-name-' + fileId);
-                if (fileNameElement) fileNameElement.textContent = "Tidak ada file yang dipilih";
-            }
-        }
+        });
     });
 });
-//== Ajax (Dashboard & Rekapitulasi_admin) ==//
 
-//== Script Ajax (status_pengajuan) ==//
+//== services/cancel_pengajuan.php (user) ==//
 document.querySelectorAll('.cancel-btn').forEach(button => {
     button.addEventListener('click', function () {
         const id = this.dataset.id;
@@ -660,7 +681,34 @@ document.querySelectorAll('.cancel-btn').forEach(button => {
         });
     });
 });
-//== Script Ajax (status_pengajuan) ==//
+
+// Validasi file saat diinput
+document.querySelectorAll('input[type="file"]').forEach(input => {
+    input.addEventListener('change', function () {
+        const allowedExtensions = ['pdf', 'doc', 'docx', 'zip', 'rar', '7z', 'tar', 'gz', 'jpg', 'jpeg', 'png'];
+        const file = this.files[0];
+
+        if (file) {
+            const fileExtension = file.name.split('.').pop().toLowerCase();
+
+            if (!allowedExtensions.includes(fileExtension)) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'File Sertifikat Tidak Valid',
+                    text: `Hanya Sertifikat dengan ekstensi berikut yang diizinkan: ${allowedExtensions.join(', ')}.`,
+                    showConfirmButton: true,
+                    confirmButtonText: 'Oke, paham!'
+                });
+                this.value = ''; // Reset input file
+
+                // Reset file-name display
+                const fileId = this.id.split('_').pop();
+                const fileNameElement = document.getElementById('file-name-' + fileId);
+                if (fileNameElement) fileNameElement.textContent = "Tidak ada file yang dipilih";
+            }
+        }
+    });
+});
 
 //== Hide search param from URL after search ==//
 document.addEventListener('DOMContentLoaded', function () {

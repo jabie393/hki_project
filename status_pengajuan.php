@@ -10,6 +10,11 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
+// Ambil nomor admin untuk konsultasi banding
+$adminQuery = mysqli_query($conn, "SELECT admin_number FROM consultation_number LIMIT 1");
+$adminData = mysqli_fetch_assoc($adminQuery);
+$adminNumber = $adminData['admin_number'];
+
 // Ambil kata kunci pencarian jika ada
 $search = isset($_GET['search']) ? $_GET['search'] : '';
 
@@ -157,6 +162,12 @@ $result = $stmt->get_result();
                 <th>Aksi</th>
             </tr>
             <?php while ($row = $result->fetch_assoc()) { ?>
+                <?php
+                $noPengajuan = !empty($row['nomor_pengajuan']) ? urlencode($row['nomor_pengajuan']) : '–';
+                $judul = urlencode($row['judul_hak_cipta']);
+                $pesan = "Yth. Admin LPPM UNIRA Malang,%0A%0ASaya ingin menanyakan terkait pengajuan Hak Cipta saya yang saat ini berstatus Ditinjau.%0A%0A- No. Pengajuan: $noPengajuan%0A- Judul: $judul%0A%0AMohon informasinya apabila ada hal yang perlu saya lengkapi atau tindak lanjuti.%0A%0ATerima kasih.";
+                $pesanBanding = "Yth. Admin LPPM UNIRA Malang,%0ASaya ingin mengajukan banding atas hak cipta saya yang saat ini berstatus Ditolak.%0A%0A- Judul: $judul%0A- No. Pengajuan: $noPengajuan%0ADengan alasan: %0A%0AMohon pertimbangannya kembali.%0A%0ATerima kasih.";
+                ?>
                 <tr id="row-<?= $row['id'] ?>">
                     <td><?php echo htmlspecialchars($row['nomor_pengajuan'] ?? '-'); ?></td>
                     <td><?php echo htmlspecialchars(date('Y-m-d', strtotime($row['created_at']))); ?></td>
@@ -169,8 +180,24 @@ $result = $stmt->get_result();
                         <button type="button" onclick="openModal('<?= $row['id'] ?>')" class="btn btn-info">Detail
                             Pencipta</button>
                     </td>
-                    <td class="status-td"><span
-                            class="badge badge-<?= strtolower($row['status']) ?>"><?= htmlspecialchars($row['status']) ?></span>
+                    <td class="status-td">
+                        <?php if ($row['status'] == 'Ditolak' && !empty($row['rejected_at'])): ?>
+                            <?php
+                            $rejected_at = new DateTime($row['rejected_at']);
+                            $now = new DateTime();
+                            $interval = $now->diff($rejected_at);
+                            $days_passed = $interval->days;
+                            $days_left = max(0, 7 - $days_passed);
+                            ?>
+                            <span class="badge badge-ditolak badge-countdown status-tooltip"
+                                data-tooltip="<?= $days_left > 0 ? 'Akan dihapus otomatis dalam ' . $days_left . ' hari' : 'Menunggu penghapusan otomatis' ?>">
+                                Ditolak<?= $days_left > 0 ? ' 🕒 ' . $days_left . 'd' : '' ?>
+                            </span>
+                        <?php else: ?>
+                            <span class="badge badge-<?= strtolower($row['status']) ?>">
+                                <?= htmlspecialchars($row['status']) ?>
+                            </span>
+                        <?php endif; ?>
                     </td>
                     <td>
                         <?php if (!empty($row['certificate_path'])) { ?>
@@ -181,7 +208,7 @@ $result = $stmt->get_result();
                     </td>
                     <td><?php echo htmlspecialchars($row['nomor_sertifikat'] ?? '-'); ?></td>
                     <td class="action-td">
-                        <?php if ($row['status'] == 'Pending' || $row['status'] == 'Ditinjau') { ?>
+                        <?php if ($row['status'] == 'Pending') { ?>
                             <div class="action-dropdown">
                                 <button type="button" onclick="toggleDropdown(this)" class="btn action-button">
                                     Aksi
@@ -193,7 +220,35 @@ $result = $stmt->get_result();
                                             class="bx bxs-edit"></i> Revisi</button>
                                 </div>
                             </div>
-                        <?php } else { ?>
+                        <?php } elseif ($row['status'] == 'Ditinjau') { ?>
+                            <div class="action-dropdown">
+                                <button type="button" onclick="toggleDropdown(this)" class="btn action-button">
+                                    Aksi
+                                </button>
+                                <div class="dropdown-menu sp">
+                                    <a href="https://wa.me/<?= $adminNumber ?>?text=<?= $pesan ?>" target="_blank"
+                                        class="button ask-btn">
+                                        <i class='bx bx-conversation'></i> Tanya
+                                    </a>
+                                    <button class="revise-btn" data-id="<?= $row['id'] ?>" data-row="row-<?= $row['id'] ?>"><i
+                                            class="bx bxs-edit"></i> Revisi</button>
+                                </div>
+                            </div>
+                        <?php } elseif ($row['status'] == 'Ditolak' && !empty($row['rejected_at'])) { ?>
+                            <div class="action-dropdown">
+                                <button type="button" onclick="toggleDropdown(this)" class="btn action-button">
+                                    Aksi
+                                </button>
+                                <div class="dropdown-menu sp">
+                                    <button class="delete-btn" data-id="<?= $row['id'] ?>" data-row="row-<?= $row['id'] ?>"><i
+                                            class="bx bxs-trash"></i> Hapus</button>
+                                    <a href="https://wa.me/<?= $adminNumber ?>?text=<?= $pesanBanding ?>" target="_blank"
+                                        class="button appeal-btn">
+                                        <i class='bx bx-conversation'></i> Banding
+                                    </a>
+                                </div>
+                            </div>
+                        <?php } elseif ($row['status'] == 'Terdaftar') { ?>
                             <span style="color: gray;">Tidak bisa dibatalkan</span>
                         <?php } ?>
                     </td>

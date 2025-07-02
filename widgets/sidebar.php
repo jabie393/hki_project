@@ -49,6 +49,11 @@ $page = substr($_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"], "/") + 
                     <i class='bx bxs-folder'></i><span class="text">Rekapitulasi</span>
                 </a>
             </li>
+            <li class="sidebar-text" title="Pengajuan Ditolak">
+                <a class="menu-link" onclick="loadContent('pengajuan_ditolak.php')">
+                    <i class='bx bxs-x-circle'></i><span class="text">Pengajuan Ditolak</span>
+                </a>
+            </li>
             <li class="sidebar-text" title="Pengumuman">
                 <a class="menu-link" onclick="loadContent('announcement.php')">
                     <i class='bx bxs-megaphone'></i><span class="text">Pengumuman</span>

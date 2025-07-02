@@ -9,6 +9,15 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $user_id = $_SESSION['user_id'];
+$user_role = $_SESSION['role'] ?? 'user';
+$isAdmin = ($user_role === 'admin');
+
+// Periksa apakah tabel consultation_number memiliki data
+$check_query = $conn->query("SELECT id FROM consultation_number LIMIT 1");
+if ($check_query->num_rows === 0) {
+    // Tambahkan data dummy jika tabel kosong
+    $conn->query("INSERT INTO consultation_number (id, admin_number) VALUES (1, '')");
+}
 
 // Ambil data lama
 $query = $conn->prepare("SELECT * FROM user_profile WHERE user_id = ?");
@@ -28,6 +37,7 @@ $birth_date        = nullIfEmpty($_POST['birth_date'] ?? null);
 $gender            = nullIfEmpty($_POST['gender'] ?? null);
 $nationality       = nullIfEmpty($_POST['nationality'] ?? null);
 $type_of_applicant = nullIfEmpty($_POST['type_of_applicant'] ?? null);
+$consultation_number = nullIfEmpty($_POST['consultation_number'] ?? null); // Tambahkan untuk admin_number
 
 // Direktori upload
 $upload_dir = "../uploads/users/$user_id/profile/";
@@ -63,6 +73,14 @@ if ($existing_data) {
 
 // Eksekusi query
 if ($query->execute()) {
+    // Jika user adalah admin, update admin_number
+    if ($isAdmin && $consultation_number !== null) {
+        $admin_query = $conn->prepare("UPDATE consultation_number SET admin_number = ? LIMIT 1");
+        $admin_query->bind_param("s", $consultation_number);
+        $admin_query->execute();
+        $admin_query->close();
+    }
+
     // Siapkan URL foto baru (kalau ada upload baru)
     $profile_picture_url = null;
     if ($new_profile_picture_uploaded) {

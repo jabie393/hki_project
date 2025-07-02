@@ -2,7 +2,7 @@
 <!-- ADMIN & USER -->
 <?php
 include 'config/config.php';
-include_once 'helpers/profile_helper.php'; // Tambahkan ini
+include_once 'helpers/profile_helper.php';
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
@@ -62,6 +62,17 @@ $profile_picture = getProfilePicture($user_id);
             <input type="tel" spellcheck="false" name="telephone" id="telephone"
                 value="<?= $profile['telephone'] ?? '' ?>">
         </div>
+
+        <?php if ($isAdmin): ?>
+        <div>
+            <label for="consultation_number">No Konsultasi:</label>
+            <?php
+            $consultation_number = $conn->query("SELECT admin_number FROM consultation_number LIMIT 1")->fetch_assoc();
+            ?>
+            <input type="text" spellcheck="false" name="consultation_number" id="consultation_number"
+                value="<?= $consultation_number['admin_number'] ?? '' ?>">
+        </div>
+        <?php endif; ?>
 
         <div>
             <label for="birth_date">Tanggal Lahir:</label>

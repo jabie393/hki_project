@@ -24,7 +24,7 @@ $order = isset($_GET['order']) ? ($_GET['order'] === 'DESC' ? 'DESC' : 'ASC') : 
 // Query untuk menghitung total data
 $totalQuery = "SELECT COUNT(*) as total FROM registrations
                 JOIN users ON registrations.user_id = users.id
-                WHERE registrations.status NOT IN ('Terdaftar', 'Ditolak')
+                WHERE registrations.status = 'Ditolak'
                 AND (users.username LIKE '%$search%'
                 OR registrations.jenis_pengajuan LIKE '%$search%'
                 OR registrations.jenis_hak_cipta LIKE '%$search%'
@@ -41,7 +41,7 @@ $totalPages = ceil($totalData / $limit);
 // Query untuk mengambil data dengan pagination dan urutan
 $query = "SELECT registrations.*, users.username FROM registrations
             JOIN users ON registrations.user_id = users.id
-            WHERE registrations.status NOT IN ('Terdaftar', 'Ditolak')
+            WHERE registrations.status = 'Ditolak'
             AND (users.username LIKE '%$search%'
             OR registrations.nomor_pengajuan LIKE '%$search%'
             OR registrations.jenis_pengajuan LIKE '%$search%'
@@ -73,7 +73,7 @@ $result = $conn->query($query);
 
 <!-- tinjau_pengajuan.php (HTML Table Layout) -->
 <div id="hak_cipta-page">
-    <h2>Daftar Pengajuan Hak Cipta</h2>
+    <h2>Hak Cipta Ditolak</h2>
 
     <!-- Form Pencarian -->
     <form method="GET" id="search-form" class="search-form">
@@ -141,8 +141,17 @@ $result = $conn->query($query);
                                 }
                                 ?>
                             </td>
-                            <td class="status-td"><span
-                                    class="badge badge-<?= strtolower($row['status']) ?>"><?= htmlspecialchars($row['status']) ?></span>
+                            <td class="status-td"> <?php
+                            $rejected_at = new DateTime($row['rejected_at']);
+                            $now = new DateTime();
+                            $interval = $now->diff($rejected_at);
+                            $days_passed = $interval->days;
+                            $days_left = max(0, 7 - $days_passed);
+                            ?>
+                                <span class="badge badge-ditolak badge-countdown status-tooltip"
+                                    data-tooltip="<?= $days_left > 0 ? 'Akan dihapus otomatis dalam ' . $days_left . ' hari' : 'Menunggu penghapusan otomatis' ?>">
+                                    Ditolak<?= $days_left > 0 ? ' 🕒 ' . $days_left . 'd' : '' ?>
+                                </span>
                             </td>
                             <td class="nomor-cell">
                                 <div class="nomor-fields">
@@ -175,11 +184,11 @@ $result = $conn->query($query);
                                                 Aksi
                                             </button>
                                             <div class="dropdown-menu">
-                                                <button class="reject-btn" data-id="<?= $row['id'] ?>"
+                                                <button class="delete-btn" data-id="<?= $row['id'] ?>"
                                                     data-row="row_<?= $row['id'] ?>">
-                                                    <i class="bx bxs-trash"></i> Tolak
+                                                    <i class="bx bxs-trash"></i> Hapus
                                                 </button>
-                                                <button class="review-btn" data-id="<?= $row['id'] ?>"
+                                                <button class="manage_review-btn" data-id="<?= $row['id'] ?>"
                                                     data-row="row_<?= $row['id'] ?>">
                                                     <i class="bx bx-search-alt-2"></i> Tinjau
                                                 </button>
