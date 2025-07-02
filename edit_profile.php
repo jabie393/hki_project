@@ -12,6 +12,7 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 $profile = $conn->query("SELECT * FROM user_profile WHERE user_id = '$user_id'")->fetch_assoc();
+$consultation_number = $conn->query("SELECT admin_number, consult_phone_code FROM consultation_number LIMIT 1")->fetch_assoc();
 $user_role = $_SESSION['role'] ?? 'user';
 $isAdmin = ($user_role === 'admin');
 
@@ -59,19 +60,24 @@ $profile_picture = getProfilePicture($user_id);
 
         <div>
             <label for="telephone">No. Telepon:</label>
-            <input type="tel" spellcheck="false" name="telephone" id="telephone"
-                value="<?= $profile['telephone'] ?? '' ?>">
+            <div class="phone-input-wrapper">
+                <select id="phone_code" name="phone_code"
+                    data-selected="<?= $profile['phone_code'] ?? '+62' ?>"></select>
+                <input type="tel" spellcheck="false" name="telephone" id="telephone"
+                    value="<?= $profile['telephone'] ?? '' ?>">
+            </div>
         </div>
 
         <?php if ($isAdmin): ?>
-        <div>
-            <label for="consultation_number">No Konsultasi:</label>
-            <?php
-            $consultation_number = $conn->query("SELECT admin_number FROM consultation_number LIMIT 1")->fetch_assoc();
-            ?>
-            <input type="text" spellcheck="false" name="consultation_number" id="consultation_number"
-                value="<?= $consultation_number['admin_number'] ?? '' ?>">
-        </div>
+            <div>
+                <label for="consultation_number">No Konsultasi:</label>
+                <div class="phone-input-wrapper">
+                    <select id="consult_phone_code" name="consult_phone_code"
+                        data-selected="<?= $consultation_number['consult_phone_code'] ?? '+62' ?>"></select>
+                    <input type="tel" spellcheck="false" name="consultation_number" id="consultation_number"
+                        value="<?= $consultation_number['admin_number'] ?? '' ?>">
+                </div>
+            </div>
         <?php endif; ?>
 
         <div>
@@ -82,7 +88,7 @@ $profile_picture = getProfilePicture($user_id);
         <div>
             <label for="gender">Jenis Kelamin:</label>
             <select name="gender" id="gender">
-            <option value="">-- Pilih Jenis Kelamin --</option>
+                <option value="">-- Pilih Jenis Kelamin --</option>
                 <option value="Laki-laki" <?= isset($profile['gender']) && $profile['gender'] == 'Laki-laki' ? 'selected' : '' ?>>Laki-laki</option>
                 <option value="Perempuan" <?= isset($profile['gender']) && $profile['gender'] == 'Perempuan' ? 'selected' : '' ?>>Perempuan</option>
             </select>

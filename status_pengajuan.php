@@ -11,9 +11,10 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 
 // Ambil nomor admin untuk konsultasi banding
-$adminQuery = mysqli_query($conn, "SELECT admin_number FROM consultation_number LIMIT 1");
+$adminQuery = mysqli_query($conn, "SELECT admin_number, consult_phone_code FROM consultation_number LIMIT 1");
 $adminData = mysqli_fetch_assoc($adminQuery);
-$adminNumber = $adminData['admin_number'];
+$consultPhoneCode = $adminData['consult_phone_code'];
+$adminNumber = $consultPhoneCode . $adminData['admin_number'];
 
 // Ambil kata kunci pencarian jika ada
 $search = isset($_GET['search']) ? $_GET['search'] : '';

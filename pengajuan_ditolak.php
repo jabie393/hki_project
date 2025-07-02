@@ -150,7 +150,10 @@ $result = $conn->query($query);
                             ?>
                                 <span class="badge badge-ditolak badge-countdown status-tooltip"
                                     data-tooltip="<?= $days_left > 0 ? 'Akan dihapus otomatis dalam ' . $days_left . ' hari' : 'Menunggu penghapusan otomatis' ?>">
-                                    Ditolak<?= $days_left > 0 ? ' 🕒 ' . $days_left . 'd' : '' ?>
+                                    Ditolak
+                                    <?php if ($days_left > 0): ?>
+                                        <i class='bx bxs-hourglass'></i> <?= $days_left ?>d
+                                    <?php endif; ?>
                                 </span>
                             </td>
                             <td class="nomor-cell">

@@ -21,7 +21,7 @@ function refreshAllProfilePics() {
 function initEditProfilePage() {
     loadCountriesForProfile();
 
-    // ================= MEMBUKA DATEPICKER ===================
+    // ================= MEMBUKA DATEPICKER =================== //
     const dateInput = document.getElementById('birth_date');
     if (dateInput) {
         dateInput.addEventListener('click', function (e) {
@@ -31,7 +31,7 @@ function initEditProfilePage() {
         });
     }
 
-    // ================== INITIALIZE SELECT2 ==================
+    // ================== INITIALIZE SELECT2 ================== //
     $('#gender').select2({
         placeholder: "-- Pilih Jenis Kelamin --",
         allowClear: true,
@@ -51,11 +51,27 @@ function initEditProfilePage() {
     const form = document.getElementById('profileForm');
     if (!form) return;
 
-    // ==== Handle Submit Form ====
+    // ==== Handle Submit Form ==== //
     form.addEventListener('submit', function (e) {
         e.preventDefault();
 
+        // Normalisasi nomor telepon: hapus 0 di depan jika ada
+        let telephone = $('#telephone').val().trim();
+        if (telephone.startsWith("0")) {
+            telephone = telephone.slice(1);
+            $('#telephone').val(telephone);
+        }
+
+        let consultation_number = $('#consultation_number').val() ? $('#consultation_number').val().trim() : '';
+        if (consultation_number.startsWith("0")) {
+            consultation_number = consultation_number.slice(1);
+            $('#consultation_number').val(consultation_number);
+        }
+
         const formData = new FormData(form);
+        // memastikan yang dikirim sudah tanpa 0 di depan
+        formData.set('telephone', telephone);
+        formData.set('consultation_number', consultation_number);
 
         Swal.fire({
             title: "Mengupdate Profil...",
@@ -71,7 +87,7 @@ function initEditProfilePage() {
             showConfirmButton: false,
             didOpen: () => {
                 const xhr = new XMLHttpRequest();
-                const startTime = Date.now(); // Catat waktu mulai
+                const startTime = Date.now();
 
                 xhr.upload.addEventListener("progress", function (e) {
                     if (e.lengthComputable) {
@@ -86,8 +102,8 @@ function initEditProfilePage() {
 
                 xhr.open("POST", "services/submit_profile.php", true);
                 xhr.onload = function () {
-                    const elapsedTime = Date.now() - startTime; // Hitung waktu yang telah berlalu
-                    const delay = Math.max(1500 - elapsedTime, 0); // Hitung delay agar minimal 1,5 detik
+                    const elapsedTime = Date.now() - startTime;
+                    const delay = Math.max(1500 - elapsedTime, 0);
 
                     setTimeout(() => {
                         Swal.close();
@@ -101,9 +117,7 @@ function initEditProfilePage() {
                                 timer: 2000,
                                 showConfirmButton: false
                             }).then(() => {
-                                refreshAllProfilePics(); // Update gambar profil di DOM
-
-                                // Muat ulang konten dan update elemen baru
+                                refreshAllProfilePics();
                                 loadContent('edit_profile.php', () => {
                                     refreshAllProfilePics();
                                 });
@@ -135,7 +149,46 @@ function initEditProfilePage() {
         });
     });
 
-    // ==== Load Negara ====
+    // ================== INISIALISASI SELECT2 KODE TELEPON NEGARA ================== //
+    fetch("json/country_codes.json")
+        .then(res => res.json())
+        .then(data => {
+            const options = data.map(c => {
+                const phone = Array.isArray(c.phoneCode) ? c.phoneCode[0] : c.phoneCode;
+                const isoCode = (c.countryCode || "").split(" / ")[0];
+                const flagURL = `https://flagcdn.com/w40/${isoCode.toLowerCase()}.png`;
+
+                return {
+                    id: `+${phone}`,
+                    text: `${isoCode.toUpperCase()} (+${phone})`,
+                    img: flagURL,
+                    iso: isoCode.toUpperCase()
+                };
+            });
+
+            $('#phone_code, #consult_phone_code').select2({
+                data: options,
+                templateResult: formatOption,
+                templateSelection: formatOption,
+                escapeMarkup: m => m,
+                placeholder: "Pilih negara",
+                minimumResultsForSearch: 5
+            });
+            $('#phone_code, #consult_phone_code').next('.select2-container').addClass('select2-code');
+
+            // Set value SESUAI data-selected
+            const defaultCode = $('#phone_code').data('selected') || '+62';
+            $('#phone_code').val(defaultCode).trigger('change');
+            const defaultCodeConsult = $('#consult_phone_code').data('selected') || '+62';
+            $('#consult_phone_code').val(defaultCodeConsult).trigger('change');
+        });
+
+    function formatOption(opt) {
+        if (!opt.id) return opt.text;
+        return `<span><img src="${opt.img}" style="width: 20px; height: 15px; margin-right: 5px;" /> ${opt.text}</span>`;
+    }
+
+    // ================== Load Negara ================== //
     function loadCountriesForProfile() {
         const select = $("#nationality_profile");
         if (!select.length) return;

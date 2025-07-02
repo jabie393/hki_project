@@ -27,17 +27,20 @@ $result = $query->get_result();
 $existing_data = $result->fetch_assoc();
 
 // Ambil data dari form
-function nullIfEmpty($val) {
+function nullIfEmpty($val)
+{
     return (isset($val) && trim($val) !== '') ? $val : null;
 }
-$nama_lengkap      = nullIfEmpty($_POST['nama_lengkap'] ?? null);
-$no_ktp            = nullIfEmpty($_POST['no_ktp'] ?? null);
-$telephone         = nullIfEmpty($_POST['telephone'] ?? null);
-$birth_date        = nullIfEmpty($_POST['birth_date'] ?? null);
-$gender            = nullIfEmpty($_POST['gender'] ?? null);
-$nationality       = nullIfEmpty($_POST['nationality'] ?? null);
+$nama_lengkap = nullIfEmpty($_POST['nama_lengkap'] ?? null);
+$no_ktp = nullIfEmpty($_POST['no_ktp'] ?? null);
+$phone_code = nullIfEmpty($_POST['phone_code'] ?? null);
+$telephone = nullIfEmpty($_POST['telephone'] ?? null);
+$consult_phone_code = nullIfEmpty($_POST['consult_phone_code'] ?? null);
+$consultation_number = nullIfEmpty($_POST['consultation_number'] ?? null);
+$birth_date = nullIfEmpty($_POST['birth_date'] ?? null);
+$gender = nullIfEmpty($_POST['gender'] ?? null);
+$nationality = nullIfEmpty($_POST['nationality'] ?? null);
 $type_of_applicant = nullIfEmpty($_POST['type_of_applicant'] ?? null);
-$consultation_number = nullIfEmpty($_POST['consultation_number'] ?? null); // Tambahkan untuk admin_number
 
 // Direktori upload
 $upload_dir = "../uploads/users/$user_id/profile/";
@@ -62,21 +65,24 @@ if (!empty($_POST['cropped_image'])) {
 // Insert atau Update
 if ($existing_data) {
     $query = $conn->prepare("UPDATE user_profile SET
-        nama_lengkap = ?, no_ktp = ?, telephone = ?, birth_date = ?, gender = ?, nationality = ?, type_of_applicant = ?, profile_picture = ?
+        nama_lengkap = ?, no_ktp = ?, telephone = ?, birth_date = ?, gender = ?, nationality = ?, type_of_applicant = ?, profile_picture = ?, phone_code = ?
         WHERE user_id = ?");
-    $query->bind_param("ssssssssi", $nama_lengkap, $no_ktp, $telephone, $birth_date, $gender, $nationality, $type_of_applicant, $profile_picture, $user_id);
+    $query->bind_param("sssssssssi", $nama_lengkap, $no_ktp, $telephone, $birth_date, $gender, $nationality, $type_of_applicant, $profile_picture, $phone_code, $user_id);
 } else {
-    $query = $conn->prepare("INSERT INTO user_profile (user_id, nama_lengkap, no_ktp, telephone, birth_date, gender, nationality, type_of_applicant, profile_picture)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $query->bind_param("issssssss", $user_id, $nama_lengkap, $no_ktp, $telephone, $birth_date, $gender, $nationality, $type_of_applicant, $profile_picture);
+    $query = $conn->prepare("INSERT INTO user_profile (user_id, nama_lengkap, no_ktp, telephone, birth_date, gender, nationality, type_of_applicant, profile_picture, phone_code)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $query->bind_param("isssssssss", $user_id, $nama_lengkap, $no_ktp, $telephone, $birth_date, $gender, $nationality, $type_of_applicant, $profile_picture, $phone_code);
 }
 
 // Eksekusi query
 if ($query->execute()) {
     // Jika user adalah admin, update admin_number
-    if ($isAdmin && $consultation_number !== null) {
-        $admin_query = $conn->prepare("UPDATE consultation_number SET admin_number = ? LIMIT 1");
-        $admin_query->bind_param("s", $consultation_number);
+    if ($isAdmin) {
+        $admin_query = $conn->prepare("UPDATE consultation_number SET admin_number = ?, consult_phone_code = ? LIMIT 1");
+        // Ubah string kosong menjadi NULL
+        $admin_number_param = ($consultation_number === null || $consultation_number === '') ? null : $consultation_number;
+        $consult_phone_code_param = ($consult_phone_code === null || $consult_phone_code === '') ? null : $consult_phone_code;
+        $admin_query->bind_param("ss", $admin_number_param, $consult_phone_code_param);
         $admin_query->execute();
         $admin_query->close();
     }

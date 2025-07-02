@@ -317,7 +317,7 @@
   border: 1px solid #f5c6cb;
   padding: 5px 8px;
   border-radius: 12px;
-  font-size: 0.8rem;
+  font-size: 12px;
   white-space: nowrap;
   z-index: 10;
   opacity: 1;
@@ -839,7 +839,8 @@ body.dark-mode #hak_cipta-page .pagination .page-link.active {
     padding: 8px;
   }
 
-  #hak_cipta-page .badge {
+  #hak_cipta-page .badge,
+  #hak_cipta-page .status-tooltip:hover::after {
     font-size: 10px;
   }
 
@@ -895,7 +896,8 @@ body.dark-mode #hak_cipta-page .pagination .page-link.active {
     padding: 5px;
   }
 
-  #hak_cipta-page .badge {
+  #hak_cipta-page .badge,
+  #hak_cipta-page .status-tooltip:hover::after {
     font-size: 9px;
   }
 

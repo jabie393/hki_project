@@ -54,6 +54,13 @@ select {
   padding-right: 30px;
 }
 
+/*=== Khusus di field Telephone ===*/
+.select2-code.select2-container--default .select2-selection--single {
+  padding: 5px 10px;
+  border-radius: 8px 0 0 8px;
+}
+/*=== Khusus di field Telephone ===*/
+
 .select2-selection__rendered {
   line-height: 45px !important;
   color: #6c757d !important;
@@ -185,6 +192,17 @@ body.dark-mode
     padding-right: 28px;
   }
 
+  /*=== Khusus di field Telephone ===*/
+  #edit_profile-page .phone-input-wrapper select,
+  #edit_profile-page
+    .phone-input-wrapper
+    .select2-code.select2-container--default {
+    width: 45% !important;
+    min-width: 90px;
+    box-sizing: border-box;
+  }
+  /*=== Khusus di field Telephone ===*/
+
   .select2-selection__rendered {
     line-height: 42px !important;
     font-size: 14px !important;
@@ -221,6 +239,17 @@ body.dark-mode
     padding-left: 10px;
     padding-right: 25px;
   }
+
+  /*=== Khusus di field Telephone ===*/
+  #edit_profile-page .phone-input-wrapper select,
+  #edit_profile-page
+    .phone-input-wrapper
+    .select2-code.select2-container--default {
+    width: 45% !important;
+    min-width: 90px;
+    box-sizing: border-box;
+  }
+  /*=== Khusus di field Telephone ===*/
 
   .select2-selection__rendered {
     line-height: 40px !important;
