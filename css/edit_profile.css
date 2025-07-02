@@ -58,7 +58,6 @@
 
 #edit_profile-page input[type="tel"] {
   border-radius: 0 8px 8px 0;
-  border-left: none;
 }
 
 #birth_date {
@@ -80,6 +79,7 @@
 
 #phone_code,
 #consult_phone_code {
+  width: 46%;
   border-radius: 6px 0 0 6px;
 }
 
@@ -314,7 +314,7 @@ body.dark-mode #edit_profile-page img[src*="default-avatar.png"] {
   }
 
   #edit_profile-page input[type="tel"] {
-    width: 55%!important;
+    width: 52% !important;
     min-width: 100px;
   }
 
@@ -360,7 +360,7 @@ body.dark-mode #edit_profile-page img[src*="default-avatar.png"] {
   }
 
   #edit_profile-page input[type="tel"] {
-    width: 55%!important;
+    width: 52% !important;
     min-width: 100px;
   }
 

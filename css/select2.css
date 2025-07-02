@@ -58,6 +58,7 @@ select {
 .select2-code.select2-container--default .select2-selection--single {
   padding: 5px 10px;
   border-radius: 8px 0 0 8px;
+  border-right: none !important;
 }
 /*=== Khusus di field Telephone ===*/
 
@@ -126,6 +127,12 @@ body.dark-mode select {
   background-color: #333333;
   color: #ffffff;
   border: 1px solid #444444;
+}
+
+body.dark-mode
+  .select2-code.select2-container--default
+  .select2-selection--single {
+  border-right: none !important;
 }
 
 /* Dark mode styles for Select2 */
@@ -197,7 +204,7 @@ body.dark-mode
   #edit_profile-page
     .phone-input-wrapper
     .select2-code.select2-container--default {
-    width: 45% !important;
+    width: 46% !important;
     min-width: 90px;
     box-sizing: border-box;
   }
@@ -245,7 +252,7 @@ body.dark-mode
   #edit_profile-page
     .phone-input-wrapper
     .select2-code.select2-container--default {
-    width: 45% !important;
+    width: 46% !important;
     min-width: 90px;
     box-sizing: border-box;
   }
