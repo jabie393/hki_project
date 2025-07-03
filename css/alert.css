@@ -24,6 +24,56 @@
   color: #4b5563; /* medium gray */
 }
 
+.swal2-file-wrapper {
+  position: relative;
+  width: 90%;
+  margin: 0 10px 0 10px;
+}
+
+.swal2-file-input {
+  opacity: 0;
+  position: absolute;
+  overflow: hidden;
+  z-index: 2;
+  cursor: pointer;
+}
+
+.swal2-file-btn {
+  font-size: 13px;
+  color: white !important;
+  background-color: #004080;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-block !important;
+  margin-top: 5px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.2s;
+  outline: none;
+  -webkit-tap-highlight-color: transparent; /* Menghilangkan highlight pada elemen saat di-tap di Chrome */
+  -moz-tap-highlight-color: none; /* Firefox */
+  -ms-tap-highlight-color: none; /* Internet Explorer/Edge */
+}
+
+.swal2-file-btn:hover {
+  background-color: #002a5e;
+}
+
+.swal2-name-text {
+  margin-left: 10px;
+  font-style: italic;
+  font-size: 13px;
+  color: grey;
+}
+
+.swal2-validation-message {
+  margin: 0px;
+  background-color: transparent !important;
+  color: grey;
+  font-weight: 500;
+  font-size: 13px;
+}
+
 /* Tombol konfirmasi */
 .swal2-confirm {
   background-color: #004080 !important;
@@ -103,12 +153,13 @@ body.dark-mode .swal2-title {
 body.dark-mode .swal2-html-container {
   color: #cccccc;
 }
-
+body.dark-mode .swal2-file-btn,
 body.dark-mode .swal2-confirm {
   background-color: #333333 !important;
   color: #ffffff !important;
 }
 
+body.dark-mode .swal2-file-btn:hover,
 body.dark-mode .swal2-confirm:hover {
   background-color: #444444 !important;
 }
@@ -116,6 +167,10 @@ body.dark-mode .swal2-confirm:hover {
 body.dark-mode .swal2-cancel {
   background-color: #444444 !important;
   color: #ffffff !important;
+}
+
+body.dark-mode .swal2-cancel:hover {
+  background-color: #555555 !important;
 }
 
 body.dark-mode .swal2-timer-progress-bar {
@@ -152,6 +207,30 @@ body.dark-mode #progress-text {
 
   .swal2-html-container {
     font-size: 0.9rem !important; /* Adjust font size for content */
+  }
+
+  .swal2-file-wrapper {
+    width: 100%;
+    margin: 0;
+  }
+
+  .swal2-file-btn {
+    font-size: 12px;
+    padding: 8px 10px;
+    box-sizing: border-box;
+    margin-top: 8px;
+  }
+
+  .swal2-name-text {
+    margin-left: 0;
+    margin-top: 6px;
+    font-size: 12px;
+    text-align: left;
+    word-break: break-all;
+  }
+
+  .swal2-validation-message {
+    font-size: 12px;
   }
 
   .swal2-confirm,

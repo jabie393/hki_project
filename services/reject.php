@@ -1,34 +1,74 @@
 <?php
 include '../config/config.php';
 session_start();
-
 header('Content-Type: application/json');
 
-// Cek apakah pengguna adalah admin
-if (!isset($_SESSION['role']) || $_SESSION['role'] != 'admin') {
+// Validasi admin
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     echo json_encode(['success' => false, 'message' => 'Akses ditolak!']);
     exit();
 }
 
-if (isset($_GET['id'])) {
-    $id = $_GET['id'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id']) && isset($_FILES['file'])) {
+    $id = intval($_POST['id']);
+    $file = $_FILES['file'];
 
-    // Cek apakah pengajuan ditemukan
-    $stmt = $conn->prepare("SELECT id FROM registrations WHERE id = ?");
+    // Ambil user_id dan path lama dari database
+    $stmt = $conn->prepare("SELECT user_id, rejection_path FROM registrations WHERE id = ?");
     $stmt->bind_param("i", $id);
     $stmt->execute();
     $result = $stmt->get_result();
 
-    if ($result->num_rows > 0) {
-        // Update status menjadi 'Ditolak' dan isi rejected_at
-        $update = $conn->prepare("UPDATE registrations SET status = 'Ditolak', rejected_at = NOW() WHERE id = ?");
-        $update->bind_param("i", $id);
-        $update->execute();
-
-        echo json_encode(['success' => true, 'message' => 'Status pengajuan diubah menjadi Ditolak. Akan dihapus otomatis dalam 7 hari.']);
-    } else {
+    if ($result->num_rows === 0) {
         echo json_encode(['success' => false, 'message' => 'Pengajuan tidak ditemukan.']);
+        exit();
     }
+
+    $data = $result->fetch_assoc();
+    $user_id = $data['user_id'];
+    $old_rejection_path = $data['rejection_path'];
+
+    $rejection_path = null;
+
+    if (!empty($file['name'])) {
+        // Buat direktori jika belum ada
+        $upload_dir = "../uploads/users/$user_id/files/$id/rejection_file/";
+        if (!file_exists($upload_dir)) {
+            mkdir($upload_dir, 0777, true);
+        }
+
+        // Hapus file lama jika ada
+        if (!empty($old_rejection_path)) {
+            $old_file = "../" . $old_rejection_path;
+            if (file_exists($old_file)) {
+                @unlink($old_file);
+            }
+        }
+
+        // Buat nama file baru
+        $file_ext = pathinfo($file['name'], PATHINFO_EXTENSION);
+        $file_name = "rejection_" . time() . "." . $file_ext;
+        $full_path = $upload_dir . $file_name;
+        $db_path = "uploads/users/$user_id/files/$id/rejection_file/$file_name";
+
+        // Pindahkan file
+        if (!move_uploaded_file($file['tmp_name'], $full_path)) {
+            echo json_encode(['success' => false, 'message' => 'Gagal mengunggah file penolakan.']);
+            exit();
+        }
+
+        $rejection_path = $db_path;
+    }
+
+    // Simpan ke database: status, waktu tolak, dan path file
+    $update = $conn->prepare("UPDATE registrations SET status = 'Ditolak', rejected_at = NOW(), rejection_path = ? WHERE id = ?");
+    $update->bind_param("si", $rejection_path, $id);
+    $update->execute();
+
+    echo json_encode([
+        'success' => true,
+        'message' => 'Pengajuan berhasil ditolak dan file disimpan. Akan dihapus otomatis dalam 7 hari.'
+    ]);
 } else {
-    echo json_encode(['success' => false, 'message' => 'Permintaan tidak valid!']);
+    echo json_encode(['success' => false, 'message' => 'Permintaan tidak valid.']);
 }

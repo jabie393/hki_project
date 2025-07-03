@@ -501,14 +501,49 @@ document.querySelectorAll('.reject-btn').forEach(button => {
 
         Swal.fire({
             title: 'Yakin ingin menolak?',
-            text: "Status pengajuan akan menjadi 'Ditolak' selama 7 hari!",
+            html: `
+                    <p>Status pengajuan akan menjadi <b>'Ditolak'</b> selama 7 hari!</p>
+                    <div class="swal2-file-wrapper">
+                        <input type="file" id="rejectFile" class="swal2-file-input">
+                        <label id="customFileBtn" class="swal2-file-btn">
+                            Pilih File Penolakan
+                        </label>
+                    <span id="fileName" class="swal2-name-text">Tidak ada file yang dipilih</span>
+                    </div>
+        `,
             icon: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Ya, tolak!',
-            cancelButtonText: 'Batal'
+            cancelButtonText: 'Batal',
+            focusConfirm: false,
+            preConfirm: () => {
+                const fileInput = document.getElementById('rejectFile');
+                if (!fileInput.files.length) {
+                    Swal.showValidationMessage('File Penolakan wajib diunggah!');
+                    return false;
+                }
+                return fileInput.files[0];
+            },
+            didOpen: () => {
+                const fileInput = document.getElementById('rejectFile');
+                const fileBtn = document.getElementById('customFileBtn');
+                const fileName = document.getElementById('fileName');
+                fileBtn.addEventListener('click', () => fileInput.click());
+                fileInput.addEventListener('change', function () {
+                    fileName.textContent = this.files.length ? this.files[0].name : 'Tidak ada file yang dipilih';
+                });
+            },
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`services/reject.php?id=${id}`)
+                const file = result.value;
+                const formData = new FormData();
+                formData.append('file', file);
+                formData.append('id', id);
+
+                fetch(`services/reject.php`, {
+                    method: 'POST',
+                    body: formData
+                })
                     .then(res => res.json())
                     .then(response => {
                         if (response.success) {
@@ -519,7 +554,6 @@ document.querySelectorAll('.reject-btn').forEach(button => {
                                 timer: 2000,
                                 showConfirmButton: false
                             });
-                            // Hapus baris dari tabel
                             if (rowElement) {
                                 rowElement.remove();
                             }
@@ -540,7 +574,7 @@ document.querySelectorAll('.reject-btn').forEach(button => {
             }
         });
     });
-})
+});
 
 //=== services/delete.php (admin) ===//
 document.querySelectorAll('.delete-btn').forEach(button => {

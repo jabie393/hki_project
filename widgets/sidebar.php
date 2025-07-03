@@ -50,7 +50,7 @@ $page = substr($_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"], "/") + 
                 </a>
             </li>
             <li class="sidebar-text" title="Pengajuan Ditolak">
-                <a class="menu-link" onclick="loadContent('pengajuan_ditolak.php')">
+                <a class="menu-link" onclick="loadContent('manage_pengajuan_ditolak.php')">
                     <i class='bx bxs-x-circle'></i><span class="text">Pengajuan Ditolak</span>
                 </a>
             </li>
@@ -88,6 +88,11 @@ $page = substr($_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"], "/") + 
             <li class="sidebar-text" title="Revisi Hak Cipta" id="menu-revisi" style="display:none;">
                 <a class="menu-link disabled" onclick="return false;" tabindex="-1">
                     <i class='bx bx-pencil'></i><span class="text">Revisi Hak Cipta</span>
+                </a>
+            </li>
+            <li class="sidebar-text" title="Pengajuan Ditolak">
+                <a class="menu-link" onclick="loadContent('pengajuan_ditolak.php')">
+                    <i class='bx bxs-x-circle'></i><span class="text">Pengajuan Ditolak</span>
                 </a>
             </li>
             <li class="sidebar-text" title="Update Data Akun">

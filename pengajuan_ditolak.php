@@ -1,61 +1,104 @@
-<!-- Flow FE -->
-<!-- ADMIN -->
+<!-- ADMIN & USER -->
 <?php
 include 'config/config.php';
 session_start();
 
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'admin') {
+if (!isset($_SESSION['user_id'])) {
     header("Location: login");
     exit();
 }
 
+$user_id = $_SESSION['user_id'];
+
+// Ambil nomor admin untuk konsultasi banding
+$adminQuery = mysqli_query($conn, "SELECT admin_number, consult_phone_code FROM consultation_number LIMIT 1");
+$adminData = mysqli_fetch_assoc($adminQuery);
+$consultPhoneCode = $adminData['consult_phone_code'];
+$adminNumber = $consultPhoneCode . $adminData['admin_number'];
+
 // Ambil kata kunci pencarian jika ada
-$search = isset($_GET['search']) ? $conn->real_escape_string($_GET['search']) : '';
+$search = isset($_GET['search']) ? $_GET['search'] : '';
 
 // Pagination setup
-$defaultLimit = 5; // Default jumlah data per halaman
-$limit = isset($_GET['limit']) ? (int) $_GET['limit'] : $defaultLimit; // Ambil limit dari URL, default 5
+$defaultLimit = 10;
+$limit = isset($_GET['limit']) ? (int) $_GET['limit'] : $defaultLimit;
 $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
 
 // Ambil parameter order dari URL, default DESC
 $order = isset($_GET['order']) ? ($_GET['order'] === 'DESC' ? 'DESC' : 'ASC') : 'DESC';
 
-// Query untuk menghitung total data
+// Query untuk menghitung total data dengan prepared statement
 $totalQuery = "SELECT COUNT(*) as total FROM registrations
-                JOIN users ON registrations.user_id = users.id
-                WHERE registrations.status = 'Ditolak'
-                AND (users.username LIKE '%$search%'
-                OR registrations.jenis_pengajuan LIKE '%$search%'
-                OR registrations.jenis_hak_cipta LIKE '%$search%'
-                OR registrations.sub_jenis_hak_cipta LIKE '%$search%'
-                OR registrations.tanggal_pengumuman LIKE '%$search%'
-                OR registrations.created_at LIKE '%$search%'
-                OR registrations.judul_hak_cipta LIKE '%$search%'
-                OR registrations.negara_pengumuman LIKE '%$search%'
-                OR registrations.kota_pengumuman LIKE '%$search%')";
-$totalResult = $conn->query($totalQuery);
+                WHERE user_id = ?
+                AND status = 'Ditolak'
+                AND (
+                    nomor_pengajuan LIKE ? OR
+                    jenis_pengajuan LIKE ? OR
+                    jenis_hak_cipta LIKE ? OR
+                    sub_jenis_hak_cipta LIKE ? OR
+                    tanggal_pengumuman LIKE ? OR
+                    created_at LIKE ? OR
+                    judul_hak_cipta LIKE ? OR
+                    negara_pengumuman LIKE ? OR
+                    kota_pengumuman LIKE ?
+                )";
+$stmt = $conn->prepare($totalQuery);
+$likeSearch = "%$search%";
+$stmt->bind_param(
+    "ssssssssss",
+    $user_id,
+    $likeSearch,
+    $likeSearch,
+    $likeSearch,
+    $likeSearch,
+    $likeSearch,
+    $likeSearch,
+    $likeSearch,
+    $likeSearch,
+    $likeSearch
+);
+$stmt->execute();
+$totalResult = $stmt->get_result();
 $totalData = $totalResult->fetch_assoc()['total'];
 $totalPages = ceil($totalData / $limit);
+$stmt->close();
 
-// Query untuk mengambil data dengan pagination dan urutan
-$query = "SELECT registrations.*, users.username FROM registrations
-            JOIN users ON registrations.user_id = users.id
-            WHERE registrations.status = 'Ditolak'
-            AND (users.username LIKE '%$search%'
-            OR registrations.nomor_pengajuan LIKE '%$search%'
-            OR registrations.jenis_pengajuan LIKE '%$search%'
-            OR registrations.jenis_hak_cipta LIKE '%$search%'
-            OR registrations.sub_jenis_hak_cipta LIKE '%$search%'
-            OR registrations.tanggal_pengumuman LIKE '%$search%'
-            OR registrations.created_at LIKE '%$search%'
-            OR registrations.judul_hak_cipta LIKE '%$search%'
-            OR registrations.negara_pengumuman LIKE '%$search%'
-            OR registrations.kota_pengumuman LIKE '%$search%'
-            OR registrations.nomor_sertifikat LIKE '%$search%')
+// Query untuk mengambil data dengan prepared statement, urutan dan pagination
+$query = "SELECT * FROM registrations
+            WHERE user_id = ?
+            AND status = 'Ditolak'
+            AND (
+                nomor_pengajuan LIKE ? OR
+                jenis_pengajuan LIKE ? OR
+                jenis_hak_cipta LIKE ? OR
+                sub_jenis_hak_cipta LIKE ? OR
+                tanggal_pengumuman LIKE ? OR
+                created_at LIKE ? OR
+                judul_hak_cipta LIKE ? OR
+                negara_pengumuman LIKE ? OR
+                kota_pengumuman LIKE ?
+            )
             ORDER BY created_at $order
-            LIMIT $limit OFFSET $offset";
-$result = $conn->query($query);
+            LIMIT ? OFFSET ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param(
+    "ssssssssssii",
+    $user_id,
+    $likeSearch,
+    $likeSearch,
+    $likeSearch,
+    $likeSearch,
+    $likeSearch,
+    $likeSearch,
+    $likeSearch,
+    $likeSearch,
+    $likeSearch,
+    $limit,
+    $offset
+);
+$stmt->execute();
+$result = $stmt->get_result();
 ?>
 
 <head>
@@ -64,6 +107,7 @@ $result = $conn->query($query);
 
     <!-- Sweet Alert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- Css -->
     <link rel="stylesheet" href="css/hak_cipta.css">
@@ -71,146 +115,108 @@ $result = $conn->query($query);
     <link rel="stylesheet" href="css/alert.css">
 </head>
 
-<!-- tinjau_pengajuan.php (HTML Table Layout) -->
 <div id="hak_cipta-page">
-    <h2>Hak Cipta Ditolak</h2>
+
+    <h2>Pengajuan Hak Cipta Ditolak</h2>
 
     <!-- Form Pencarian -->
     <form method="GET" id="search-form" class="search-form">
         <div class="search-group">
-            <input type="text" spellcheck="false" name="search" class="input-field-search"
-                placeholder="Cari Data Pengajuan" value="<?php echo htmlspecialchars($search); ?>">
+            <input type="text" name="search" class="input-field-search" placeholder="Cari Data Pengajuan"
+                value="<?php echo htmlspecialchars($search); ?>">
             <button type="submit" class="btn btn-info">Cari</button>
         </div>
     </form>
 
     <div class="table-wrapper">
         <table id="hak_cipta-table">
-            <thead>
-                <tr>
-                    <th>Username</th>
-                    <th>
-                        <div class="sortable-header">
+            <tr>
+                <th>Nomor Pengajuan</th>
+                <th>
+                    <div class="sortable-header">
+                        <a href="javascript:void(0);"
+                            onclick="loadContent('status_pengajuan.php?page=<?= $page; ?>&order=<?= $order === 'ASC' ? 'DESC' : 'ASC'; ?>')"
+                            class="sort-link <?= $order === 'ASC' ? 'active-order' : ''; ?>"
+                            title="<?= $order === 'ASC' ? 'Urutkan Dari Yang Terbaru' : 'Urutkan Dari Yang Terlama'; ?>">
+                            Tanggal Pengajuan
+                        </a>
+                        <div class="sort-buttons">
                             <a href="javascript:void(0);"
-                                onclick="loadContent('tinjau_pengajuan.php?page=<?= $page; ?>&order=<?= $order === 'ASC' ? 'DESC' : 'ASC'; ?>')"
-                                class="sort-link <?= $order === 'ASC' ? 'active-order' : ''; ?>"
-                                title="<?= $order === 'ASC' ? 'Urutkan Dari Yang Terbaru' : 'Urutkan Dari Yang Terlama'; ?>">
-                                Tanggal Pengajuan
-                            </a>
-                            <div class="sort-buttons">
-                                <a href="javascript:void(0);"
-                                    onclick="loadContent('tinjau_pengajuan.php?page=<?= $page; ?>&order=ASC')"
-                                    id="sort-asc" class="<?= $order === 'ASC' ? 'active-order' : ''; ?>"
-                                    title="Urutkan Dari Yang Terlama">&#9650;</a>
-                                <a href="javascript:void(0);"
-                                    onclick="loadContent('tinjau_pengajuan.php?page=<?= $page; ?>&order=DESC')"
-                                    class="<?= $order === 'DESC' ? 'active-order' : ''; ?>"
-                                    title="Urutkan Dari Yang Terbaru">&#9660;</a>
+                                onclick="loadContent('status_pengajuan.php?page=<?= $page; ?>&order=ASC')" id="sort-asc"
+                                class="<?= $order === 'ASC' ? 'active-order' : ''; ?>"
+                                title="Urutkan Dari Yang Terlama">&#9650;</a>
+                            <a href="javascript:void(0);"
+                                onclick="loadContent('status_pengajuan.php?page=<?= $page; ?>&order=DESC')"
+                                class="<?= $order === 'DESC' ? 'active-order' : ''; ?>"
+                                title="Urutkan Dari Yang Terbaru">&#9660;</a>
+                        </div>
+                    </div>
+                </th>
+                <th>Judul</th>
+                <th>Detail Ciptaan</th>
+                <th>Pencipta</th>
+                <th>Status</th>
+                <th>File Penolakan</th>
+                <th>Aksi</th>
+            </tr>
+            <?php while ($row = $result->fetch_assoc()) { ?>
+                <?php
+                $noPengajuan = !empty($row['nomor_pengajuan']) ? urlencode($row['nomor_pengajuan']) : '–';
+                $judul = urlencode($row['judul_hak_cipta']);
+                $pesanBanding = "Yth. Admin LPPM UNIRA Malang,%0A%0ASaya ingin mengajukan banding atas Hak Cipta saya yang saat ini berstatus Ditolak.%0A%0A- Judul: $judul%0A- No. Pengajuan: $noPengajuan%0A- Dengan alasan: %0A%0AMohon pertimbangannya kembali.%0A%0ATerima kasih.";
+                ?>
+                <tr id="row-<?= $row['id'] ?>">
+                    <td><?php echo htmlspecialchars($row['nomor_pengajuan'] ?? '-'); ?></td>
+                    <td><?php echo htmlspecialchars(date('Y-m-d', strtotime($row['created_at']))); ?></td>
+                    <td><?php echo htmlspecialchars($row['judul_hak_cipta']); ?></td>
+                    <td>
+                        <button type="button" class="btn btn-info"
+                            onclick="openDetailCiptaanModal(<?= $row['id'] ?>)">Lihat</button>
+                    </td>
+                    <td>
+                        <button type="button" onclick="openModal('<?= $row['id'] ?>')" class="btn btn-info">Detail
+                            Pencipta</button>
+                    </td>
+                    <td class="status-td">
+                        <?php
+                        $rejected_at = new DateTime($row['rejected_at']);
+                        $now = new DateTime();
+                        $interval = $now->diff($rejected_at);
+                        $days_passed = $interval->days;
+                        $days_left = max(0, 7 - $days_passed);
+                        ?>
+                        <span class="badge badge-ditolak badge-countdown status-tooltip"
+                            data-tooltip="<?= $days_left > 0 ? 'Akan dihapus otomatis dalam ' . $days_left . ' hari' : 'Menunggu penghapusan otomatis' ?>">
+                            Ditolak
+                            <?php if ($days_left > 0): ?>
+                                <i class='bx bxs-hourglass'></i> <?= $days_left ?>d
+                            <?php endif; ?>
+                        </span>
+                    </td>
+                    <td>
+                        <?php if (!empty($row['rejection_path'])) { ?>
+                            <a href="<?= $row['rejection_path'] ?>" class="btn btn-download" download>Download</a>
+                        <?php } else { ?>
+                            <span>Belum tersedia</span>
+                        <?php } ?>
+                    </td>
+                    <td class="action-td">
+                        <div class="action-dropdown">
+                            <button type="button" onclick="toggleDropdown(this)" class="btn action-button">
+                                Aksi
+                            </button>
+                            <div class="dropdown-menu sp">
+                                <button class="delete-btn" data-id="<?= $row['id'] ?>" data-row="row-<?= $row['id'] ?>"><i
+                                        class="bx bxs-trash"></i> Hapus</button>
+                                <a href="https://wa.me/<?= $adminNumber ?>?text=<?= $pesanBanding ?>" target="_blank"
+                                    class="button appeal-btn">
+                                    <i class='bx bx-conversation'></i> Banding
+                                </a>
                             </div>
                         </div>
-                    </th>
-                    <th>Judul</th>
-                    <th>Detail Ciptaan</th>
-                    <th>Pencipta</th>
-                    <th>File</th>
-                    <th>Status</th>
-                    <th>Nomor Hak Cipta</th>
-                    <th>Aksi</th>
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-                <?php while ($row = $result->fetch_assoc()) { ?>
-                    <form id="form_<?= $row['id'] ?>" enctype="multipart/form-data">
-                        <tr id="row_<?= $row['id'] ?>">
-                            <td><a href="javascript:void(0)" onclick="showProfile(<?= $row['user_id'] ?>)"
-                                    class="profile-link"><?= htmlspecialchars($row['username']) ?></a></td>
-                            <td><?php echo htmlspecialchars(date('Y-m-d', strtotime($row['created_at']))); ?></td>
-                            <td><?= htmlspecialchars($row['judul_hak_cipta']) ?></td>
-                            <td>
-                                <button type="button" class="btn btn-info"
-                                    onclick="openDetailCiptaanModal(<?= $row['id'] ?>)">Lihat</button>
-                            </td>
-                            <td><button type="button" onclick="openModal('<?= $row['id'] ?>')" class="btn btn-info">Detail
-                                    Pencipta</button></td>
-                            <td>
-                                <?php
-                                $reg_id = $row['id'];
-                                $files = $conn->query("SELECT file_name, file_path FROM documents WHERE registration_id = '$reg_id'");
-                                while ($file = $files->fetch_assoc()) {
-                                    echo '<a href="' . htmlspecialchars($file['file_path']) . '" download="' . htmlspecialchars($file['file_name']) . '" class="btn btn-download">Download</a><br>';
-                                }
-                                ?>
-                            </td>
-                            <td class="status-td"> <?php
-                            $rejected_at = new DateTime($row['rejected_at']);
-                            $now = new DateTime();
-                            $interval = $now->diff($rejected_at);
-                            $days_passed = $interval->days;
-                            $days_left = max(0, 7 - $days_passed);
-                            ?>
-                                <span class="badge badge-ditolak badge-countdown status-tooltip"
-                                    data-tooltip="<?= $days_left > 0 ? 'Akan dihapus otomatis dalam ' . $days_left . ' hari' : 'Menunggu penghapusan otomatis' ?>">
-                                    Ditolak
-                                    <?php if ($days_left > 0): ?>
-                                        <i class='bx bxs-hourglass'></i> <?= $days_left ?>d
-                                    <?php endif; ?>
-                                </span>
-                            </td>
-                            <td class="nomor-cell">
-                                <div class="nomor-fields">
-                                    <label class="file-label">Nomor Pengajuan</label>
-                                    <input type="text" spellcheck="false" name="nomor_pengajuan"
-                                        id="nomor_pengajuan_<?= $row['id'] ?>"
-                                        value="<?= htmlspecialchars($row['nomor_pengajuan'] ?? '') ?>" class="input-field"
-                                        placeholder="Opsional">
-                                    <label class="file-label">Nomor Sertifikat</label>
-                                    <input type="text" spellcheck="false" name="nomor_sertifikat"
-                                        id="nomor_sertifikat_<?= $row['id'] ?>"
-                                        value="<?= htmlspecialchars($row['nomor_sertifikat'] ?? '') ?>" class="input-field"
-                                        placeholder="Opsional">
-                                </div>
-                            </td>
-                            <td>
-                                <div class="input-wrapper">
-                                    <label for="certificate_<?= $row['id'] ?>" class="file-label">Sertifikat
-                                        (Opsional)</label>
-                                    <div class="button-row">
-                                        <div class="custom-file-container">
-                                            <label for="certificate_<?= $row['id'] ?>"
-                                                class="custom-file-label btn btn-info">Pilih
-                                                File</label>
-                                            <input type="file" id="certificate_<?= $row['id'] ?>" name="certificate"
-                                                class="input-file" accept="image/*,.pdf,.doc,.docx,.zip,.rar,.7z,.tar,.gz">
-                                        </div>
-                                        <div class="action-dropdown">
-                                            <button type="button" onclick="toggleDropdown(this)" class="btn action-button">
-                                                Aksi
-                                            </button>
-                                            <div class="dropdown-menu">
-                                                <button class="delete-btn" data-id="<?= $row['id'] ?>"
-                                                    data-row="row_<?= $row['id'] ?>">
-                                                    <i class="bx bxs-trash"></i> Hapus
-                                                </button>
-                                                <button class="manage_review-btn" data-id="<?= $row['id'] ?>"
-                                                    data-row="row_<?= $row['id'] ?>">
-                                                    <i class="bx bx-search-alt-2"></i> Tinjau
-                                                </button>
-                                                <button type="button" class="approve-btn" data-id="<?= $row['id'] ?>"
-                                                    data-form="form_<?= $row['id'] ?>" data-user="<?= $row['user_id'] ?>">
-                                                    <i class="bx bx-check"></i>
-                                                    Setujui
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <span class="file-name" id="file-name-<?= $row['id'] ?>">Tidak ada file yang
-                                        dipilih</span>
-                                </div>
-                            </td>
-                        </tr>
-                    </form>
-                <?php } ?>
-            </tbody>
+            <?php } ?>
         </table>
     </div>
 
@@ -257,47 +263,32 @@ $result = $conn->query($query);
                 onclick="loadPage(<?= $page + 1; ?>, <?= $limit; ?>, '<?= htmlspecialchars($search); ?>', '<?= $order; ?>')">&raquo;</a>
         <?php endif; ?>
     </div>
-</div>
-</div>
 
-
-<!-- Modal untuk Profil User -->
-<div id="modal-page">
-    <div id="profileModal" class="modal" style="display: none;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Profil Pengguna</h2>
-                <button class="close" onclick="closeProfileModal()">&times;</button>
+    <!-- Modal untuk Detail Ciptaan -->
+    <div id="modal-page">
+        <div id="detailCiptaanModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Detail Ciptaan</h2>
+                    <button class="close" onclick="closeDetailCiptaanModal()">&times;</button>
+                </div>
+                <div id="detailCiptaanDetails"></div>
             </div>
-            <div id="profileDetails"></div>
         </div>
     </div>
-</div>
 
-<!-- Modal untuk Detail Ciptaan -->
-<div id="modal-page">
-    <div id="detailCiptaanModal" class="modal" style="display: none;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Detail Ciptaan</h2>
-                <button class="close" onclick="closeDetailCiptaanModal()">&times;</button>
+    <!-- Modal untuk Detail Pencipta -->
+    <div id="modal-page">
+        <div id="creatorModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Detail Pencipta</h2>
+                    <button class="close" onclick="closeModal()">&times;</button>
+                </div>
+                <div id="creatorDetails"></div>
             </div>
-            <div id="detailCiptaanDetails"></div>
         </div>
     </div>
-</div>
 
-<!-- Modal untuk Detail Pencipta -->
-<div id="modal-page">
-    <div id="creatorModal" class="modal" style="display: none;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Detail Pencipta</h2>
-                <button class="close" onclick="closeModal()">&times;</button>
-            </div>
-            <div id="creatorDetails"></div>
-        </div>
-    </div>
+    <script src="js/hak_cipta.js"></script>
 </div>
-
-<script src="js/hak_cipta.js"></script>
