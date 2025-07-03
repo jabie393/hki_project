@@ -18,34 +18,18 @@
   font-weight: bold;
 }
 
-#user-page .section {
-  background: #fff;
-  border-radius: 10px;
+#user-page .card-container {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 15px;
   margin-bottom: 20px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-#user-page .section h3 {
-  color: #004080;
-  font-weight: bold;
-  margin: 0;
-  padding: 30px 20px 10px;
-}
-
-/* Input dan select di dalam user-page */
-#user-page input[type="search"],
-#user-page select {
-  border: 1px solid #ced4da;
-  background-color: #eef2ff;
-  border-radius: 8px;
-  transition: border-color 0.2s;
-}
-
-#user-page input:focus,
-#user-page select:focus {
-  border-color: #007bff;
-  outline: none;
-  box-shadow: 0 0 4px #007bff66;
+#user-page .top-table,
+#user-page .bottom-table {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
 }
 
 #user-page .table-wrapper {
@@ -76,11 +60,34 @@
   white-space: nowrap;
 }
 
-#user-page .card-container {
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 15px;
+#user-page .section {
+  background: #fff;
+  border-radius: 10px;
   margin-bottom: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#user-page .section h3 {
+  color: #004080;
+  font-weight: bold;
+  margin: 0;
+  padding: 30px 20px 10px;
+}
+
+/* Input dan select di dalam user-page */
+#user-page input[type="search"],
+#user-page select {
+  border: 1px solid #ced4da;
+  background-color: #eef2ff;
+  border-radius: 8px;
+  transition: border-color 0.2s;
+}
+
+#user-page input:focus,
+#user-page select:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 4px #007bff66;
 }
 
 #user-page .btn {
@@ -299,6 +306,14 @@ body.dark-mode
 }
 /* === End of Dark mode styles === */
 
+@media (max-width: 1180px) {
+  #user-page .top-table,
+  #user-page .bottom-table {
+    flex-direction: column;
+    gap: 0px;
+  }
+}
+
 @media (max-width: 768px) {
   .dataTables_scrollHead {
     height: 28px;
@@ -343,7 +358,6 @@ body.dark-mode
   }
 }
 
-/* Untuk layar sangat kecil */
 @media (max-width: 480px) {
   #user-page .section h3 {
     font-size: 14px;

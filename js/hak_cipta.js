@@ -1,47 +1,33 @@
 //== Pagination user.php ==//
 function pagination() {
-    $('#approvedTable').DataTable({
-        dom: '<"dtable-header"lf>rtip',
-        scrollX: true,
-        autoWidth: false,
-        order: [[1, 'desc']], // Urutkan berdasarkan tanggal pengajuan (kolom kedua)
-        language: {
-            search: "",
-            lengthMenu: "_MENU_",
-            paginate: {
-                previous: '&laquo;', // «
-                next: '&raquo;'      // »
+    function initDataTable(selector) {
+        $(selector).DataTable({
+            dom: '<"dtable-header"lf>rtip',
+            scrollX: true,
+            autoWidth: false,
+            order: [[1, 'desc']],
+            language: {
+                search: "",
+                lengthMenu: "_MENU_",
+                paginate: {
+                    previous: '&laquo;',
+                    next: '&raquo;'
+                },
+                info: "Menampilkan _START_ sampai _END_ dari total _TOTAL_ hak cipta",
+                infoEmpty: "Hak cipta tidak ditemukan",
+                infoFiltered: "(Hasil pencarian dari _MAX_ total hak cipta)",
             },
-            info: "Menampilkan _START_ sampai _END_ dari total _TOTAL_ hak cipta",
-            infoEmpty: "Hak cipta tidak ditemukan",
-            infoFiltered: "(Hasil pencarian dari _MAX_ total hak cipta)",
-        },
-        initComplete: function () {
-            // Placeholder
-            $('.dataTables_filter input[type="search"]').attr('placeholder', 'Cari hak cipta...');
-        },
-    });
-    $('#pendingTable').DataTable({
-        dom: '<"dtable-header"lf>rtip',
-        scrollX: true,
-        autoWidth: false,
-        order: [[1, 'desc']], // Urutkan berdasarkan tanggal pengajuan (kolom kedua)
-        language: {
-            search: "",
-            lengthMenu: "_MENU_",
-            paginate: {
-                previous: '&laquo;', // «
-                next: '&raquo;'      // »
+            initComplete: function () {
+                console.log("Init table:", this.api().table().node().id);
+                $(this).closest('.dataTables_wrapper').find('.dataTables_filter input[type="search"]').attr('placeholder', 'Cari hak cipta...');
             },
-            info: "Menampilkan _START_ sampai _END_ dari total _TOTAL_ hak cipta",
-            infoEmpty: "Hak cipta tidak ditemukan",
-            infoFiltered: "(Hasil pencarian dari _MAX_ total hak cipta)",
-        },
-        initComplete: function () {
-            // Placeholder
-            $('.dataTables_filter input[type="search"]').attr('placeholder', 'Cari hak cipta...');
-        }
-    });
+        });
+    }
+
+    initDataTable('#pendingTable');
+    initDataTable('#reviewTable');
+    initDataTable('#rejectTable');
+    initDataTable('#approvedTable');
 };
 
 //== Action dropdown ==//

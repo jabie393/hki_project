@@ -18,9 +18,9 @@ $stmtRegistered->execute();
 $registeredResult = $stmtRegistered->get_result();
 $registeredCount = $registeredResult->fetch_assoc()['total'];
 
-// Query untuk menghitung pasca hak cipta terdaftar (status 'Pending')
+// Query untuk menghitung hak cipta diproses (status 'Pending, Ditinjau, Ditolak')
 $postRegisteredQuery = "SELECT COUNT(*) as total FROM registrations
-                        WHERE user_id = ? AND status = 'Pending'";
+                        WHERE user_id = ? AND status IN ('Pending', 'Ditinjau', 'Ditolak')";
 $stmtPostRegistered = $conn->prepare($postRegisteredQuery);
 $stmtPostRegistered->bind_param("s", $user_id);
 $stmtPostRegistered->execute();
@@ -55,101 +55,198 @@ $postRegisteredCount = $postRegisteredResult->fetch_assoc()['total'];
             </div>
             <div class="card">
                 <h1><?php echo htmlspecialchars($postRegisteredCount); ?></h1>
-                <p>Pasca Hak Cipta Terdaftar</p>
+                <p>Hak Cipta Diproses</p>
             </div>
         </div>
 
-        <div class="section">
-            <h3>Hak Cipta Yang Disetujui</h3>
-            <div class="table-wrapper">
-                <table id="approvedTable" class="hak_cipta-table">
-                    <thead>
-                        <tr>
-                            <th>Judul</th>
-                            <th>Tanggal</th>
-                            <th>Pencipta</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $approvedQuery = "SELECT id, judul_hak_cipta, created_at
+        <div class="top-table">
+            <div class="section">
+                <h3>Hak Cipta Yang Belum Ditinjau</h3>
+                <div class="table-wrapper">
+                    <table id="pendingTable" class="hak_cipta-table">
+                        <thead>
+                            <tr>
+                                <th>Judul</th>
+                                <th>Tanggal</th>
+                                <th>Pencipta</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $pendingQuery = "SELECT id, judul_hak_cipta, created_at
+                            FROM registrations
+                            WHERE user_id = ? AND status = 'Pending'
+                            ORDER BY created_at DESC";
+                            $stmtPending = $conn->prepare($pendingQuery);
+                            $stmtPending->bind_param("s", $user_id);
+                            $stmtPending->execute();
+                            $pendingResult = $stmtPending->get_result();
+
+                            if ($pendingResult->num_rows > 0) {
+                                while ($row = $pendingResult->fetch_assoc()) { ?>
+                                    <tr>
+                                        <td><?php echo htmlspecialchars($row['judul_hak_cipta']); ?></td>
+                                        <td><?php echo htmlspecialchars(date('Y-m-d', strtotime($row['created_at']))); ?></td>
+                                        <td>
+                                            <button type="button" onclick="openModal('<?= $row['id'] ?>')" class="btn btn-info">
+                                                Detail Pencipta
+                                            </button>
+                                        </td>
+                                    </tr>
+                                <?php }
+                            } else { ?>
+                                <tr>
+                                    <td><?php echo "-"; ?></td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Hak Cipta Yang sedang Ditinjau</h3>
+                <div class="table-wrapper">
+                    <table id="reviewTable" class="hak_cipta-table">
+                        <thead>
+                            <tr>
+                                <th>Judul</th>
+                                <th>Tanggal</th>
+                                <th>Pencipta</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $approvedQuery = "SELECT id, judul_hak_cipta, created_at
+                                FROM registrations
+                                WHERE user_id = ? AND status = 'Ditinjau'
+                                ORDER BY created_at DESC";
+                            $stmtTerdaftar = $conn->prepare($approvedQuery);
+                            $stmtTerdaftar->bind_param("s", $user_id);
+                            $stmtTerdaftar->execute();
+                            $approvedResult = $stmtTerdaftar->get_result();
+
+                            if ($approvedResult->num_rows > 0) {
+                                while ($row = $approvedResult->fetch_assoc()) { ?>
+                                    <tr>
+                                        <td><?php echo htmlspecialchars($row['judul_hak_cipta']); ?></td>
+                                        <td><?php echo htmlspecialchars(date('Y-m-d', strtotime($row['created_at']))); ?></td>
+                                        <td>
+                                            <button type="button" onclick="openModal('<?= $row['id'] ?>')" class="btn btn-info">
+                                                Detail Pencipta
+                                            </button>
+                                        </td>
+                                    </tr>
+                                <?php }
+                            } else { ?>
+                                <tr>
+                                    <td><?php echo "-"; ?></td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="bottom-table">
+            <div class="section">
+                <h3>Hak Cipta Yang Ditolak</h3>
+                <div class="table-wrapper">
+                    <table id="rejectTable" class="hak_cipta-table">
+                        <thead>
+                            <tr>
+                                <th>Judul</th>
+                                <th>Tanggal</th>
+                                <th>Pencipta</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $pendingQuery = "SELECT id, judul_hak_cipta, created_at
+                            FROM registrations
+                            WHERE user_id = ? AND status = 'Ditolak'
+                            ORDER BY created_at DESC";
+                            $stmtPending = $conn->prepare($pendingQuery);
+                            $stmtPending->bind_param("s", $user_id);
+                            $stmtPending->execute();
+                            $pendingResult = $stmtPending->get_result();
+
+                            if ($pendingResult->num_rows > 0) {
+                                while ($row = $pendingResult->fetch_assoc()) { ?>
+                                    <tr>
+                                        <td><?php echo htmlspecialchars($row['judul_hak_cipta']); ?></td>
+                                        <td><?php echo htmlspecialchars(date('Y-m-d', strtotime($row['created_at']))); ?></td>
+                                        <td>
+                                            <button type="button" onclick="openModal('<?= $row['id'] ?>')" class="btn btn-info">
+                                                Detail Pencipta
+                                            </button>
+                                        </td>
+                                    </tr>
+                                <?php }
+                            } else { ?>
+                                <tr>
+                                    <td><?php echo "-"; ?></td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Hak Cipta Yang Disetujui</h3>
+                <div class="table-wrapper">
+                    <table id="approvedTable" class="hak_cipta-table">
+                        <thead>
+                            <tr>
+                                <th>Judul</th>
+                                <th>Tanggal</th>
+                                <th>Pencipta</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $approvedQuery = "SELECT id, judul_hak_cipta, created_at
                                 FROM registrations
                                 WHERE user_id = ? AND status = 'Terdaftar'
                                 ORDER BY created_at DESC";
-                        $stmtTerdaftar = $conn->prepare($approvedQuery);
-                        $stmtTerdaftar->bind_param("s", $user_id);
-                        $stmtTerdaftar->execute();
-                        $approvedResult = $stmtTerdaftar->get_result();
+                            $stmtTerdaftar = $conn->prepare($approvedQuery);
+                            $stmtTerdaftar->bind_param("s", $user_id);
+                            $stmtTerdaftar->execute();
+                            $approvedResult = $stmtTerdaftar->get_result();
 
-                        if ($approvedResult->num_rows > 0) {
-                            while ($row = $approvedResult->fetch_assoc()) { ?>
+                            if ($approvedResult->num_rows > 0) {
+                                while ($row = $approvedResult->fetch_assoc()) { ?>
+                                    <tr>
+                                        <td><?php echo htmlspecialchars($row['judul_hak_cipta']); ?></td>
+                                        <td><?php echo htmlspecialchars(date('Y-m-d', strtotime($row['created_at']))); ?></td>
+                                        <td>
+                                            <button type="button" onclick="openModal('<?= $row['id'] ?>')" class="btn btn-info">
+                                                Detail Pencipta
+                                            </button>
+                                        </td>
+                                    </tr>
+                                <?php }
+                            } else { ?>
                                 <tr>
-                                    <td><?php echo htmlspecialchars($row['judul_hak_cipta']); ?></td>
-                                    <td><?php echo htmlspecialchars(date('Y-m-d', strtotime($row['created_at']))); ?></td>
-                                    <td>
-                                        <button type="button" onclick="openModal('<?= $row['id'] ?>')" class="btn btn-info">
-                                            Detail Pencipta
-                                        </button>
-                                    </td>
+                                    <td><?php echo "-"; ?></td>
+                                    <td>-</td>
+                                    <td>-</td>
                                 </tr>
-                            <?php }
-                        } else { ?>
-                            <tr>
-                                <td><?php echo "-"; ?></td>
-                                <td>-</td>
-                                <td>-</td>
-                            </tr>
-                        <?php } ?>
-                    </tbody>
-                </table>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
-        <div class="section">
-            <h3>Hak Cipta Yang Belum Disetujui</h3>
-            <div class="table-wrapper">
-                <table id="pendingTable" class="hak_cipta-table">
-                    <thead>
-                        <tr>
-                            <th>Judul</th>
-                            <th>Tanggal</th>
-                            <th>Pencipta</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $pendingQuery = "SELECT id, judul_hak_cipta, created_at
-                            FROM registrations
-                            WHERE user_id = ? AND (status = 'Pending' OR status = 'Rejected')
-                            ORDER BY created_at DESC";
-                        $stmtPending = $conn->prepare($pendingQuery);
-                        $stmtPending->bind_param("s", $user_id);
-                        $stmtPending->execute();
-                        $pendingResult = $stmtPending->get_result();
-
-                        if ($pendingResult->num_rows > 0) {
-                            while ($row = $pendingResult->fetch_assoc()) { ?>
-                                <tr>
-                                    <td><?php echo htmlspecialchars($row['judul_hak_cipta']); ?></td>
-                                    <td><?php echo htmlspecialchars(date('Y-m-d', strtotime($row['created_at']))); ?></td>
-                                    <td>
-                                        <button type="button" onclick="openModal('<?= $row['id'] ?>')" class="btn btn-info">
-                                            Detail Pencipta
-                                        </button>
-                                    </td>
-                                </tr>
-                            <?php }
-                        } else { ?>
-                            <tr>
-                                <td><?php echo "-"; ?></td>
-                                <td>-</td>
-                                <td>-</td>
-                            </tr>
-                        <?php } ?>
-                    </tbody>
-                </table>
-            </div>
-        </div>
     </div>
 </div>
 

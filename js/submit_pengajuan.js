@@ -149,7 +149,7 @@ function loadCountriesForMainForm() {
     // Konfigurasi API
     const configCSC = {
         cUrl: 'https://api.countrystatecity.in/v1/countries',
-        ckey: 'NHhvOEcyWk50N2Vna3VFTE00bFp3MjFKR0ZEOUhkZlg4RTk1MlJlaA=='
+        ckey: 'dW04ZkIxZGM5UDNYVWdzZWQ5N0JGMHpsRk5NR0dKNnVOelVDQloxaQ=='
     };
 
     fetch(configCSC.cUrl, {

@@ -167,7 +167,7 @@ $result = $stmt->get_result();
                 $noPengajuan = !empty($row['nomor_pengajuan']) ? urlencode($row['nomor_pengajuan']) : '–';
                 $judul = urlencode($row['judul_hak_cipta']);
                 $pesan = "Yth. Admin LPPM UNIRA Malang,%0A%0ASaya ingin menanyakan terkait pengajuan Hak Cipta saya yang saat ini berstatus Ditinjau.%0A%0A- No. Pengajuan: $noPengajuan%0A- Judul: $judul%0A%0AMohon informasinya apabila ada hal yang perlu saya lengkapi atau tindak lanjuti.%0A%0ATerima kasih.";
-                $pesanBanding = "Yth. Admin LPPM UNIRA Malang,%0A%0ASaya ingin mengajukan banding atas hak cipta saya yang saat ini berstatus Ditolak.%0A%0A- Judul: $judul%0A- No. Pengajuan: $noPengajuan%0A- Dengan alasan: %0A%0AMohon pertimbangannya kembali.%0A%0ATerima kasih.";
+                $pesanBanding = "Yth. Admin LPPM UNIRA Malang,%0A%0ASaya ingin mengajukan banding atas Hak Cipta saya yang saat ini berstatus Ditolak.%0A%0A- Judul: $judul%0A- No. Pengajuan: $noPengajuan%0A- Dengan alasan: %0A%0AMohon pertimbangannya kembali.%0A%0ATerima kasih.";
                 ?>
                 <tr id="row-<?= $row['id'] ?>">
                     <td><?php echo htmlspecialchars($row['nomor_pengajuan'] ?? '-'); ?></td>

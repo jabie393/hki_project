@@ -10,8 +10,8 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'admin') {
     exit();
 }
 
-// Ambil total pengajuan yang belum disetujui
-$totalPendingQuery = "SELECT COUNT(*) as total FROM registrations WHERE status != 'Terdaftar'";
+// Ambil total diproses (status 'Pending, Ditinjau, Ditolak')
+$totalPendingQuery = "SELECT COUNT(*) as total FROM registrations WHERE status IN ('Pending', 'Ditinjau')";
 $totalPendingResult = $conn->query($totalPendingQuery);
 $totalPending = $totalPendingResult->fetch_assoc()['total'];
 
