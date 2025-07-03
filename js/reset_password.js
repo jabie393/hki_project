@@ -172,72 +172,13 @@ $('#showUserDetailBtn').click(function () {
     if (!userId) return;
 
     $.ajax({
-        url: 'services/get_user_detail.php',
+        url: 'widgets/profile_details_reset.php',
         type: 'POST',
         data: { user_id: userId },
-        dataType: 'json',
-        success: function (data) {
-            if (data.error) {
-                $('#userDetailContent').html(`<p>${data.error}</p>`);
-            } else {
-                const html = `
-                    <div id="modal-page">
-                        <div>
-                            <div class="profile-center">
-                                <img src="${data.profile_picture}" alt="Foto Profil" class="profile-img"
-                                    onerror="this.src='assets/image/default-avatar.png'">
-                            </div>
-                            <p class="profile-row">
-                                <span class="profile-label">Username:</span>
-                                <span class="profile-value">${data.username}</span>
-                            </p>
-                            <p class="profile-row">
-                                <span class="profile-label">Email:</span>
-                                <span class="profile-value">${data.email}</span>
-                            </p>
-                            <p class="profile-row">
-                                <span class="profile-label">Role:</span>
-                                <span class="profile-value">${data.role}</span>
-                            </p>
-                            <hr>
-                            <p class="profile-row">
-                                <span class="profile-label">Nama Lengkap:</span>
-                                <span class="profile-value">
-                                ${data.nama_lengkap || '-'}
-                                ${data.role === 'admin' ? '<i class="fas fa-check-circle check-icon"></i>' : ''}</span>
-                            </p>
-                            <p class="profile-row">
-                                <span class="profile-label">No KTP:</span>
-                                <span class="profile-value">${data.no_ktp || '-'}</span>
-                            </p>
-                            <p class="profile-row">
-                                <span class="profile-label">Telepon:</span>
-                                <span class="profile-value">${data.telephone || '-'}</span>
-                            </p>
-                            <p class="profile-row">
-                                <span class="profile-label">Tanggal Lahir:</span>
-                                <span class="profile-value">${data.birth_date || '-'}</span>
-                            </p>
-                            <p class="profile-row">
-                                <span class="profile-label">Jenis Kelamin:</span>
-                                <span class="profile-value">${data.gender || '-'}</span>
-                            </p>
-                            <p class="profile-row">
-                                <span class="profile-label">Kewarganegaraan:</span>
-                                <span class="profile-value">${data.nationality || '-'}</span>
-                            </p>
-                            <p class="profile-row">
-                                <span class="profile-label">Tipe Pengaju:</span>
-                                <span class="profile-value">${data.type_of_applicant || '-'}</span>
-                            </p>
-                        </div>
-                    </div>
-                `;
-                $('#userDetailContent').html(html);
-            }
+        success: function (html) {
+            $('#userDetailContent').html(html);
             showProfileModal();
         },
-
         error: function () {
             $('#userDetailContent').html('<p>Terjadi kesalahan saat mengambil detail user.</p>');
             showProfileModal();

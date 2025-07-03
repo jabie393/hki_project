@@ -2,18 +2,15 @@
 include '../config/config.php';
 include_once '../helpers/profile_helper.php';
 
-session_start();
-
-if (!isset($_SESSION['user_id'])) {
-    header("Location: ../login");
+if (!isset($_POST['user_id'])) {
+    echo "<p>User ID tidak ditemukan.</p>";
     exit();
 }
 
-$role = $_SESSION['role'] ?? 'user';
-$user_id = $_SESSION['user_id'];
+$user_id = intval($_POST['user_id']);
 
 // Ambil data dari tabel 'users'
-$user_query = $conn->prepare("SELECT username, email FROM users WHERE id = ?");
+$user_query = $conn->prepare("SELECT username, email, role FROM users WHERE id = ?");
 $user_query->bind_param("i", $user_id);
 $user_query->execute();
 $user_result = $user_query->get_result();
@@ -44,62 +41,57 @@ $type_of_applicant = $profile['type_of_applicant'] ?? 'Belum diisi';
 
 // helper
 $profile_picture = getProfilePicture($user_id);
+$role = $user_data['role'];
 ?>
 
 <div id="modal-page">
     <div>
         <div class="profile-center">
-            <img src="<?= $profile_picture ?>" alt="Foto Profil" class="profile-img profilePic"
+            <img src="<?= $profile_picture ?>" alt="Foto Profil" class="profile-img"
                 onerror="this.src='assets/image/default-avatar.png'">
         </div>
-
         <p class="profile-row">
             <span class="profile-label">Username:</span>
             <span class="profile-value"><?= htmlspecialchars($user_data['username']) ?></span>
         </p>
-
         <p class="profile-row">
             <span class="profile-label">Email:</span>
             <span class="profile-value"><?= htmlspecialchars($user_data['email']) ?></span>
         </p>
-
+        <p class="profile-row">
+            <span class="profile-label">Role:</span>
+            <span class="profile-value"><?= htmlspecialchars($role) ?></span>
+        </p>
         <hr>
-
         <p class="profile-row">
             <span class="profile-label">Nama Lengkap:</span>
             <span class="profile-value">
                 <?= htmlspecialchars($nama_lengkap) ?>
-                <?php if (isset($role) && $role === 'admin'): ?>
-                    <i class="fas fa-check-circle" title="Admin"></i>
+                <?php if ($role === 'admin'): ?>
+                    <i class="fas fa-check-circle check-icon"></i>
                 <?php endif; ?>
             </span>
         </p>
-
         <p class="profile-row">
             <span class="profile-label">No KTP:</span>
             <span class="profile-value"><?= htmlspecialchars($no_ktp) ?></span>
         </p>
-
         <p class="profile-row">
             <span class="profile-label">Telepon:</span>
-            <span class="profile-value"><?= htmlspecialchars($phone_code . ' ' . $telephone) ?></span>
+            <span class="profile-value"><?= htmlspecialchars(trim($phone_code . ' ' . $telephone)) ?></span>
         </p>
-
         <p class="profile-row">
             <span class="profile-label">Tanggal Lahir:</span>
             <span class="profile-value"><?= htmlspecialchars($birth_date) ?></span>
         </p>
-
         <p class="profile-row">
             <span class="profile-label">Jenis Kelamin:</span>
             <span class="profile-value"><?= htmlspecialchars($gender) ?></span>
         </p>
-
         <p class="profile-row">
             <span class="profile-label">Kewarganegaraan:</span>
             <span class="profile-value"><?= htmlspecialchars($nationality) ?></span>
         </p>
-
         <p class="profile-row">
             <span class="profile-label">Tipe Pengaju:</span>
             <span class="profile-value"><?= htmlspecialchars($type_of_applicant) ?></span>

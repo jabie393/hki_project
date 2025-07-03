@@ -22,8 +22,9 @@ if (isset($_GET['id'])) {
     $profile = $conn->query("SELECT * FROM user_profile WHERE user_id = '$user_id'")->fetch_assoc();
 
     // Jika data kosong, tampilkan pesan default
-    $nama_lengkap = $profile['nama_lengkap'] ?? 'Belum diisi';
+    $nama_lengkap = $profile['nama_lengkap'] ?? 'Nama?🤔';
     $no_ktp = $profile['no_ktp'] ?? 'Belum diisi';
+    $phone_code = $profile['phone_code'] ?? '';
     $telephone = $profile['telephone'] ?? 'Belum diisi';
     $birth_date = $profile['birth_date'] ?? 'Belum diisi';
     $gender = $profile['gender'] ?? 'Belum diisi';
@@ -63,7 +64,7 @@ if (isset($_GET['id'])) {
             </p>
             <p class="profile-row">
                 <span class="profile-label">Telepon:</span>
-                <span class="profile-value"><?= $telephone ?></span>
+                <span class="profile-value"><?= $phone_code . ' ' . $telephone ?></span>
             </p>
             <p class="profile-row">
                 <span class="profile-label">Tanggal Lahir:</span>
