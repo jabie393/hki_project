@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
     $certificate_path = null;
 
     if (!empty($_FILES["certificate"]["name"])) {
-        $upload_dir = "../uploads/users/$user_id/files/$id/certificates/";
+        $upload_dir = "../uploads/users/$user_id/files/$id/certificate/";
         if (!file_exists($upload_dir)) {
             mkdir($upload_dir, 0777, true);
         }
@@ -42,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
 
         $file_name = "certificate_" . time() . "." . pathinfo($_FILES["certificate"]["name"], PATHINFO_EXTENSION);
         $full_path = $upload_dir . $file_name;
-        $db_file_path = "uploads/users/$user_id/files/$id/certificates/$file_name";
+        $db_file_path = "uploads/users/$user_id/files/$id/certificate/$file_name";
 
         if (!move_uploaded_file($_FILES["certificate"]["tmp_name"], $full_path)) {
             echo json_encode(['success' => false, 'message' => 'Gagal mengunggah sertifikat.']);

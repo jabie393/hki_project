@@ -703,10 +703,12 @@ document.querySelectorAll('.cancel-btn').forEach(button => {
 });
 
 // Validasi file saat diinput
-document.querySelectorAll('input[type="file"]').forEach(input => {
-    input.addEventListener('change', function () {
+document.querySelectorAll('input[type="file"]').forEach(function (input) {
+    input.addEventListener('change', function (e) {
         const allowedExtensions = ['pdf', 'doc', 'docx', 'zip', 'rar', '7z', 'tar', 'gz', 'jpg', 'jpeg', 'png'];
-        const file = this.files[0];
+        const file = e.target.files[0];
+        const fileId = e.target.id.split('_').pop();
+        const fileNameElement = document.getElementById('file-name-' + fileId);
 
         if (file) {
             const fileExtension = file.name.split('.').pop().toLowerCase();
@@ -714,18 +716,18 @@ document.querySelectorAll('input[type="file"]').forEach(input => {
             if (!allowedExtensions.includes(fileExtension)) {
                 Swal.fire({
                     icon: 'warning',
-                    title: 'File Sertifikat Tidak Valid',
-                    text: `Hanya Sertifikat dengan ekstensi berikut yang diizinkan: ${allowedExtensions.join(', ')}.`,
+                    title: 'File Tidak Valid',
+                    text: `Hanya file dengan ekstensi berikut yang diizinkan: ${allowedExtensions.join(', ')}.`,
                     showConfirmButton: true,
                     confirmButtonText: 'Oke, paham!'
                 });
-                this.value = ''; // Reset input file
-
-                // Reset file-name display
-                const fileId = this.id.split('_').pop();
-                const fileNameElement = document.getElementById('file-name-' + fileId);
+                e.target.value = ''; // Reset input file
                 if (fileNameElement) fileNameElement.textContent = "Tidak ada file yang dipilih";
+            } else {
+                if (fileNameElement) fileNameElement.textContent = file.name;
             }
+        } else {
+            if (fileNameElement) fileNameElement.textContent = "Tidak ada file yang dipilih";
         }
     });
 });

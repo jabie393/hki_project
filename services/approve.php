@@ -24,10 +24,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
     $user_id = $data['user_id'];
     $old_certificate_path = $data['certificate_path'];
 
+    // Set kolom rejection_path dan rejected_at menjadi NULL
+    $conn->query("UPDATE registrations SET rejection_path=NULL, rejected_at=NULL WHERE id='$id'");
+
+    // Hapus folder rejection_file jika ada
+    $rejection_dir = "../uploads/users/$user_id/files/$id/rejection_file/";
+    if (file_exists($rejection_dir) && is_dir($rejection_dir)) {
+        // Hapus semua file di dalam folder
+        $files = glob($rejection_dir . '*');
+        foreach ($files as $file) {
+            if (is_file($file)) {
+                @unlink($file);
+            }
+        }
+        // Hapus foldernya
+        @rmdir($rejection_dir);
+    }
+
     $certificate_path = null;
 
     if (!empty($_FILES["certificate"]["name"])) {
-        $upload_dir = "../uploads/users/$user_id/files/$id/certificates/";
+        $upload_dir = "../uploads/users/$user_id/files/$id/certificate/";
         if (!file_exists($upload_dir)) {
             mkdir($upload_dir, 0777, true);
         }
@@ -42,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
 
         $file_name = "certificate_" . time() . "." . pathinfo($_FILES["certificate"]["name"], PATHINFO_EXTENSION);
         $full_path = $upload_dir . $file_name;
-        $db_file_path = "uploads/users/$user_id/files/$id/certificates/$file_name";
+        $db_file_path = "uploads/users/$user_id/files/$id/certificate/$file_name";
 
         if (!move_uploaded_file($_FILES["certificate"]["tmp_name"], $full_path)) {
             echo json_encode(['success' => false, 'message' => 'Gagal mengunggah sertifikat.']);
