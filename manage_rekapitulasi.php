@@ -113,8 +113,8 @@ $result = $conn->query($query);
                     <th>Pencipta</th>
                     <th>File</th>
                     <th>Status</th>
-                    <th>Sertifikat</th>
                     <th>Nomor Hak Cipta</th>
+                    <th>Sertifikat</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -150,13 +150,6 @@ $result = $conn->query($query);
                             <td class="status-td"><span
                                     class="badge badge-<?= strtolower($row['status']) ?>"><?= htmlspecialchars($row['status']) ?></span>
                             </td>
-                            <td id="certificate-container-<?= $row['id'] ?>">
-                                <?php if (!empty($row['certificate_path'])) { ?>
-                                    <a href="<?= $row['certificate_path'] ?>" class="btn btn-download" download>Download</a>
-                                <?php } else { ?>
-                                    <span>Belum ada sertifikat</span>
-                                <?php } ?>
-                            </td>
                             <td class="nomor-cell">
                                 <div class="nomor-fields">
                                     <label class="file-label">Nomor Pengajuan</label>
@@ -176,6 +169,15 @@ $result = $conn->query($query);
                                     <label for="certificate_<?= $row['id'] ?>" class="file-label">Perbarui Sertifikat
                                         (Opsional)</label>
                                     <div class="button-row">
+                                        <span id="certificate-download-<?= $row['id'] ?>">
+                                            <?php if (!empty($row['certificate_path'])) { ?>
+                                                <a href="<?= $row['certificate_path'] ?>" class="btn btn-download"
+                                                    download>Download</a>
+                                            <?php } else { ?>
+                                                <span class="highlight highlight-tooltip"
+                                                    data-tooltip="Sertifikat belum diunggah">Belum ada</span>
+                                            <?php } ?>
+                                        </span>
                                         <div class="custom-file-container">
                                             <label for="certificate_<?= $row['id'] ?>"
                                                 class="custom-file-label btn btn-info">Pilih
@@ -183,30 +185,33 @@ $result = $conn->query($query);
                                             <input type="file" id="certificate_<?= $row['id'] ?>" name="certificate"
                                                 class="input-file" accept="image/*,.pdf,.doc,.docx,.zip,.rar,.7z,.tar,.gz">
                                         </div>
-                                        <div class="action-dropdown">
-                                            <button type="button" onclick="toggleDropdown(this)" class="btn action-button">
-                                                Aksi
-                                            </button>
-                                            <div class="dropdown-menu">
-                                                <button class="delete-btn" data-id="<?= $row['id'] ?>"
-                                                    data-row="row_<?= $row['id'] ?>">
-                                                    <i class="bx bxs-trash"></i> Hapus
-                                                </button>
-                                                <button class="manage_review-btn" data-id="<?= $row['id'] ?>"
-                                                    data-row="row_<?= $row['id'] ?>">
-                                                    <i class="bx bx-search-alt-2"></i>
-                                                    Tinjau
-                                                </button>
-                                                <button type="button" class="update-btn" data-id="<?= $row['id'] ?>"
-                                                    data-form="form_<?= $row['id'] ?>" data-user="<?= $row['user_id'] ?>">
-                                                    <i class="bx bx-refresh"></i>
-                                                    Perbarui
-                                                </button>
-                                            </div>
-                                        </div>
                                     </div>
                                     <span class="file-name" id="file-name-<?= $row['id'] ?>">Tidak ada file yang
                                         dipilih</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="action-dropdown">
+                                    <button type="button" onclick="toggleDropdown(this)" class="btn action-button">
+                                        Aksi
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <button id="delete-btn" class="top-btn red-btn" data-id="<?= $row['id'] ?>"
+                                            data-row="row_<?= $row['id'] ?>">
+                                            <i class="bx bxs-trash"></i> Hapus
+                                        </button>
+                                        <button id="manage_review-btn" class="blue-btn" data-id="<?= $row['id'] ?>"
+                                            data-row="row_<?= $row['id'] ?>">
+                                            <i class="bx bx-search-alt-2"></i>
+                                            Tinjau
+                                        </button>
+                                        <button type="button" id="update_approve-btn" class="bottom-btn amber-btn"
+                                            data-id="<?= $row['id'] ?>" data-form="form_<?= $row['id'] ?>"
+                                            data-user="<?= $row['user_id'] ?>">
+                                            <i class="bx bx-refresh"></i>
+                                            Perbarui
+                                        </button>
+                                    </div>
                                 </div>
                             </td>
                         </tr>
@@ -301,4 +306,4 @@ $result = $conn->query($query);
 </div>
 
 <script src="js/hak_cipta.js"></script>
-<script src="js/action.js"></script>
+<script src="js/actions.js"></script>

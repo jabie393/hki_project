@@ -71,7 +71,6 @@ $result = $conn->query($query);
     <link rel="stylesheet" href="css/alert.css">
 </head>
 
-<!-- tinjau_pengajuan.php (HTML Table Layout) -->
 <div id="hak_cipta-page">
     <h2>Hak Cipta Ditolak</h2>
 
@@ -92,18 +91,18 @@ $result = $conn->query($query);
                     <th>
                         <div class="sortable-header">
                             <a href="javascript:void(0);"
-                                onclick="loadContent('tinjau_pengajuan.php?page=<?= $page; ?>&order=<?= $order === 'ASC' ? 'DESC' : 'ASC'; ?>')"
+                                onclick="loadContent('manage_pengajuan_ditolak.php?page=<?= $page; ?>&order=<?= $order === 'ASC' ? 'DESC' : 'ASC'; ?>')"
                                 class="sort-link <?= $order === 'ASC' ? 'active-order' : ''; ?>"
                                 title="<?= $order === 'ASC' ? 'Urutkan Dari Yang Terbaru' : 'Urutkan Dari Yang Terlama'; ?>">
                                 Tanggal Pengajuan
                             </a>
                             <div class="sort-buttons">
                                 <a href="javascript:void(0);"
-                                    onclick="loadContent('tinjau_pengajuan.php?page=<?= $page; ?>&order=ASC')"
+                                    onclick="loadContent('manage_pengajuan_ditolak.php?page=<?= $page; ?>&order=ASC')"
                                     id="sort-asc" class="<?= $order === 'ASC' ? 'active-order' : ''; ?>"
                                     title="Urutkan Dari Yang Terlama">&#9650;</a>
                                 <a href="javascript:void(0);"
-                                    onclick="loadContent('tinjau_pengajuan.php?page=<?= $page; ?>&order=DESC')"
+                                    onclick="loadContent('manage_pengajuan_ditolak.php?page=<?= $page; ?>&order=DESC')"
                                     class="<?= $order === 'DESC' ? 'active-order' : ''; ?>"
                                     title="Urutkan Dari Yang Terbaru">&#9660;</a>
                             </div>
@@ -115,7 +114,7 @@ $result = $conn->query($query);
                     <th>File</th>
                     <th>File Penolakan</th>
                     <th>Status</th>
-                    <th>Nomor Hak Cipta</th>
+                    <th>Nomor Pengajuan</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -142,7 +141,7 @@ $result = $conn->query($query);
                                 }
                                 ?>
                             </td>
-                            <td>
+                            <td id="rejection-container-<?= $row['id'] ?>">
                                 <?php if (!empty($row['rejection_path'])) { ?>
                                     <a href="<?= $row['rejection_path'] ?>" class="btn btn-download" download>Download</a>
                                 <?php } else { ?>
@@ -166,53 +165,33 @@ $result = $conn->query($query);
                             </td>
                             <td class="nomor-cell">
                                 <div class="nomor-fields">
-                                    <label class="file-label">Nomor Pengajuan</label>
                                     <input type="text" spellcheck="false" name="nomor_pengajuan"
                                         id="nomor_pengajuan_<?= $row['id'] ?>"
                                         value="<?= htmlspecialchars($row['nomor_pengajuan'] ?? '') ?>" class="input-field"
                                         placeholder="Opsional">
-                                    <label class="file-label">Nomor Sertifikat</label>
-                                    <input type="text" spellcheck="false" name="nomor_sertifikat"
-                                        id="nomor_sertifikat_<?= $row['id'] ?>"
-                                        value="<?= htmlspecialchars($row['nomor_sertifikat'] ?? '') ?>" class="input-field"
-                                        placeholder="Opsional">
                                 </div>
                             </td>
                             <td>
-                                <div class="input-wrapper">
-                                    <label for="certificate_<?= $row['id'] ?>" class="file-label">Sertifikat
-                                        (Opsional)</label>
-                                    <div class="button-row">
-                                        <div class="custom-file-container">
-                                            <label for="certificate_<?= $row['id'] ?>"
-                                                class="custom-file-label btn btn-info">Pilih
-                                                File</label>
-                                            <input type="file" id="certificate_<?= $row['id'] ?>" name="certificate"
-                                                class="input-file" accept="image/*,.pdf,.doc,.docx,.zip,.rar,.7z,.tar,.gz">
-                                        </div>
-                                        <div class="action-dropdown">
-                                            <button type="button" onclick="toggleDropdown(this)" class="btn action-button">
-                                                Aksi
-                                            </button>
-                                            <div class="dropdown-menu">
-                                                <button class="delete-btn" data-id="<?= $row['id'] ?>"
-                                                    data-row="row_<?= $row['id'] ?>">
-                                                    <i class="bx bxs-trash"></i> Hapus
-                                                </button>
-                                                <button class="manage_review-btn" data-id="<?= $row['id'] ?>"
-                                                    data-row="row_<?= $row['id'] ?>">
-                                                    <i class="bx bx-search-alt-2"></i> Tinjau
-                                                </button>
-                                                <button type="button" class="approve-btn" data-id="<?= $row['id'] ?>"
-                                                    data-form="form_<?= $row['id'] ?>" data-user="<?= $row['user_id'] ?>">
-                                                    <i class="bx bx-check"></i>
-                                                    Setujui
-                                                </button>
-                                            </div>
-                                        </div>
+                                <div class="action-dropdown">
+                                    <button type="button" onclick="toggleDropdown(this)" class="btn action-button">
+                                        Aksi
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <button id="delete-btn" class="top-btn red-btn" data-id="<?= $row['id'] ?>"
+                                            data-row="row_<?= $row['id'] ?>">
+                                            <i class="bx bxs-trash"></i> Hapus
+                                        </button>
+                                        <button id="manage_review-btn" class="blue-btn" data-id="<?= $row['id'] ?>"
+                                            data-row="row_<?= $row['id'] ?>">
+                                            <i class="bx bx-search-alt-2"></i> Tinjau
+                                        </button>
+                                        <button id="update_reject-btn" class="bottom-btn amber-btn"
+                                            data-id="<?= $row['id'] ?>" data-row="row_<?= $row['id'] ?>"
+                                            data-user="<?= $row['user_id'] ?>">
+                                            <i class="bx bx-refresh"></i>
+                                            Update
+                                        </button>
                                     </div>
-                                    <span class="file-name" id="file-name-<?= $row['id'] ?>">Tidak ada file yang
-                                        dipilih</span>
                                 </div>
                             </td>
                         </tr>
@@ -309,4 +288,4 @@ $result = $conn->query($query);
 </div>
 
 <script src="js/hak_cipta.js"></script>
-<script src="js/action.js"></script>
+<script src="js/actions.js"></script>

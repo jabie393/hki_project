@@ -31,8 +31,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id']) && isset($_FILE
     $user_id = $data['user_id'];
     $old_rejection_path = $data['rejection_path'];
 
-    // Set certificate_path ke NULL di database
-    $null_cert = $conn->prepare("UPDATE registrations SET certificate_path = NULL WHERE id = ?");
+    // Set certificate_path dan nomor_sertifikat ke NULL di database
+    $null_cert = $conn->prepare("UPDATE registrations SET certificate_path = NULL, nomor_sertifikat = NULL WHERE id = ?");
     $null_cert->bind_param("i", $id);
     $null_cert->execute();
 

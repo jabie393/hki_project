@@ -202,10 +202,10 @@ $result = $stmt->get_result();
                                     Aksi
                                 </button>
                                 <div class="dropdown-menu sp">
-                                    <button class="cancel-btn" data-id="<?= $row['id'] ?>" data-row="row-<?= $row['id'] ?>"><i
-                                            class="bx bxs-trash"></i> Batalkan</button>
-                                    <button class="revise-btn" data-id="<?= $row['id'] ?>" data-row="row-<?= $row['id'] ?>"><i
-                                            class="bx bxs-edit"></i> Revisi</button>
+                                    <button id="cancel-btn" class="top-btn red-btn" data-id="<?= $row['id'] ?>"
+                                        data-row="row-<?= $row['id'] ?>"><i class="bx bxs-trash"></i> Batalkan</button>
+                                    <button id="revise-btn" class="bottom-btn blue-btn" data-id="<?= $row['id'] ?>"
+                                        data-row="row-<?= $row['id'] ?>"><i class="bx bxs-edit"></i> Revisi</button>
                                 </div>
                             </div>
                         <?php } elseif ($row['status'] == 'Ditinjau') { ?>
@@ -215,11 +215,11 @@ $result = $stmt->get_result();
                                 </button>
                                 <div class="dropdown-menu sp">
                                     <a href="https://wa.me/<?= $adminNumber ?>?text=<?= $pesan ?>" target="_blank"
-                                        class="button ask-btn">
+                                        class="button top-btn yellow-btn">
                                         <i class='bx bx-conversation'></i> Tanya
                                     </a>
-                                    <button class="revise-btn" data-id="<?= $row['id'] ?>" data-row="row-<?= $row['id'] ?>"><i
-                                            class="bx bxs-edit"></i> Revisi</button>
+                                    <button id="revise-btn" class="bottom-btn blue-btn" data-id="<?= $row['id'] ?>"
+                                        data-row="row-<?= $row['id'] ?>"><i class="bx bxs-edit"></i> Revisi</button>
                                 </div>
                             </div>
                         <?php } elseif ($row['status'] == 'Terdaftar') { ?>
@@ -302,5 +302,5 @@ $result = $stmt->get_result();
     </div>
 
     <script src="js/hak_cipta.js"></script>
-    <script src="js/action.js"></script>
+    <script src="js/actions.js"></script>
 </div>

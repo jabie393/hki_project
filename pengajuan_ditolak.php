@@ -135,18 +135,18 @@ $result = $stmt->get_result();
                 <th>
                     <div class="sortable-header">
                         <a href="javascript:void(0);"
-                            onclick="loadContent('status_pengajuan.php?page=<?= $page; ?>&order=<?= $order === 'ASC' ? 'DESC' : 'ASC'; ?>')"
+                            onclick="loadContent('pengajuan_ditolak.php?page=<?= $page; ?>&order=<?= $order === 'ASC' ? 'DESC' : 'ASC'; ?>')"
                             class="sort-link <?= $order === 'ASC' ? 'active-order' : ''; ?>"
                             title="<?= $order === 'ASC' ? 'Urutkan Dari Yang Terbaru' : 'Urutkan Dari Yang Terlama'; ?>">
                             Tanggal Pengajuan
                         </a>
                         <div class="sort-buttons">
                             <a href="javascript:void(0);"
-                                onclick="loadContent('status_pengajuan.php?page=<?= $page; ?>&order=ASC')" id="sort-asc"
-                                class="<?= $order === 'ASC' ? 'active-order' : ''; ?>"
+                                onclick="loadContent('pengajuan_ditolak.php?page=<?= $page; ?>&order=ASC')"
+                                id="sort-asc" class="<?= $order === 'ASC' ? 'active-order' : ''; ?>"
                                 title="Urutkan Dari Yang Terlama">&#9650;</a>
                             <a href="javascript:void(0);"
-                                onclick="loadContent('status_pengajuan.php?page=<?= $page; ?>&order=DESC')"
+                                onclick="loadContent('pengajuan_ditolak.php?page=<?= $page; ?>&order=DESC')"
                                 class="<?= $order === 'DESC' ? 'active-order' : ''; ?>"
                                 title="Urutkan Dari Yang Terbaru">&#9660;</a>
                         </div>
@@ -206,10 +206,10 @@ $result = $stmt->get_result();
                                 Aksi
                             </button>
                             <div class="dropdown-menu sp">
-                                <button class="delete-btn" data-id="<?= $row['id'] ?>" data-row="row-<?= $row['id'] ?>"><i
-                                        class="bx bxs-trash"></i> Hapus</button>
+                                <button id="delete-btn" class="top-btn red-btn" data-id="<?= $row['id'] ?>"
+                                    data-row="row-<?= $row['id'] ?>"><i class="bx bxs-trash"></i> Hapus</button>
                                 <a href="https://wa.me/<?= $adminNumber ?>?text=<?= $pesanBanding ?>" target="_blank"
-                                    class="button appeal-btn">
+                                    class="button bottom-btn yellow-btn">
                                     <i class='bx bx-conversation'></i> Banding
                                 </a>
                             </div>
@@ -291,5 +291,5 @@ $result = $stmt->get_result();
     </div>
 
     <script src="js/hak_cipta.js"></script>
-    <script src="js/action.js"></script>
+    <script src="js/actions.js"></script>
 </div>

@@ -115,6 +115,7 @@ $result = $conn->query($query);
                     <th>File</th>
                     <th>Status</th>
                     <th>Nomor Hak Cipta</th>
+                    <th>Sertifikat</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -170,29 +171,32 @@ $result = $conn->query($query);
                                             <input type="file" id="certificate_<?= $row['id'] ?>" name="certificate"
                                                 class="input-file" accept="image/*,.pdf,.doc,.docx,.zip,.rar,.7z,.tar,.gz">
                                         </div>
-                                        <div class="action-dropdown">
-                                            <button type="button" onclick="toggleDropdown(this)" class="btn action-button">
-                                                Aksi
-                                            </button>
-                                            <div class="dropdown-menu">
-                                                <button class="reject-btn" data-id="<?= $row['id'] ?>"
-                                                    data-row="row_<?= $row['id'] ?>">
-                                                    <i class="bx bxs-trash"></i> Tolak
-                                                </button>
-                                                <button class="review-btn" data-id="<?= $row['id'] ?>"
-                                                    data-row="row_<?= $row['id'] ?>">
-                                                    <i class="bx bx-search-alt-2"></i> Tinjau
-                                                </button>
-                                                <button type="button" class="approve-btn" data-id="<?= $row['id'] ?>"
-                                                    data-form="form_<?= $row['id'] ?>" data-user="<?= $row['user_id'] ?>">
-                                                    <i class="bx bx-check"></i>
-                                                    Setujui
-                                                </button>
-                                            </div>
-                                        </div>
                                     </div>
                                     <span class="file-name" id="file-name-<?= $row['id'] ?>">Tidak ada file yang
                                         dipilih</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="action-dropdown">
+                                    <button type="button" onclick="toggleDropdown(this)" class="btn action-button">
+                                        Aksi
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <button type="button" id="reject-btn" class="top-btn red-btn"
+                                            data-id="<?= $row['id'] ?>" data-row="row_<?= $row['id'] ?>">
+                                            <i class="bx bxs-trash"></i> Tolak
+                                        </button>
+                                        <button id="review-btn" class="blue-btn" data-id="<?= $row['id'] ?>"
+                                            data-row="row_<?= $row['id'] ?>">
+                                            <i class="bx bx-search-alt-2"></i> Tinjau
+                                        </button>
+                                        <button type="button" id="approve-btn" class="bottom-btn green-btn"
+                                            data-id="<?= $row['id'] ?>" data-form="form_<?= $row['id'] ?>"
+                                            data-user="<?= $row['user_id'] ?>">
+                                            <i class="bx bx-check"></i>
+                                            Setujui
+                                        </button>
+                                    </div>
                                 </div>
                             </td>
                         </tr>
@@ -289,4 +293,4 @@ $result = $conn->query($query);
 </div>
 
 <script src="js/hak_cipta.js"></script>
-<script src="js/action.js"></script>
+<script src="js/actions.js"></script>
