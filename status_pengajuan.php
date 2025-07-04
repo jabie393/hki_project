@@ -302,4 +302,5 @@ $result = $stmt->get_result();
     </div>
 
     <script src="js/hak_cipta.js"></script>
+    <script src="js/action.js"></script>
 </div>

@@ -309,3 +309,4 @@ $result = $conn->query($query);
 </div>
 
 <script src="js/hak_cipta.js"></script>
+<script src="js/action.js"></script>
