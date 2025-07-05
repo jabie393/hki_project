@@ -165,7 +165,7 @@ $result = $stmt->get_result();
                 $judul = urlencode($row['judul_hak_cipta']);
                 $pesanBanding = "Yth. Admin LPPM UNIRA Malang,%0A%0ASaya ingin mengajukan banding atas Hak Cipta saya yang saat ini berstatus Ditolak.%0A%0A- Judul: $judul%0A- No. Pengajuan: $noPengajuan%0A- Dengan alasan: %0A%0AMohon pertimbangannya kembali.%0A%0ATerima kasih.";
                 ?>
-                <tr id="row-<?= $row['id'] ?>">
+                <tr id="row_<?= $row['id'] ?>">
                     <td><?php echo htmlspecialchars($row['nomor_pengajuan'] ?? '-'); ?></td>
                     <td><?php echo htmlspecialchars(date('Y-m-d', strtotime($row['created_at']))); ?></td>
                     <td><?php echo htmlspecialchars($row['judul_hak_cipta']); ?></td>
@@ -207,7 +207,7 @@ $result = $stmt->get_result();
                             </button>
                             <div class="dropdown-menu sp">
                                 <button id="delete-btn" class="top-btn red-btn" data-id="<?= $row['id'] ?>"
-                                    data-row="row-<?= $row['id'] ?>"><i class="bx bxs-trash"></i> Hapus</button>
+                                    data-row="row_<?= $row['id'] ?>"><i class="bx bxs-trash"></i> Hapus</button>
                                 <a href="https://wa.me/<?= $adminNumber ?>?text=<?= $pesanBanding ?>" target="_blank"
                                     class="button bottom-btn yellow-btn">
                                     <i class='bx bx-conversation'></i> Banding

@@ -121,7 +121,7 @@ $result = $conn->query($query);
             <tbody>
                 <?php while ($row = $result->fetch_assoc()) { ?>
                     <form id="form_<?= $row['id'] ?>" enctype="multipart/form-data">
-                        <tr id="row-<?= $row['id'] ?>">
+                        <tr id="row_<?= $row['id'] ?>">
                             <td>
                                 <a href="javascript:void(0)" onclick="showProfile(<?php echo $row['user_id']; ?>)"
                                     class="profile-link">
@@ -131,7 +131,7 @@ $result = $conn->query($query);
                             <td><?php echo htmlspecialchars(date('Y-m-d', strtotime($row['created_at']))); ?></td>
                             <td><?= htmlspecialchars($row['judul_hak_cipta']); ?></td>
                             <td>
-                                <button type="button" class="btn btn-info"
+                                <button type="button" class="margin btn btn-info"
                                     onclick="openDetailCiptaanModal(<?= $row['id'] ?>)">Lihat</button>
                             </td>
                             <td>
@@ -200,16 +200,16 @@ $result = $conn->query($query);
                                             data-row="row_<?= $row['id'] ?>">
                                             <i class="bx bxs-trash"></i> Hapus
                                         </button>
-                                        <button id="manage_review-btn" class="blue-btn" data-id="<?= $row['id'] ?>"
-                                            data-row="row_<?= $row['id'] ?>">
-                                            <i class="bx bx-search-alt-2"></i>
-                                            Tinjau
-                                        </button>
-                                        <button type="button" id="update_approve-btn" class="bottom-btn amber-btn"
+                                        <button type="button" id="update_approve-btn" class="amber-btn"
                                             data-id="<?= $row['id'] ?>" data-form="form_<?= $row['id'] ?>"
                                             data-user="<?= $row['user_id'] ?>">
                                             <i class="bx bx-refresh"></i>
                                             Perbarui
+                                        </button>
+                                        <button id="manage_review-btn" class="bottom-btn blue-btn"
+                                            data-id="<?= $row['id'] ?>" data-row="row_<?= $row['id'] ?>">
+                                            <i class="bx bx-search-alt-2"></i>
+                                            Tinjau
                                         </button>
                                     </div>
                                 </div>

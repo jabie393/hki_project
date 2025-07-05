@@ -168,17 +168,10 @@ document.querySelectorAll('#review-btn').forEach(button => {
         const row = this.closest('tr');
 
         const nomor_pengajuan = row.querySelector("input[name='nomor_pengajuan']").value;
-        const nomor_sertifikat = row.querySelector("input[name='nomor_sertifikat']").value;
-        const certificateInput = row.querySelector(`#certificate_${id}`);
 
         const formData = new FormData();
         formData.append('id', id);
         formData.append('nomor_pengajuan', nomor_pengajuan);
-        formData.append('nomor_sertifikat', nomor_sertifikat);
-
-        if (certificateInput && certificateInput.files.length > 0) {
-            formData.append('certificate', certificateInput.files[0]);
-        }
 
         Swal.fire({
             title: 'Tandai sebagai Ditinjau?',
@@ -191,42 +184,69 @@ document.querySelectorAll('#review-btn').forEach(button => {
             if (result.isConfirmed) {
                 Swal.fire({
                     title: "Memproses...",
+                    html: `
+                    <div id="progress-container">
+                        <div id="progress-bar-container">
+                            <div id="progress-bar"></div>
+                        </div>
+                        <p id="progress-text">0%</p>
+                    </div>
+                `,
                     allowOutsideClick: false,
                     showConfirmButton: false,
                     didOpen: () => {
                         const xhr = new XMLHttpRequest();
+                        const startTime = Date.now();
+
+                        xhr.upload.addEventListener("progress", function (e) {
+                            if (e.lengthComputable) {
+                                const percentComplete = Math.round((e.loaded / e.total) * 100);
+                                const progressBar = document.getElementById("progress-bar");
+                                const progressText = document.getElementById("progress-text");
+
+                                progressBar.style.width = `${percentComplete}%`;
+                                progressText.textContent = `${percentComplete}%`;
+                            }
+                        });
+
                         xhr.open("POST", "actions/review.php", true);
                         xhr.onload = function () {
-                            Swal.close();
-                            try {
-                                const response = JSON.parse(xhr.responseText);
-                                if (response.success) {
-                                    Swal.fire({
-                                        icon: 'success',
-                                        title: 'Berhasil',
-                                        text: response.message,
-                                        showConfirmButton: false,
-                                        timer: 2000
-                                    }).then(() => {
-                                        // Update badge status di tabel
-                                        const statusTd = row.querySelector('.status-td .badge');
-                                        if (statusTd) {
-                                            statusTd.textContent = "Ditinjau";
-                                            statusTd.className = "badge badge-ditinjau";
-                                        }
-                                    });
-                                } else {
-                                    Swal.fire({
-                                        icon: 'error',
-                                        title: 'Gagal',
-                                        text: response.message,
-                                        showConfirmButton: true,
-                                        confirmButtonText: 'Oke!'
-                                    });
+                            const elapsedTime = Date.now() - startTime;
+                            const delay = Math.max(1200 - elapsedTime, 0);
+
+                            setTimeout(() => {
+                                Swal.close();
+                                Swal.close();
+                                try {
+                                    const response = JSON.parse(xhr.responseText);
+                                    if (response.success) {
+                                        Swal.fire({
+                                            icon: 'success',
+                                            title: 'Berhasil',
+                                            text: response.message,
+                                            showConfirmButton: false,
+                                            timer: 2000
+                                        }).then(() => {
+                                            // Update badge status di tabel
+                                            const statusTd = row.querySelector('.status-td .badge');
+                                            if (statusTd) {
+                                                statusTd.textContent = "Ditinjau";
+                                                statusTd.className = "badge badge-ditinjau";
+                                            }
+                                        });
+                                    } else {
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Gagal',
+                                            text: response.message,
+                                            showConfirmButton: true,
+                                            confirmButtonText: 'Oke!'
+                                        });
+                                    }
+                                } catch (e) {
+                                    Swal.fire('Error', 'Terjadi kesalahan: ' + xhr.responseText, 'error');
                                 }
-                            } catch (e) {
-                                Swal.fire('Error', 'Terjadi kesalahan: ' + xhr.responseText, 'error');
-                            }
+                            }, delay);
                         };
                         xhr.onerror = function () {
                             Swal.fire('Error', 'Gagal menghubungi server.', 'error');
@@ -408,7 +428,7 @@ document.querySelectorAll('#revise-btn').forEach(button => {
     button.addEventListener('click', function () {
         const id = this.dataset.id;
         loadContent(`revisi.php?revisi_id=${id}`, function () {
-            fetch(`services/revise.php?id=${id}`) // Mengambil data revisi
+            fetch(`actions/revise.php?id=${id}`) // Mengambil data revisi
                 .then(res => res.json())
                 .then(data => {
                     if (data.success) {
@@ -428,11 +448,119 @@ document.querySelectorAll('#revise-btn').forEach(button => {
 //===== End Of Action Primary Buttons =====//
 
 //===== Action Secondary Buttons =====//
-//== actions/manage_review.php (Tombol Tinjau di manage_rekapitulasi & pengajuan_ditolak ) (admin) ==//
+//== actions/review.php (Tombol Update Tinjauan di tinjau_pengajuan.php beda di alert & delete row logic) (admin) ==//
+document.querySelectorAll('#update_review-btn').forEach(button => {
+    button.addEventListener('click', function () {
+        const id = this.dataset.id;
+        const row = this.closest('tr');
+
+        const nomor_pengajuan = row.querySelector("input[name='nomor_pengajuan']").value;
+
+        const formData = new FormData();
+        formData.append('id', id);
+        formData.append('nomor_pengajuan', nomor_pengajuan);
+
+        Swal.fire({
+            title: 'Perbarui data hak cipta?',
+            text: "Data hak cipta akan diperbarui sesuai input!",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, perbarui!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: "Memproses...",
+                    html: `
+                    <div id="progress-container">
+                        <div id="progress-bar-container">
+                            <div id="progress-bar"></div>
+                        </div>
+                        <p id="progress-text">0%</p>
+                    </div>
+                `,
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                    didOpen: () => {
+                        const xhr = new XMLHttpRequest();
+                        const startTime = Date.now();
+
+                        xhr.upload.addEventListener("progress", function (e) {
+                            if (e.lengthComputable) {
+                                const percentComplete = Math.round((e.loaded / e.total) * 100);
+                                const progressBar = document.getElementById("progress-bar");
+                                const progressText = document.getElementById("progress-text");
+
+                                progressBar.style.width = `${percentComplete}%`;
+                                progressText.textContent = `${percentComplete}%`;
+                            }
+                        });
+
+                        xhr.open("POST", "actions/review.php", true);
+                        xhr.onload = function () {
+                            const elapsedTime = Date.now() - startTime;
+                            const delay = Math.max(1200 - elapsedTime, 0);
+
+                            setTimeout(() => {
+                                Swal.close();
+                                Swal.close();
+                                try {
+                                    const response = JSON.parse(xhr.responseText);
+                                    if (response.success) {
+                                        Swal.fire({
+                                            icon: 'success',
+                                            title: 'Berhasil',
+                                            text: "Tinjauan berhasil diperbarui.",
+                                            showConfirmButton: false,
+                                            timer: 2000
+                                        }).then(() => {
+                                            // Update badge status di tabel
+                                            const statusTd = row.querySelector('.status-td .badge');
+                                            if (statusTd) {
+                                                statusTd.textContent = "Ditinjau";
+                                                statusTd.className = "badge badge-ditinjau";
+                                            }
+                                            // Reset file name display & input
+                                            const fileNameElement = document.getElementById('file-name-' + id);
+                                            if (fileNameElement) fileNameElement.textContent = "Tidak ada file yang dipilih";
+                                            if (certificateInput) certificateInput.value = '';
+                                        });
+                                    } else {
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Gagal',
+                                            text: response.message,
+                                            showConfirmButton: true,
+                                            confirmButtonText: 'Oke!'
+                                        });
+                                    }
+                                } catch (e) {
+                                    Swal.fire('Error', 'Terjadi kesalahan: ' + xhr.responseText, 'error');
+                                }
+                            }, delay);
+                        };
+                        xhr.onerror = function () {
+                            Swal.fire('Error', 'Gagal menghubungi server.', 'error');
+                        };
+                        xhr.send(formData);
+                    }
+                });
+            }
+        });
+    });
+});
+
+//== actions/review.php (Tombol Tinjau di manage_rekapitulasi & pengajuan_ditolak ) (admin) ==//
 document.querySelectorAll('#manage_review-btn').forEach(button => {
     button.addEventListener('click', function () {
         const id = this.dataset.id;
-        const row = document.getElementById('row-' + id);
+        const row = this.closest('tr');
+
+        const nomor_pengajuan = row.querySelector("input[name='nomor_pengajuan']").value;
+
+        const formData = new FormData();
+        formData.append('id', id);
+        formData.append('nomor_pengajuan', nomor_pengajuan);
 
         Swal.fire({
             title: 'Tinjau ulang?',
@@ -445,49 +573,69 @@ document.querySelectorAll('#manage_review-btn').forEach(button => {
             if (result.isConfirmed) {
                 Swal.fire({
                     title: "Memproses...",
+                    html: `
+                    <div id="progress-container">
+                        <div id="progress-bar-container">
+                            <div id="progress-bar"></div>
+                        </div>
+                        <p id="progress-text">0%</p>
+                    </div>
+                `,
                     allowOutsideClick: false,
                     showConfirmButton: false,
                     didOpen: () => {
                         const xhr = new XMLHttpRequest();
-                        const formData = new FormData();
-                        formData.append('id', id);
+                        const startTime = Date.now();
 
-                        xhr.open("POST", "actions/manage_review.php", true);
-                        xhr.onload = function () {
-                            Swal.close();
-                            try {
-                                const response = JSON.parse(xhr.responseText);
-                                if (response.success) {
-                                    Swal.fire({
-                                        icon: 'success',
-                                        title: 'Berhasil',
-                                        text: response.message,
-                                        showConfirmButton: false,
-                                        timer: 2000
-                                    }).then(() => {
-                                        // Update badge status di tabel
-                                        const statusTd = row.querySelector('.status-td .badge');
-                                        if (statusTd) {
-                                            statusTd.textContent = "Ditinjau";
-                                            statusTd.className = "badge badge-ditinjau";
-                                        }
-                                        // Hapus baris dari tabel
-                                        if (row) {
-                                            row.remove();
-                                        }
-                                    });
-                                } else {
-                                    Swal.fire({
-                                        icon: 'error',
-                                        title: 'Gagal',
-                                        text: response.message,
-                                        showConfirmButton: true,
-                                        confirmButtonText: 'Oke!'
-                                    });
-                                }
-                            } catch (e) {
-                                Swal.fire('Error', 'Terjadi kesalahan: ' + xhr.responseText, 'error');
+                        xhr.upload.addEventListener("progress", function (e) {
+                            if (e.lengthComputable) {
+                                const percentComplete = Math.round((e.loaded / e.total) * 100);
+                                const progressBar = document.getElementById("progress-bar");
+                                const progressText = document.getElementById("progress-text");
+
+                                progressBar.style.width = `${percentComplete}%`;
+                                progressText.textContent = `${percentComplete}%`;
                             }
+                        });
+
+                        xhr.open("POST", "actions/review.php", true);
+                        xhr.onload = function () {
+                            const elapsedTime = Date.now() - startTime;
+                            const delay = Math.max(1200 - elapsedTime, 0);
+
+                            setTimeout(() => {
+                                Swal.close();
+                                Swal.close();
+                                try {
+                                    const response = JSON.parse(xhr.responseText);
+                                    if (response.success) {
+                                        Swal.fire({
+                                            icon: 'success',
+                                            title: 'Berhasil',
+                                            text: response.message,
+                                            showConfirmButton: false,
+                                            timer: 2000
+                                        }).then(() => {
+                                            // Update badge status di tabel
+                                            const statusTd = row.querySelector('.status-td .badge');
+                                            if (statusTd) {
+                                                statusTd.textContent = "Ditinjau";
+                                                statusTd.className = "badge badge-ditinjau";
+                                            }
+                                        });
+                                    } else {
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Gagal',
+                                            text: response.message,
+                                            showConfirmButton: true,
+                                            confirmButtonText: 'Oke!'
+                                        });
+                                    }
+                                } catch (e) {
+                                    Swal.fire('Error', 'Terjadi kesalahan: ' + xhr.responseText, 'error');
+                                }
+                            }, delay);
                         };
                         xhr.onerror = function () {
                             Swal.fire('Error', 'Gagal menghubungi server.', 'error');
@@ -504,7 +652,7 @@ document.querySelectorAll('#manage_review-btn').forEach(button => {
 document.querySelectorAll('#update_approve-btn').forEach(button => {
     button.addEventListener('click', function () {
         const id = this.dataset.id;
-        const row = document.getElementById('row-' + id);
+        const row = document.getElementById('row_' + id);
 
         const nomor_pengajuan = row.querySelector("input[name='nomor_pengajuan']").value;
         const nomor_sertifikat = row.querySelector("input[name='nomor_sertifikat']").value;

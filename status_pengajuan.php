@@ -170,7 +170,7 @@ $result = $stmt->get_result();
                 $judul = urlencode($row['judul_hak_cipta']);
                 $pesan = "Yth. Admin LPPM UNIRA Malang,%0A%0ASaya ingin menanyakan terkait pengajuan Hak Cipta saya yang saat ini berstatus Ditinjau.%0A%0A- No. Pengajuan: $noPengajuan%0A- Judul: $judul%0A%0AMohon informasinya apabila ada hal yang perlu saya lengkapi atau tindak lanjuti.%0A%0ATerima kasih.";
                 ?>
-                <tr id="row-<?= $row['id'] ?>">
+                <tr id="row_<?= $row['id'] ?>">
                     <td><?php echo htmlspecialchars($row['nomor_pengajuan'] ?? '-'); ?></td>
                     <td><?php echo htmlspecialchars(date('Y-m-d', strtotime($row['created_at']))); ?></td>
                     <td><?php echo htmlspecialchars($row['judul_hak_cipta']); ?></td>
@@ -203,9 +203,9 @@ $result = $stmt->get_result();
                                 </button>
                                 <div class="dropdown-menu sp">
                                     <button id="cancel-btn" class="top-btn red-btn" data-id="<?= $row['id'] ?>"
-                                        data-row="row-<?= $row['id'] ?>"><i class="bx bxs-trash"></i> Batalkan</button>
+                                        data-row="row_<?= $row['id'] ?>"><i class="bx bxs-trash"></i> Batalkan</button>
                                     <button id="revise-btn" class="bottom-btn blue-btn" data-id="<?= $row['id'] ?>"
-                                        data-row="row-<?= $row['id'] ?>"><i class="bx bxs-edit"></i> Revisi</button>
+                                        data-row="row_<?= $row['id'] ?>"><i class="bx bxs-edit"></i> Revisi</button>
                                 </div>
                             </div>
                         <?php } elseif ($row['status'] == 'Ditinjau') { ?>
@@ -219,7 +219,7 @@ $result = $stmt->get_result();
                                         <i class='bx bx-conversation'></i> Tanya
                                     </a>
                                     <button id="revise-btn" class="bottom-btn blue-btn" data-id="<?= $row['id'] ?>"
-                                        data-row="row-<?= $row['id'] ?>"><i class="bx bxs-edit"></i> Revisi</button>
+                                        data-row="row_<?= $row['id'] ?>"><i class="bx bxs-edit"></i> Revisi</button>
                                 </div>
                             </div>
                         <?php } elseif ($row['status'] == 'Terdaftar') { ?>

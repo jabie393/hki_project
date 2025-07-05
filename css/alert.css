@@ -26,16 +26,13 @@
 
 .swal2-file-wrapper {
   position: relative;
-  width: 90%;
   margin: 0 10px 0 10px;
 }
 
 .swal2-file-input {
   opacity: 0;
   position: absolute;
-  overflow: hidden;
-  z-index: 2;
-  cursor: pointer;
+  overflow: hidden !important;
 }
 
 .swal2-file-btn {
@@ -60,7 +57,9 @@
 }
 
 .swal2-name-text {
-  margin-left: 10px;
+  margin-top: 6px;
+  display: block;
+  text-align: center;
   font-style: italic;
   font-size: 13px;
   color: grey;
@@ -210,7 +209,6 @@ body.dark-mode #progress-text {
   }
 
   .swal2-file-wrapper {
-    width: 100%;
     margin: 0;
   }
 
@@ -222,10 +220,7 @@ body.dark-mode #progress-text {
   }
 
   .swal2-name-text {
-    margin-left: 0;
-    margin-top: 6px;
     font-size: 12px;
-    text-align: left;
     word-break: break-all;
   }
 

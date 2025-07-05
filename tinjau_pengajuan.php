@@ -128,7 +128,7 @@ $result = $conn->query($query);
                             <td><?php echo htmlspecialchars(date('Y-m-d', strtotime($row['created_at']))); ?></td>
                             <td><?= htmlspecialchars($row['judul_hak_cipta']) ?></td>
                             <td>
-                                <button type="button" class="btn btn-info"
+                                <button type="button" class="margin btn btn-info"
                                     onclick="openDetailCiptaanModal(<?= $row['id'] ?>)">Lihat</button>
                             </td>
                             <td><button type="button" onclick="openModal('<?= $row['id'] ?>')" class="btn btn-info">Detail
@@ -177,27 +177,49 @@ $result = $conn->query($query);
                                 </div>
                             </td>
                             <td>
-                                <div class="action-dropdown">
-                                    <button type="button" onclick="toggleDropdown(this)" class="btn action-button">
-                                        Aksi
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <button type="button" id="reject-btn" class="top-btn red-btn"
-                                            data-id="<?= $row['id'] ?>" data-row="row_<?= $row['id'] ?>">
-                                            <i class="bx bxs-trash"></i> Tolak
+                                <?php if ($row['status'] == 'Pending') { ?>
+                                    <div class="action-dropdown">
+                                        <button type="button" onclick="toggleDropdown(this)" class="btn action-button">
+                                            Aksi
                                         </button>
-                                        <button id="review-btn" class="blue-btn" data-id="<?= $row['id'] ?>"
-                                            data-row="row_<?= $row['id'] ?>">
-                                            <i class="bx bx-search-alt-2"></i> Tinjau
-                                        </button>
-                                        <button type="button" id="approve-btn" class="bottom-btn green-btn"
-                                            data-id="<?= $row['id'] ?>" data-form="form_<?= $row['id'] ?>"
-                                            data-user="<?= $row['user_id'] ?>">
-                                            <i class="bx bx-check"></i>
-                                            Setujui
-                                        </button>
-                                    </div>
-                                </div>
+                                        <div class="dropdown-menu">
+                                            <button type="button" id="reject-btn" class="top-btn red-btn"
+                                                data-id="<?= $row['id'] ?>" data-row="row_<?= $row['id'] ?>">
+                                                <i class="bx bxs-trash"></i> Tolak
+                                            </button>
+                                            <button id="review-btn" class="blue-btn" data-id="<?= $row['id'] ?>"
+                                                data-row="row_<?= $row['id'] ?>">
+                                                <i class="bx bx-search-alt-2"></i> Tinjau
+                                            </button>
+                                            <button type="button" id="approve-btn" class="bottom-btn green-btn"
+                                                data-id="<?= $row['id'] ?>" data-form="form_<?= $row['id'] ?>"
+                                                data-user="<?= $row['user_id'] ?>">
+                                                <i class="bx bx-check"></i>
+                                                Setujui
+                                            </button>
+                                        <?php } else if ($row['status'] == 'Ditinjau') { ?>
+                                                <div class="action-dropdown">
+                                                    <button type="button" onclick="toggleDropdown(this)" class="btn action-button">
+                                                        Aksi
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <button type="button" id="reject-btn" class="top-btn red-btn"
+                                                            data-id="<?= $row['id'] ?>" data-row="row_<?= $row['id'] ?>">
+                                                            <i class="bx bxs-trash"></i> Tolak
+                                                        </button>
+                                                        <button id="update_review-btn" class="amber-btn blue-btn"
+                                                            data-id="<?= $row['id'] ?>" data-row="row_<?= $row['id'] ?>">
+                                                            <i class="bx bx-refresh"></i> Perbarui
+                                                        </button>
+                                                        <button type="button" id="approve-btn" class="bottom-btn green-btn"
+                                                            data-id="<?= $row['id'] ?>" data-form="form_<?= $row['id'] ?>"
+                                                            data-user="<?= $row['user_id'] ?>">
+                                                            <i class="bx bx-check"></i>
+                                                            Setujui
+                                                        </button>
+                                                <?php } ?>
+                                            </div>
+                                        </div>
                             </td>
                         </tr>
                     </form>

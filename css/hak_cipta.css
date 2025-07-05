@@ -198,6 +198,10 @@
   -ms-tap-highlight-color: none; /* Internet Explorer/Edge */
 }
 
+#hak_cipta-page .margin {
+  margin: 28px 0 !important;
+}
+
 #hak_cipta-page .btn {
   padding: 6px 12px;
   font-size: 13px;
@@ -946,6 +950,10 @@ body.dark-mode #hak_cipta-page .pagination .page-link.active {
   #hak_cipta-page .highlight-tooltip:hover::after,
   #hak_cipta-page .status-tooltip:hover::after {
     font-size: 9px;
+  }
+
+  #hak_cipta-page .margin {
+    margin: 34px 0 !important;
   }
 
   #hak_cipta-page .highlight,
