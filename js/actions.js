@@ -233,6 +233,12 @@ document.querySelectorAll('#review-btn').forEach(button => {
                                                 statusTd.textContent = "Ditinjau";
                                                 statusTd.className = "badge badge-ditinjau";
                                             }
+                                            // Reset file name display & input
+                                            const fileNameElement = document.getElementById('file-name-' + id);
+                                            if (fileNameElement) fileNameElement.textContent = "Tidak ada file yang dipilih";
+                                            // Kosongkan input nomor_sertifikat berdasarkan ID
+                                            const nomorSertifikatInput = document.getElementById('nomor_sertifikat_' + id);
+                                            if (nomorSertifikatInput) nomorSertifikatInput.value = '';
                                         });
                                     } else {
                                         Swal.fire({
