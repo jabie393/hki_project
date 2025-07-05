@@ -622,6 +622,10 @@ document.querySelectorAll('#manage_review-btn').forEach(button => {
                                                 statusTd.textContent = "Ditinjau";
                                                 statusTd.className = "badge badge-ditinjau";
                                             }
+                                            // Hapus baris dari tabel
+                                            if (row) {
+                                                row.remove();
+                                            }
                                         });
                                     } else {
                                         Swal.fire({
