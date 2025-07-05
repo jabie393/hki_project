@@ -523,7 +523,9 @@ document.querySelectorAll('#update_review-btn').forEach(button => {
                                             // Reset file name display & input
                                             const fileNameElement = document.getElementById('file-name-' + id);
                                             if (fileNameElement) fileNameElement.textContent = "Tidak ada file yang dipilih";
-                                            if (certificateInput) certificateInput.value = '';
+                                            // Kosongkan input nomor_sertifikat berdasarkan ID
+                                            const nomorSertifikatInput = document.getElementById('nomor_sertifikat_' + id);
+                                            if (nomorSertifikatInput) nomorSertifikatInput.value = '';
                                         });
                                     } else {
                                         Swal.fire({
