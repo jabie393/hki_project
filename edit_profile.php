@@ -1,5 +1,3 @@
-<!-- Flow FE -->
-<!-- ADMIN & USER -->
 <?php
 include 'config/config.php';
 include_once 'helpers/profile_helper.php';

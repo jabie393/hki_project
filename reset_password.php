@@ -1,5 +1,3 @@
-<!-- Flow FE -->
-<!-- ADMIN -->
 <?php
 session_start();
 include 'config/config.php';

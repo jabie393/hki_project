@@ -1,5 +1,3 @@
-<!-- Flow FE -->
-<!-- ALL -->
 <?php
 include 'config/config.php';
 
