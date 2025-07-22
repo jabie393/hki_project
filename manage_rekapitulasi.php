@@ -107,7 +107,7 @@ $result = $conn->query($query);
                         </div>
                     </th>
                     <th>Judul</th>
-                    <th>Detail Ciptaan</th>
+                    <th>Ciptaan</th>
                     <th>Pencipta</th>
                     <th>File</th>
                     <th>Status</th>
@@ -130,7 +130,7 @@ $result = $conn->query($query);
                             <td><?= htmlspecialchars($row['judul_hak_cipta']); ?></td>
                             <td>
                                 <button type="button" class="margin btn btn-info"
-                                    onclick="openDetailCiptaanModal(<?= $row['id'] ?>)">Lihat</button>
+                                    onclick="openDetailCiptaanModal(<?= $row['id'] ?>)">Detail Ciptaan</button>
                             </td>
                             <td>
                                 <button onclick="openModal('<?php echo $row['id']; ?>')" class="btn btn-info">Detail

@@ -151,7 +151,7 @@ $result = $conn->query($query);
                             </div>
                         </th>
                         <th>Judul</th>
-                        <th>Detail Ciptaan</th>
+                        <th>Ciptaan</th>
                         <th>Pencipta</th>
                         <th>Pemegang Hak Cipta</th>
                         <th>Nomor Sertifikat</th>
@@ -167,7 +167,7 @@ $result = $conn->query($query);
                             <td><?= htmlspecialchars($row['judul_hak_cipta']); ?></td>
                             <td>
                                 <button type="button" class="btn btn-info"
-                                    onclick="openDetailCiptaanModal(<?= $row['id'] ?>)">Lihat</button>
+                                    onclick="openDetailCiptaanModal(<?= $row['id'] ?>)">Detail Ciptaan</button>
                             </td>
                             <td>
                                 <button class="btn btn-info" onclick="showCreator(<?= $row['id']; ?>)">Detail

@@ -156,7 +156,7 @@ $result = $stmt->get_result();
                     </div>
                 </th>
                 <th>Judul</th>
-                <th>Detail Ciptaan</th>
+                <th>Ciptaan</th>
                 <th>Pencipta</th>
                 <th>Status</th>
                 <th>Sertifikat</th>
@@ -175,7 +175,7 @@ $result = $stmt->get_result();
                     <td><?php echo htmlspecialchars($row['judul_hak_cipta']); ?></td>
                     <td>
                         <button type="button" class="btn btn-info"
-                            onclick="openDetailCiptaanModal(<?= $row['id'] ?>)">Lihat</button>
+                            onclick="openDetailCiptaanModal(<?= $row['id'] ?>)">Detail Ciptaan</button>
                     </td>
                     <td>
                         <button type="button" onclick="openModal('<?= $row['id'] ?>')" class="btn btn-info">Detail
