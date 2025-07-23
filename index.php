@@ -44,7 +44,9 @@ $images = $result->fetch_all(MYSQLI_ASSOC);
   <div class="menu">
     <button onclick="location.href='rekapitulasi'">REKAPITULASI</button>
     <button onclick="location.href='<?php echo $dashboardPage; ?>'">PENGAJUAN HAK CIPTA</button>
-    <button onclick="location.href='guide'">PETUNJUK PENGAJUAN</button>
+    <a href="assets/guide/USER MANUAL HAK CIPTA UNIRA MALANG.pdf" download>
+  <button type="button">PETUNJUK PENGAJUAN</button>
+</a>
   </div>
 
   <div class="footer"></div>

@@ -1,0 +1,89 @@
+/* About Page Styles */
+.about-container {
+  width: 90%;
+  max-width: 900px;
+  margin: 100px auto;
+  padding: 20px;
+  z-index: 1;
+}
+
+.about-card {
+  background-color: rgba(32, 47, 91, 0.9);
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  color: white;
+}
+
+.about-card h1 {
+  font-size: 2.2rem;
+  margin-bottom: 25px;
+  text-align: center;
+  color: white;
+  font-weight: 700;
+}
+
+.about-card h2 {
+  font-size: 1.5rem;
+  margin: 25px 0 15px;
+  color: #3b82f6;
+  font-weight: 600;
+}
+
+.about-card h3 {
+  font-size: 1.3rem;
+  margin: 20px 0 10px;
+  color: #3b82f6;
+  font-weight: 600;
+}
+
+.about-content {
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+.about-content p {
+  margin-bottom: 15px;
+}
+
+.about-content ul {
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
+
+.about-content li {
+  margin-bottom: 8px;
+}
+
+.contact-info {
+  background-color: rgba(59, 130, 246, 0.1);
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 30px;
+}
+
+.footer a.active {
+  color: #3b82f6;
+  font-weight: bold;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  .about-container {
+    width: 95%;
+    margin: 80px auto;
+    padding: 10px;
+  }
+
+  .about-card {
+    padding: 20px;
+  }
+
+  .about-card h1 {
+    font-size: 1.8rem;
+  }
+
+  .about-card h2 {
+    font-size: 1.3rem;
+  }
+}
