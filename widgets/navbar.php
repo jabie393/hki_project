@@ -7,7 +7,7 @@ if (session_status() == PHP_SESSION_NONE) {
 
 $user_id = $_SESSION['user_id'] ?? null;
 
-$profile_picture_path = "assets/image/default-avatar.png?v=" . time(); // default dengan cache busting
+$profile_picture_path = "assets/images/default-avatar.png?v=" . time(); // default dengan cache busting
 
 if ($user_id) {
   $custom_path = "uploads/users/$user_id/profile/profile.jpg";

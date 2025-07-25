@@ -17,7 +17,7 @@ $page = substr($_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"], "/") + 
 <section id="sidebar" class="sidebar">
     <button id="arrowToggle">&#8592;</button>
     <a href="" class="brand">
-        <img src="assets/icon/unira.png" alt="Unira Icon" style="width: 30px; height: 30px;">
+        <img src="assets/icons/unira.png" alt="Unira Icon" style="width: 30px; height: 30px;">
         <?php if ($role === 'admin'): ?>
             <span id="sidebar-username" class="text">Halo, <?= htmlspecialchars($username) ?>! <i
                     class="fas fa-check-circle" title="Admin"></i></span>

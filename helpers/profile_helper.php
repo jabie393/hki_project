@@ -16,7 +16,7 @@ function getProfilePicture($user_id, $withTimestamp = true)
     $url = BASE_URL . $relativePath;
 
     if (!file_exists($absoluteFilePath)) {
-        return BASE_URL . "/assets/image/default-avatar.png";
+        return BASE_URL . "/assets/images/default-avatar.png";
     }
 
     return $withTimestamp ? "$url?v=" . time() : $url;

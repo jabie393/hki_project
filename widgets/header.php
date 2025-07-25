@@ -1,1 +1,1 @@
-<img src="assets/image/logo.png" alt="Logo Unira">
+<img src="assets/images/logo.png" alt="Logo Unira">

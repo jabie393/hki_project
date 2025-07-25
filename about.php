@@ -23,7 +23,7 @@ if ($phoneQuery && $row = $phoneQuery->fetch_assoc()) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tentang - Hak Cipta UNIRA Malang</title>
-    <link rel="shortcut icon" href="assets/icon/fcompany.png" type="image/x-icon">
+    <link rel="shortcut icon" href="assets/icons/fcompany.png" type="image/x-icon">
 
     <!-- Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
@@ -41,7 +41,7 @@ if ($phoneQuery && $row = $phoneQuery->fetch_assoc()) {
 <body>
     <!-- Background Image -->
     <div class="background-image">
-        <img src="assets/image/bg.png" alt="Gambar latar belakang gedung UNIRA">
+        <img src="assets/images/bg.png" alt="Gambar latar belakang gedung UNIRA">
         <div class="bg-overlay"></div>
     </div>
 
@@ -77,7 +77,7 @@ if ($phoneQuery && $row = $phoneQuery->fetch_assoc()) {
                 <ul>
                     <li style="display: flex; align-items: center; gap: 10px;">
                         <a href="https://fahd.my.id" target="_blank" style="display:inline-block;">
-                            <img src="assets/icon/fcompany.png" alt="Logo Fahd Rajaby" style="height:1.2em;width:1.2em;vertical-align:middle;border-radius:8px;">
+                            <img src="assets/icons/fcompany.png" alt="Logo Fahd Rajaby" style="height:1.2em;width:1.2em;vertical-align:middle;border-radius:8px;">
                             Mochammad Fahd Wahyu Rajaby
                         </a>
                     </li>

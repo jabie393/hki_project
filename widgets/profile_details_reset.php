@@ -48,7 +48,7 @@ $role = $user_data['role'];
     <div>
         <div class="profile-center">
             <img src="<?= $profile_picture ?>" alt="Foto Profil" class="profile-img"
-                onerror="this.src='assets/image/default-avatar.png'">
+                onerror="this.src='assets/images/default-avatar.png'">
         </div>
         <p class="profile-row">
             <span class="profile-label">Username:</span>

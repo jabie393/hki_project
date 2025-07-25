@@ -150,7 +150,7 @@ $profile_picture = getProfilePicture($user_id);
         <div>
             <label>Foto Saat Ini:</label>
             <img id="profilePagePic" class="profilePic" src="<?= $profile_picture ?>" width="100" height="100"
-                alt="Foto Profil" onerror="this.src='assets/image/default-avatar.png'">
+                alt="Foto Profil" onerror="this.src='assets/images/default-avatar.png'">
         </div>
     </form>
 

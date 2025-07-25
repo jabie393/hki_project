@@ -88,8 +88,8 @@ $result = $conn->query($query);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rekapitulasi Hak Cipta</title>
-    <link rel="shortcut icon" href="assets/icon/fcompany.png" type="image/x-icon">
+    <title>Rekapitulasi - Hak Cipta UNIRA Malang</title>
+    <link rel="shortcut icon" href="assets/icons/fcompany.png" type="image/x-icon">
 
     <!-- Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
@@ -106,7 +106,7 @@ $result = $conn->query($query);
 <body>
     <!-- Background Image -->
     <div class="background-image">
-        <img src="assets/image/bg.png" alt="Background image of a university building">
+        <img src="assets/images/bg.png" alt="Background image of a university building">
     </div>
 
     <div class="header"></div>
