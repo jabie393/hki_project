@@ -51,9 +51,13 @@ a:hover {
 }
 
 .about-content {
-  text-align: justify;
   line-height: 1.6;
   font-size: 1rem;
+}
+
+.justify {
+  text-indent: 2em;
+  text-align: justify;
 }
 
 .about-content p {
@@ -121,7 +125,7 @@ a:hover {
 @media (max-width: 768px) {
   .about-container {
     width: 99%;
-    margin: 60px auto;
+    margin: 70px auto;
     padding: 10px;
   }
   .about-card {
@@ -152,7 +156,6 @@ a:hover {
 @media (max-width: 576px) {
   .about-container {
     width: 100%;
-    margin: 30px auto;
     padding: 10px;
   }
   .about-card {

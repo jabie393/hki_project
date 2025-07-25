@@ -52,7 +52,7 @@ if ($phoneQuery && $row = $phoneQuery->fetch_assoc()) {
             <h1>Tentang Sistem Hak Cipta UNIRA Malang</h1>
 
             <div class="about-content">
-                <p>
+                <p class="justify">
                     Sistem ini merupakan platform digital yang dikembangkan untuk mempermudah sivitas akademika
                     Universitas Islam Raden Rahmat Malang dalam melakukan pengajuan dan pengelolaan Hak Cipta secara
                     online. Sistem ini dikelola oleh Lembaga Penelitian dan Pengabdian kepada Masyarakat (LPPM)
@@ -69,7 +69,7 @@ if ($phoneQuery && $row = $phoneQuery->fetch_assoc()) {
                 </ul>
 
                 <h2>Pengembang</h2>
-                <p>
+                <p class="justify">
                     Aplikasi ini dikembangkan oleh mahasiswa Praktik Kerja Lapangan (PKL) dari Program Studi Teknik
                     Informatika,
                     Universitas Islam Raden Rahmat Malang:
