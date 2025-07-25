@@ -64,8 +64,8 @@ if ($phoneQuery && $row = $phoneQuery->fetch_assoc()) {
                     <li>Pengajuan Hak Cipta secara mandiri</li>
                     <li>Upload dokumen persyaratan secara daring</li>
                     <li>Monitoring status pengajuan (Pending, Ditinjau, Terdaftar)</li>
-                    <li>Notifikasi digital dan riwayat pengajuan</li>
-                    <li>Unduh template dan surat pernyataan</li>
+                    <li>Rekapitulasi Hak Cipta</li>
+                    <li>Update data akun</li>
                 </ul>
 
                 <h2>Pengembang</h2>
@@ -78,8 +78,8 @@ if ($phoneQuery && $row = $phoneQuery->fetch_assoc()) {
                     <li style="display: flex; align-items: center; gap: 10px;">
                         <a href="https://fahd.my.id" target="_blank" style="display:inline-block;">
                             <img src="assets/icon/fcompany.png" alt="Logo Fahd Rajaby" style="height:1.2em;width:1.2em;vertical-align:middle;border-radius:8px;">
+                            Mochammad Fahd Wahyu Rajaby
                         </a>
-                        Mochammad Fahd Wahyu Rajaby (22552021020)
                     </li>
                 </ul>
 

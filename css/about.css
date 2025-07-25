@@ -1,4 +1,17 @@
-/* About Page Styles */
+a {
+  outline: none;
+  text-decoration: none!important;
+  color: white!important;
+  -webkit-tap-highlight-color: transparent; /* Menghilangkan highlight pada elemen saat di-tap di Chrome */
+  -moz-tap-highlight-color: none; /* Firefox */
+  -ms-tap-highlight-color: none; /* Internet Explorer/Edge */
+}
+
+a:hover {
+  color: #3b82f6!important;
+  transition: transform 0.3s ease;
+}
+
 .about-container {
   width: 90%;
   max-width: 900px;
@@ -38,6 +51,7 @@
 }
 
 .about-content {
+  text-align: justify;
   line-height: 1.6;
   font-size: 1rem;
 }
@@ -49,10 +63,12 @@
 .about-content ul {
   margin-left: 20px;
   margin-bottom: 20px;
+  padding-left: 0;
 }
 
 .about-content li {
   margin-bottom: 8px;
+  list-style: disc inside;
 }
 
 .contact-info {
@@ -62,28 +78,109 @@
   margin-top: 30px;
 }
 
-.footer a.active {
-  color: #3b82f6;
-  font-weight: bold;
+/* Pengembang logo + nama */
+.about-content .developer-list {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 20px;
+}
+.about-content .developer-list img {
+  height: 1.2em;
+  width: 1.2em;
+  vertical-align: middle;
+  border-radius: 8px;
 }
 
 /* Responsive Design */
-@media screen and (max-width: 768px) {
+@media (max-width: 992px) {
   .about-container {
-    width: 95%;
+    width: 98%;
     margin: 80px auto;
     padding: 10px;
   }
-
   .about-card {
     padding: 20px;
   }
-
   .about-card h1 {
     font-size: 1.8rem;
   }
-
   .about-card h2 {
     font-size: 1.3rem;
+  }
+  .about-card h3 {
+    font-size: 1.1rem;
+  }
+  .about-content {
+    font-size: 0.97rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-container {
+    width: 99%;
+    margin: 60px auto;
+    padding: 10px;
+  }
+  .about-card {
+    padding: 12px;
+  }
+  .about-card h1 {
+    font-size: 1.3rem;
+  }
+  .about-card h2 {
+    font-size: 1.1rem;
+  }
+  .about-card h3 {
+    font-size: 1rem;
+  }
+  .about-content {
+    font-size: 0.93rem;
+  }
+  .contact-info {
+    padding: 12px;
+    margin-top: 18px;
+  }
+  .about-content .developer-list img {
+    height: 1em;
+    width: 1em;
+  }
+}
+
+@media (max-width: 576px) {
+  .about-container {
+    width: 100%;
+    margin: 30px auto;
+    padding: 10px;
+  }
+  .about-card {
+    padding: 6px;
+    border-radius: 8px;
+  }
+  .about-card h1 {
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+  }
+  .about-card h2 {
+    font-size: 1rem;
+    margin: 15px 0 8px;
+  }
+  .about-card h3 {
+    font-size: 0.95rem;
+    margin: 10px 0 6px;
+  }
+  .about-content {
+    font-size: 0.89rem;
+  }
+  .contact-info {
+    padding: 8px;
+    margin-top: 10px;
+    font-size: 0.89rem;
+  }
+  .about-content .developer-list img {
+    height: 0.95em;
+    width: 0.95em;
   }
 }
