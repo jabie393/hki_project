@@ -68,15 +68,19 @@ if ($phoneQuery && $row = $phoneQuery->fetch_assoc()) {
                     <li>Unduh template dan surat pernyataan</li>
                 </ul>
 
-                <h2>Tim Pengembang</h2>
+                <h2>Pengembang</h2>
                 <p>
                     Aplikasi ini dikembangkan oleh mahasiswa Praktik Kerja Lapangan (PKL) dari Program Studi Teknik
                     Informatika,
                     Universitas Islam Raden Rahmat Malang:
                 </p>
                 <ul>
-                    <li>Mochammad Fahd Wahyu Rajaby (22552021020)</li>
-                    <li>Abdul Aziis Arifiyanto (22552021002)</li>
+                    <li style="display: flex; align-items: center; gap: 10px;">
+                        <a href="https://fahd.my.id" target="_blank" style="display:inline-block;">
+                            <img src="assets/icon/fcompany.png" alt="Logo Fahd Rajaby" style="height:1.2em;width:1.2em;vertical-align:middle;border-radius:8px;">
+                        </a>
+                        Mochammad Fahd Wahyu Rajaby (22552021020)
+                    </li>
                 </ul>
 
                 <div class="contact-info">
