@@ -1,5 +1,3 @@
-<!-- Flow FE -->
-<!-- ADMIN -->
 <?php
 include '../config/config.php';
 require_once __DIR__ . '/../helpers/profile_helper.php';
