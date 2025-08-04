@@ -131,9 +131,10 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
             <label>Lampiran Dokumen:</label>
             <label for="fileInput" class="custom-file-label">📁 Pilih Dokumen</label>
             <input type="file" name="dokumen" id="fileInput" class="custom-file-input"
-                accept=".pdf,.doc,.docx,.zip,.rar,.7z,.tar,.gz"/>
+                accept=".zip,.rar,.7z,.tar,.gz" required
+                oninvalid="this.setCustomValidity('Belum ada dokumen.')" oninput="this.setCustomValidity('')" />
             <span id="file-name" class="file-name">Belum ada dokumen</span><br>
-            <small><em><span style="color: red; font-size: 0.8em;">* </span>Ukuran maksimal dokumen 30MB</em></small>
+            <small><em><span style="color: red; font-size: 0.8em;">* </span>Ukuran maksimal dokumen 30MB & terkompres (zip, rar, dsb.)</em></small>
         </div>
         <!--List Pencipta-->
         <label>Pencipta:</label>

@@ -213,7 +213,7 @@ function setupFileValidation() {
         fileInput.addEventListener('change', function () {
             const file = fileInput.files[0];
             const maxSize = 30 * 1024 * 1024; // 30MB in bytes
-            const allowedExtensions = ['pdf', 'doc', 'docx', 'zip', 'rar', '7z', 'tar', 'gz'];
+            const allowedExtensions = ['zip', 'rar', '7z', 'tar', 'gz'];
 
             if (file) {
                 const fileExtension = file.name.split('.').pop().toLowerCase();
