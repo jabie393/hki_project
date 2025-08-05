@@ -578,6 +578,36 @@
   margin-bottom: 8px;
 }
 
+#hak_cipta-page .filter-download-form {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0 10px 0;
+  max-width: 245px;
+}
+
+#hak_cipta-page .filter-download-form .btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+#hak_cipta-page .filter-download-form select {
+  padding: 6px 10px;
+  border-radius: 5px;
+  border: 1px solid #b3c6e0;
+  font-size: 13px;
+  background: #fff;
+  color: #004080;
+  outline: none;
+  transition: border-color 0.2s;
+  min-width: 120px;
+}
+
+#hak_cipta-page .filter-download-form select:focus {
+  border-color: #007bff;
+}
+
 #hak_cipta-page .btn-group.horizontal {
   display: flex;
   gap: 6px;
@@ -778,6 +808,21 @@ body.dark-mode #hak_cipta-page .input-wrapper {
   background-color: #121212;
 }
 
+body.dark-mode #hak_cipta-page .filter-download-form {
+  box-shadow: none;
+}
+
+body.dark-mode #hak_cipta-page .filter-download-form select {
+  background: #23272f;
+  color: #fff;
+  border: 1px solid #444;
+}
+
+body.dark-mode #hak_cipta-page .filter-download-form .btn-success {
+  background-color: #18752e;
+  color: #fff;
+}
+
 body.dark-mode #hak_cipta-page .badge-pending {
   background-color: #5c4400;
   color: #fff3cd;
@@ -877,6 +922,12 @@ body.dark-mode #hak_cipta-page .pagination .page-link.active {
     font-size: 20px;
   }
 
+  #hak_cipta-page .filter-download-form {
+    max-width: 100%;
+    padding: 8px 0 8px 0;
+    gap: 8px;
+  }
+
   #hak_cipta-page .table-wrapper {
     padding: 8px;
   }
@@ -934,6 +985,18 @@ body.dark-mode #hak_cipta-page .pagination .page-link.active {
     font-size: 18px;
     padding-top: 5px;
     padding-bottom: 10px;
+  }
+
+  #hak_cipta-page .filter-download-form {
+    gap: 8px;
+    padding: 6px 0 6px 0;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  #hak_cipta-page .filter-download-form select {
+    font-size: 13px;
+    padding: 7px 10px;
   }
 
   #hak_cipta-page .table-wrapper {

@@ -30,6 +30,15 @@ function pagination() {
     initDataTable('#approvedTable');
 };
 
+function initSelect2() {
+    // ================== INITIALIZE SELECT2 ================== //
+    $('#tahun_pengajuan').select2({
+        width: '100%',
+        minimumResultsForSearch: 5
+    });
+    $('#tahun_pengajuan').next('.select2-container').addClass('select2-export');
+}
+
 //== Modal ==//
 // script detail profil user
 function showProfile(userId) {

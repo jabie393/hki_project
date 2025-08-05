@@ -62,6 +62,17 @@ select {
 }
 /*=== Khusus di field Telephone ===*/
 
+/*=== Khusus di field Export Data ===*/
+.select2-export.select2-container--default .select2-selection--single {
+  height: 30px !important;
+  border-radius: 4px !important;
+  -webkit-border-radius: 4px !important;
+  -moz-border-radius: 4px !important;
+  -ms-border-radius: 4px !important;
+  -o-border-radius: 4px !important;
+}
+/*=== Khusus di field Export Data ===*/
+
 .select2-selection__rendered {
   line-height: 45px !important;
   color: #6c757d !important;
@@ -80,8 +91,6 @@ select {
   .select2-selection__clear {
   position: absolute;
   right: 25px;
-  top: 20px;
-  transform: translateY(-50%);
   color: #dc3545;
   font-size: 1.2em;
   cursor: pointer;
@@ -199,6 +208,10 @@ body.dark-mode
     padding-right: 28px;
   }
 
+  .select2-results__option {
+    font-size: 14px !important;
+  }
+
   /*=== Khusus di field Telephone ===*/
   #edit_profile-page .phone-input-wrapper select,
   #edit_profile-page
@@ -236,7 +249,7 @@ body.dark-mode
 /* Media Query untuk layar kecil (ponsel) */
 @media (max-width: 576px) {
   select {
-    font-size: 13px;
+    font-size: 12px;
     padding: 8px 10px;
   }
 
@@ -245,6 +258,10 @@ body.dark-mode
     border-radius: 8px;
     padding-left: 10px;
     padding-right: 25px;
+  }
+
+  .select2-results__option {
+    font-size: 12px !important;
   }
 
   /*=== Khusus di field Telephone ===*/
@@ -257,6 +274,13 @@ body.dark-mode
     box-sizing: border-box;
   }
   /*=== Khusus di field Telephone ===*/
+
+  /*=== Khusus di field Export Data ===*/
+.select2-export.select2-container--default .select2-selection--single {
+  font-size: 12px;
+  height: 24px !important;
+}
+/*=== Khusus di field Export Data ===*/
 
   .select2-selection__rendered {
     line-height: 40px !important;

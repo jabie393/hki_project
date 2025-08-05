@@ -193,3 +193,39 @@ body.dark-mode #admin-page select:focus {
     max-width: 100%;
   }
 }
+
+#admin-page .filter-container {
+    position: relative;
+}
+
+#admin-page .period-filter {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    background-color: white;
+    color: #2c3e50;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+#admin-page .stat-card-left .period-filter {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Dark mode styles */
+body.dark-mode #admin-page .period-filter {
+    background-color: #333333;
+    color: #ffffff;
+    border-color: #444444;
+}
+
+body.dark-mode #admin-page .stat-card-left .period-filter {
+    background-color: rgba(0, 0, 0, 0.3);
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.2);
+}

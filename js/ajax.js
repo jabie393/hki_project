@@ -96,6 +96,10 @@ function afterContentLoaded(url) {
         if (typeof initAdminPage === "function") initAdminPage();
     }
 
+    if (cleanUrl.endsWith("manage_rekapitulasi.php")) {
+        if (typeof initSelect2 === "function") initSelect2();
+    }
+
     if (cleanUrl.endsWith("user.php")) {
         if (typeof pagination === "function") pagination();
     }

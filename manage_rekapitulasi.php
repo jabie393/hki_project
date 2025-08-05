@@ -64,9 +64,15 @@ $result = $conn->query($query);
     <!-- Sweet Alert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    <!-- Select2 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
     <link rel="stylesheet" href="css/hak_cipta.css">
     <link rel="stylesheet" href="css/modal.css">
     <link rel="stylesheet" href="css/alert.css">
+    <link rel="stylesheet" href="css/select2.css">
 </head>
 
 <div id="hak_cipta-page">
@@ -79,6 +85,24 @@ $result = $conn->query($query);
                 placeholder="Cari Data Hak Cipta" value="<?php echo htmlspecialchars($search); ?>">
             <button type="submit" class="btn btn-info">Cari</button>
         </div>
+    </form>
+
+    <!-- Form Filter Tahun & Download -->
+    <form method="GET" action="services/export_data.php" class="filter-download-form">
+        <select name="tahun_pengajuan" id="tahun_pengajuan">
+            <option value="">Semua Data</option>
+            <?php
+            // Ambil daftar tahun dari data
+            $tahunQuery = $conn->query("SELECT DISTINCT YEAR(created_at) as tahun FROM registrations WHERE status = 'Terdaftar' ORDER BY tahun DESC");
+            while ($tahun = $tahunQuery->fetch_assoc()) {
+                echo '<option value="' . $tahun['tahun'] . '">' . $tahun['tahun'] . '</option>';
+            }
+            ?>
+        </select>
+        <button type="submit" class="btn btn-download">
+            <i class='bx bx-download'></i>
+            <span>CSV</span>
+        </button>
     </form>
 
     <div class="table-wrapper">
