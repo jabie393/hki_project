@@ -25,7 +25,7 @@ $result = $conn->query("SELECT * FROM registrations WHERE user_id = '$user_id'")
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
     <!-- Css -->
-    <link rel="stylesheet" href="css/pengajuan_baru.css">
+    <link rel="stylesheet" href="css/form_pengajuan.css">
     <link rel="stylesheet" href="css/modal.css">
     <link rel="stylesheet" href="css/alert.css">
     <link rel="stylesheet" href="css/select2.css">

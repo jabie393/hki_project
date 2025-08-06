@@ -51,4 +51,18 @@ function initAdminPage() {
         });
     }
 
+    // Download PDF
+    const btn = document.getElementById('downloadPdfBtn');
+    if (btn) {
+        btn.addEventListener('click', function () {
+            const element = document.getElementById('admin-page');
+            html2pdf().set({
+                margin: 0.5,
+                filename: 'Grafik hak cipta UNIRA MALANG.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'in', format: 'a4', orientation: 'landscape' } // Ubah ke landscape
+            }).from(element).save();
+        });
+    }
 }

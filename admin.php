@@ -57,11 +57,19 @@ $chartData = [
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+    <!-- html2pdf.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
     <!-- CSS -->
     <link rel="stylesheet" href="css/admin.css">
 </head>
 
 <div id="admin-page">
+    <div class="download-container btn download-btn">
+        <button id="downloadPdfBtn">
+            <i class='bx bx-download'></i>
+            <span>PDF</span></button>
+    </div>
     <div class="layout">
         <!-- Kiri -->
         <div class="left-column boxl">

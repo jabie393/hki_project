@@ -3,10 +3,37 @@
   color: #2c3e50;
 }
 
+#admin-page .download-container {
+  position: fixed;
+  top: 75px;
+  right: 20px;
+  display: flex;
+  gap: 10px;
+  z-index: 999;
+}
+
+#admin-page .download-btn button {
+  padding: 8px 12px;
+  background-color: #004080;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  white-space: nowrap;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.2s;
+}
+
+#admin-page .download-btn button:hover {
+  background-color: #002a5e;
+}
+
 #admin-page .layout {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
+  padding: 30px 20px 0 20px;
 }
 
 #admin-page .right-column {
@@ -76,6 +103,15 @@ body.dark-mode #admin-page {
   color: #ffffff;
 }
 
+body.dark-mode #admin-page button {
+  background-color: #333333;
+  color: #ffffff;
+}
+
+body.dark-mode #admin-page button:hover {
+  background-color: #444444;
+}
+
 body.dark-mode #admin-page .box,
 body.dark-mode #admin-page .boxl {
   background: #1e1e1e;
@@ -140,6 +176,12 @@ body.dark-mode #admin-page select:focus {
     flex-direction: column;
   }
 
+  #admin-page .download-btn button,
+  #admin-page .cancel-btn button {
+    font-size: 13px;
+    padding: 8px 12px;
+  }
+
   #admin-page .left-column,
   #admin-page .right-column {
     flex: 1 1 100%;
@@ -177,6 +219,12 @@ body.dark-mode #admin-page select:focus {
     padding: 10px;
   }
 
+  #admin-page .download-btn button,
+  #admin-page .cancel-btn button {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+
   #admin-page h3 {
     font-size: 14px;
   }
@@ -192,40 +240,4 @@ body.dark-mode #admin-page select:focus {
   #admin-page canvas {
     max-width: 100%;
   }
-}
-
-#admin-page .filter-container {
-    position: relative;
-}
-
-#admin-page .period-filter {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    padding: 5px 10px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    background-color: white;
-    color: #2c3e50;
-    font-size: 12px;
-    cursor: pointer;
-}
-
-#admin-page .stat-card-left .period-filter {
-    background-color: rgba(255, 255, 255, 0.2);
-    color: white;
-    border-color: rgba(255, 255, 255, 0.3);
-}
-
-/* Dark mode styles */
-body.dark-mode #admin-page .period-filter {
-    background-color: #333333;
-    color: #ffffff;
-    border-color: #444444;
-}
-
-body.dark-mode #admin-page .stat-card-left .period-filter {
-    background-color: rgba(0, 0, 0, 0.3);
-    color: #ffffff;
-    border-color: rgba(255, 255, 255, 0.2);
 }

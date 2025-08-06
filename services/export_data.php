@@ -11,9 +11,9 @@ $tahun = isset($_GET['tahun_pengajuan']) ? intval($_GET['tahun_pengajuan']) : ''
 $filter = '';
 if ($tahun) {
     $filter = "AND YEAR(registrations.created_at) = $tahun";
-    $filename = $tahun . " rekapitulasi hak cipta UNIRA.csv";
+    $filename = $tahun . " rekapitulasi hak cipta UNIRA MALANG.csv";
 } else {
-    $filename = "Semua Data rekapitulasi hak cipta UNIRA.csv";
+    $filename = "Semua Data rekapitulasi hak cipta UNIRA MALANG.csv";
 }
 
 header('Content-Type: text/csv; charset=utf-8');
@@ -22,25 +22,25 @@ header('Content-Disposition: attachment; filename="' . $filename . '"');
 $output = fopen('php://output', 'w');
 fputcsv($output, [
     'Nomor Pengajuan',
+    'Nomor Sertifikat',
     'Username',
     'Tanggal Pengajuan',
     'Judul',
     'Jenis',
     'Sub Jenis',
-    'Nomor Sertifikat',
     'Pencipta',
     'Status',
     'Sertifikat'
 ]);
 
-$query = "SELECT 
+$query = "SELECT
             registrations.nomor_pengajuan,
+            registrations.nomor_sertifikat,
             users.username,
             registrations.created_at,
             registrations.judul_hak_cipta,
             registrations.jenis_hak_cipta,
             registrations.sub_jenis_hak_cipta,
-            registrations.nomor_sertifikat,
             registrations.id,
             registrations.status,
             registrations.certificate_path,
@@ -69,12 +69,12 @@ while ($row = $result->fetch_assoc()) {
 
     fputcsv($output, [
         $row['nomor_pengajuan'],
+        $row['nomor_sertifikat'],
         $row['username'],
         $row['created_at'],
         $row['judul_hak_cipta'],
         $row['jenis_hak_cipta'],
         $row['sub_jenis_hak_cipta'],
-        $row['nomor_sertifikat'],
         $pencipta,
         $row['status'],
         $sertifikat

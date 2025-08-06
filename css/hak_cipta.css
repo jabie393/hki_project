@@ -146,6 +146,7 @@
   display: flex;
   justify-content: center;
   gap: 10px;
+  z-index: 1;
 }
 
 #hak_cipta-page .input-field {
