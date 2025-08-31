@@ -1,4 +1,3 @@
-````markdown
 # 📑 Sistem Pendaftaran Hak Cipta - LPPM UNIRA Malang
 
 [![PHP Version](https://img.shields.io/badge/php-%3E%3D7.4-blue)](https://www.php.net/)
@@ -28,8 +27,6 @@ Sebelum menjalankan sistem ini, pastikan sudah terpasang:
 - Git (opsional untuk clone repo)
 - Web browser modern (Chrome, Edge, Firefox)
 
----
-
 ## ⚙️ Instalasi & Konfigurasi
 
 ### 1. Clone Repository
@@ -38,8 +35,6 @@ git clone https://github.com/jabie393/hki_project.git
 ````
 
 Atau download langsung file **ZIP** lalu extract ke folder `htdocs` (jika menggunakan XAMPP).
-
----
 
 ### 2. Buat Database di phpMyAdmin
 
@@ -143,7 +138,7 @@ Jika ingin berkontribusi:
 ## 📄 Lisensi
 
 Proyek ini dibuat untuk keperluan internal **LPPM UNIRA Malang**.
-Hak cipta © 2025 – Mochamad Fahd Wahyu Rajaby.
+Hak cipta © 2025 – Mochammad Fahd Wahyu Rajaby.
 
 ---
 
