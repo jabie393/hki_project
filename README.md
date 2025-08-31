@@ -154,5 +154,3 @@ Jika ada error saat konfigurasi database, cek kembali:
 * Nama database di `phpMyAdmin`
 * Username & password MySQL di `config.php`
 * Pastikan modul `mysqli` aktif di XAMPP/PHP
-
-```
