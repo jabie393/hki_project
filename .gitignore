@@ -1,2 +1,3 @@
-# Abaikan folder node_modules (pada project JS/TS)
+# Abaikan
+config/
 uploads/
