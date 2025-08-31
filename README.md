@@ -102,10 +102,6 @@ Gunakan akun berikut untuk login sebagai admin:
 
 ## 📷 Tampilan Sistem
 
-*(Tambahkan screenshot aplikasi di sini agar lebih menarik. Contoh: halaman login, dashboard user, dashboard admin.)*
-
-Contoh placeholder:
-
 ![Login Page](screenshots/login.png)
 ![Dashboard Admin](screenshots/admin.png)
 
