@@ -102,8 +102,26 @@ Gunakan akun berikut untuk login sebagai admin:
 
 ## 📷 Tampilan Sistem
 
-![Login Page](screenshots/login.png)
-![Dashboard Admin](screenshots/admin.png)
+Berikut adalah beberapa tampilan dari sistem pendaftaran Hak Cipta:
+
+### 🏠 1. Halaman Beranda
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/c5f912f3-7635-4f26-8397-1239dd166797" alt="Halaman Beranda" width="800"/>
+</p>
+
+---
+
+### ⚙️ 2. Dashboard Admin
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/4bbc64f1-29d4-4ddf-b32d-a6e96064be4b" alt="Dashboard Admin" width="800"/>
+</p>
+
+---
+
+### 👤 3. Dashboard User
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/fec5fe4d-1255-43de-8ed3-6037fbf8130e" alt="Dashboard User" width="800"/>
+</p>
 
 ---
 
