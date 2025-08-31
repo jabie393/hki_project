@@ -22,6 +22,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
+    // Generate nomor pengajuan otomatis
+    $today = date('dmY');
+    // Hitung jumlah pengajuan hari ini
+    $stmt = $conn->prepare("SELECT COUNT(*) as total FROM registrations WHERE DATE(created_at) = CURDATE()");
+    $stmt->execute();
+    $res = $stmt->get_result();
+    $countToday = $res->fetch_assoc()['total'] ?? 0;
+    $stmt->close();
+
+    $nextNumber = str_pad($countToday + 1, 5, '0', STR_PAD_LEFT);
+    $nomor_pengajuan = $nextNumber . $today;
+
     // Ambil data dari form
     $jenis_pengajuan = $_POST['jenis_pengajuan'] ?? "";
     $jenis_hak_cipta = $_POST['jenis_hak_cipta'];
@@ -33,10 +45,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $kota_pengumuman = $_POST['kota_pengumuman'] ?? "";
     $status = "Pending";
 
-    $sql = $conn->prepare("INSERT INTO registrations (user_id, jenis_pengajuan, jenis_hak_cipta, sub_jenis_hak_cipta, tanggal_pengumuman, judul_hak_cipta, deskripsi, negara_pengumuman, kota_pengumuman, status) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $sql = $conn->prepare("INSERT INTO registrations (user_id, jenis_pengajuan, jenis_hak_cipta, sub_jenis_hak_cipta, tanggal_pengumuman, judul_hak_cipta, deskripsi, negara_pengumuman, kota_pengumuman, status, nomor_pengajuan) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-    $sql->bind_param("isssssssss", $user_id, $jenis_pengajuan, $jenis_hak_cipta, $sub_jenis_hak_cipta, $tanggal_pengumuman, $judul, $deskripsi, $negara_pengumuman, $kota_pengumuman, $status);
+    $sql->bind_param("issssssssss", $user_id, $jenis_pengajuan, $jenis_hak_cipta, $sub_jenis_hak_cipta, $tanggal_pengumuman, $judul, $deskripsi, $negara_pengumuman, $kota_pengumuman, $status, $nomor_pengajuan);
 
     // Validasi minimal 1 pencipta harus ada
     if (!isset($_POST["nama"]) || !is_array($_POST["nama"]) || count($_POST["nama"]) === 0) {
@@ -87,9 +99,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $target_file = $reg_dir . $file_name;
 
         if (move_uploaded_file($_FILES["dokumen"]["tmp_name"], $target_file)) {
-            // Simpan ke tabel documents
+            $relative_file_path = "uploads/users/$user_id/files/$reg_id/$file_name";
             $stmt_doc = $conn->prepare("INSERT INTO documents (registration_id, file_name, file_path) VALUES (?, ?, ?)");
-            $stmt_doc->bind_param("iss", $reg_id, $file_name, $target_file);
+            $stmt_doc->bind_param("iss", $reg_id, $file_name, $relative_file_path);
             $stmt_doc->execute();
 
             echo "Pengajuan hak cipta berhasil dikirim!";

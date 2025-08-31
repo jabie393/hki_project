@@ -77,7 +77,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Upload file jika ada file baru
         if (isset($_FILES["dokumen"]) && $_FILES["dokumen"]["size"] > 0) {
-            // Hapus dokumen lama
+            // Ambil file_path dokumen lama
+            $result = $conn->query("SELECT file_path FROM documents WHERE registration_id = $reg_id");
+            while ($row = $result->fetch_assoc()) {
+                $old_file = "../" . $row['file_path'];
+                if (file_exists($old_file)) {
+                    @unlink($old_file);
+                }
+            }
+
+            // Hapus dokumen lama dari database
             $conn->query("DELETE FROM documents WHERE registration_id = $reg_id");
 
             // Buat folder upload
@@ -92,9 +101,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $target_file = $reg_dir . $file_name;
 
             if (move_uploaded_file($_FILES["dokumen"]["tmp_name"], $target_file)) {
-                // Simpan ke tabel documents
+                // Simpan ke tabel documents dengan path relatif (tanpa ../)
+                $relative_file_path = "uploads/users/$user_id/files/$reg_id/$file_name";
                 $stmt_doc = $conn->prepare("INSERT INTO documents (registration_id, file_name, file_path) VALUES (?, ?, ?)");
-                $stmt_doc->bind_param("iss", $reg_id, $file_name, $target_file);
+                $stmt_doc->bind_param("iss", $reg_id, $file_name, $relative_file_path);
                 $stmt_doc->execute();
             } else {
                 echo "Gagal mengunggah dokumen.";

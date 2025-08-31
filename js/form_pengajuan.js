@@ -75,10 +75,15 @@ function initPengajuanBaru() {
 
             // Step 2: Fetch semua kabupaten/kota (paralel)
             const allCitiesPromises = provinsi.map(async (prov) => {
-                const res = await fetch(`https://ibnux.github.io/data-indonesia/kabupaten/${prov.id}.json`);
-                const cities = await res.json();
-                cities.forEach(city => city.provinsi = prov.nama);
-                return cities;
+                try {
+                    const res = await fetch(`https://ibnux.github.io/data-indonesia/kabupaten/${prov.id}.json`);
+                    if (!res.ok) return []; // Jika 404, kembalikan array kosong
+                    const cities = await res.json();
+                    cities.forEach(city => city.provinsi = prov.nama);
+                    return cities;
+                } catch (err) {
+                    return []; // Jika error, kembalikan array kosong
+                }
             });
 
             const allCitiesArrays = await Promise.all(allCitiesPromises);
