@@ -7,14 +7,12 @@ if (php_sapi_name() === 'cli') {
     parse_str(implode('&', array_slice($argv, 1)), $_GET);
 }
 
-// Proteksi akses
-if (!isset($_GET['key']) || $_GET['key'] !== 'hapus7hari') {
-    http_response_code(403);
-    exit("[ERROR] Unauthorized.\n");
-}
-
-// Tampilkan plain text jika dari browser
+// Proteksi akses kalau via browser
 if (php_sapi_name() !== 'cli') {
+    if (!isset($_GET['key']) || $_GET['key'] !== 'hapus7hari') {
+        http_response_code(403);
+        exit("[ERROR] Unauthorized.\n");
+    }
     header('Content-Type: text/plain');
 }
 
@@ -98,3 +96,6 @@ file_put_contents('/home/fahk3771/cron_log.txt', "[" . date("Y-m-d H:i:s") . "] 
 
 $stmt->close();
 $conn->close();
+
+
+// == Jika via url : wget -qO- "https://domain.com/services/cron_delete.php?key=hapus7hari" == //
