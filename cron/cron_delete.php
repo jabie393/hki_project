@@ -98,4 +98,4 @@ $stmt->close();
 $conn->close();
 
 
-// == Jika via url : wget -qO- "https://domain.com/services/cron_delete.php?key=hapus7hari" == //
+// == Jika via url : wget -qO- "https://domain.com/cron/cron_delete.php?key=hapus7hari" == //
