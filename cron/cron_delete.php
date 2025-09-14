@@ -92,10 +92,7 @@ while ($row = $result->fetch_assoc()) {
 echo "[SELESAI] Total pengajuan dihapus: $total_deleted\n";
 
 // Logging opsional ke file
-file_put_contents('/home/fahk3771/cron_log.txt', "[" . date("Y-m-d H:i:s") . "] Dihapus: $total_deleted\n", FILE_APPEND);
+// file_put_contents('/home/.../cron_log.txt', "[" . date("Y-m-d H:i:s") . "] Dihapus: $total_deleted\n", FILE_APPEND);
 
 $stmt->close();
 $conn->close();
-
-
-// == Jika via url : wget -qO- "https://domain.com/cron/cron_delete.php?key=hapus7hari" == //
