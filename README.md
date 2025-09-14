@@ -33,8 +33,10 @@ Sebelum menjalankan sistem ini, pastikan sudah terpasang:
 ```bash
 git clone https://github.com/jabie393/hki_project.git
 ````
-
 Atau download langsung file **ZIP** lalu extract ke folder `htdocs` (jika menggunakan XAMPP).
+
+---
+
 
 ### 2. Buat Database di phpMyAdmin
 
@@ -98,6 +100,47 @@ Gunakan akun berikut untuk login sebagai admin:
 * **Email**: `admin@gmail.com`
 * **Password**: `adminlppm`
 
+---
+
+## ⏰ Cron Job (Pembersihan Otomatis)
+
+Sistem ini memiliki fitur **pembersihan otomatis** untuk menghapus pendaftaran yang **Ditolak** lebih dari 7 hari.  
+Anda perlu menambahkan cron job agar proses ini berjalan rutin.
+
+### 1. Menggunakan `wget` (Direkomendasikan)
+
+Jika server mendukung cron job, tambahkan baris berikut di **crontab**:
+
+```bash
+0 0 * * * wget -qO- "https://domain-anda.com/services/cron_delete.php?key=hapus7hari"
+````
+
+📝 **Penjelasan:**
+
+* `0 0 * * *` → Cron akan berjalan setiap hari jam **00:00**
+* `wget -qO-` → Mengakses script via HTTP tanpa output ke layar
+* `?key=hapus7hari` → Proteksi agar hanya cron job yang bisa menjalankan script ini
+
+### 2. Menggunakan `curl`
+
+Alternatif jika `wget` tidak tersedia:
+
+```bash
+0 0 * * * curl -s "https://domain-anda.com/services/cron_delete.php?key=hapus7hari"
+```
+
+### 3. Jalankan Manual untuk Testing
+
+Jika ingin mencoba secara manual tanpa menunggu cron:
+
+```bash
+wget -qO- "https://domain-anda.com/services/cron_delete.php?key=hapus7hari"
+```
+
+Anda akan melihat log pembersihan langsung di terminal.
+
+> ⚠️ **Catatan Keamanan:**
+> Pastikan `key=hapus7hari` diganti dengan secret key unik agar tidak bisa diakses sembarang orang.
 ---
 
 ## 📷 Tampilan Sistem
