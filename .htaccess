@@ -1,3 +1,63 @@
+# --- Security Headers ---
+
+# 1. Content Security Policy (CSP)
+# Sesuaikan src sesuai kebutuhan (self = domain sendiri)
+<IfModule mod_headers.c>
+Header always set Content-Security-Policy "default-src 'self'; \
+    connect-src 'self' \
+        https://cdn.jsdelivr.net \
+        https://cdnjs.cloudflare.com \
+        https://fonts.googleapis.com \
+        https://fonts.gstatic.com \
+        https://ibnux.github.io \
+        https://countriesnow.space \
+        https://kodepos.vercel.app \
+        https://api.countrystatecity.in; \
+    script-src 'self' 'unsafe-inline' \
+        https://cdn.jsdelivr.net \
+        https://cdn.tailwindcss.com \
+        https://cdnjs.cloudflare.com; \
+    style-src 'self' 'unsafe-inline' \
+        https://cdn.jsdelivr.net \
+        https://fonts.googleapis.com \
+        https://cdnjs.cloudflare.com \
+        https://unpkg.com; \
+    font-src 'self' \
+        https://fonts.gstatic.com \
+        https://cdnjs.cloudflare.com \
+        https://unpkg.com; \
+    img-src 'self' data: https://flagcdn.com; \
+    object-src 'none'; \
+    frame-ancestors 'self'; \
+    base-uri 'self';"
+
+# 2. HTTP Strict Transport Security (HSTS)
+Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+
+# 3. X-Content-Type-Options (Prevent MIME Sniffing)
+Header set X-Content-Type-Options "nosniff"
+
+# 4. X-Frame-Options (Prevent Clickjacking)
+Header set X-Frame-Options "SAMEORIGIN"
+
+# 5. X-XSS-Protection (Legacy XSS Filter)
+Header set X-XSS-Protection "1; mode=block"
+
+# 6. Referrer-Policy (Kurangi info bocor)
+Header set Referrer-Policy "strict-origin-when-cross-origin"
+
+# 7. Remove Server Signature & X-Powered-By (Info Leakage)
+Header unset X-Powered-By
+Header always unset X-Powered-By
+</IfModule>
+
+# Hilangkan versi Apache/PHP di error page
+ServerSignature Off
+ServerTokens Prod
+
+
+# --- URL Rewrite Rules ---
+
 RewriteEngine On
 
 # Menghapus ekstensi .php dari URL
@@ -5,6 +65,6 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^([^/]+)$ $1.php [L]
 
-RewriteEngine On
+# Redirect jika ada query string ?i=1 agar bersih
 RewriteCond %{QUERY_STRING} ^i=1$
 RewriteRule ^(.*)$ /$1? [R=301,L]
