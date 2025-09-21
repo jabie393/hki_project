@@ -37,7 +37,6 @@ Atau download langsung file **ZIP** lalu extract ke folder `htdocs` (jika menggu
 
 ---
 
-
 ### 2. Buat Database di phpMyAdmin
 
 * Buka [http://localhost/phpmyadmin](http://localhost/phpmyadmin)
@@ -141,6 +140,64 @@ Anda akan melihat log pembersihan langsung di terminal.
 
 > ⚠️ **Catatan Keamanan:**
 > Pastikan `key=hapus7hari` diganti dengan secret key unik agar tidak bisa diakses sembarang orang.
+
+---
+
+## 🛠️ Konfigurasi .htaccess (Development vs Production)
+
+Proyek ini menggunakan dua konfigurasi `.htaccess` terpisah agar pengembangan lebih mudah dan aman:
+
+- **`.htaccess.development`** → digunakan saat menjalankan sistem di **localhost/XAMPP**
+  - Tidak memaksa HTTPS (tidak ada HSTS)
+  - Tidak ada Content Security Policy (CSP) ketat
+  - Memudahkan debugging dan testing tanpa error browser
+  - **Isi minimal:**
+    ```apache
+    RewriteEngine On
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^([^/]+)$ $1.php [L]
+
+    RewriteCond %{QUERY_STRING} ^i=1$
+    RewriteRule ^(.*)$ /$1? [R=301,L]
+    ```
+
+- **`.htaccess.production`** → digunakan saat deploy ke server/hosting
+  - Mengaktifkan **CSP** untuk mencegah XSS
+  - Menambahkan **HSTS** agar semua koneksi pakai HTTPS
+  - Menambahkan **X-Frame-Options, Referrer-Policy, X-Content-Type-Options**
+  - Menghilangkan informasi server (X-Powered-By)
+
+### 📌 Cara Menggunakan
+1. **Saat develop di localhost:**  
+   - Rename file `.htaccess.development` → `.htaccess`
+   - Jalankan sistem seperti biasa di `http://localhost/`
+
+2. **Saat deploy ke hosting:**  
+   - Rename file `.htaccess.production` → `.htaccess`
+   - Pastikan domain sudah punya SSL/HTTPS aktif
+   - Cek browser console — jika ada error CSP, tambahkan domain CDN/API yang dibutuhkan ke file `.htaccess.production`
+
+### ➕ Menambahkan CDN atau API Baru ke CSP
+Jika Anda menambahkan library baru (misalnya Bootstrap dari CDN, Font Awesome, Tailwind, atau API eksternal), Anda harus menambahkan domainnya ke direktif CSP di `.htaccess.production`.
+
+Contoh:
+```apache
+Header always set Content-Security-Policy "default-src 'self'; \
+    script-src 'self' https://cdn.jsdelivr.net https://cdn.tailwindcss.com; \
+    style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://fonts.googleapis.com; \
+    connect-src 'self' https://api.countrystatecity.in;"
+```
+
+📌 **Panduan Cepat:**
+- **script-src** → untuk file JS (CDN seperti Bootstrap, Tailwind, jQuery)
+- **style-src** → untuk CSS (Bootstrap, Font Awesome, Google Fonts)
+- **font-src** → untuk font (Google Fonts, CDN font)
+- **img-src** → untuk gambar dari luar (contoh: https://flagcdn.com)
+- **connect-src** → untuk API atau AJAX request (misal: API negara, kodepos)
+
+> 💡 **Tips:** Buka browser DevTools → Console → cari pesan error CSP → domain yang ditolak akan ditampilkan → tambahkan ke direktif yang sesuai.
+
 ---
 
 ## 📷 Tampilan Sistem
