@@ -63,18 +63,30 @@ Atau download langsung file **ZIP** lalu extract ke folder `htdocs` (jika menggu
 
 ### 4. Konfigurasi Koneksi Database
 
-Edit file:
+Salin file contoh konfigurasi menjadi file konfigurasi utama:
+
+```bash
+cp config/config.php.example config/config.php
+````
+
+> **Catatan:** Jika menggunakan Windows PowerShell, gunakan:
+>
+> ```powershell
+> Copy-Item config/config.php.example config/config.php
+> ```
+
+Kemudian edit file berikut:
 
 ```bash
 config/config.php
 ```
 
-Sesuaikan dengan setting lokal:
+Sesuaikan dengan setting lokal Anda:
 
 ```php
 <?php
 $host     = "localhost";
-$user     = "root";
+$user     = "";
 $password = "";
 $dbname   = "hak_cipta";
 ?>
