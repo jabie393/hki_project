@@ -51,11 +51,6 @@ Header unset X-Powered-By
 Header always unset X-Powered-By
 </IfModule>
 
-# Hilangkan versi Apache/PHP di error page
-ServerSignature Off
-ServerTokens Prod
-
-
 # --- URL Rewrite Rules ---
 
 RewriteEngine On
