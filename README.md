@@ -40,17 +40,13 @@ Atau download langsung file **ZIP** lalu extract ke folder `htdocs` (jika menggu
 ### 2. Buat Database di phpMyAdmin
 
 * Buka [http://localhost/phpmyadmin](http://localhost/phpmyadmin)
-* Buat database baru, misalnya:
-
-  ```bash
-  hak_cipta
-  ```
+* Buat database baru
 
 ---
 
 ### 3. Import Database
 
-* Masuk ke database `hak_cipta`
+* Masuk ke database tersebut
 * Klik tab **Import**
 * Pilih file database:
 
@@ -88,7 +84,7 @@ Sesuaikan dengan setting lokal Anda:
 $host     = "localhost";
 $user     = "";
 $password = "";
-$dbname   = "hak_cipta";
+$dbname   = "";
 ?>
 ```
 
